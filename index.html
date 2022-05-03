@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script type="text/javascript" src="javascript/jquery.js"></script>
+    <link rel="icon" type="../image/png" sizes="25x17" href="images/logo16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <title>Questões de Concursos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascript/scriptpagina.obfuscated.js"></script>
+    <script type="text/javascript" src="javascript/jquery.maskedinput.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body id="home" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <div id="loading">
+        <img id="loading-image" src="images/hug.gif" alt="Loading..." />
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="tituloModal"></h4>
+                </div>
+                <div class="modal-body" id="textoModal">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="buttonModal" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="interna" style="background-color: #dddddd;" align="justify">
+            <div id="contact" class="container-fluid bg-grey">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h2 style="text-align: center;">
+                                Questões de Concursos e Vestibulares
+                            </h2>
+                            <hr>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="espacoInicio">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>
+                                Resolva questões de concursos e vestibulares para avaliar seus conhecimentos.<br>Os dados foram todos retirados do site <a href="http://concursando.sunsalesystem.com.br/" target="_blank">Concursando</a>.
+                            </h3>
+                            <hr>
+                            <br>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12 form-group" id="game">
+                                    <h4 style="text-align: center;">
+                                        <button class="buttonStartGame" onclick="Iniciar()">Iniciar</button>
+                                        <br>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="espacoExercicio">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <button class="buttonInicio" onclick="document.location.reload(true);">Início</button>
+
+                            <h4 style="text-align: left;">
+                                Tempo:
+                                <br>
+                                <b style="color: blue;" id="time">
+                                </b>
+                                <br>
+                                <br>
+                                <h1 style="text-align: center;color:blue;" id="lugarTotal">
+
+                                </h1>
+                            </h4>
+                            <br>
+                            <h4 style="text-align: left;">
+                                Certas/Total:
+                                <br>
+                                <h1 style="text-align: center;color:blue;" id="lugarInfo">
+
+                                </h1>
+                            </h4>
+                        </div>
+                        <div class="col-sm-8">
+                            <h4 id="lugarParaConta">
+
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row" id="LugarProximaQuestao">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-grey" style="text-align: center;">
+        SunSale System
+    </footer>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    document.getElementById('espacoInicio').hidden = false;
+    document.getElementById('espacoExercicio').hidden = true;
+    var totalQuestoes = 0;
+    var totalCertas = 0;
+
+    removeLoader();
+    topo();
+
+    function Iniciar(){
+        openLoader();
+
+        document.getElementById('espacoInicio').hidden = true;
+        document.getElementById('espacoExercicio').hidden = false;
+        
+        PreencheTime();
+        PreencheQuestao();
+    }
+
+    function alerta(mensagem, func) {
+        AbrirModal("Alerta", mensagem, func);
+    }
+
+    function informa(mensagem, func) {
+        AbrirModal("Informação", mensagem, func);
+    }
+
+    function AbrirModal(tituloModal, textoModal, func) {
+        var titulo = document.querySelector('#tituloModal');
+        var texto = document.querySelector('#textoModal');
+        var button = document.querySelector('#buttonModal');
+        
+        titulo.innerHTML = '';
+        titulo.innerHTML = tituloModal;
+        texto.innerHTML = '';
+        texto.innerHTML = '<p>' + textoModal + '</p>';
+        button.onclick = func;
+
+        $("#myModal").modal();
+    }
+
+    function removeLoader(){
+        $( "#loading" ).fadeOut(500, function() {
+            document.getElementById('loading').hidden = true;
+        });  
+    }
+
+    function openLoader(){
+        document.getElementById('loading').style["display"] = "";
+        pollVisibility();
+    }
+
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+    async function pollVisibility() {
+        try {
+            if (document.getElementById("loading").style.display == '') {
+                return null;
+            } else {
+                return await delay(100).then(pollVisibility);
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    
+    var hora = 0;
+    var minuto = 0;
+    var segundo = 0;
+    function PreencheTime() {
+        document.getElementById('time').innerHTML = '00:00:00';
+
+        interval = setInterval(function () {
+            segundo++;
+            if (segundo == 60) {
+                segundo = 0;
+                minuto++;
+            }
+            if (minuto == 60) {
+                minuto = 0;
+                hora++;
+            }
+            document.getElementById('time').innerHTML = MontaTempo();
+        }, 1000);
+    }
+
+    function MontaTempo(){
+        return (hora >= 10 ? hora : '0' + hora) + ":" +
+                (minuto >= 10 ? minuto : '0' + minuto) + ":" +
+                (segundo >= 10 ? segundo : '0' + segundo);
+    }
+
+    function PreenchInfos(){
+        document.getElementById('lugarInfo').innerHTML = totalCertas + '/' + totalQuestoes;
+    }
+
+</script>
