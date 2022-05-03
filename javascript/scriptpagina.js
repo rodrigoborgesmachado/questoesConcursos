@@ -117,7 +117,15 @@ function ValidaResposta(Codigoresposta){
 
 function MontaQuestaoApresentacao(questao){
     var html = '';
-    html += `<div class="row">`;
+    html+= `<div class="row">`;
+    html+= `    <div class="col-sm-10">`;
+    html+= `        Matéria: <b>` + questao.questao.Materia + `</b>`;
+    html+= `    </div>`;
+    html+= `    <div class="col-sm-2">`;
+    html+= `        <button class="buttonInicio" onclick="BuscaInfoProva(` + questao.Codigoprova + `);">Dados Prova</button>`;
+    html+= `    </div>`;
+    html+= `</div>`;
+    html+= `<div class="row">`;
     html+= `    <div class="col-sm-12">`;
     html+= `        ` + questao.questao.Campoquestao;
     html+= `    </div>`;
@@ -182,6 +190,44 @@ function BuscarQuestao(){
                 `;
         } else {
             alert('Erro ao buscar questões');
+        }
+        removeLoader();
+    }
+    );
+
+    xhr.send();
+}
+
+function BuscaInfoProva(codigoProva){
+    var xhr = new XMLHttpRequest();
+    openLoader();
+    xhr.open("GET", "http://questoesconcurso.sunsalesystem.com.br/PHP/BuscarDadosProva.php?codigoProva=" + codigoProva);
+
+    xhr.addEventListener("load", function() {
+        if (xhr.status == 200) {
+            var obj = JSON.parse(xhr.responseText);
+            var html = '';
+            html+= `<div class="row">`;
+            html+= `    <div class="col-sm-10">`;
+            html+= `        Prova: <b>` + obj.lista[0].Nomeprova + `</b>`;
+            html+= `    </div>`;
+            html+= `    <div class="col-sm-10">`;
+            html+= `        Local: <b>` + obj.lista[0].Local + `</b>`;
+            html+= `    </div>`;
+            html+= `    <div class="col-sm-10">`;
+            html+= `        Tipo Prova: <b>` + obj.lista[0].Tipoprova + `</b>`;
+            html+= `    </div>`;
+            html+= `    <div class="col-sm-10">`;
+            html+= `        Banca: <b>` + obj.lista[0].Banca + `</b>`;
+            html+= `    </div>`;
+            html+= `    <div class="col-sm-10">`;
+            html+= `        Ano: <b>` + obj.lista[0].Dataaplicacao + `</b>`;
+            html+= `    </div>`;
+            html+= `</div>`;
+
+            informa(html);
+        } else {
+            alert('Erro ao buscar prova');
         }
         removeLoader();
     }
