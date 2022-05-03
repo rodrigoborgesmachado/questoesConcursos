@@ -65,8 +65,9 @@
                             <div class="row">
                                 <div class="col-sm-12 form-group" id="game">
                                     <h4 style="text-align: center;">
-                                        <button class="buttonStartGame" onclick="Iniciar()">Iniciar</button>
+                                        <button class="buttonStartGame" onclick="IniciarAleatorio()">Iniciar com Questões Aleatórias</button>
                                         <br>
+                                        <button class="buttonStartGame" onclick="IniciarQuestoesEnem()">Iniciar com Questões Aleatórias do Enem</button>
                                     </h4>
                                 </div>
                             </div>
@@ -129,14 +130,24 @@
     removeLoader();
     topo();
 
-    function Iniciar(){
+    function IniciarAleatorio(){
         openLoader();
 
         document.getElementById('espacoInicio').hidden = true;
         document.getElementById('espacoExercicio').hidden = false;
         
         PreencheTime();
-        PreencheQuestao();
+        PreencheQuestao("http://questoesconcurso.sunsalesystem.com.br/PHP/BuscarQuestaoAleatoria.php");
+    }
+
+    function IniciarQuestoesEnem(){
+        openLoader();
+
+        document.getElementById('espacoInicio').hidden = true;
+        document.getElementById('espacoExercicio').hidden = false;
+        
+        PreencheTime();
+        PreencheQuestao("http://questoesconcurso.sunsalesystem.com.br/PHP/BuscarQuestaoAleatoriaEnem.php");
     }
 
     function alerta(mensagem, func) {

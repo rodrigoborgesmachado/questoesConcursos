@@ -147,10 +147,10 @@ function MontaQuestaoApresentacao(questao){
     return html;
 }
 
-function BuscarQuestao(){
+function BuscarQuestao(url){
     var xhr = new XMLHttpRequest();
     openLoader();
-    xhr.open("GET", "http://questoesconcurso.sunsalesystem.com.br/PHP/BuscarQuestaoAleatoria.php");
+    xhr.open("GET", url);
 
     xhr.addEventListener("load", function() {
         if (xhr.status == 200) {
@@ -236,8 +236,8 @@ function BuscaInfoProva(codigoProva){
     xhr.send();
 }
 
-function PreencheQuestao(){
-    BuscarQuestao();
+function PreencheQuestao(url){
+    BuscarQuestao(url);
 }
 
 function Finalizar(){
