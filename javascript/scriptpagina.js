@@ -98,12 +98,12 @@ function ValidaResposta(Codigoresposta){
             
             var retorno = JSON.parse(xhr.responseText);
             if(!retorno.RespostaCorreta){
-                informa('Resposta incorreta', BuscarQuestao);
+                informa('Resposta incorreta', PreencheQuestao);
             }
             else{
                 totalCertas++;
                 PreenchInfos();
-                informa('Resposta correta', BuscarQuestao);
+                informa('Resposta correta', PreencheQuestao);
             }
         } else {
             alert('Não foi possível inserir e validar a resposta');
@@ -185,7 +185,7 @@ function BuscarQuestao(url){
                     <div class="col-sm-1">
                     </div>
                     <div class="col-sm-2">
-                        <button class="buttonInicio" onclick="BuscarQuestao();">Próxima</button>
+                        <button class="buttonInicio" onclick="PreencheQuestao();">Próxima</button>
                     </div>
                 `;
         } else {
@@ -236,8 +236,13 @@ function BuscaInfoProva(codigoProva){
     xhr.send();
 }
 
+var urlBase = '';
 function PreencheQuestao(url){
-    BuscarQuestao(url);
+
+    if(url != undefined)
+        urlBase = url;
+
+    BuscarQuestao(urlBase);
 }
 
 function Finalizar(){
