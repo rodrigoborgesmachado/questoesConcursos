@@ -2,6 +2,8 @@ function topo(){
 	parent.scroll(0,0);
 }
 
+var listaQuestoes = [];
+var tentativas = 0;
 function MontaOrdemLetras(i){
     var retorno = '';
     switch(i){
@@ -98,12 +100,12 @@ function ValidaResposta(Codigoresposta){
             
             var retorno = JSON.parse(xhr.responseText);
             if(!retorno.RespostaCorreta){
-                informa('Resposta incorreta', PreencheQuestao);
+                informa('Resposta incorreta', PreencheQuestao(urlBase));
             }
             else{
                 totalCertas++;
                 PreenchInfos();
-                informa('Resposta correta', PreencheQuestao);
+                informa('Resposta correta', PreencheQuestao(urlBase));
             }
         } else {
             alert('Não foi possível inserir e validar a resposta');
@@ -154,10 +156,23 @@ function BuscarQuestao(url){
 
     xhr.addEventListener("load", function() {
         if (xhr.status == 200) {
+            var obj = JSON.parse(xhr.responseText);
+            
+            if(listaQuestoes.includes(obj.lista[0].questao.Codigo) && tentativas < 5)
+            {
+                tentativas++;
+                PreencheQuestao();
+                return;
+            }
+            else if (tentativas >= 3){
+                Finalizar();
+            }
+            tentativas = 0;
+            listaQuestoes.push(obj.lista[0].questao.Codigo);
+
             totalQuestoes++;
             PreenchInfos();
 
-            var obj = JSON.parse(xhr.responseText);
             document.getElementById('lugarParaConta').innerHTML = MontaQuestaoApresentacao(obj.lista[0]);
 
             if(obj.lista[0].questao.anexosQuestao != null){
@@ -228,6 +243,32 @@ function BuscaInfoProva(codigoProva){
             informa(html);
         } else {
             alert('Erro ao buscar prova');
+        }
+        removeLoader();
+    }
+    );
+
+    xhr.send();
+}
+
+function BuscaMaterias(){
+    var xhr = new XMLHttpRequest();
+    openLoader();
+    xhr.open("GET", "http://questoesconcurso.sunsalesystem.com.br/PHP/BuscarMaterias.php");
+
+    xhr.addEventListener("load", function() {
+        if (xhr.status == 200) {
+            var obj = JSON.parse(xhr.responseText);
+
+            var html = '<select class="col-sm-12 form-select form-select-lg mb-3" id="materiaSelect">';
+            for(var i = 0; i < obj.Materia.length; i++){
+                html+=`<option value="`+ obj.Materia[i] + `"` + (i == 0 ? " selected " : "") + `>` + obj.Materia[i] + `</option>`;
+            }
+            html+='</select>';
+
+            document.getElementById("listaMaterias").innerHTML = html;
+        } else {
+            alert('Erro ao buscar matérias');
         }
         removeLoader();
     }
