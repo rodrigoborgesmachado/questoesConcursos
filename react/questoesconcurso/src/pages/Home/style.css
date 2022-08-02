@@ -1,0 +1,12 @@
+.container h3{
+    padding: 20px;
+    justify-content: space-around;
+}
+
+.container a{
+    text-decoration: none;
+    background-color: #116feb;
+    color: #FFF;
+    padding: 10px;
+    margin-top: 20px;
+}
