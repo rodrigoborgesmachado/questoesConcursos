@@ -30,9 +30,16 @@ function Questoes(){
         return listaResolvida?.some((item) => item.Codigo === codigo).length > 0;
     }
 
+    function BuscaUrl(){
+        if(filtro === 'enem'){
+            return `/BuscarQuestaoAleatoriaEnem.php/`;
+        }
+        return `/BuscarQuestaoAleatoria.php/`;
+    }
+
     async function BuscarProximaQuestao(){
         setLoadding(true);
-        await api.get(`/BuscarQuestaoAleatoria.php/`)
+        await api.get(BuscaUrl())
         .then((response) => {
             if(response.data.Sucesso){
                 setQuestao(response.data.lista[0]);

@@ -11,8 +11,8 @@ function Home(){
             </h3>
             <br/>
             <div className='botoes'>
-                <Link className='botao' to={`/questoes/aleatoria`}>Iniciar</Link>
-                {/*<Link className='botao' to={`/questoes/enem`}>Iniciar com Questões do Enem</Link>*/}
+                <Link className='botao' to={`/questoes/aleatoria`}>Iniciar com Questões Aleatórias</Link>
+                <Link className='botao' to={`/questoes/enem`}>Iniciar com Questões do Enem</Link>
                 {/*<Link className='botao' to={`/pormateria`}>Selecionar matéria</Link>*/}
             </div>
         </div>
