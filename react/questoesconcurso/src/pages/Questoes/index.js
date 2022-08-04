@@ -17,10 +17,10 @@ function Questoes(){
     useEffect(() => {
         async function loadQuestao(){
             await BuscarProximaQuestao();
+            setLoadding(false);
         }
 
         loadQuestao();
-        setLoadding(false);
     }, [])
 
     function QuestaoJaResolvida(codigo){
@@ -33,6 +33,12 @@ function Questoes(){
     function BuscaUrl(){
         if(filtro === 'enem'){
             return `/BuscarQuestaoAleatoriaEnem.php/`;
+        }
+        else if(filtro.includes('materias')){
+            return `/BuscarQuestaoMateria.php?Materia=` + filtro.replace('materias&', '');
+        }
+        else if(filtro.includes('bancas')){
+            return `/BuscarQuestaoBanca.php?Bancas=` + filtro.replace('bancas&', '');
         }
         return `/BuscarQuestaoAleatoria.php/`;
     }
