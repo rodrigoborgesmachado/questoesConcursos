@@ -13,6 +13,8 @@ function Questoes(){
     const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(sessionStorage.getItem(configData.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
     const[questoesTotal, setQuestoesTotal] = useState(parseInt(sessionStorage.getItem(configData.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
     const[loadding, setLoadding] = useState(true);
+    const[tentativas, setTentativas] = useState(0);
+    const[maxTentativas] = useState(5);
 
     useEffect(() => {
         async function loadQuestao(){
@@ -40,6 +42,18 @@ function Questoes(){
         else if(filtro.includes('bancas')){
             return `/BuscarQuestaoBanca.php?Bancas=` + filtro.replace('bancas&', '');
         }
+        else if(filtro.includes('provas')){
+            let temp =  `/BuscarQuestaoProva.php?codigoProva=` + filtro.replace('provas&', '');
+
+            if(Object.keys(questao).length > 0){
+                temp += "&ultimaQuestao=" + questao?.questao?.Numeroquestao;
+            }
+            else{
+                temp += "&ultimaQuestao=0";
+            }
+
+            return temp;
+        }
         return `/BuscarQuestaoAleatoria.php/`;
     }
 
@@ -56,6 +70,19 @@ function Questoes(){
                 }
             }
             else{
+                if(response.data.Mensagem === 'Não há mais itens!'){
+                    toast.success('Você respondeu todas as questões dessa prova!');
+                    navigate('/', {replace: true});
+                    return;
+                }
+
+                if(tentativas > maxTentativas){
+                    toast.warn('Não há mais questões com esses filtros!');
+                    navigate('/', {replace: true});
+                    return;
+                }
+
+                setTentativas(tentativas+1);
                 BuscarProximaQuestao();
                 return;
             }
