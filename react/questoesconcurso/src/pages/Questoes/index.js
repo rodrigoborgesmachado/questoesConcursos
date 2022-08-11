@@ -5,6 +5,22 @@ import configData from "../../config.json";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
+import { BsChatLeftDotsFill } from "react-icons/bs";
+import Modal from 'react-modal';
+
+const customStyles = {
+    content: {
+      top: '20%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      border: 0,
+      background: '#424242',
+      marginRight: '-50%',
+      'border-radius': '5px',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
 
 function Questoes(){
     const navigate = useNavigate();
@@ -15,6 +31,15 @@ function Questoes(){
     const[loadding, setLoadding] = useState(true);
     const[tentativas, setTentativas] = useState(0);
     const[maxTentativas] = useState(5);
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+    
+    function closeModal() {
+        setIsOpen(false);
+    }
 
     useEffect(() => {
         async function loadQuestao(){
@@ -131,11 +156,33 @@ function Questoes(){
             }
             BuscarProximaQuestao();
         }).catch(() => {
+            toast.warn('Erro ao validar resposta!');
             navigate('/', {replace: true});
             return;
         });
     }
 
+    async function solicitarRevisao(){
+        await api.get(`/SolicitaVerificacao.php`, {
+            params:{
+                "codigoQuestao": questao?.questao?.Codigo
+            }
+        })
+        .then((response) => {
+            closeModal();
+            if(response.data.Sucesso){
+                toast.success('Solicitação enviada!');
+            }
+            else{
+                toast.warn('Erro ao enviar solicitação!');
+            }
+            BuscarProximaQuestao();
+        }).catch(() => {
+            toast.warn('Erro ao solicitar!');
+            navigate('/', {replace: true});
+            return;
+        });
+    }
 
     if(loadding || !questao){
         return(
@@ -147,8 +194,28 @@ function Questoes(){
 
     return(
         <div className='container'>
-            <div className='total'>
-                <h2>Questões corretas: {qtQuestoesCertas}/{questoesTotal}</h2>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>Deseja Solicitar revisão da questão?</h3>
+                    </div>
+                    <div className='botoesModal'>
+                        <button onClick={solicitarRevisao}>Solicitar</button>
+                    </div>
+                </div>
+            </Modal>
+            <div className='opcoesQuestao'>
+                <div className='total'>
+                    <h2>Questões corretas: {qtQuestoesCertas}/{questoesTotal}</h2>
+                </div>
+                <div className='opcaoVerificacao'>
+                    <h2><BsChatLeftDotsFill onClick={openModal}/></h2>
+                </div>
             </div>
             <div className='Materia'>
                 <h2>Matéria: {questao?.questao?.Materia}</h2>

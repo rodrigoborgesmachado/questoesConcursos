@@ -8,13 +8,24 @@
     justify-content: center;
 }
 
-.total{
+.opcoesQuestao{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.total{
     width: 100%;
     justify-content: left;
     margin-left: 20px;
-    margin-bottom: 20px;
+}
+.opcaoVerificacao{
+    display: flex;
+    width: 100%;
+    justify-content: right;
+    margin-right: 20px;
 }
 
 .loaddingDiv img{
@@ -69,3 +80,56 @@
 .respostas h4{
     padding-left: 20px;
 }
+
+.contextModal{
+    display: flex;
+    flex-direction: column;    
+    background-color: #424242;
+    width: 100%;
+    color: #fff;
+    
+}
+
+.tituloModal{
+    display: flex;
+    justify-content: left;
+    border: 5px;
+    padding: 5% 5%;
+}
+
+.bodymodal{
+    display: flex;
+    justify-content: left;
+    border: 5px;
+    padding: 5% 5%;
+}
+
+.botoesModal{
+    display: flex;
+    justify-content: right;
+    border: 5px;
+    padding: 5% 5%;
+}
+
+.botoesModal button{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: beige;
+    color: #121212;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.botoesModal button:hover{
+    background-color: rgb(37, 26, 166);
+    color: #FFF;
+  }
