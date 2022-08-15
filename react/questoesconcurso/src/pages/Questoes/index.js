@@ -1,7 +1,7 @@
 import './style.css';
 import React from 'react';
 import api from '../../services/api.js';
-import configData from "../../config.json";
+import Config from "../../config.json";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
@@ -26,8 +26,8 @@ function Questoes(){
     const navigate = useNavigate();
     const{filtro} = useParams();
     const[questao, setQuestao] = useState({});
-    const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(sessionStorage.getItem(configData.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
-    const[questoesTotal, setQuestoesTotal] = useState(parseInt(sessionStorage.getItem(configData.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
+    const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(sessionStorage.getItem(Config.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
+    const[questoesTotal, setQuestoesTotal] = useState(parseInt(sessionStorage.getItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
     const[loadding, setLoadding] = useState(true);
     const[tentativas, setTentativas] = useState(0);
     const[maxTentativas] = useState(5);
@@ -51,7 +51,7 @@ function Questoes(){
     }, [])
 
     function QuestaoJaResolvida(codigo){
-        let lista = sessionStorage.getItem(configData.QUESTOES_FEITAS);
+        let lista = sessionStorage.getItem(Config.QUESTOES_FEITAS);
         let listaResolvida = JSON.parse(lista);
 
         return listaResolvida?.some((item) => item.Codigo === codigo).length > 0;
@@ -112,7 +112,7 @@ function Questoes(){
                 return;
             }
             setQuestoesTotal(questoesTotal+1);
-            sessionStorage.setItem(configData.QUANTIDADE_QUESTOES_RESPONDIDAS, questoesTotal);
+            sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, questoesTotal);
             setLoadding(false);
         }).catch(() => {
             toast.error('Erro ao buscar questão');
@@ -139,16 +139,20 @@ function Questoes(){
                 "codigoResposta": codigo
             }
         })
-        .then((response) => {
+        .then(async (response) => {
+            if(sessionStorage.getItem(Config.LOGADO) === '1'){
+                await insereResposta(codigo);
+            }
+
             if(response.data.RespostaCorreta){
                 toast.success('Resposta correta!');
                 
-                let lista = sessionStorage.getItem(configData.QUESTOES_FEITAS);
+                let lista = sessionStorage.getItem(Config.QUESTOES_FEITAS);
                 let listaResolvida = JSON.parse(lista) ?? [];
                 listaResolvida.push(codigo);
 
-                sessionStorage.setItem(configData.QUESTOES_FEITAS, JSON.stringify(listaResolvida));
-                sessionStorage.setItem(configData.QUANTIDADE_QUESTOES_ACERTADAS, qtQuestoesCertas+1);
+                sessionStorage.setItem(Config.QUESTOES_FEITAS, JSON.stringify(listaResolvida));
+                sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, qtQuestoesCertas+1);
                 setQtQuestoesCertas(qtQuestoesCertas+1);
             }
             else{
@@ -160,6 +164,26 @@ function Questoes(){
             navigate('/', {replace: true});
             return;
         });
+    }
+
+    async function insereResposta(codigoResposta){
+        await api.post(`/InsereResposta.php`, 
+        {
+            Codigousuario: sessionStorage.getItem(Config.CodigoUsuario),
+            Codigoresposta: codigoResposta
+        }
+        )
+        .then((response) => {
+            if(response.data.Sucesso){
+                console.log('Resposta salva para o usuário');
+            }
+            else{
+                console.log('Erro ao salvar resposta!');
+            }
+        })
+        .catch(() =>{
+            console.log('Erro ao salvar resposta');
+        })
     }
 
     async function solicitarRevisao(){

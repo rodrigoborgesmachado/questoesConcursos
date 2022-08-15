@@ -1,8 +1,10 @@
 header{
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    padding-left: 20px;
-    justify-content: left;
+    padding-left: 40px;
+    padding-right: 40px;
     width: 100%;
     height: 60px;
     background-color: #121212;

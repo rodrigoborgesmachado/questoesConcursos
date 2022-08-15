@@ -1,6 +1,8 @@
 {
     "QUESTOES_FEITAS":"questoes",
     "QUANTIDADE_QUESTOES_RESPONDIDAS":"quantidade_questoes_respondidas",
-    "QUANTIDADE_QUESTOES_ACERTADAS":"quantidade_questoes_acertadas"
-
+    "QUANTIDADE_QUESTOES_ACERTADAS":"quantidade_questoes_acertadas",
+    "LOGADO":"logado",
+    "USUARIO":"usuario",
+    "CodigoUsuario":"codigousuario"
 }
