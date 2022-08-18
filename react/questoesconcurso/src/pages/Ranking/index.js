@@ -1,12 +1,14 @@
 import './style.css';
 import api from '../../services/api.js';
 import { useState, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
+import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Config from './../../config.json';
 
 function Ranking(){
     const[loadding, setLoadding] = useState(true);
     const[lista, setLista] = useState({});
+    const[usuarioLogado] = useState(parseInt(sessionStorage.getItem(Config.CodigoUsuario) ? sessionStorage.getItem(Config.CodigoUsuario) : -1));
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,23 +42,23 @@ function Ranking(){
             <h2>
                 Ranking
             </h2>
-            <Table striped bordered hover variant="dark">
+            <Table>
                 <thead>
                     <tr>
                         <th>
-                            <h2>
+                            <h3>
                             Posição
-                            </h2>
+                            </h3>
                         </th>
                         <th>
-                            <h2>
+                            <h3>
                             Nome
-                            </h2>
+                            </h3>
                         </th>
                         <th>
-                            <h2>
+                            <h3>
                             Nº questões corretas
-                            </h2>
+                            </h3>
                         </th>
                     </tr>
                 </thead>
@@ -64,21 +66,21 @@ function Ranking(){
                     {
                         lista?.lista?.map((item, index) => {
                             return(
-                                <tr key={item.Nome}>
+                                <tr key={item.Nome} className={item.Codigo === usuarioLogado  ? 'posicao' : ''}>
                                     <td>
-                                        <h3>
+                                        <h4>
                                             {index + 1}
-                                        </h3>
+                                        </h4>
                                     </td>
                                     <td key={item.Nome}>
-                                        <h3>
+                                        <h4>
                                         {item.Nome}
-                                        </h3>
+                                        </h4>
                                     </td>
                                     <td>
-                                        <h3>
+                                        <h4>
                                         {item.Quantidade}
-                                        </h3>
+                                        </h4>
                                     </td>
                                 </tr>
                             )

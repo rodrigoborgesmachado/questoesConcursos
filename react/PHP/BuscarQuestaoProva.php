@@ -1,4 +1,10 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+
+header('Access-Control-Allow-Methods: GET, POST');
+
+header("Access-Control-Allow-Headers: X-Requested-With");
+
 $data = array('codigoProva'=>$_GET["codigoProva"]);
 $data2 = array('ultimaQuestao'=>$_GET["ultimaQuestao"]);
 $url = "http://teste.sunsalesystem.com.br/api/concursando/questoes/getQuestoesPorProva?" . http_build_query($data) . "&" . http_build_query($data2);

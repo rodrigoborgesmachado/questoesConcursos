@@ -77,6 +77,7 @@ function Login(){
                     Senha
                 </h2>
                 <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
+                <a target='_blank' href='http://concursando.sunsalesystem.com.br/EsqueciSenha.html'>Esqueci minha senha</a>
                 <button onClick={logar}>Logar</button>
                 <button onClick={criarUsuario}>Criar usuário</button>
             </div>

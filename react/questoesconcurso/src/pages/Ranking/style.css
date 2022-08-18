@@ -7,4 +7,10 @@ table, tr, td{
     align-items: center;
     text-align: center;
     background-color: rgba(93, 89, 89, 0.177);
+    padding: 4px;
+}
+
+.posicao{
+    font-weight: bold;
+    background-color: #191970;
 }

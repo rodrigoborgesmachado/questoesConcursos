@@ -1,4 +1,10 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+
+header('Access-Control-Allow-Methods: GET, POST');
+
+header("Access-Control-Allow-Headers: X-Requested-With");
+
 $data = array('materia'=>$_GET["Materia"]);
 $url = "http://teste.sunsalesystem.com.br/api/concursando/questoes/getQuestoesPorMateria?" . http_build_query($data);
 $curl = curl_init($url);

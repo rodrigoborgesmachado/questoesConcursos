@@ -31,3 +31,8 @@
     text-decoration:none;
     cursor: pointer;
 }
+
+.login a{
+    border-radius: 4px;
+    font-size: x-small;    
+}
