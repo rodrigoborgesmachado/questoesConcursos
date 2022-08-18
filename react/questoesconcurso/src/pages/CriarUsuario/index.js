@@ -81,7 +81,7 @@ function CriarUsuario(){
                 <h2>
                     Email
                 </h2>
-                <input type='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                <input type='email' value={email} name='email' id='email' onChange={(e) => setEmail(e.target.value)}></input>
                 <h2>
                     Senha
                 </h2>

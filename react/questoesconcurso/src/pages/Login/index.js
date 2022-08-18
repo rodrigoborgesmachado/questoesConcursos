@@ -36,6 +36,8 @@ function Login(){
                     sessionStorage.setItem(Config.LOGADO, 1);
                     sessionStorage.setItem(Config.USUARIO, email);
                     sessionStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
+                    sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
+                    sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);
                     toast.success('Bem vindo!');
 
                     navigate('/', {replace: true});
@@ -72,7 +74,7 @@ function Login(){
                 <h2>
                     Login
                 </h2>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
+                <input type="email" name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
                 <h2>
                     Senha
                 </h2>
