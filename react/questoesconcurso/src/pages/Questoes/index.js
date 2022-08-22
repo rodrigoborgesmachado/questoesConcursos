@@ -79,6 +79,9 @@ function Questoes(){
 
             return temp;
         }
+        else if(filtro.includes('codigoquestao')){
+            return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestao:', '');
+        }
         return `/BuscarQuestaoAleatoria.php/`;
     }
 
@@ -217,7 +220,7 @@ function Questoes(){
     }
 
     return(
-        <div className='container'>
+        <div className="containerpage">
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}

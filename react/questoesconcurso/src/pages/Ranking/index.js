@@ -38,7 +38,7 @@ function Ranking(){
     }
 
     return(
-        <div className='container'>
+        <div className="containerpage">
             <h2>
                 Ranking
             </h2>

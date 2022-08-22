@@ -72,7 +72,7 @@ function CriarUsuario(){
     }
 
     return(
-        <div className='container'>
+        <div className="containerpage">
             <div className='criarUsuario'>
                 <h2>
                     Nome

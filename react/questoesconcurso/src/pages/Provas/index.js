@@ -67,7 +67,7 @@ function Provas(){
     }
 
     return (
-        <div className="container">
+        <div className="containerpage">
             <h1>Provas:</h1>
             <div className="opcoes">
                 <Select closeMenuOnSelect={false} components={animatedComponents} options={provas} isMulti onChange={handleChange} />

@@ -69,7 +69,7 @@ function Login(){
     }
 
     return (
-        <div className='container'>
+        <div className="containerpage">
             <div className='login'>
                 <h2>
                     Login

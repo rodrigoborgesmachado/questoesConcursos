@@ -69,7 +69,7 @@ function Bancas(){
     }
 
     return (
-        <div className="container">
+        <div className="containerpage">
             <h1>Bancas:</h1>
             <div className="opcoes">
                 <Select closeMenuOnSelect={false} components={animatedComponents} options={bancas} isMulti onChange={handleChange} />
