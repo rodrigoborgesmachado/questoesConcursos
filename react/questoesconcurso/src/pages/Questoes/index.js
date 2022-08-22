@@ -77,6 +77,13 @@ function Questoes(){
                 temp += "&ultimaQuestao=0";
             }
 
+            if(sessionStorage.getItem(Config.LOGADO) === '1'){
+                temp+= "&codigoUsuario=" + sessionStorage.getItem(Config.CodigoUsuario);
+            }
+            else{
+                temp+="&codigoUsuario=0";
+            }
+
             return temp;
         }
         else if(filtro.includes('codigoquestao')){
@@ -161,7 +168,13 @@ function Questoes(){
             else{
                 toast.warn('Resposta incorreta!');
             }
-            BuscarProximaQuestao();
+
+            if(filtro.includes('codigoquestao')){
+                navigate('/historico', true);
+            }
+            else{
+                BuscarProximaQuestao();
+            }
         }).catch(() => {
             toast.warn('Erro ao validar resposta!');
             navigate('/', {replace: true});
