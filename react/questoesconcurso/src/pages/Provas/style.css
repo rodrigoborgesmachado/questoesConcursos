@@ -6,5 +6,6 @@
 }
 
 .continuar{
-    margin-top: 5%;
+    position: absolute;
+    bottom: 22%;
 }
