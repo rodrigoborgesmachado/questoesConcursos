@@ -4,6 +4,27 @@ import Config from './../../config.json';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import {toast} from 'react-toastify';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '100%', mr: 1 }}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="text.principal">
+            <h4>
+          {`${Math.round(
+            props.value,
+          )}%`}
+            </h4></Typography>
+        </Box>
+      </Box>
+    );
+  }
 
 function HistoricoUsuario(){
     const navigate = useNavigate();
@@ -14,12 +35,14 @@ function HistoricoUsuario(){
 
     const[loadding, setLoadding] = useState(true);
     const[lista, setLita] = useState([]);
+    const[qtTotal, setQtTotal] = useState(0);
 
     useEffect(() => {
         async function BuscarRespostas(){
             await api.get(`BuscarRespostasUsuario.php?codigoUsuario=${sessionStorage.getItem(Config.CodigoUsuario)}`)
             .then(response => {
                 setLita(response.data.lista);
+                setQtTotal(parseInt(response.data.QuantidadeQuestoes));
             })
             .catch(exception => {
                 toast.warn(exception);
@@ -57,11 +80,19 @@ function HistoricoUsuario(){
                 Total de questões <b>certas</b> respondidas: {lista?.filter(item => item.RespostaCorreta)?.length}
                 <br/>
                 <br/>
-
-            <hr/>
+                Taxa de acertos: 
+                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.RespostaCorreta)?.length/lista?.length) * 100)} />
+                <br/>
+                Progresso de questões resolvidas: {lista?.filter(item => item.RespostaCorreta)?.length} de {qtTotal} 
+                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.RespostaCorreta)?.length/qtTotal) * 100)} />
+                <br/>
+                <br/>
             </div>
             <div className='itens'>
-            {
+                <h3>
+                    Histórico de questões respondidas:
+                </h3>
+            {   
                 lista?.map((item, index) => {
                     return(
                         <div key={index} className='descricao'>

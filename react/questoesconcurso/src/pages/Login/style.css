@@ -7,7 +7,7 @@
 }
 
 .login h2{
-    padding: 10px;
+    padding: 5px;
     justify-content: left;
     justify-self: left;
     align-self: flex-start;
@@ -24,7 +24,7 @@
     margin-top: 10px;
     padding: 10px;
     width: 40%;
-    font-size: 25px;
+    font-size: 20px;
     background-color: #116feb;
     color: #FFF;
     border-radius: 10px;
