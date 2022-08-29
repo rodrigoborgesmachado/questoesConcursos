@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Config from './../../config.json';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ResponsiveAppBar from '../Navbar';
 
 function Header(){
     const navigate = useNavigate();
@@ -14,6 +15,10 @@ function Header(){
         toast.success('Volte sempre!');
         navigate('/', {replace: true});
     }
+
+    return (
+        <ResponsiveAppBar/>
+    )
 
     return(
         <header>
