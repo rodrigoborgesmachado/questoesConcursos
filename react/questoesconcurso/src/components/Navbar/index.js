@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const pages = ['Burcar por Provas', 'Burcar por Matérias'];
+const pages = ['Ranking dos usuários'];
 const settings = ['Histórico', 'Sair'];
 
 const ResponsiveAppBar = () => {
@@ -45,10 +45,7 @@ const ResponsiveAppBar = () => {
   function SelecionaOpcao(page){
     handleCloseNavMenu();
     if(page === pages[0]){
-        navigate('/provas', {replace: true});
-    }
-    else if(page === pages[1]){
-        navigate('/bancas', {replace: true});
+        navigate('/ranking', {replace: true});
     }
   }
 
@@ -90,7 +87,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <a href='/'>Questões de Concurso</a>
+            <a href='/'>ConQuest</a>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -148,7 +145,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <a href='/'>Questões de Concurso</a>
+            <a href='/'>ConQuest</a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
