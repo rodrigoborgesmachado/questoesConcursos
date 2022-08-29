@@ -7,6 +7,7 @@
 body{
   font-family: sans-serif;
   background-color: #292929;
+  background-image: url("../src/assets/image/papelParede.jpg");
   color: #FFF;
 }
 
@@ -30,6 +31,7 @@ body{
   margin-bottom: 18px;
   padding: 20px 8px;
   background-color: #121212;
+  opacity : 0.9;
 }
 
 .containerpage h3{

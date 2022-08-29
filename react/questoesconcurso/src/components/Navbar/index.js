@@ -73,7 +73,7 @@ const ResponsiveAppBar = () => {
   return (
     <AppBar position="static" className='varBarResponsive'>
       <Container maxWidth="xl" className='conNav'>
-        <Toolbar disableGutters>
+        <Toolbar disableGutters className='toolNav'>
           <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -90,7 +90,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            Questões de Concurso
+            <a href='/'>Questões de Concurso</a>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -136,7 +136,7 @@ const ResponsiveAppBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -148,7 +148,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            Questões de Concurso
+            <a href='/'>Questões de Concurso</a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
