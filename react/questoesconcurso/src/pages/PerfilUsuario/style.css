@@ -1,0 +1,17 @@
+.dados{
+    width: 100%;
+    padding: 25px;
+}
+
+.dados h2{
+    display: flex;
+    justify-content: center;
+}
+
+.dados h4{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    width: 100%;
+    padding: 50px;
+}

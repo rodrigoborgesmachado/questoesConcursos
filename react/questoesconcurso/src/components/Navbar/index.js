@@ -19,7 +19,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const pages = ['Ranking dos usuários'];
-const settings = ['Histórico', 'Sair'];
+const settings = ['Perfil', 'Histórico', 'Sair'];
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
@@ -51,10 +51,14 @@ const ResponsiveAppBar = () => {
 
   function SelecionaOpcaoUsuario(setting){
     handleCloseUserMenu();
+    
     if(setting === settings[0]){
-        navigate('/historico', {replace: true});
+      navigate('/perfil', {replace: true});
     }
     else if(setting === settings[1]){
+        navigate('/historico', {replace: true});
+    }
+    else if(setting === settings[2]){
         sair();
     }
   }

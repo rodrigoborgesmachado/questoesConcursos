@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import CriarUsuario from './pages/CriarUsuario';
 import Ranking from './pages/Ranking';
 import HistoricoUsuario from './pages/HistoricoUsuario';
+import PerfilUsuario from './pages/PerfilUsuario';
 
 function RoutesApp(){
     return(
@@ -24,6 +25,7 @@ function RoutesApp(){
                 <Route path='/criarUsuario' element={<CriarUsuario/>}/>
                 <Route path='/ranking' element={<Ranking/>}/>
                 <Route path='/historico' element={<HistoricoUsuario/>}/>
+                <Route path='/perfil' element={<PerfilUsuario/>}/>
                 <Route path='/questoes/:filtro' element={<Questoes/>}/>
                 <Route path='*' element={<Erro/>}/>
             </Routes>
