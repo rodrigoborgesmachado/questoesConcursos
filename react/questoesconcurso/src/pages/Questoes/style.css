@@ -71,9 +71,7 @@
 .respostas{
     display: flex;
     flex-direction: row;
-    width: 60%;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
     padding: 20px;
 }
 
