@@ -1,0 +1,25 @@
+.questoes{
+    width: 90%;
+}
+
+.questoes button{
+    text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: beige;
+  color: #121212;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.questoes button:hover{
+    background-color: rgb(37, 26, 166);
+    color: #FFF;
+}

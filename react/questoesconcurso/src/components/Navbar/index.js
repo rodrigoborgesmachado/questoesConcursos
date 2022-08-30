@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const pages = ['Ranking dos usuários'];
+const pages = ['Ranking dos usuários', 'Provas'];
 const settings = ['Perfil', 'Histórico', 'Sair'];
 
 const ResponsiveAppBar = () => {
@@ -46,6 +46,9 @@ const ResponsiveAppBar = () => {
     handleCloseNavMenu();
     if(page === pages[0]){
         navigate('/ranking', {replace: true});
+    }
+    else if(page === pages[1]){
+      navigate('/listagemprovas', {replace: true});
     }
   }
 

@@ -86,8 +86,11 @@ function Questoes(){
 
             return temp;
         }
-        else if(filtro.includes('codigoquestao')){
-            return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestao:', '');
+        else if(filtro.includes('codigoquestaohistorico')){
+            return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestaohistorico:', '');
+        }
+        else if(filtro.includes('codigoquestaolistagem')){
+            return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestaolistagem:', '');
         }
         return `/BuscarQuestaoAleatoria.php/`;
     }
@@ -169,8 +172,11 @@ function Questoes(){
                 toast.warn('Resposta incorreta!');
             }
 
-            if(filtro.includes('codigoquestao')){
+            if(filtro.includes('codigoquestaohistorico')){
                 navigate('/historico', true);
+            }
+            else if(filtro.includes('codigoquestaolistagem')){
+                navigate('/listagemquestoes/' + questao?.questao?.Codigoprova, true);
             }
             else{
                 BuscarProximaQuestao();

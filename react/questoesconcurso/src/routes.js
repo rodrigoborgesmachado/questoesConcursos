@@ -11,6 +11,8 @@ import CriarUsuario from './pages/CriarUsuario';
 import Ranking from './pages/Ranking';
 import HistoricoUsuario from './pages/HistoricoUsuario';
 import PerfilUsuario from './pages/PerfilUsuario';
+import ListagemProvas from './pages/ListagemProvas';
+import ListagemQuestoes from './pages/ListagemQuestoes';
 
 function RoutesApp(){
     return(
@@ -21,6 +23,8 @@ function RoutesApp(){
                 <Route path='/materias' element={<Materias/>}/>
                 <Route path='/bancas' element={<Bancas/>}/>
                 <Route path='/provas' element={<Provas/>}/>
+                <Route path='/listagemprovas' element={<ListagemProvas/>}/>
+                <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/criarUsuario' element={<CriarUsuario/>}/>
                 <Route path='/ranking' element={<Ranking/>}/>

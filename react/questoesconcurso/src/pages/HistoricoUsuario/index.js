@@ -54,7 +54,7 @@ function HistoricoUsuario(){
     }, [])
 
     function abreQuestao(codigoQuestao){
-        navigate('/questoes/codigoquestao:' + codigoQuestao, {replace: true});
+        navigate('/questoes/codigoquestaohistorico:' + codigoQuestao, {replace: true});
     }
 
     if(loadding){
