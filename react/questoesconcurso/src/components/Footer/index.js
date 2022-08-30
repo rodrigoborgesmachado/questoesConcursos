@@ -3,7 +3,7 @@ import './style.css';
 function Header(){
     return(
         <footer>
-            <h1>SunSale System</h1>
+            <h1><a target='_blank' href='http://www.sunsalesystem.com.br/' >SunSale System</a></h1>
         </footer>
     )
 }
