@@ -49,7 +49,7 @@ function ListagemQuestoes(){
 
     return(
         <div className='containerpage'>
-            Questões
+            <h2>Questões</h2>
             <div className='questoes'>
             <Table>
                 <thead>

@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
 import { BsChatLeftDotsFill } from "react-icons/bs";
+import { BsQuestionLg } from "react-icons/bs";
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -32,13 +33,32 @@ function Questoes(){
     const[tentativas, setTentativas] = useState(0);
     const[maxTentativas] = useState(5);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [modalSolicitaRespostaIsOpen, setModalSolicitaRespostaIsOpen] = useState(false);
+    const [modalRespostaIsOpen, setModalRespostaIsOpen] = useState(false);
+    const [textoResposta, setTextoResposta] = useState('');
 
-    function openModal() {
+    function openModalSolicitarRevisao() {
         setIsOpen(true);
     }
     
-    function closeModal() {
+    function closeModalSolicitarRevisao() {
         setIsOpen(false);
+    }
+
+    function openModalSolicitarResposta() {
+        setModalSolicitaRespostaIsOpen(true);
+    }
+    
+    function closeModalSolicitarResposta() {
+        setModalSolicitaRespostaIsOpen(false);
+    }
+
+    function openModalResposta() {
+        setModalRespostaIsOpen(true);
+    }
+    
+    function closeModalResposta() {
+        setModalRespostaIsOpen(false);
     }
 
     useEffect(() => {
@@ -147,6 +167,7 @@ function Questoes(){
     }
 
     async function ValidaResposta(codigo){
+        setLoadding(true);
         await api.get(`/ValidaResposta.php/`, {
             params:{
                 "codigoResposta": codigo
@@ -171,6 +192,7 @@ function Questoes(){
             else{
                 toast.warn('Resposta incorreta!');
             }
+            setLoadding(false);
 
             if(filtro.includes('codigoquestaohistorico')){
                 navigate('/historico', true);
@@ -215,7 +237,7 @@ function Questoes(){
             }
         })
         .then((response) => {
-            closeModal();
+            closeModalSolicitarRevisao();
             if(response.data.Sucesso){
                 toast.success('Solicitação enviada!');
             }
@@ -230,6 +252,20 @@ function Questoes(){
         });
     }
 
+    async function buscaRespostaCorreta(){
+        await api.get(`BuscarRespostaCorreta.php?codigoProva=${questao?.questao?.Codigoprova}&codigoquestao=${questao?.questao?.Codigo}`)
+        .then((response) =>{
+            closeModalSolicitarResposta();
+            if(response.data.Sucesso){
+                setTextoResposta(response.data.TextoResposta);
+                openModalResposta();
+            }
+        })
+        .catch(() => {
+            toast.warn('Erro ao buscar resposta correta!');
+        })
+    }
+
     if(loadding || !questao){
         return(
             <div className='loaddingDiv'>
@@ -242,16 +278,43 @@ function Questoes(){
         <div className="containerpage">
             <Modal
               isOpen={modalIsOpen}
-              onRequestClose={closeModal}
+              onRequestClose={closeModalSolicitarRevisao}
               style={customStyles}
               contentLabel="Example Modal"
             >
                 <div className='contextModal'>
                     <div className='bodymodal'>
-                        <h3>Deseja Solicitar revisão da questão?</h3>
+                        <h3>Deseja solicitar revisão da questão?</h3>
                     </div>
                     <div className='botoesModal'>
                         <button onClick={solicitarRevisao}>Solicitar</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+              isOpen={modalSolicitaRespostaIsOpen}
+              onRequestClose={closeModalSolicitarResposta}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>Deseja visualizar resposta da questão?</h3>
+                    </div>
+                    <div className='botoesModal'>
+                        <button onClick={buscaRespostaCorreta}>Visualizar</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+              isOpen={modalRespostaIsOpen}
+              onRequestClose={closeModalResposta}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>{textoResposta}</h3>
                     </div>
                 </div>
             </Modal>
@@ -260,7 +323,8 @@ function Questoes(){
                     <h2>Questões corretas: {qtQuestoesCertas}/{questoesTotal}</h2>
                 </div>
                 <div className='opcaoVerificacao'>
-                    <h2><BsChatLeftDotsFill onClick={openModal}/></h2>
+                    <h2><BsChatLeftDotsFill onClick={openModalSolicitarRevisao}/></h2>
+                    <h2><BsQuestionLg onClick={openModalSolicitarResposta}/></h2>
                 </div>
             </div>
             <div className='Materia'>

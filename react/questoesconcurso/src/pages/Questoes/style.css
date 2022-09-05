@@ -28,6 +28,12 @@
     margin-right: 20px;
 }
 
+.opcaoVerificacao h2{
+    padding: 5px;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
 .loaddingDiv img{
     width: 10%;
     height: 5%;
