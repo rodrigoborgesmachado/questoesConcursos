@@ -13,8 +13,6 @@
   font-size: 15px;
   padding: 10px;
   border-radius: 15px;
-  background-color: beige;
-  color: #121212;
   cursor: pointer;
   transition: all 0.5s;
 }
@@ -22,4 +20,19 @@
 .questoes button:hover{
     background-color: rgb(37, 26, 166);
     color: #FFF;
+}
+
+.respondida{
+    background-color: green;
+    color: #FFF;
+}
+
+.errado{
+    background-color: red;
+    color: #FFF;
+}
+
+.responder{
+    background-color: beige;
+    color: #121212;
 }

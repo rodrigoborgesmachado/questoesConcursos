@@ -84,7 +84,18 @@ function ListagemQuestoes(){
                                         </h4>
                                     </td>
                                     <td>
-                                        <button onClick={() => abreQuestao(item.questao.Codigo)}>Visualizar</button>
+                                        {item?.respostaUsuario?.find(element => element.Correta === true) !== undefined ? 
+                                        <button className='respondida' onClick={() => abreQuestao(item.questao.Codigo)}>Respondida</button>
+                                        :
+                                        <>
+                                        {
+                                            item?.respostaUsuario?.find(element => element.Correta === false) !== undefined ? 
+                                            <button className='errado' onClick={() => abreQuestao(item.questao.Codigo)}>Responder</button>
+                                            :
+                                            <button className='responder' onClick={() => abreQuestao(item.questao.Codigo)}>Responder</button>
+                                        }
+                                        </>
+                                        }
                                     </td>
                                 </tr>
                             )
