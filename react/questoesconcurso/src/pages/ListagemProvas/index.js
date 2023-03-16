@@ -71,10 +71,7 @@ function ListagemProvas(){
 
                 const link = document.createElement('a');
                 link.href = result.data.Arquivo;
-                link.setAttribute(
-                    'download',
-                    prova + '.pdf',
-                );
+                link.target = '_blank';
 
                 // Append to html link element page
                 document.body.appendChild(link);
@@ -100,10 +97,7 @@ function ListagemProvas(){
 
                 const link = document.createElement('a');
                 link.href = result.data.Arquivo;
-                link.setAttribute(
-                    'download',
-                    prova + ' - Gabarito.pdf',
-                );
+                link.target = '_blank';
 
                 // Append to html link element page
                 document.body.appendChild(link);
