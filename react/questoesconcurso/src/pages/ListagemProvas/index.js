@@ -6,8 +6,24 @@ import { useNavigate } from 'react-router-dom';
 import Config from "../../config.json";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import { BsFunnelFill } from "react-icons/bs";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Modal from 'react-modal';
+
+const customStyles = {
+    content: {
+      top: '20%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      border: 0,
+      background: '#424242',
+      marginRight: '-50%',
+      'border-radius': '5px',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -31,33 +47,43 @@ function ListagemProvas(){
     const navigate = useNavigate();
     const[loadding, setLoadding] = useState(true);
     const[provas, setProvas] = useState([]);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [filtroNome, setFiltroNome] = useState('');
+
+    function openModal() {
+        setIsOpen(true);
+    }
+    
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    async function buscaProvas(){
+        let url = '/BuscarProvas.php' + 
+        (
+            sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0' ? 
+            '' 
+            : 
+            '?codigousuario=' + sessionStorage.getItem(Config.CodigoUsuario)
+        )
+        await api.get(url)
+        .then((response) => {
+            if(response.data.Sucesso){
+                setProvas(response.data.lista);
+                setLoadding(false);
+            }
+            else{
+                navigate('/', {replace: true});
+                toast.warn('Erro ao buscar');    
+            }
+        })
+        .catch(() => {
+            navigate('/', {replace: true});
+            toast.warn('Erro ao buscar');
+        })
+    }
 
     useEffect(() => {
-        async function buscaProvas(){
-            let url = '/BuscarProvas.php' + 
-            (
-                sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0' ? 
-                '' 
-                : 
-                '?codigousuario=' + sessionStorage.getItem(Config.CodigoUsuario)
-            )
-            await api.get(url)
-            .then((response) => {
-                if(response.data.Sucesso){
-                    setProvas(response.data.lista);
-                    setLoadding(false);
-                }
-                else{
-                    navigate('/', {replace: true});
-                    toast.warn('Erro ao buscar');    
-                }
-            })
-            .catch(() => {
-                navigate('/', {replace: true});
-                toast.warn('Erro ao buscar');
-            })
-        }
-
         setLoadding(true);
 
         buscaProvas();
@@ -119,6 +145,24 @@ function ListagemProvas(){
         navigate('/listagemquestoes/' + codigo, {replace: true});
     }
 
+    function filtrar(){
+        closeModal();
+        setLoadding(true);
+        setProvas(provas.filter(prova => prova.Nomeprova.toUpperCase().includes(filtroNome.toUpperCase())));
+        if(provas.length == 0){
+            alert("Não encontrado");
+        }
+        setLoadding(false);
+    }
+
+    function limparFiltro(){
+        closeModal();
+        setFiltroNome('');
+        setLoadding(true);
+        buscaProvas();
+        setLoadding(false);
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -129,14 +173,44 @@ function ListagemProvas(){
     
     return(
         <div className='containerpage'>
-            <h2>Provas</h2>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Filtro"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>Filtros</h3>
+                    </div>
+                    <div className='filtros'>
+                        <br/>
+                        <h4>
+                            Nome:
+                            <input type='text' value={filtroNome} onChange={(e) => setFiltroNome(e.target.value)}/>
+                        </h4>
+                    </div>
+                    <div className='botoesModal'>
+                        <button onClick={filtrar}>Filtrar</button>
+                        <button onClick={limparFiltro}>Limpar</button>
+                    </div>
+                </div>
+            </Modal>
+            <div className='opcoesProva'>
+                <h2><a onClick={limparFiltro}>Provas</a></h2>
+                <div className='opcaoFiltro'>
+                    <h2><BsFunnelFill onClick={openModal}/></h2>
+                </div>
+            </div>
             <div className='provas'>
                 {
                     provas.map((item) => {
                         return(
                             <div key={item.Codigo}>
                                 <h4>
-                                <b>Prova:</b> {item.Nomeprova}
+                                <div className='tituloProva'>
+                                    <b>{item.Nomeprova}</b> 
+                                </div>
                                 <br/>
                                 <b>Local de aplicação:</b> {item.Local}
                                 <br/>
