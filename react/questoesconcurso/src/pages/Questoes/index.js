@@ -369,15 +369,17 @@ function Questoes(){
                     questao?.respostas?.map((item) => {
                         return(
                             <div key={item.Codigo} className='respostas'>
-                                <input type='radio' className='radioOption' name={'Radio_' + item.Codigo} onClick={(e) => ValidaResposta(e, item.Codigo)}/>
-                                {
-                                item.anexos.length > 0 ? 
-                                    <div id="imagemResposta">
-                                        <img src={item.anexos[0]}/>
-                                    </div>
-                                : 
-                                <h4 dangerouslySetInnerHTML={createMarkup(item.Textoresposta)} className='descricaoResposta'></h4>
-                                }
+                                <label className='respostas'>
+                                    <input type='radio' className='radioOption' name={'Radio_' + item.Codigo} onClick={(e) => ValidaResposta(e, item.Codigo)}/>
+                                    {
+                                    item.anexos.length > 0 ? 
+                                        <div id="imagemResposta">
+                                            <img src={item.anexos[0]}/>
+                                        </div>
+                                    : 
+                                    <h4 dangerouslySetInnerHTML={createMarkup(item.Textoresposta)} className='descricaoResposta'></h4>
+                                    }
+                                </label>
                             </div>
                         )
                     })
