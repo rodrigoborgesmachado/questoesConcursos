@@ -16,6 +16,24 @@
     margin-bottom: 20px;
 }
 
+.opcoesBotoesNavegacao{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.opcaoBotaoBefore{
+    justify-content: left;
+}
+
+.opcaoBotaoAfter{
+    justify-content: right;
+}
+
 .total{
     width: 100%;
     justify-content: left;

@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
 import { BsChatLeftDotsFill } from "react-icons/bs";
 import { BsQuestionLg } from "react-icons/bs";
+import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -77,7 +79,7 @@ function Questoes(){
         return listaResolvida?.some((item) => item.Codigo === codigo).length > 0;
     }
 
-    function BuscaUrl(){
+    function BuscaUrl(anterior = false){
         if(filtro === 'enem'){
             return `/BuscarQuestaoAleatoriaEnem.php/`;
         }
@@ -91,7 +93,7 @@ function Questoes(){
             let temp =  `/BuscarQuestaoProva.php?codigoProva=` + filtro.replace('provas&', '');
 
             if(Object.keys(questao).length > 0){
-                temp += "&ultimaQuestao=" + questao?.questao?.Numeroquestao;
+                temp += "&ultimaQuestao=" + (questao?.questao?.Numeroquestao - (anterior ? 1 : 0));
             }
             else{
                 temp += "&ultimaQuestao=0";
@@ -110,27 +112,38 @@ function Questoes(){
             return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestaohistorico:', '');
         }
         else if(filtro.includes('codigoquestaolistagem')){
-            return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestaolistagem:', '');
+            if(!questao?.questao){
+                return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestaolistagem:', '');
+            }
+            let temp =  `/BuscarQuestaoProva.php?codigoProva=` + questao?.questao?.Codigoprova;
+            let num = parseInt(questao?.questao?.Numeroquestao);
+            if(anterior)
+                num -=2;
+            temp += "&ultimaQuestao=" + num;
+
+            if(sessionStorage.getItem(Config.LOGADO) === '1'){
+                temp+= "&codigoUsuario=" + sessionStorage.getItem(Config.CodigoUsuario);
+            }
+            else{
+                temp+="&codigoUsuario=0";
+            }
+            return temp;
+
         }
         return `/BuscarQuestaoAleatoria.php/`;
     }
 
-    async function BuscarProximaQuestao(){
+    async function BuscarProximaQuestao(anterior = false){
         setLoadding(true);
-        await api.get(BuscaUrl())
+        await api.get(BuscaUrl(anterior))
         .then((response) => {
             if(response.data.Sucesso){
                 setQuestao(response.data.lista[0]);
-
-                if(QuestaoJaResolvida(questao?.questao?.Codigo)){
-                    BuscarProximaQuestao();
-                    return;
-                }
             }
             else{
                 if(response.data.Mensagem === 'Não há mais itens!'){
                     toast.success('Você respondeu todas as questões dessa prova!');
-                    navigate('/', {replace: true});
+                    navigate('/listagemprovas', {replace: true});
                     return;
                 }
 
@@ -166,8 +179,7 @@ function Questoes(){
         return createMarkup(temp);
     }
 
-    async function ValidaResposta(codigo){
-        setLoadding(true);
+    async function ValidaResposta(e, codigo){
         await api.get(`/ValidaResposta.php/`, {
             params:{
                 "codigoResposta": codigo
@@ -177,8 +189,13 @@ function Questoes(){
             if(sessionStorage.getItem(Config.LOGADO) === '1'){
                 await insereResposta(codigo);
             }
-
+            var div = document.createElement('div');
+            div.style.justifyContent = 'right';
+            div.style.paddingLeft = '20px';
+            
             if(response.data.RespostaCorreta){
+                div.style.color = 'green';
+                div.textContent = 'Correto';
                 toast.success('Resposta correta!');
                 
                 let lista = sessionStorage.getItem(Config.QUESTOES_FEITAS);
@@ -188,22 +205,27 @@ function Questoes(){
                 sessionStorage.setItem(Config.QUESTOES_FEITAS, JSON.stringify(listaResolvida));
                 sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, qtQuestoesCertas+1);
                 setQtQuestoesCertas(qtQuestoesCertas+1);
+
+                var radios = document.getElementsByClassName('radioOption');
+
+                for(let i = 0; i<radios.length;i++){
+                    radios[i].disabled = true;
+                }
             }
             else{
+                div.style.color = 'red';
+                div.textContent = 'Incorreto';
                 toast.warn('Resposta incorreta!');
+
+                e.target.checked = false;
             }
-            setLoadding(false);
+            e.target.parentElement.appendChild(div);
 
             if(filtro.includes('codigoquestaohistorico')){
                 navigate('/historico', true);
             }
-            else if(filtro.includes('codigoquestaolistagem')){
-                navigate('/listagemquestoes/' + questao?.questao?.Codigoprova, true);
-            }
-            else{
-                BuscarProximaQuestao();
-            }
-        }).catch(() => {
+        }).catch((Exception) => {
+            console.log(Exception);
             toast.warn('Erro ao validar resposta!');
             navigate('/', {replace: true});
             return;
@@ -347,12 +369,12 @@ function Questoes(){
                     questao?.respostas?.map((item) => {
                         return(
                             <div key={item.Codigo} className='respostas'>
-                                <input type='radio' onClick={() => ValidaResposta(item.Codigo)}/>
+                                <input type='radio' className='radioOption' name={'Radio_' + item.Codigo} onClick={(e) => ValidaResposta(e, item.Codigo)}/>
                                 {
                                 item.anexos.length > 0 ? 
-                                <div id="imagemResposta">
-                                    <img src={item.anexos[0].Anexo}/>
-                                </div>
+                                    <div id="imagemResposta">
+                                        <img src={item.anexos[0]}/>
+                                    </div>
                                 : 
                                 <h4 dangerouslySetInnerHTML={createMarkup(item.Textoresposta)} className='descricaoResposta'></h4>
                                 }
@@ -360,6 +382,14 @@ function Questoes(){
                         )
                     })
                 }
+            </div>
+            <div className='opcoesBotoesNavegacao'>
+                <div className='opcaoBotaoBefore'>
+                    <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true);}}/></h2>
+                </div>
+                <div className='opcaoBotaoAfter'>
+                    <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false);}}/></h2>
+                </div>
             </div>
             <div ></div>
         </div>
