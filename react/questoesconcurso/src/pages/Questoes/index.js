@@ -374,7 +374,7 @@ function Questoes(){
                                     {
                                     item.anexos.length > 0 ? 
                                         <div id="imagemResposta">
-                                            <img src={item.anexos[0]}/>
+                                            <img src={item.anexos[0].Anexo}/>
                                         </div>
                                     : 
                                     <h4 dangerouslySetInnerHTML={createMarkup(item.Textoresposta)} className='descricaoResposta'></h4>
