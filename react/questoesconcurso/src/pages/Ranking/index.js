@@ -9,7 +9,7 @@ import {toast} from 'react-toastify';
 function Ranking(){
     const[loadding, setLoadding] = useState(true);
     const[lista, setLista] = useState({});
-    const[usuarioLogado] = useState(parseInt(sessionStorage.getItem(Config.CodigoUsuario) ? sessionStorage.getItem(Config.CodigoUsuario) : -1));
+    const[usuarioLogado] = useState(sessionStorage.getItem(Config.USUARIO));
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,10 +21,10 @@ function Ranking(){
                 return;
             }
 
-            await api.get('/BuscarRanking.php')
+            await api.get('/RespostasUsuaro/ranking')
             .then((response) => {
-                if(response.data.Sucesso){
-                    setLista(response.data);
+                if(response.data.success){
+                    setLista(response.data.object);
                 }
                 setLoadding(false);
             }).catch(() => {
@@ -71,22 +71,22 @@ function Ranking(){
                 </thead>
                 <tbody>
                     {
-                        lista?.lista?.map((item, index) => {
+                        lista?.map((item, index) => {
                             return(
-                                <tr key={item.Nome} className={item.Codigo === usuarioLogado  ? 'posicao' : ''}>
+                                <tr key={item.nome} className={item.login === usuarioLogado  ? 'posicao' : ''}>
                                     <td>
                                         <h4>
                                             {index + 1}
                                         </h4>
                                     </td>
-                                    <td key={item.Nome}>
+                                    <td key={item.nome}>
                                         <h4>
-                                        {item.Nome}
+                                        {item.nome}
                                         </h4>
                                     </td>
                                     <td>
                                         <h4>
-                                        {item.Quantidade}
+                                        {item.quantidade}
                                         </h4>
                                     </td>
                                 </tr>
