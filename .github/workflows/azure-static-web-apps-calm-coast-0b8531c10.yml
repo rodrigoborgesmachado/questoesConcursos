@@ -10,7 +10,7 @@ on:
       - main
       
 env:
-  CI: false npm run build
+  process.env.CI: false
 
 jobs:
   build_and_deploy_job:
