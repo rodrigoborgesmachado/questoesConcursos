@@ -10,7 +10,7 @@ on:
       - main
       
 env:
-  process.env.CI: false
+  CI: false
 
 jobs:
   build_and_deploy_job:
