@@ -5,6 +5,7 @@ import api from '../../services/api.js';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Config from './../../config.json';
 import './style.css';
 
 function Materias(){
@@ -16,11 +17,17 @@ function Materias(){
 
     useEffect(() => {
         async function buscaMaterias(){
-            await api.get('/BuscarMaterias.php')
+            if(!sessionStorage.getItem(Config.TOKEN)){
+                toast.info('Necessário logar para acessar!');
+                navigate('/', {replace: true});
+                return;
+            }
+            
+            await api.get('/Questoes/GetAllMaterias')
             .then((response) => {
                 let mat = [];
-                if(response.data.Sucesso){
-                    response.data.Materia.forEach(element => {
+                if(response.data.success){
+                    response.data.object.forEach(element => {
                         mat.push({
                             value: element,
                             label: element

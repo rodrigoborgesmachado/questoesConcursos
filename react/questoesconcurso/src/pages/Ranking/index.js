@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Config from './../../config.json';
+import {toast} from 'react-toastify';
 
 function Ranking(){
     const[loadding, setLoadding] = useState(true);
@@ -14,6 +15,12 @@ function Ranking(){
     useEffect(() => {
 
         async function BuscarRanking(){
+            if(!sessionStorage.getItem(Config.TOKEN)){
+                toast.info('Necessário logar para acessar!');
+                navigate('/', {replace: true});
+                return;
+            }
+
             await api.get('/BuscarRanking.php')
             .then((response) => {
                 if(response.data.Sucesso){

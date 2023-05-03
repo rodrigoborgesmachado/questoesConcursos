@@ -64,81 +64,67 @@ function Questoes(){
     }
 
     useEffect(() => {
-        async function loadQuestao(){
-            await BuscarProximaQuestao();
-            setLoadding(false);
-        }
-
-        loadQuestao();
+        if(loadding)
+            BuscarProximaQuestao();
     }, [])
-
-    function QuestaoJaResolvida(codigo){
-        let lista = sessionStorage.getItem(Config.QUESTOES_FEITAS);
-        let listaResolvida = JSON.parse(lista);
-
-        return listaResolvida?.some((item) => item.Codigo === codigo).length > 0;
-    }
-
-    function BuscaUrl(anterior = false){
+    
+    function BuscaUrl(anterior = false, proxima = false){
         if(filtro === 'enem'){
-            return `/BuscarQuestaoAleatoriaEnem.php/`;
+            return `/Questoes/getQuestaoAleatoria?tipo=ENEM`;
         }
         else if(filtro.includes('materias')){
-            return `/BuscarQuestaoMateria.php?Materia=` + filtro.replace('materias&', '');
+            return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&subject=` + filtro.replace('materias&', '');
         }
         else if(filtro.includes('bancas')){
-            return `/BuscarQuestaoBanca.php?Bancas=` + filtro.replace('bancas&', '');
+            return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&bancas` + filtro.replace('bancas&', '');
         }
         else if(filtro.includes('provas')){
-            let temp =  `/BuscarQuestaoProva.php?codigoProva=` + filtro.replace('provas&', '');
+            let temp =  `/Questoes/getQuestao?codigoProva=` + filtro.replace('provas&', '');
 
             if(Object.keys(questao).length > 0){
-                temp += "&ultimaQuestao=" + (questao?.questao?.Numeroquestao - (anterior ? 1 : 0));
+                temp += "&numeroQuestao=" + (questao?.numeroquestao + 1 - (anterior ? 2 : 0));
             }
             else{
-                temp += "&ultimaQuestao=0";
-            }
-
-            if(sessionStorage.getItem(Config.LOGADO) === '1'){
-                temp+= "&codigoUsuario=" + sessionStorage.getItem(Config.CodigoUsuario);
-            }
-            else{
-                temp+="&codigoUsuario=0";
+                temp += "&numeroQuestao=1";
             }
 
             return temp;
         }
         else if(filtro.includes('codigoquestaohistorico')){
-            return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestaohistorico:', '');
+            return `/Questoes/getById?id=` + filtro.replace('codigoquestaohistorico:', '');
         }
         else if(filtro.includes('codigoquestaolistagem')){
-            if(!questao?.questao){
-                return `/BuscarQuestao.php?codigoQuestao=` + filtro.replace('codigoquestaolistagem:', '');
+            if(!proxima && !anterior){
+                return `/Questoes/getById?id=` + filtro.replace('codigoquestaolistagem:', '');
             }
-            let temp =  `/BuscarQuestaoProva.php?codigoProva=` + questao?.questao?.Codigoprova;
-            let num = parseInt(questao?.questao?.Numeroquestao);
-            if(anterior)
-                num -=2;
-            temp += "&ultimaQuestao=" + num;
 
-            if(sessionStorage.getItem(Config.LOGADO) === '1'){
-                temp+= "&codigoUsuario=" + sessionStorage.getItem(Config.CodigoUsuario);
-            }
-            else{
-                temp+="&codigoUsuario=0";
-            }
+            let temp =  `/Questoes/getQuestao?codigoProva=` + questao?.codigoProva;
+            let num = parseInt(questao?.numeroQuestao);
+            if(anterior)
+                num -=1;
+            else
+                num +=1;
+
+            temp += "&numeroQuestao=" + num;
+
             return temp;
 
         }
-        return `/BuscarQuestaoAleatoria.php/`;
+        return `/Questoes/getQuestaoAleatoria?tipo=GENERIC`;
     }
 
-    async function BuscarProximaQuestao(anterior = false){
+    async function BuscarProximaQuestao(anterior = false, proxima = false){
+        if(!sessionStorage.getItem(Config.TOKEN)){
+            toast.info('Necessário logar para acessar!');
+            navigate('/', {replace: true});
+            return;
+        }
+
         setLoadding(true);
-        await api.get(BuscaUrl(anterior))
+        await api.get(BuscaUrl(anterior, proxima))
         .then((response) => {
-            if(response.data.Sucesso){
-                setQuestao(response.data.lista[0]);
+            if(response.data.success){
+                setQuestao(response.data.object);
             }
             else{
                 if(response.data.Mensagem === 'Não há mais itens!'){
@@ -171,29 +157,26 @@ function Questoes(){
 
     function createMarkupWithImages(text, anexos){
         let temp = text;
-
+        
         for(let i = 0; i< anexos.length; i++){
-            temp = temp.replace(`<img src=\"#\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`, `<img src=\"${anexos[i].Anexo}\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`);
+            temp = temp.replace(`<img src=\"#\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`, `<img src=\"${anexos[i].anexo}\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`);
         }
 
         return createMarkup(temp);
     }
 
     async function ValidaResposta(e, codigo){
-        await api.get(`/ValidaResposta.php/`, {
+        await api.get(`/RespostasQuestoes/validaResposta`, {
             params:{
-                "codigoResposta": codigo
+                "id": codigo
             }
         })
         .then(async (response) => {
-            if(sessionStorage.getItem(Config.LOGADO) === '1'){
-                await insereResposta(codigo);
-            }
             var div = document.createElement('div');
             div.style.justifyContent = 'right';
             div.style.paddingLeft = '20px';
             
-            if(response.data.RespostaCorreta){
+            if(response.data.object?.certa == "1"){
                 div.style.color = 'green';
                 div.textContent = 'Correto';
                 toast.success('Resposta correta!');
@@ -225,42 +208,21 @@ function Questoes(){
                 navigate('/historico', true);
             }
         }).catch((Exception) => {
-            console.log(Exception);
             toast.warn('Erro ao validar resposta!');
             navigate('/', {replace: true});
             return;
         });
     }
 
-    async function insereResposta(codigoResposta){
-        await api.post(`/InsereResposta.php`, 
-        {
-            Codigousuario: sessionStorage.getItem(Config.CodigoUsuario),
-            Codigoresposta: codigoResposta
-        }
-        )
-        .then((response) => {
-            if(response.data.Sucesso){
-                console.log('Resposta salva para o usuário');
-            }
-            else{
-                console.log('Erro ao salvar resposta!');
-            }
-        })
-        .catch(() =>{
-            console.log('Erro ao salvar resposta');
-        })
-    }
-
     async function solicitarRevisao(){
-        await api.get(`/SolicitaVerificacao.php`, {
+        await api.get(`/Questoes/solicitaVerificacao`, {
             params:{
-                "codigoQuestao": questao?.questao?.Codigo
+                "id": questao?.id
             }
         })
         .then((response) => {
             closeModalSolicitarRevisao();
-            if(response.data.Sucesso){
+            if(response.data.success){
                 toast.success('Solicitação enviada!');
             }
             else{
@@ -275,11 +237,11 @@ function Questoes(){
     }
 
     async function buscaRespostaCorreta(){
-        await api.get(`BuscarRespostaCorreta.php?codigoProva=${questao?.questao?.Codigoprova}&codigoquestao=${questao?.questao?.Codigo}`)
+        await api.get(`/RespostasQuestoes/getRespostaCorreta?questao=${questao?.id}`)
         .then((response) =>{
             closeModalSolicitarResposta();
-            if(response.data.Sucesso){
-                setTextoResposta(response.data.TextoResposta);
+            if(response.data.success){
+                setTextoResposta(response.data?.object?.textoResposta);
                 openModalResposta();
             }
         })
@@ -350,34 +312,34 @@ function Questoes(){
                 </div>
             </div>
             <div className='Materia'>
-                <h2>Matéria: {questao?.questao?.Materia}</h2>
+                <h2>Matéria: {questao?.materia}</h2>
             </div>
             <br/>
             <br/>
             <div className='descricaoQuestao'>
                 {
-                    questao?.questao?.anexosQuestao?.length > 0 ?
-                    <h4 dangerouslySetInnerHTML={createMarkupWithImages(questao?.questao?.Campoquestao, questao?.questao?.anexosQuestao)}></h4>
+                    questao?.anexosQuestoes?.length > 0 ?
+                    <h4 dangerouslySetInnerHTML={createMarkupWithImages(questao?.campoQuestao, questao?.anexosQuestoes)}></h4>
                     :
-                    <h4 dangerouslySetInnerHTML={createMarkup(questao?.questao?.Campoquestao)}></h4>
+                    <h4 dangerouslySetInnerHTML={createMarkup(questao?.campoQuestao)}></h4>
                 }
             </div>
             <br/>
             <br/>
             <div className='todasRespostas'>
                 {
-                    questao?.respostas?.map((item) => {
+                    questao?.respostasQuestoes?.map((item) => {
                         return(
-                            <div key={item.Codigo} className='respostas'>
+                            <div key={item.id} className='respostas'>
                                 <label className='respostas'>
-                                    <input type='radio' className='radioOption' name={'Radio_' + item.Codigo} onClick={(e) => ValidaResposta(e, item.Codigo)}/>
+                                    <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
                                     {
-                                    item.anexos.length > 0 ? 
+                                    item.anexoResposta.length > 0 ? 
                                         <div id="imagemResposta">
-                                            <img src={item.anexos[0].Anexo}/>
+                                            <img src={item.anexoResposta[0].anexo}/>
                                         </div>
                                     : 
-                                    <h4 dangerouslySetInnerHTML={createMarkup(item.Textoresposta)} className='descricaoResposta'></h4>
+                                    <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
                                     }
                                 </label>
                             </div>
@@ -387,10 +349,10 @@ function Questoes(){
             </div>
             <div className='opcoesBotoesNavegacao'>
                 <div className='opcaoBotaoBefore'>
-                    <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true);}}/></h2>
+                    <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true, false);}}/></h2>
                 </div>
                 <div className='opcaoBotaoAfter'>
-                    <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false);}}/></h2>
+                    <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false, true);}}/></h2>
                 </div>
             </div>
             <div ></div>

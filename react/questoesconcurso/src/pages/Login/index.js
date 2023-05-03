@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 function Login(){
     const navigate = useNavigate();
-
     const[email, setEmail] = useState('');
     const[senha, setSenha] = useState('');
     const[loadding, setLoadding] = useState(false);
@@ -29,22 +28,19 @@ function Login(){
 
     async function logar(){
         setLoadding(true);
-        await api.get(`/Logar.php?login=${email}&pass=${stringToHash(senha)}`)
+        await api.post(`/Token`, {username: email, password: stringToHash(senha)+''})
             .then((response) => {
                 setLoadding(false);
-                if(response.data.Sucesso){
                     sessionStorage.setItem(Config.LOGADO, 1);
-                    sessionStorage.setItem(Config.USUARIO, email);
-                    sessionStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
-                    sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
-                    sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);
+                    sessionStorage.setItem(Config.USUARIO, response.data.username);
+                    sessionStorage.setItem(Config.TOKEN, response.data.token);
+                    //sessionStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
+                    //sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
+                    //sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);
                     toast.success('Bem vindo!');
 
-                    navigate('/', {replace: true});
-                }
-                else{
-                    toast.error('Email ou senha incorretos');
-                }
+                    //navigate('/', {replace: true});
+                    window.location.href = '/';
             }).catch(() => {
                 setLoadding(false);
                 toast.error('Erro ao logar');

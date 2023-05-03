@@ -5,6 +5,7 @@ import api from '../../services/api.js';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Config from './../../config.json';
 import './style.css';
 
 function Provas(){
@@ -16,14 +17,20 @@ function Provas(){
 
     useEffect(() => {
         async function buscaProvas(){
-            await api.get('/BuscarProvas.php')
+            if(!sessionStorage.getItem(Config.TOKEN)){
+                toast.info('Necessário logar para acessar!');
+                navigate('/', {replace: true});
+                return;
+            }
+            
+            await api.get('/Prova/GetAllProvas')
             .then((response) => {
                 let prov = [];
-                if(response.data.Sucesso){
-                    response.data.lista.forEach(element => {
+                if(response.data.success){
+                    response.data.object.forEach(element => {
                         prov.push({
-                            value: element.Codigo,
-                            label: element.Nomeprova
+                            value: element.codigo,
+                            label: element.nome
                         })
                     });
                     setProvas(prov);

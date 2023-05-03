@@ -39,10 +39,10 @@ function HistoricoUsuario(){
 
     useEffect(() => {
         async function BuscarRespostas(){
-            await api.get(`BuscarRespostasUsuario.php?codigoUsuario=${sessionStorage.getItem(Config.CodigoUsuario)}`)
+            await api.get(`/RespostasUsuaro/getHistory`)
             .then(response => {
-                setLita(response.data.lista);
-                setQtTotal(parseInt(response.data.QuantidadeQuestoes));
+                setLita(response.data.object);
+                setQtTotal(parseInt(response.data.quantity));
             })
             .catch(exception => {
                 toast.warn(exception);
@@ -75,16 +75,16 @@ function HistoricoUsuario(){
                 Progresso:
                 <br/>
                 <br/>
-                Total de questões tentadas: {lista?.length}
+                Total de questões tentadas: {qtTotal}
                 <br/>
-                Total de questões <b>certas</b> respondidas: {lista?.filter(item => item.RespostaCorreta)?.length}
+                Total de questões <b>certas</b> respondidas: {lista?.filter(item => item.respostaCorreta == '1')?.length}
                 <br/>
                 <br/>
                 Taxa de acertos: 
-                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.RespostaCorreta)?.length/lista?.length) * 100)} />
+                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta == '1')?.length/lista?.length) * 100)} />
                 <br/>
-                Progresso de questões resolvidas: {lista?.filter(item => item.RespostaCorreta)?.length} de {qtTotal} 
-                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.RespostaCorreta)?.length/qtTotal) * 100)} />
+                Progresso de questões resolvidas: {lista?.filter(item => item.respostaCorreta == '1')?.length} de {qtTotal} 
+                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta == '1')?.length/qtTotal) * 100)} />
                 <br/>
                 <br/>
             </div>
@@ -97,15 +97,15 @@ function HistoricoUsuario(){
                     return(
                         <div key={index} className='descricao'>
                             <h4>
-                                Prova: {item.NomeProva}
+                                Prova: {item.nomeProva}
                                 <br/>
-                                Questão: {item.NumeroQuestao}
+                                Questão: {item.numeroQuestao}
                                 <br/>
-                                Resposta: {item.RespostaCorreta ? "CORRETA" : "INCORRETA"}
+                                Resposta: {item.respostaCorreta == '1' ? "CORRETA" : "INCORRETA"}
                                 <br/>
-                                Data resposta: {item.DataResposta.split('T')[0]}
+                                Data resposta: {item.dataResposta?.replace('T', ' ')}
                                 <br/>
-                                <button onClick={() => abreQuestao(item.CodigoQuestao)}>Visualizar Questão</button>
+                                <button onClick={() => abreQuestao(item.codigoQuestao)}>Visualizar Questão</button>
                                 <br/>
                                 <br/>
                             </h4>

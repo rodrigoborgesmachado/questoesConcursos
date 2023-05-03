@@ -14,10 +14,16 @@ function ListagemQuestoes(){
 
     useEffect(() => {
         async function buscaQuestoes(){
-            await api.get(`/BuscarListagemQuestoesProva.php?usuario=${(sessionStorage.getItem(Config.CodigoUsuario) == null || sessionStorage.getItem(Config.CodigoUsuario) === '0' ? '0' : sessionStorage.getItem(Config.CodigoUsuario))}&prova=${filtro}`)
+            if(!sessionStorage.getItem(Config.TOKEN)){
+                toast.info('Necessário logar para acessar!');
+                navigate('/', {replace: true});
+                return;
+            }
+
+            await api.get(`/Questoes/pagged?page=1&quantity=10000&anexos=false&codigoProva=${filtro}`)
             .then((response) => {
-                if(response.data.Sucesso){
-                    setQuestoes(response.data.lista);
+                if(response.data.success){
+                    setQuestoes(response.data.object);
                     setLoadding(false);
                 }
                 else{
@@ -33,7 +39,7 @@ function ListagemQuestoes(){
         }
 
         buscaQuestoes();
-    }, [])
+    }, [loadding])
 
     function abreQuestao(codigoQuestao){
         navigate('/questoes/codigoquestaolistagem:' + codigoQuestao, {replace: true});
@@ -72,27 +78,27 @@ function ListagemQuestoes(){
                     {
                         questoes.map((item) => {
                             return(
-                                <tr key={item.questao.Codigo}>
+                                <tr key={item.id}>
                                     <td>
                                         <h4>
-                                            {item.questao.Numeroquestao}
+                                            {item.numeroQuestao}
                                         </h4>
                                     </td>
                                     <td>
                                         <h4>
-                                        {item.questao.Materia}
+                                        {item.materia}
                                         </h4>
                                     </td>
                                     <td>
-                                        {item?.respostaUsuario?.find(element => element.Correta === true) !== undefined ? 
-                                        <button className='respondida' onClick={() => abreQuestao(item.questao.Codigo)}>Respondida</button>
+                                        {item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "1")) !== undefined ? 
+                                        <button className='respondida' onClick={() => abreQuestao(item.id)}>Respondida</button>
                                         :
                                         <>
                                         {
-                                            item?.respostaUsuario?.find(element => element.Correta === false) !== undefined ? 
-                                            <button className='errado' onClick={() => abreQuestao(item.questao.Codigo)}>Responder</button>
+                                            item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "0")) !== undefined ? 
+                                            <button className='errado' onClick={() => abreQuestao(item.id)}>Responder</button>
                                             :
-                                            <button className='responder' onClick={() => abreQuestao(item.questao.Codigo)}>Responder</button>
+                                            <button className='responder' onClick={() => abreQuestao(item.id)}>Responder</button>
                                         }
                                         </>
                                         }

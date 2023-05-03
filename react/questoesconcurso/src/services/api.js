@@ -1,7 +1,17 @@
 import axios from "axios";
+import Config from './../config.json';
 
 const api = axios.create({
-    baseURL: 'http://questoesconcurso.sunsalesystem.com.br/PHP'
+    baseURL: 'https://apisunsale.azurewebsites.net/api',
+    headers: {
+        'Content-Type': 'application/json',
+    },
 })
+
+const token = sessionStorage.getItem(Config.TOKEN);
+
+if (token) {
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 export default api;

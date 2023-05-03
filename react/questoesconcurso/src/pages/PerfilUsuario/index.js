@@ -11,9 +11,9 @@ function PerfilUsuario(){
 
     useEffect(() => {
         async function BuscaDadosUsuario(){
-            await api.get('/BuscarDadosPerfil.php?codigo=' + sessionStorage.getItem(Config.CodigoUsuario))
+            await api.get('/Usuarios/getPerfil')
             .then((response) => {
-                setUsuario(response.data);
+                setUsuario(response.data.object);
             })
             .catch(() => {
                 toast.warn('Erro ao buscar dados');
@@ -37,19 +37,19 @@ function PerfilUsuario(){
                 </h2>
                 <br/>
                 <h4>
-                    Nome: {usuario?.Usuario?.Nome}
+                    Nome: {usuario?.usuario?.nome}
                     <br/>
                     <br/>
-                    Email: {usuario?.Usuario?.Email}
+                    Email: {usuario?.usuario?.email}
                     <br/>
                     <br/>
-                    Perfil: {usuario?.Usuario?.Admin === "1" ? 'Administrador' : 'Aluno'}
+                    Perfil: {usuario?.usuario?.admin === "1" ? 'Administrador' : 'Aluno'}
                     <br/>
                     <br/>
-                    Quantidade de questões resolvidas: {usuario?.QuantidadeQuestoesResolvidas}
+                    Quantidade de questões resolvidas: {usuario?.quantidadeQuestoesResolvidas}
                     <br/>
                     <br/>
-                    Quantidade de questões acertadas: {usuario?.QuantidadeQuestoesAcertadas}
+                    Quantidade de questões acertadas: {usuario?.quantidadeQuestoesAcertadas}
                 </h4>
             </div>
         </div>

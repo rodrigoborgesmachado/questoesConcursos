@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <div className="app">
-      <ToastContainer autoClose="3000"/>
+      <ToastContainer autoClose="2000"/>
       <RoutesApp/>
       <Footer/>
     </div>

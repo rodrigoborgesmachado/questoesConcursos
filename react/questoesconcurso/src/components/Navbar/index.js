@@ -66,13 +66,17 @@ const ResponsiveAppBar = () => {
     }
   }
 
-    function sair(){
-        sessionStorage.setItem(Config.LOGADO, 0);
-        sessionStorage.setItem(Config.USUARIO, '');
-        sessionStorage.setItem(Config.CodigoUsuario, '');
-        toast.success('Volte sempre!');
-        navigate('/', {replace: true});
-    }
+  function sair(){
+    sessionStorage.setItem(Config.LOGADO, 0);
+    sessionStorage.setItem(Config.USUARIO, '');
+    sessionStorage.setItem(Config.TOKEN, '');
+    sessionStorage.removeItem(Config.LOGADO);
+    sessionStorage.removeItem(Config.USUARIO);
+    sessionStorage.removeItem(Config.TOKEN);
+    
+    toast.success('Volte sempre!');
+    navigate('/', {replace: true});
+}
 
   return (
     <AppBar position="static" className='varBarResponsive'>

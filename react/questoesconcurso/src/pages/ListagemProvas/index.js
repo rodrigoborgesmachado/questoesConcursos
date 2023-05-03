@@ -10,6 +10,8 @@ import { BsFunnelFill } from "react-icons/bs";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from 'react-modal';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const customStyles = {
     content: {
@@ -49,6 +51,9 @@ function ListagemProvas(){
     const[provas, setProvas] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [filtroNome, setFiltroNome] = useState('');
+    const [page, setPage] = useState(1);
+    const [quantity, setQuantity] = useState(1);
+    const [quantityPerPage, setQuantityPerPage] = useState(5);
 
     function openModal() {
         setIsOpen(true);
@@ -58,18 +63,18 @@ function ListagemProvas(){
         setIsOpen(false);
     }
 
-    async function buscaProvas(){
-        let url = '/BuscarProvas.php' + 
-        (
-            sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0' ? 
-            '' 
-            : 
-            '?codigousuario=' + sessionStorage.getItem(Config.CodigoUsuario)
-        )
-        await api.get(url)
+    async function buscaProvas(page){
+        if(!sessionStorage.getItem(Config.TOKEN)){
+            toast.info('Necessário logar para acessar!');
+            navigate('/', {replace: true});
+            return;
+        }
+
+        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage)
         .then((response) => {
-            if(response.data.Sucesso){
-                setProvas(response.data.lista);
+            if(response.data.success){
+                setProvas(response.data.object);
+                setQuantity(response.data.total);
                 setLoadding(false);
             }
             else{
@@ -86,60 +91,8 @@ function ListagemProvas(){
     useEffect(() => {
         setLoadding(true);
 
-        buscaProvas();
+        buscaProvas(page);
     }, []);
-
-    async function BaixarProva(codigoProva, prova){
-        setLoadding(true);
-        await api.get(`/BuscarArquivoProva.php?codigoProva=${codigoProva}`)
-        .then((result) => {
-            if(result.data.Sucesso){
-
-                const link = document.createElement('a');
-                link.href = result.data.Arquivo;
-                link.target = '_blank';
-
-                // Append to html link element page
-                document.body.appendChild(link);
-
-                // Start download
-                link.click();
-
-                // Clean up and remove the link
-                link.parentNode.removeChild(link);
-            }
-            setLoadding(false);
-        })
-        .catch(() => {
-            setLoadding(false);
-        })
-    }
-
-    async function BaixarGabarito(codigoProva, prova){
-        setLoadding(true);
-        await api.get(`/BuscarArquivoGabarito.php?codigoProva=${codigoProva}`)
-        .then((result) => {
-            if(result.data.Sucesso){
-
-                const link = document.createElement('a');
-                link.href = result.data.Arquivo;
-                link.target = '_blank';
-
-                // Append to html link element page
-                document.body.appendChild(link);
-
-                // Start download
-                link.click();
-
-                // Clean up and remove the link
-                link.parentNode.removeChild(link);
-            }
-            setLoadding(false);
-        })
-        .catch(() => {
-            setLoadding(false);
-        })
-    }
 
     function abrirQuestao(codigo){
         navigate('/listagemquestoes/' + codigo, {replace: true});
@@ -162,6 +115,12 @@ function ListagemProvas(){
         buscaProvas();
         setLoadding(false);
     }
+
+    const handleChange = (event, value) => {
+        setPage(value);
+        setLoadding(true);
+        buscaProvas(value);
+      };
 
     if(loadding){
         return(
@@ -198,53 +157,56 @@ function ListagemProvas(){
             </Modal>
             <div className='opcoesProva'>
                 <h2><a onClick={limparFiltro}>Provas</a></h2>
+                {
+/*
                 <div className='opcaoFiltro'>
                     <h2><BsFunnelFill onClick={openModal}/></h2>
                 </div>
+*/
+                }
             </div>
             <div className='provas'>
                 {
                     provas.map((item) => {
                         return(
-                            <div key={item.Codigo}>
+                            <div key={item.id}>
                                 <h4>
                                 <div className='tituloProva'>
-                                    <b>{item.Nomeprova}</b> 
+                                    <b>{item.nomeProva}</b> 
                                 </div>
                                 <br/>
-                                <b>Local de aplicação:</b> {item.Local}
+                                <b>Local de aplicação:</b> {item.local}
                                 <br/>
-                                <b>Banca:</b> {item.Banca}
+                                <b>Banca:</b> {item.banca}
                                 <br/>
-                                <b>Ano de aplicação:</b> {item.Dataaplicacao}
+                                <b>Data de aplicação:</b> {item.dataAplicacao}
                                 <br/>
-                                <b>Quantidade de questões:</b> {item.QuantidadeQuestoesTotal}
+                                <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}
                                 {
-                                    sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0'?
-                                    <>
-                                    </>
-                                    :
                                     <>
                                     <br/>
-                                    <b>Quantidade de questões resolvidas:</b> {item.QuantidadeQuestoesResolvidas}
+                                    <b>Quantidade de questões resolvidas:</b> {item.quantidadeQuestoesResolvidas}
                                     <br/>
                                     <b>Progresso:</b>
                                     <br/>
-                                    <LinearProgressWithLabel value={parseInt((item.QuantidadeQuestoesResolvidas/item.QuantidadeQuestoesTotal) * 100)} />
+                                    <LinearProgressWithLabel value={parseInt((item.quantidadeQuestoesResolvidas/item.quantidadeQuestoesTotal) * 100)} />
                                     </>
                                 }
                                 <br/>
-                                <a className='botaoBaixarArquivo' onClick={() => BaixarProva(item.Codigo, item.Nomeprova)}><CloudDownloadIcon/> Prova</a>
+                                <a className='botaoBaixarArquivo' target="_blank" href={item.linkProva}><CloudDownloadIcon/> Prova</a>
                                 <br/>
-                                <a className='botaoBaixarArquivo' onClick={() => BaixarGabarito(item.Codigo, item.Nomeprova)}><CloudDownloadIcon/> Gabarito</a>
+                                <a className='botaoBaixarArquivo' target="_blank" href={item.linkGabarito}><CloudDownloadIcon/> Gabarito</a>
                                 </h4>
-                                <button onClick={() => abrirQuestao(item.Codigo)}>Visualizar questões</button>
+                                <button onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
                                 <br/>
                                 <br/>
                             </div>
                         )
                     })
                 }
+                <Stack spacing={4}>
+                    <Pagination count={parseInt(quantity/quantityPerPage)+1} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
+                </Stack>
             </div>
         </div>
     )

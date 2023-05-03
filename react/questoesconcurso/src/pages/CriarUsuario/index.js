@@ -31,32 +31,31 @@ function CriarUsuario(){
 
     async function confirmaFormulario(){
         setLoadding(true);
-        await api.post(`/InsereUsuario.php`, 
+        await api.post(`/Usuarios`, 
         {
-            Nome: nome,
-            Email: email,
-            Password:stringToHash(senha),
-            Datanascimento: nascimento
+            login: email,
+            nome: nome,
+            email: email,
+            pass:stringToHash(senha)+'',
+            dataNascimento: nascimento,
+            admin:'0'
         }
         )
-            .then((response) => {
-                setLoadding(false);
-                if(response.data.Sucesso){
-                    sessionStorage.setItem(Config.LOGADO, 0);
-                    sessionStorage.setItem(Config.USUARIO, '');
-                    sessionStorage.setItem(Config.CodigoUsuario, '');
-                    
-                    toast.success('Usuário criado com sucesso! Login Liberado!');
-                    navigate('/login', {replace: true});
-                }
-                else{
-                    toast.error('Erro ao criar o usuário');
-                }
-            }).catch(() => {
-                setLoadding(false);
-                toast.error('Erro ao criar usuário');
-                return;
-            });
+        .then((response) => {
+            if(response.data.success){
+                toast.success('Usuário criado com sucesso! Login Liberado!');
+                navigate('/login', {replace: true});
+            }
+            else{
+                toast.info('Já existe um usuário com esse email!');
+                setSenha('');
+            }
+            setLoadding(false);
+        }).catch(() => {
+            setLoadding(false);
+            toast.error('Erro ao criar usuário');
+            return;
+        });
     }
 
     if(sessionStorage.getItem(Config.LOGADO) != null && sessionStorage.getItem(Config.LOGADO) === '1'){

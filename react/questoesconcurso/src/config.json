@@ -4,5 +4,6 @@
     "QUANTIDADE_QUESTOES_ACERTADAS":"quantidade_questoes_acertadas",
     "LOGADO":"logado",
     "USUARIO":"usuario",
+    "TOKEN":"token",
     "CodigoUsuario":"codigousuario"
 }

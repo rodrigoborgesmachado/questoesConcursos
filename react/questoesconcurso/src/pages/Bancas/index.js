@@ -5,6 +5,7 @@ import api from '../../services/api.js';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Config from "./../../config.json";
 import './style.css';
 
 function Bancas(){
@@ -16,18 +17,22 @@ function Bancas(){
 
     useEffect(() => {
         async function buscaBancas(){
-            await api.get('/BuscarBancas.php')
+            if(!sessionStorage.getItem(Config.TOKEN)){
+                toast.info('Necessário logar para acessar!');
+                navigate('/', {replace: true});
+                return;
+            }
+
+            await api.get('/Prova/GetAllBancas')
             .then((response) => {
                 let banca = [];
-                if(response.data.Sucesso){
-                    response.data.Bancas.forEach(element => {
-                        banca.push({
-                            value: element,
-                            label: element
-                        })
-                    });
-                    setBancas(banca);
-                }
+                response.data.object.forEach(element => {
+                    banca.push({
+                        value: element,
+                        label: element
+                    })
+                });
+                setBancas(banca);
                 setLoadding(false);
             }).catch(() => {
                 toast.error('Erro ao buscar bancas');
