@@ -77,14 +77,14 @@ function HistoricoUsuario(){
                 <br/>
                 Total de questões tentadas: {qtTotal}
                 <br/>
-                Total de questões <b>certas</b> respondidas: {lista?.filter(item => item.respostaCorreta == '1')?.length}
+                Total de questões <b>certas</b> respondidas: {lista?.filter(item => item.respostaCorreta === '1')?.length}
                 <br/>
                 <br/>
                 Taxa de acertos: 
-                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta == '1')?.length/lista?.length) * 100)} />
+                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta === '1')?.length/lista?.length) * 100)} />
                 <br/>
-                Progresso de questões resolvidas: {lista?.filter(item => item.respostaCorreta == '1')?.length} de {qtTotal} 
-                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta == '1')?.length/qtTotal) * 100)} />
+                Progresso de questões resolvidas: {lista?.filter(item => item.respostaCorreta === '1')?.length} de {qtTotal} 
+                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta === '1')?.length/qtTotal) * 100)} />
                 <br/>
                 <br/>
             </div>
@@ -101,7 +101,7 @@ function HistoricoUsuario(){
                                 <br/>
                                 Questão: {item.numeroQuestao}
                                 <br/>
-                                Resposta: {item.respostaCorreta == '1' ? "CORRETA" : "INCORRETA"}
+                                Resposta: {item.respostaCorreta === '1' ? "CORRETA" : "INCORRETA"}
                                 <br/>
                                 Data resposta: {item.dataResposta?.replace('T', ' ')}
                                 <br/>

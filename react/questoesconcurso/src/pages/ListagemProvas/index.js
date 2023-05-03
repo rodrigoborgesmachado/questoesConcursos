@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Config from "../../config.json";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import { BsFunnelFill } from "react-icons/bs";
+/*import { BsFunnelFill } from "react-icons/bs";*/
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from 'react-modal';
@@ -53,7 +53,7 @@ function ListagemProvas(){
     const [filtroNome, setFiltroNome] = useState('');
     const [page, setPage] = useState(1);
     const [quantity, setQuantity] = useState(1);
-    const [quantityPerPage, setQuantityPerPage] = useState(5);
+    const [quantityPerPage] = useState(5);
 
     function openModal() {
         setIsOpen(true);
@@ -102,7 +102,7 @@ function ListagemProvas(){
         closeModal();
         setLoadding(true);
         setProvas(provas.filter(prova => prova.Nomeprova.toUpperCase().includes(filtroNome.toUpperCase())));
-        if(provas.length == 0){
+        if(provas.length === 0){
             alert("Não encontrado");
         }
         setLoadding(false);
