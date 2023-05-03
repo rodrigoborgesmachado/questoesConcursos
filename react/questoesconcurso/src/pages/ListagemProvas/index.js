@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Config from "../../config.json";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-/*import { BsFunnelFill } from "react-icons/bs";*/
+import { BsFunnelFill } from "react-icons/bs";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from 'react-modal';
@@ -63,14 +63,14 @@ function ListagemProvas(){
         setIsOpen(false);
     }
 
-    async function buscaProvas(page){
+    async function buscaProvas(page, semFiltro){
         if(!sessionStorage.getItem(Config.TOKEN)){
             toast.info('Necessário logar para acessar!');
             navigate('/', {replace: true});
             return;
         }
 
-        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage)
+        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage + (semFiltro ? '' : '&prova=' + filtroNome))
         .then((response) => {
             if(response.data.success){
                 setProvas(response.data.object);
@@ -101,19 +101,16 @@ function ListagemProvas(){
     function filtrar(){
         closeModal();
         setLoadding(true);
-        setProvas(provas.filter(prova => prova.Nomeprova.toUpperCase().includes(filtroNome.toUpperCase())));
-        if(provas.length === 0){
-            alert("Não encontrado");
-        }
-        setLoadding(false);
+        setPage(1);
+        buscaProvas(1);
     }
 
     function limparFiltro(){
         closeModal();
         setFiltroNome('');
         setLoadding(true);
-        buscaProvas();
-        setLoadding(false);
+        setPage(1);
+        buscaProvas(1, true);
     }
 
     const handleChange = (event, value) => {
@@ -157,13 +154,9 @@ function ListagemProvas(){
             </Modal>
             <div className='opcoesProva'>
                 <h2><a onClick={limparFiltro}>Provas</a></h2>
-                {
-/*
                 <div className='opcaoFiltro'>
                     <h2><BsFunnelFill onClick={openModal}/></h2>
                 </div>
-*/
-                }
             </div>
             <div className='provas'>
                 {
@@ -204,9 +197,16 @@ function ListagemProvas(){
                         )
                     })
                 }
-                <Stack spacing={4}>
-                    <Pagination count={parseInt(quantity/quantityPerPage)+1} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
-                </Stack>
+                {
+                    quantity > 0 ?
+                    <Stack spacing={4}>
+                        <Pagination count={parseInt(quantity/quantityPerPage)+1} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
+                    </Stack>    
+                    :
+                    <>
+                    </>
+                }
+                
             </div>
         </div>
     )
