@@ -14,7 +14,7 @@ function ListagemQuestoes(){
 
     useEffect(() => {
         async function buscaQuestoes(){
-            if(!sessionStorage.getItem(Config.TOKEN)){
+            if(!localStorage.getItem(Config.TOKEN)){
                 toast.info('Necessário logar para acessar!');
                 navigate('/', {replace: true});
                 return;

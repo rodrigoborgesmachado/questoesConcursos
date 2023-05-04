@@ -67,12 +67,12 @@ const ResponsiveAppBar = () => {
   }
 
   function sair(){
-    sessionStorage.setItem(Config.LOGADO, 0);
-    sessionStorage.setItem(Config.USUARIO, '');
-    sessionStorage.setItem(Config.TOKEN, '');
-    sessionStorage.removeItem(Config.LOGADO);
-    sessionStorage.removeItem(Config.USUARIO);
-    sessionStorage.removeItem(Config.TOKEN);
+    localStorage.setItem(Config.LOGADO, 0);
+    localStorage.setItem(Config.USUARIO, '');
+    localStorage.setItem(Config.TOKEN, '');
+    localStorage.removeItem(Config.LOGADO);
+    localStorage.removeItem(Config.USUARIO);
+    localStorage.removeItem(Config.TOKEN);
     
     toast.success('Volte sempre!');
     navigate('/', {replace: true});
@@ -172,7 +172,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {
-                sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0'?
+                localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'?
                 <>
                 <h3>
                 <Link className='logo' to='/login'><span>Login</span></Link>

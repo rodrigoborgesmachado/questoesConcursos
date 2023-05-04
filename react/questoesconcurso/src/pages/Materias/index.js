@@ -17,7 +17,7 @@ function Materias(){
 
     useEffect(() => {
         async function buscaMaterias(){
-            if(!sessionStorage.getItem(Config.TOKEN)){
+            if(!localStorage.getItem(Config.TOKEN)){
                 toast.info('Necessário logar para acessar!');
                 navigate('/', {replace: true});
                 return;

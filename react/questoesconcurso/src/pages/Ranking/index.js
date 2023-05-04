@@ -9,13 +9,13 @@ import {toast} from 'react-toastify';
 function Ranking(){
     const[loadding, setLoadding] = useState(true);
     const[lista, setLista] = useState({});
-    const[usuarioLogado] = useState(sessionStorage.getItem(Config.USUARIO));
+    const[usuarioLogado] = useState(localStorage.getItem(Config.USUARIO));
     const navigate = useNavigate();
 
     useEffect(() => {
 
         async function BuscarRanking(){
-            if(!sessionStorage.getItem(Config.TOKEN)){
+            if(!localStorage.getItem(Config.TOKEN)){
                 toast.info('Necessário logar para acessar!');
                 navigate('/', {replace: true});
                 return;

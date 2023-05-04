@@ -17,7 +17,7 @@ function Provas(){
 
     useEffect(() => {
         async function buscaProvas(){
-            if(!sessionStorage.getItem(Config.TOKEN)){
+            if(!localStorage.getItem(Config.TOKEN)){
                 toast.info('Necessário logar para acessar!');
                 navigate('/', {replace: true});
                 return;

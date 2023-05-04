@@ -58,7 +58,7 @@ function CriarUsuario(){
         });
     }
 
-    if(sessionStorage.getItem(Config.LOGADO) != null && sessionStorage.getItem(Config.LOGADO) === '1'){
+    if(localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1'){
         navigate('/', {replace: true});
     }
 

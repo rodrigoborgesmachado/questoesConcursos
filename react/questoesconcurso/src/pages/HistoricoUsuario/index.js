@@ -29,7 +29,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 function HistoricoUsuario(){
     const navigate = useNavigate();
     
-    if(sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0'){
+    if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'){
         navigate('/', {replace: true});
     }
 

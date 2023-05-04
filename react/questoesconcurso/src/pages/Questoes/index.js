@@ -29,8 +29,8 @@ function Questoes(){
     const navigate = useNavigate();
     const{filtro} = useParams();
     const[questao, setQuestao] = useState({});
-    const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(sessionStorage.getItem(Config.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
-    const[questoesTotal, setQuestoesTotal] = useState(parseInt(sessionStorage.getItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
+    const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
+    const[questoesTotal, setQuestoesTotal] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
     const[loadding, setLoadding] = useState(true);
     const[tentativas, setTentativas] = useState(0);
     const[maxTentativas] = useState(5);
@@ -114,7 +114,7 @@ function Questoes(){
     }
 
     async function BuscarProximaQuestao(anterior = false, proxima = false){
-        if(!sessionStorage.getItem(Config.TOKEN)){
+        if(!localStorage.getItem(Config.TOKEN)){
             toast.info('Necessário logar para acessar!');
             navigate('/', {replace: true});
             return;
@@ -144,7 +144,7 @@ function Questoes(){
                 return;
             }
             setQuestoesTotal(questoesTotal+1);
-            sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, questoesTotal);
+            localStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, questoesTotal);
             setLoadding(false);
         }).catch(() => {
             toast.error('Erro ao buscar questão');
@@ -181,12 +181,12 @@ function Questoes(){
                 div.textContent = 'Correto';
                 toast.success('Resposta correta!');
                 
-                let lista = sessionStorage.getItem(Config.QUESTOES_FEITAS);
+                let lista = localStorage.getItem(Config.QUESTOES_FEITAS);
                 let listaResolvida = JSON.parse(lista) ?? [];
                 listaResolvida.push(codigo);
 
-                sessionStorage.setItem(Config.QUESTOES_FEITAS, JSON.stringify(listaResolvida));
-                sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, qtQuestoesCertas+1);
+                localStorage.setItem(Config.QUESTOES_FEITAS, JSON.stringify(listaResolvida));
+                localStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, qtQuestoesCertas+1);
                 setQtQuestoesCertas(qtQuestoesCertas+1);
 
                 var radios = document.getElementsByClassName('radioOption');

@@ -31,12 +31,12 @@ function Login(){
         await api.post(`/Token`, {username: email, password: stringToHash(senha)+''})
             .then((response) => {
                 setLoadding(false);
-                    sessionStorage.setItem(Config.LOGADO, 1);
-                    sessionStorage.setItem(Config.USUARIO, response.data.username);
-                    sessionStorage.setItem(Config.TOKEN, response.data.token);
-                    //sessionStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
-                    //sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
-                    //sessionStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);
+                    localStorage.setItem(Config.LOGADO, 1);
+                    localStorage.setItem(Config.USUARIO, response.data.username);
+                    localStorage.setItem(Config.TOKEN, response.data.token);
+                    //localStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
+                    //localStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
+                    //localStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);
                     toast.success('Bem vindo!');
 
                     //navigate('/', {replace: true});
@@ -52,7 +52,7 @@ function Login(){
         navigate('/criarUsuario', {replace: true});
     }
 
-    if(sessionStorage.getItem(Config.LOGADO) != null && sessionStorage.getItem(Config.LOGADO) === '1'){
+    if(localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1'){
         navigate('/', {replace: true});
     }
 
