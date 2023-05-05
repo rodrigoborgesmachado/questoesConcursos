@@ -13,6 +13,7 @@ import HistoricoUsuario from './pages/HistoricoUsuario';
 import PerfilUsuario from './pages/PerfilUsuario';
 import ListagemProvas from './pages/ListagemProvas';
 import ListagemQuestoes from './pages/ListagemQuestoes';
+import CadastraProva from './pages/CadastroProva';
 
 function RoutesApp(){
     return(
@@ -31,6 +32,7 @@ function RoutesApp(){
                 <Route path='/historico' element={<HistoricoUsuario/>}/>
                 <Route path='/perfil' element={<PerfilUsuario/>}/>
                 <Route path='/questoes/:filtro' element={<Questoes/>}/>
+                <Route path='/cadastroProva' element={<CadastraProva/>}/>
                 <Route path='*' element={<Erro/>}/>
             </Routes>
         </BrowserRouter>

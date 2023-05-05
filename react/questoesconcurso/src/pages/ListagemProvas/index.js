@@ -2,11 +2,11 @@ import './style.css';
 import { useEffect, useState } from 'react';
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Config from "../../config.json";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import { BsFunnelFill } from "react-icons/bs";
+import { BsFunnelFill, BsFileEarmarkPlusFill } from "react-icons/bs";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from 'react-modal';
@@ -126,6 +126,10 @@ function ListagemProvas(){
             </div>
         )
     }
+
+    function addProva(){
+        navigate('/cadastroProva', {replace: true});
+    }
     
     return(
         <div className='containerpage'>
@@ -155,6 +159,12 @@ function ListagemProvas(){
             <div className='opcoesProva'>
                 <h2><a onClick={limparFiltro}>Provas</a></h2>
                 <div className='opcaoFiltro'>
+                    {
+                        localStorage.getItem(Config.ADMIN) == '1' ?
+                        <h2><BsFileEarmarkPlusFill onClick={addProva}/></h2>
+                        :
+                        <></>
+                    }
                     <h2><BsFunnelFill onClick={openModal}/></h2>
                 </div>
             </div>

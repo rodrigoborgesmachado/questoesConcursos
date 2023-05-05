@@ -72,22 +72,25 @@ function CriarUsuario(){
 
     return(
         <div className="containerpage">
+            <h2>
+                Cadastro de Usuário
+            </h2>
             <div className='criarUsuario'>
-                <h2>
+                <h3>
                     Nome
-                </h2>
+                </h3>
                 <input type='text' value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                <h2>
+                <h3>
                     Email
-                </h2>
+                </h3>
                 <input type='email' value={email} name='email' id='email' onChange={(e) => setEmail(e.target.value)}></input>
-                <h2>
+                <h3>
                     Senha
-                </h2>
+                </h3>
                 <input type='password' value={senha} onChange={(e) => setSenha(e.target.value)}></input>
-                <h2>
+                <h3>
                     Data nascimento
-                </h2>
+                </h3>
                 <input type='date' value={nascimento} onChange={(e) => setNascimento(e.target.value)}></input>
                 <button onClick={confirmaFormulario}>Confirma</button>
             </div>

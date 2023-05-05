@@ -34,6 +34,7 @@ function Login(){
                     localStorage.setItem(Config.LOGADO, 1);
                     localStorage.setItem(Config.USUARIO, response.data.username);
                     localStorage.setItem(Config.TOKEN, response.data.token);
+                    localStorage.setItem(Config.ADMIN, response.data.admin);
                     //localStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
                     //localStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
                     //localStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);
@@ -43,7 +44,7 @@ function Login(){
                     window.location.href = '/';
             }).catch(() => {
                 setLoadding(false);
-                toast.error('Erro ao logar');
+                toast.error('Usuário ou senhas incorretos');
                 return;
             });
     }
