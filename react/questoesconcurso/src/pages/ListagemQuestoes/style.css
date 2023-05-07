@@ -36,3 +36,18 @@
     background-color: beige;
     color: #121212;
 }
+
+.opcoesQuestoes{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.opcaoFiltro{
+    display: flex;
+    width: 100%;
+    justify-content: right;
+    margin-right: 20px;
+}

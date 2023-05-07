@@ -40,7 +40,8 @@ function CadastraProva(){
                 navigate('/listagemprovas', {replace: true});
             }
             else{
-                toast.info('Já existe uma prova com esse nome!');
+                toast.info('Erro ao cadastrar!');
+                toast.warn(response.data.message);
             }
             setLoadding(false);
         }).catch(() => {

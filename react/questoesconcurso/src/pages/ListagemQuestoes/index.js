@@ -4,6 +4,7 @@ import { Table } from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import api from '../../services/api.js';
 import { useParams, useNavigate } from 'react-router-dom';
+import { BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
 
 function ListagemQuestoes(){
@@ -45,6 +46,10 @@ function ListagemQuestoes(){
         navigate('/questoes/codigoquestaolistagem:' + codigoQuestao, {replace: true});
     }
 
+    function addQuestao(){
+        navigate('/cadastraQuestao/' + filtro, {replace: true});
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -55,7 +60,18 @@ function ListagemQuestoes(){
 
     return(
         <div className='containerpage'>
-            <h2>Questões</h2>
+            <div className='opcoesQuestoes'>
+                <h2>Questões</h2>
+                <div className='opcaoFiltro'>
+                    {
+                        localStorage.getItem(Config.ADMIN) == '1' ?
+                        <h2 onClick={addQuestao}><BsFileEarmarkPlusFill/>  Adicionar</h2>
+                        :
+                        <></>
+                    }
+                </div>
+            </div>
+            
             <div className='questoes'>
             <Table>
                 <thead>

@@ -1,0 +1,136 @@
+.cadastroDeQuestao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+.cadastroDeQuestao h3{
+    padding: 10px;
+    justify-content: left;
+    justify-self: left;
+    align-self: flex-start;
+}
+
+.cadastroDeQuestao input{
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.cadastroDeQuestao textarea{
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+
+.cadastroDeQuestao button{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 30%;
+    font-size: 20px;
+    background-color: #116feb;
+    color: #FFF;
+    border-radius: 10px;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+.respostas{
+    flex-direction: column;
+}
+
+.respostas div{
+    width: 100%;
+}
+
+.respostas input{
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.respostas button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 20%;
+    font-size: 15px;
+    background-color: #cc123a;
+    color: #FFF;
+    border-radius: 10px;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+.addQuestao{
+    width: 100%;
+}
+
+.addQuestao button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 15%;
+    font-size: 15px;
+    background-color: #025018;
+    color: #FFF;
+    border-radius: 10px;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+.campoQuestao{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    width: 90%;   
+}
+
+.camposQuestaoAdd{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;   
+}
+
+.camposQuestaoAdd input{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    margin-left: 5%;
+    width: 90%;   
+}
+
+.botaoQuestao{
+    width: 20%;
+}
+
+.botaoQuestao button{
+    margin-left: 10%;
+    width: 80%;
+    font-size: 15px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.respostaCorretaOption{
+    display: flex;
+    align-items: start;
+    width: 20%;   
+}
+
+.respostaCorretaOption h3{
+    width: 20px;
+}
+
+.respostaCorretaOption input{
+    width: 30%;
+    padding: 0;
+    height: 100%;
+    margin-left: 0;
+    margin-top: 30px;
+}

@@ -14,6 +14,7 @@ import PerfilUsuario from './pages/PerfilUsuario';
 import ListagemProvas from './pages/ListagemProvas';
 import ListagemQuestoes from './pages/ListagemQuestoes';
 import CadastraProva from './pages/CadastroProva';
+import CadastraQuestao from './pages/CadastroQuestao';
 
 function RoutesApp(){
     return(
@@ -33,6 +34,7 @@ function RoutesApp(){
                 <Route path='/perfil' element={<PerfilUsuario/>}/>
                 <Route path='/questoes/:filtro' element={<Questoes/>}/>
                 <Route path='/cadastroProva' element={<CadastraProva/>}/>
+                <Route path='/cadastraQuestao/:filtro' element={<CadastraQuestao/>}/>
                 <Route path='*' element={<Erro/>}/>
             </Routes>
         </BrowserRouter>
