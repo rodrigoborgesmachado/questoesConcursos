@@ -6,7 +6,7 @@ function Home(){
         <div className="containerpage">
             <h3>
                 <span>
-                    Teste seus conhecimentos com questões de concursos, vestibulares e questões do Enem.
+                Com o QuestoesAqui, você pode se preparar para o Enem, Vestibulares e outros concursos públicos resolvendo questões de provas anteriores. Temos uma grande variedade de questões para você praticar, organizadas por disciplina e assunto. Além disso, você pode acompanhar seu progresso, identificar suas áreas de maior dificuldade e aprimorar seus conhecimentos com as explicações detalhadas de cada questão. Prepare-se para os desafios acadêmicos e profissionais com o QuestoesAqui!
                 </span>
             </h3>
             <br/>
