@@ -4,11 +4,28 @@ import Config from '../../config.json';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
+import Modal from 'react-modal';
+
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      width: '90%',
+      height: '80%',
+      border: 0,
+      background: '#424242',
+      marginRight: '-50%',
+      'border-radius': '5px',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
 
 function CadastraQuestao(){
     const navigate = useNavigate();
     const{filtro} = useParams();
     const[contadorImagem, setContadorImagem] = useState(0);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const[questao, setQuestao] = useState({
         campoQuestao: '',
@@ -74,6 +91,14 @@ function CadastraQuestao(){
     });
     const[loadding, setLoadding] = useState(false);
 
+    function openModal() {
+        setModalIsOpen(true);
+    }
+    
+    function closeModal() {
+        setModalIsOpen(false);
+    }
+
     function adicionaQuestao(){
         setQuestao({
           ...questao,
@@ -113,6 +138,18 @@ function CadastraQuestao(){
         });
     }
 
+    function createMarkup(text) { return {__html: text}; };
+
+    function createMarkupWithImages(text, anexos){
+        let temp = text;
+        
+        for(let i = 0; i< anexos.length; i++){
+            temp = temp.replace(`<img src="#" alt="Anexo" id="divAnexo${i}"/>`, `<img src=\"${anexos[i].anexo}\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`);
+        }
+
+        return createMarkup(temp);
+    }
+
     if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0' ){
         navigate('/', {replace: true});
     }
@@ -133,6 +170,54 @@ function CadastraQuestao(){
 
     return(
         <div className="containerpage">
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Questão"
+            >
+                <div className='contextModal'>
+                    <div className='Materia'>
+                        <h2>Matéria: {questao?.materia}</h2>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div className='descricaoQuestao'>
+                        {
+                            questao.anexosQuestoes.length > 0 ?
+                            <h4 dangerouslySetInnerHTML={createMarkupWithImages(questao.campoQuestao, questao.anexosQuestoes)}></h4>
+                            :
+                            <h4 dangerouslySetInnerHTML={createMarkup(questao.campoQuestao)}></h4>
+                        }
+                    </div>
+                    <br/>
+                    <br/>
+                    <div className='todasRespostas'>
+                        {
+                            questao.respostasQuestoes.map((item) => {
+                                return(
+                                    <div key={item.codigo} className='respostas'>
+                                        <label className='respostas'>
+                                            <input type='radio' className='radioOption' checked={item.certa} name={'Radio_' + item.codigo} />
+                                            {
+                                                <>
+                                                {
+                                                    item.anexoResposta.length > 0 ??
+                                                    <div id="imagemResposta">
+                                                        <img src={item.anexoResposta[0].anexo}/>
+                                                    </div>
+                                                }
+                                                <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
+                                                </>
+                                            }
+                                        </label>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            </Modal>
             <div className="cadastroDeQuestao">
                 <h3>
                   Descrição:
@@ -173,7 +258,7 @@ function CadastraQuestao(){
                     </button>
                     <button onClick={
                         () => {
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + "<img src='#' alt='Anexo' id='divAnexo`" + contadorImagem + "`'/>" });
+                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<img src="#" alt="Anexo" id="divAnexo' + contadorImagem + '"/>' });
                             setContadorImagem(contadorImagem+1);
                         }
                     }
@@ -326,7 +411,6 @@ function CadastraQuestao(){
                                 </h3>
                                 <input
                                     type='file'
-                                    multiple="multiple"
                                     onInput=
                                     {(event) =>
                                         {
@@ -375,6 +459,9 @@ function CadastraQuestao(){
                 </div>
                 <br />
                 <br />
+                <button onClick={openModal}> 
+                    Testar Layout
+                </button>
                 <button onClick={confirmaFormulario}>Cadastrar Questão</button>
             </div>
         </div>
