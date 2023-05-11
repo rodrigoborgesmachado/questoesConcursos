@@ -15,6 +15,8 @@ import ListagemProvas from './pages/ListagemProvas';
 import ListagemQuestoes from './pages/ListagemQuestoes';
 import CadastraProva from './pages/CadastroProva';
 import CadastraQuestao from './pages/CadastroQuestao';
+import RecoveryPass from './pages/RecoveryPass';
+import ResetPass from './pages/ResetPass';
 
 function RoutesApp(){
     return(
@@ -35,6 +37,8 @@ function RoutesApp(){
                 <Route path='/questoes/:filtro' element={<Questoes/>}/>
                 <Route path='/cadastroProva' element={<CadastraProva/>}/>
                 <Route path='/cadastraQuestao/:filtro' element={<CadastraQuestao/>}/>
+                <Route path='/recoverypass' element={<RecoveryPass/>}/>
+                <Route path='/resetpass/:guid' element={<ResetPass/>}/>
                 <Route path='*' element={<Erro/>}/>
             </Routes>
         </BrowserRouter>

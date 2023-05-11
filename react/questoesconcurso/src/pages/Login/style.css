@@ -6,6 +6,12 @@
     width: 100%;
 }
 
+.login a{
+    width: 10%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
 .login h2{
     padding: 5px;
     justify-content: left;

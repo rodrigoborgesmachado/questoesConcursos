@@ -4,6 +4,7 @@ import Config from './../../config.json';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Login(){
     const navigate = useNavigate();
@@ -53,7 +54,7 @@ function Login(){
         navigate('/criarUsuario', {replace: true});
     }
 
-    if(localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1'){
+    if(localStorage.getItem(Config.LOGADO) == 1){
         navigate('/', {replace: true});
     }
 
@@ -76,7 +77,7 @@ function Login(){
                     Senha
                 </h2>
                 <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
-                <a target='_blank' rel='noreferrer' href='http://concursando.sunsalesystem.com.br/EsqueciSenha.html'>Esqueci minha senha</a>
+                <Link className='botao' to={`/recoverypass`}>Esqueci minha senha</Link>
                 <button onClick={logar}>Logar</button>
                 <button onClick={criarUsuario}>Criar usuário</button>
             </div>
