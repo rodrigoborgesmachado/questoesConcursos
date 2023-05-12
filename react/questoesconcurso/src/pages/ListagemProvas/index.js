@@ -196,9 +196,17 @@ function ListagemProvas(){
                                     </>
                                 }
                                 <br/>
-                                <a className='botaoBaixarArquivo' target="_blank" href={item.linkProva}><CloudDownloadIcon/> Prova</a>
+                                {
+                                    item.linkProva ?
+                                    <a className='botaoBaixarArquivo' target="_blank" href={item.linkProva}><CloudDownloadIcon/> Prova</a>
+                                    :<></>
+                                }
                                 <br/>
-                                <a className='botaoBaixarArquivo' target="_blank" href={item.linkGabarito}><CloudDownloadIcon/> Gabarito</a>
+                                {
+                                    item.linkGabarito ?
+                                    <a className='botaoBaixarArquivo' target="_blank" href={item.linkGabarito}><CloudDownloadIcon/> Gabarito</a>
+                                    :<></>
+                                }
                                 </h4>
                                 <button onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
                                 <br/>
