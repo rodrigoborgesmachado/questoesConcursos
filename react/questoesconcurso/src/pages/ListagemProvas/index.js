@@ -178,6 +178,8 @@ function ListagemProvas(){
                                     <b>{item.nomeProva}</b> 
                                 </div>
                                 <br/>
+                                <b>Tipo:</b> {item.tipoProva}
+                                <br/>
                                 <b>Local de aplicação:</b> {item.local}
                                 <br/>
                                 <b>Banca:</b> {item.banca}
