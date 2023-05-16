@@ -76,17 +76,22 @@ function Ranking(){
                                 <tr key={item.nome} className={item.login === usuarioLogado  ? 'posicao' : ''}>
                                     <td>
                                         <h4>
-                                            {index + 1}
+                                            {index == 0 ? <>🥇</> : <></>}
+                                            {index == 1 ? <>🥈</> : <></>}
+                                            {index == 2 ? <>🥉</> : <></>}
+                                            {index > 2 ? <>{index + 1}</> : <></>}
                                         </h4>
                                     </td>
                                     <td key={item.nome}>
                                         <h4>
-                                        {item.nome}
+                                            {index == 0 ? <>🏆</> : <></>}
+                                            {item.nome}
                                         </h4>
                                     </td>
                                     <td>
                                         <h4>
-                                        {item.quantidade}
+                                            {index == 0 ? <>🏆</> : <></>}
+                                            {item.quantidade}
                                         </h4>
                                     </td>
                                 </tr>

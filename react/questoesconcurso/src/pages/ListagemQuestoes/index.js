@@ -97,7 +97,7 @@ function ListagemQuestoes(){
                                 <tr key={item.id}>
                                     <td>
                                         <h4>
-                                            {item.numeroQuestao}
+                                        ✏️{item.numeroQuestao}
                                         </h4>
                                     </td>
                                     <td>

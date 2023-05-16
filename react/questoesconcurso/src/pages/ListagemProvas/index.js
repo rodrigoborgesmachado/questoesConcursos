@@ -175,7 +175,7 @@ function ListagemProvas(){
                             <div key={item.id}>
                                 <h4>
                                 <div className='tituloProva'>
-                                    <b>{item.nomeProva}</b> 
+                                    <b>📚{item.nomeProva}📚</b> 
                                 </div>
                                 <br/>
                                 <b>Tipo:</b> {item.tipoProva}
@@ -186,11 +186,11 @@ function ListagemProvas(){
                                 <br/>
                                 <b>Data de aplicação:</b> {item.dataAplicacao}
                                 <br/>
-                                <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}
+                                <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}🔥
                                 {
                                     <>
                                     <br/>
-                                    <b>Quantidade de questões resolvidas:</b> {item.quantidadeQuestoesResolvidas}
+                                    <b>Quantidade de questões resolvidas:</b> {item.quantidadeQuestoesResolvidas}✅
                                     <br/>
                                     <b>Progresso:</b>
                                     <br/>
@@ -210,7 +210,7 @@ function ListagemProvas(){
                                     :<></>
                                 }
                                 </h4>
-                                <button onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
+                                <button onClick={() => abrirQuestao(item.id)}>Visualizar questões✏️</button>
                                 <br/>
                                 <br/>
                             </div>
@@ -220,7 +220,7 @@ function ListagemProvas(){
                 {
                     quantity > 0 ?
                     <Stack spacing={4}>
-                        <Pagination count={parseInt(quantity/quantityPerPage)+1} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
+                        <Pagination count={(quantity/quantityPerPage)+1} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
                     </Stack>    
                     :
                     <>
