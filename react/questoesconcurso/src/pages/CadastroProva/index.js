@@ -52,7 +52,7 @@ function CadastraProva(){
     }
 
     if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0' ){
-        navigate('/', {replace: true});
+        navigate('/login', {replace: true});
     }
 
     if(localStorage.getItem(Config.ADMIN) != '1'){

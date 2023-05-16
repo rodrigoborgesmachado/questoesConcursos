@@ -30,7 +30,7 @@ function HistoricoUsuario(){
     const navigate = useNavigate();
     
     if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'){
-        navigate('/', {replace: true});
+        navigate('/login', {replace: true});
     }
 
     const[loadding, setLoadding] = useState(true);
