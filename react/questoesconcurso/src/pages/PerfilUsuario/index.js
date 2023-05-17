@@ -8,11 +8,14 @@ import {toast} from 'react-toastify';
 function PerfilUsuario(){
     const[usuario, setUsuario] = useState();
     const navigate = useNavigate();
+    const[loadding, setLoadding] = useState(false);
 
     useEffect(() => {
         async function BuscaDadosUsuario(){
+            setLoadding(true);
             await api.get('/Usuarios/getPerfil')
             .then((response) => {
+                setLoadding(false);
                 setUsuario(response.data.object);
             })
             .catch(() => {
@@ -28,6 +31,14 @@ function PerfilUsuario(){
             navigate('/', true);
         }
     }, []);
+
+    if(loadding){
+        return(
+            <div className='loaddingDiv'>
+                <img src={require('../../assets/hug.gif')} alt="Loading..." />
+            </div>
+        )
+    }
 
     return(
         <div className="containerpage">

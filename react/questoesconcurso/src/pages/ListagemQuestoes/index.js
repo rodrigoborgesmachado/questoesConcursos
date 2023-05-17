@@ -96,12 +96,12 @@ function ListagemQuestoes(){
                             return(
                                 <tr key={item.id}>
                                     <td>
-                                        <h4>
+                                        <h4 onClick={() => abreQuestao(item.id)}>
                                         ✏️{item.numeroQuestao}
                                         </h4>
                                     </td>
                                     <td>
-                                        <h4>
+                                        <h4 onClick={() => abreQuestao(item.id)}>
                                         {item.materia}
                                         </h4>
                                     </td>

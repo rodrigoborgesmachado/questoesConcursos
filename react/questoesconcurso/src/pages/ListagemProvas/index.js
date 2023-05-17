@@ -15,7 +15,7 @@ import Stack from '@mui/material/Stack';
 
 const customStyles = {
     content: {
-      top: '20%',
+      top: '30%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
@@ -24,6 +24,7 @@ const customStyles = {
       marginRight: '-50%',
       'border-radius': '5px',
       transform: 'translate(-50%, -50%)',
+      width: '50%'
     },
   };
 
@@ -53,7 +54,7 @@ function ListagemProvas(){
     const [filtroNome, setFiltroNome] = useState('');
     const [page, setPage] = useState(1);
     const [quantity, setQuantity] = useState(1);
-    const [quantityPerPage] = useState(5);
+    const [quantityPerPage] = useState(7);
 
     function openModal() {
         setIsOpen(true);
@@ -146,13 +147,13 @@ function ListagemProvas(){
                     <div className='filtros'>
                         <br/>
                         <h4>
-                            Nome:
+                            Prova:
                             <input type='text' value={filtroNome} onChange={(e) => setFiltroNome(e.target.value)}/>
                         </h4>
                     </div>
-                    <div className='botoesModal'>
-                        <button onClick={filtrar}>Filtrar</button>
+                    <div className='botoesModalFiltro'>
                         <button onClick={limparFiltro}>Limpar</button>
+                        <button onClick={filtrar}>Filtrar</button>
                     </div>
                 </div>
             </Modal>
@@ -199,7 +200,7 @@ function ListagemProvas(){
                                 }
                                 <br/>
                                 {
-                                    item.linkProva ?
+                                    /*item.linkProva ?
                                     <a className='botaoBaixarArquivo' target="_blank" href={item.linkProva}><CloudDownloadIcon/> Prova</a>
                                     :<></>
                                 }
@@ -207,7 +208,7 @@ function ListagemProvas(){
                                 {
                                     item.linkGabarito ?
                                     <a className='botaoBaixarArquivo' target="_blank" href={item.linkGabarito}><CloudDownloadIcon/> Gabarito</a>
-                                    :<></>
+                                    :<></>*/
                                 }
                                 </h4>
                                 <button onClick={() => abrirQuestao(item.id)}>Visualizar questões✏️</button>
