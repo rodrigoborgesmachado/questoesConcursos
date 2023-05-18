@@ -251,7 +251,12 @@ function Questoes(){
     }
 
     function ListagemProva(){
-        navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
+        if(filtro.includes('codigoquestaohistorico')){
+            navigate('/historico/', {replace: true});
+        }
+        else{
+            navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
+        }
     }
 
     if(loadding || !questao){
@@ -308,7 +313,7 @@ function Questoes(){
             </Modal>
             <div className='opcoesQuestao'>
                 <div className='total'>
-                    <h2 onClick={ListagemProva}><BsFillArrowLeftCircleFill size={40}/>Questões corretas: {qtQuestoesCertas}/{questoesTotal}</h2>
+                    <h2 onClick={ListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
                 </div>
                 <div className='opcaoVerificacao'>
                     <h2><BsChatLeftDotsFill onClick={openModalSolicitarRevisao}/></h2>
