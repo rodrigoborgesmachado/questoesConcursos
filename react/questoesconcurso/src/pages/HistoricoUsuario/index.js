@@ -7,6 +7,8 @@ import {toast} from 'react-toastify';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -36,26 +38,37 @@ function HistoricoUsuario(){
     const[loadding, setLoadding] = useState(true);
     const[lista, setLita] = useState([]);
     const[qtTotal, setQtTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [quantity, setQuantity] = useState(1);
+    const [quantityPerPage] = useState(10);
+
+    async function BuscarRespostas(page){
+        await api.get(`/RespostasUsuaro/getHistory?page=` + page + `&quantity=` + quantityPerPage)
+        .then(response => {
+            setLita(response.data.object);
+            setQtTotal(parseInt(response.data.total));
+            setQuantity(parseInt(response.data.quantity));
+        })
+        .catch(exception => {
+            toast.warn(exception);
+        });
+        setLoadding(false);
+    }
 
     useEffect(() => {
-        async function BuscarRespostas(){
-            await api.get(`/RespostasUsuaro/getHistory`)
-            .then(response => {
-                setLita(response.data.object);
-                setQtTotal(parseInt(response.data.quantity));
-            })
-            .catch(exception => {
-                toast.warn(exception);
-            });
-            setLoadding(false);
-        }
-
-        BuscarRespostas();
+        setLoadding(true);
+        BuscarRespostas(1);
     }, [])
 
     function abreQuestao(codigoQuestao){
         navigate('/questoes/codigoquestaohistorico:' + codigoQuestao, {replace: true});
     }
+
+    const handleChange = (event, value) => {
+        setPage(value);
+        setLoadding(true);
+        BuscarRespostas(value);
+      };
 
     if(loadding){
         return(
@@ -72,19 +85,16 @@ function HistoricoUsuario(){
             </h2>
             <br/>
             <div className='dadosResumidos'>
-                Progresso:
+                Progresso:✅
                 <br/>
                 <br/>
-                Total de questões tentadas: {qtTotal}
+                Total de questões tentadas: {qtTotal}😁
                 <br/>
-                Total de questões <b>certas</b> respondidas: {lista?.filter(item => item.respostaCorreta === '1')?.length}
+                Total de questões <b>certas</b> respondidas: {quantity}🤩
                 <br/>
                 <br/>
-                Taxa de acertos: 
-                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta === '1')?.length/lista?.length) * 100)} />
-                <br/>
-                Progresso de questões resolvidas: {lista?.filter(item => item.respostaCorreta === '1')?.length} de {qtTotal} 
-                <LinearProgressWithLabel value={parseInt((lista?.filter(item => item.respostaCorreta === '1')?.length/qtTotal) * 100)} />
+                Progresso de questões resolvidas corretamente: {quantity} de {qtTotal} 
+                <LinearProgressWithLabel value={parseInt((quantity/qtTotal) * 100)} />
                 <br/>
                 <br/>
             </div>
@@ -97,21 +107,30 @@ function HistoricoUsuario(){
                     return(
                         <div key={index} className='descricao'>
                             <h4>
-                                Prova: {item.nomeProva}
+                                Prova: {item.nomeProva}📚
                                 <br/>
                                 Questão: {item.numeroQuestao}
                                 <br/>
-                                Resposta: {item.respostaCorreta === '1' ? "CORRETA" : "INCORRETA"}
+                                Resposta: {item.respostaCorreta === '1' ? "CORRETA🥳" : "INCORRETA😒"}
                                 <br/>
                                 Data resposta: {item.dataResposta?.replace('T', ' ')}
                                 <br/>
-                                <button onClick={() => abreQuestao(item.codigoQuestao)}>Visualizar Questão</button>
+                                <button onClick={() => abreQuestao(item.codigoQuestao)}>Visualizar Questão✏️</button>
                                 <br/>
                                 <br/>
                             </h4>
                         </div>
                     )
                 })
+            }
+            {
+                qtTotal > 0 ?
+                <Stack spacing={4}>
+                    <Pagination count={parseInt((qtTotal/quantityPerPage)+1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
+                </Stack>    
+                :
+                <>
+                </>
             }
             </div>
         </div>

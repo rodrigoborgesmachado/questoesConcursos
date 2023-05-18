@@ -211,7 +211,7 @@ function ListagemProvas(){
                                     :<></>*/
                                 }
                                 </h4>
-                                <button onClick={() => abrirQuestao(item.id)}>Visualizar questões✏️</button>
+                                <button onClick={() => abrirQuestao(item.id)}>Visualizar questão✏️</button>
                                 <br/>
                                 <br/>
                             </div>

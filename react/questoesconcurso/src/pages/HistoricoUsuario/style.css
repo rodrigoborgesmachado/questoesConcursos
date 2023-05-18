@@ -3,6 +3,16 @@
     padding: 4px;
 }
 
+.itens a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.itens li{
+  background-color: beige;
+  border-radius: 15px;
+}
+
 .dadosResumidos{
     width: 80%;
 }

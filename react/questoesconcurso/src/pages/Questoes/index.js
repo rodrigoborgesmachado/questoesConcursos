@@ -254,8 +254,11 @@ function Questoes(){
         if(filtro.includes('codigoquestaohistorico')){
             navigate('/historico/', {replace: true});
         }
-        else{
+        else if(filtro.includes('codigoquestaolistagem')){
             navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
+        }
+        else{
+            navigate('/', {replace: true});
         }
     }
 
