@@ -221,7 +221,7 @@ function ListagemProvas(){
                 {
                     quantity > 0 ?
                     <Stack spacing={4}>
-                        <Pagination count={(quantity/quantityPerPage)+1} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
+                        <Pagination count={parseInt((quantity/quantityPerPage)+1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
                     </Stack>    
                     :
                     <>
