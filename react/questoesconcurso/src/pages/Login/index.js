@@ -34,6 +34,7 @@ function Login(){
                 setLoadding(false);
                     localStorage.setItem(Config.LOGADO, 1);
                     localStorage.setItem(Config.USUARIO, response.data.username);
+                    localStorage.setItem(Config.Nome, response.data.nome);
                     localStorage.setItem(Config.TOKEN, response.data.token);
                     localStorage.setItem(Config.ADMIN, response.data.admin);
                     //localStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);

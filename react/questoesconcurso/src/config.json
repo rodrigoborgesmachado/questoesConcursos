@@ -6,5 +6,6 @@
     "USUARIO":"usuario",
     "TOKEN":"token",
     "ADMIN":"admin",
-    "CodigoUsuario":"codigousuario"
+    "CodigoUsuario":"codigousuario",
+    "Nome":"nomeUsuario"
 }

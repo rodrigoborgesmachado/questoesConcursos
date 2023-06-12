@@ -19,7 +19,10 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const pages = ['Ranking dos usuários🔝', 'Provas📚'];
-const settings = ['Perfil👽', 'Histórico⏳', 'Sair👋'];
+if(localStorage.getItem(Config.ADMIN) === '1'){
+  pages.push('Admin');
+}
+const settings = ['Olá ' + localStorage.getItem(Config.Nome), 'Perfil👽', 'Histórico⏳', 'Sair👋'];
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
@@ -50,18 +53,21 @@ const ResponsiveAppBar = () => {
     else if(page === pages[1]){
       navigate('/listagemprovas', {replace: true});
     }
+    else if(page === pages[2]){
+      navigate('/admin', {replace: true});
+    }
   }
 
   function SelecionaOpcaoUsuario(setting){
     handleCloseUserMenu();
     
-    if(setting === settings[0]){
+    if(setting === settings[1]){
       navigate('/perfil', {replace: true});
     }
-    else if(setting === settings[1]){
+    else if(setting === settings[2]){
         navigate('/historico', {replace: true});
     }
-    else if(setting === settings[2]){
+    else if(setting === settings[3]){
         sair();
     }
   }
@@ -206,7 +212,7 @@ const ResponsiveAppBar = () => {
                   {settings.map((setting) => (
                     <MenuItem key={setting} onClick={(e) => SelecionaOpcaoUsuario(setting)}>
                       <Typography textAlign="center">
-                        {setting}
+                          {setting}
                         </Typography>
                     </MenuItem>
                   ))}

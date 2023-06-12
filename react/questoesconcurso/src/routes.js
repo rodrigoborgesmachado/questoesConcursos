@@ -17,6 +17,8 @@ import CadastraProva from './pages/CadastroProva';
 import CadastraQuestao from './pages/CadastroQuestao';
 import RecoveryPass from './pages/RecoveryPass';
 import ResetPass from './pages/ResetPass';
+import Admin from './pages/Admin';
+import Config from './config.json';
 
 function RoutesApp(){
     return(
@@ -39,6 +41,12 @@ function RoutesApp(){
                 <Route path='/cadastraQuestao/:filtro' element={<CadastraQuestao/>}/>
                 <Route path='/recoverypass' element={<RecoveryPass/>}/>
                 <Route path='/resetpass/:guid' element={<ResetPass/>}/>
+                {
+                    localStorage.getItem(Config.ADMIN) === '1' ?
+                    <Route path='/admin' element={<Admin/>}/>
+                    :
+                    <></>
+                }
                 <Route path='*' element={<Erro/>}/>
             </Routes>
         </BrowserRouter>
