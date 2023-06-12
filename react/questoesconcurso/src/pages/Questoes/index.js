@@ -10,6 +10,7 @@ import { BsQuestionLg } from "react-icons/bs";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import Modal from 'react-modal';
+import Tempo from './../../components/Tempo/tempo.js';
 
 const customStyles = {
     content: {
@@ -64,8 +65,10 @@ function Questoes(){
     }
 
     useEffect(() => {
-        if(loadding)
+        if(loadding){
             BuscarProximaQuestao();
+            localStorage.setItem(Config.TEMPO_PARAM, 0);
+        }
     }, [])
     
     function BuscaUrl(anterior = false, proxima = false){
@@ -78,16 +81,15 @@ function Questoes(){
         else if(filtro.includes('bancas')){
             return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&bancas` + filtro.replace('bancas&', '');
         }
-        else if(filtro.includes('provas')){
-            let temp =  `/Questoes/getQuestao?codigoProva=` + filtro.replace('provas&', '');
+        else if(filtro.includes('provas') || filtro.includes('simulado')){
+            let temp =  `/Questoes/getQuestao?codigoProva=` + filtro.replace('provas&', '').replace('simulado&', '');
 
             if(Object.keys(questao).length > 0){
-                temp += "&numeroQuestao=" + (questao?.numeroquestao + 1 - (anterior ? 2 : 0));
+                temp += "&numeroQuestao=" + (parseInt(questao?.numeroQuestao) + 1 - (anterior ? 2 : 0));
             }
             else{
                 temp += "&numeroQuestao=1";
             }
-
             return temp;
         }
         else if(filtro.includes('codigoquestaohistorico')){
@@ -127,9 +129,19 @@ function Questoes(){
                 setQuestao(response.data.object);
             }
             else{
-                if(response.data.Mensagem === 'Não há mais itens!'){
-                    toast.success('Você respondeu todas as questões dessa prova!');
-                    navigate('/listagemprovas', {replace: true});
+                alert(response.data.message);
+                var simulado = filtro.includes('simulado');
+                
+                if(response.data.message === 'Not registered'){
+                    if(simulado){
+                        toast.success('Prova finalizada em ' + localStorage.getItem(parseInt(Config.TEMPO_PARAM)/60) + ' minutos!');
+                        navigate('/resultadosimulado/' + questao?.codigoProva, {replace: true});
+                    }
+                    else{
+                        toast.success('Você respondeu todas as questões dessa prova!');
+                        navigate('/listagemprovas', {replace: true});
+                    }
+                    
                     return;
                 }
 
@@ -166,46 +178,63 @@ function Questoes(){
     }
 
     async function ValidaResposta(e, codigo){
+        var simulado = filtro.includes('simulado');
+
         await api.get(`/RespostasQuestoes/validaResposta`, {
             params:{
                 "id": codigo
             }
         })
         .then(async (response) => {
-            var div = document.createElement('div');
-            div.style.justifyContent = 'right';
-            div.style.paddingLeft = '20px';
-            
-            if(response.data.object?.certa == "1"){
-                div.style.color = 'green';
-                div.textContent = 'Correto';
-                toast.success('Resposta correta!');
-                
-                let lista = localStorage.getItem(Config.QUESTOES_FEITAS);
-                let listaResolvida = JSON.parse(lista) ?? [];
-                listaResolvida.push(codigo);
+            if(simulado){
+                var resposta = {
+                    codigoProva: questao?.codigoProva,
+                    codigoQuestao: questao?.codigo,
+                    certa: response.data.object?.certa,
+                    numeroQuestao: questao?.numeroQuestao
+                };
+                var historico = JSON.parse(localStorage.getItem(Config.Historico + questao?.codigoProva)) ?? new Array();
+                historico.push(resposta);
 
-                localStorage.setItem(Config.QUESTOES_FEITAS, JSON.stringify(listaResolvida));
-                localStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, qtQuestoesCertas+1);
-                setQtQuestoesCertas(qtQuestoesCertas+1);
-
-                var radios = document.getElementsByClassName('radioOption');
-
-                for(let i = 0; i<radios.length;i++){
-                    radios[i].disabled = true;
-                }
+                localStorage.setItem(Config.Historico + questao?.codigoProva, JSON.stringify(historico));
+                BuscarProximaQuestao(false, true);
             }
             else{
-                div.style.color = 'red';
-                div.textContent = 'Incorreto';
-                toast.warn('Resposta incorreta!');
-
-                e.target.checked = false;
-            }
-            e.target.parentElement.appendChild(div);
-
-            if(filtro.includes('codigoquestaohistorico')){
-                navigate('/historico', true);
+                var div = document.createElement('div');
+                div.style.justifyContent = 'right';
+                div.style.paddingLeft = '20px';
+                
+                if(response.data.object?.certa == "1"){
+                    div.style.color = 'green';
+                    div.textContent = 'Correto';
+                    toast.success('Resposta correta!');
+                    
+                    let lista = localStorage.getItem(Config.QUESTOES_FEITAS);
+                    let listaResolvida = JSON.parse(lista) ?? [];
+                    listaResolvida.push(codigo);
+    
+                    localStorage.setItem(Config.QUESTOES_FEITAS, JSON.stringify(listaResolvida));
+                    localStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, qtQuestoesCertas+1);
+                    setQtQuestoesCertas(qtQuestoesCertas+1);
+    
+                    var radios = document.getElementsByClassName('radioOption');
+    
+                    for(let i = 0; i<radios.length;i++){
+                        radios[i].disabled = true;
+                    }
+                }
+                else{
+                    div.style.color = 'red';
+                    div.textContent = 'Incorreto';
+                    toast.warn('Resposta incorreta!');
+    
+                    e.target.checked = false;
+                }
+                e.target.parentElement.appendChild(div);
+    
+                if(filtro.includes('codigoquestaohistorico')){
+                    navigate('/historico', true);
+                }
             }
         }).catch((Exception) => {
             toast.warn('Erro ao validar resposta!');
@@ -317,6 +346,7 @@ function Questoes(){
             <div className='opcoesQuestao'>
                 <div className='total'>
                     <h2 onClick={ListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
+                    <Tempo inicio={parseInt(localStorage.getItem(Config.TEMPO_PARAM))}/>
                 </div>
                 <div className='opcaoVerificacao'>
                     <h2><BsChatLeftDotsFill onClick={openModalSolicitarRevisao}/></h2>

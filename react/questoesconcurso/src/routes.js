@@ -19,6 +19,7 @@ import RecoveryPass from './pages/RecoveryPass';
 import ResetPass from './pages/ResetPass';
 import Admin from './pages/Admin';
 import Config from './config.json';
+import Resultado from './pages/ResultadoSimulado';
 
 function RoutesApp(){
     return(
@@ -41,6 +42,7 @@ function RoutesApp(){
                 <Route path='/cadastraQuestao/:filtro' element={<CadastraQuestao/>}/>
                 <Route path='/recoverypass' element={<RecoveryPass/>}/>
                 <Route path='/resetpass/:guid' element={<ResetPass/>}/>
+                <Route path='/resultadosimulado/:filtro' element={<Resultado/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <Route path='/admin' element={<Admin/>}/>

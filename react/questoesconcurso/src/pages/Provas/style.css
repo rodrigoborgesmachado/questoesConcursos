@@ -1,11 +1,6 @@
 .opcoes{
+    margin-top: 0;
     width: 80%;
     height: 100%;
-    margin-top: 5%;
     color: black;
-}
-
-.continuar{
-    position: absolute;
-    bottom: 22%;
 }

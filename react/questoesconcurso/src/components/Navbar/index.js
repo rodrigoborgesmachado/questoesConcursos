@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const pages = ['Ranking dos usuários🔝', 'Provas📚'];
+const pages = ['Ranking dos usuários🔝', 'Provas📚', 'Simulados🧾'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
@@ -54,6 +54,9 @@ const ResponsiveAppBar = () => {
       navigate('/listagemprovas', {replace: true});
     }
     else if(page === pages[2]){
+      navigate('/provas', {replace: true});
+    }
+    else if(page === pages[3]){
       navigate('/admin', {replace: true});
     }
   }
@@ -77,6 +80,7 @@ const ResponsiveAppBar = () => {
     localStorage.setItem(Config.USUARIO, '');
     localStorage.setItem(Config.TOKEN, '');
     localStorage.setItem(Config.ADMIN, '');
+    localStorage.setItem(Config.TEMPO_PARAM, 0);
     localStorage.removeItem(Config.LOGADO);
     localStorage.removeItem(Config.USUARIO);
     localStorage.removeItem(Config.TOKEN);

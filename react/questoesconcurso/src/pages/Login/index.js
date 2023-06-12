@@ -37,6 +37,7 @@ function Login(){
                     localStorage.setItem(Config.Nome, response.data.nome);
                     localStorage.setItem(Config.TOKEN, response.data.token);
                     localStorage.setItem(Config.ADMIN, response.data.admin);
+                    localStorage.setItem(Config.TEMPO_PARAM, 0);
                     //localStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
                     //localStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
                     //localStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);

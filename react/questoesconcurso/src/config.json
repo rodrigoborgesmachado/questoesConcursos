@@ -7,5 +7,7 @@
     "TOKEN":"token",
     "ADMIN":"admin",
     "CodigoUsuario":"codigousuario",
-    "Nome":"nomeUsuario"
+    "Nome":"nomeUsuario",
+    "TEMPO_PARAM":"tempo",
+    "Historico": "historico"
 }
