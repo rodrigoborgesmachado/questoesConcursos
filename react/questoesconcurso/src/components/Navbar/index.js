@@ -54,7 +54,7 @@ const ResponsiveAppBar = () => {
       navigate('/listagemprovas', {replace: true});
     }
     else if(page === pages[2]){
-      navigate('/provas', {replace: true});
+      navigate('/simulado', {replace: true});
     }
     else if(page === pages[3]){
       navigate('/admin', {replace: true});

@@ -147,7 +147,7 @@ function Questoes(){
                         })
                         .catch(() => {
                             toast.error('Error ao abrir resultado do simulado');
-                            navigate('/provas', {replace: true});
+                            navigate('/simulado', {replace: true});
                         });
                     }
                     else{

@@ -5,7 +5,7 @@ import Questoes from './pages/Questoes';
 import Header from './components/Header';
 import Materias from './pages/Materias';
 import Bancas from './pages/Bancas';
-import Provas from './pages/Provas';
+import Simulado from './pages/Simulado';
 import Login from './pages/Login';
 import CriarUsuario from './pages/CriarUsuario';
 import Ranking from './pages/Ranking';
@@ -29,7 +29,7 @@ function RoutesApp(){
                 <Route path='/' element={<Home/>}/>
                 <Route path='/materias' element={<Materias/>}/>
                 <Route path='/bancas' element={<Bancas/>}/>
-                <Route path='/provas' element={<Provas/>}/>
+                <Route path='/simulado' element={<Simulado/>}/>
                 <Route path='/listagemprovas' element={<ListagemProvas/>}/>
                 <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>
                 <Route path='/login' element={<Login/>}/>

@@ -5,10 +5,10 @@ import api from '../../services/api.js';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Config from './../../config.json';
+import Config from '../../config.json';
 import './style.css';
 
-function Provas(){
+function Simulado(){
     const navigate = useNavigate();
     const animatedComponents = makeAnimated();
     const[provas, setProvas] = useState([]);
@@ -23,7 +23,7 @@ function Provas(){
                 return;
             }
             
-            await api.get('/Prova/GetAllProvas')
+            await api.get('/Prova/GetSimulados')
             .then((response) => {
                 let prov = [];
                 if(response.data.success){
@@ -86,4 +86,4 @@ function Provas(){
     )
 }
 
-export default Provas;
+export default Simulado;
