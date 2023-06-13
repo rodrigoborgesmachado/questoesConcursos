@@ -7,6 +7,7 @@ import api from '../../services/api.js';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { Table } from 'react-bootstrap';
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -97,26 +98,51 @@ function Resultado(){
                     <br/>
                     Quantidade de questões respondidas certas: {respostas.filter((item) => item.certa === '1').length}🤩
                     <br/>
-                    Taxa de acertos: {(respostas.filter((item) => item.certa === '1').length/respostas.length)*100}%
+                    Taxa de acertos: {Math.round((respostas.filter((item) => item.certa === '1').length/respostas.length)*100)}%
                     <br/>
-                    <LinearProgressWithLabel value={parseInt((respostas.filter((item) => item.certa === '1').length/respostas.length)*100)} />
+                    Pontuação final: {Math.round((respostas.filter((item) => item.certa === '1').length/respostas.length)*100)} de 100
                 </h3>
             </div>
+            <div className='barraPrograsso'>
+                <LinearProgressWithLabel value={Math.round(parseInt((respostas.filter((item) => item.certa === '1').length/respostas.length)*100))} />
+            </div>
             <div className='respostasHistorico'>
-                {
-                    respostas?.map((item, index) => {
-                        return(
-                            <div key={index} className='itensHistorico'>
-                                <h4>
-                                    Questão: {item.numeroQuestao}
-                                    <br/>
-                                    Resposta: {item.certa === '1' ? "CORRETA🥳" : "INCORRETA😒"}
-                                    <br/>
-                                </h4>
-                            </div>
-                        )
-                    })
-                }
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <h3>
+                                Questão
+                                </h3>
+                            </th>
+                            <th>
+                                <h3>
+                                Resultado
+                                </h3>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        respostas?.map((item, index) => {
+                            return(
+                                <tr key={index}>
+                                    <td>
+                                        <h4>
+                                            Questão: {item.numeroQuestao}
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            Resposta: {item.certa === '1' ? "CORRETA🥳" : "INCORRETA😒"}
+                                        </h4>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                </Table>
             </div>
         </div>
     )

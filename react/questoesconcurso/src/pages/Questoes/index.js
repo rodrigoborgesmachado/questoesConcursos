@@ -87,9 +87,6 @@ function Questoes(){
             if(Object.keys(questao).length > 0){
                 temp += "&numeroQuestao=" + (parseInt(questao?.numeroQuestao) + 1 - (anterior ? 2 : 0));
             }
-            else{
-                temp += "&numeroQuestao=1";
-            }
             return temp;
         }
         else if(filtro.includes('codigoquestaohistorico')){
@@ -298,6 +295,10 @@ function Questoes(){
         }
         else if(filtro.includes('codigoquestaolistagem')){
             navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
+        }
+        else if(filtro.includes('simulado')){
+            localStorage.removeItem(Config.Historico);
+            navigate('/simulado', {replace: true});
         }
         else{
             navigate('/', {replace: true});
