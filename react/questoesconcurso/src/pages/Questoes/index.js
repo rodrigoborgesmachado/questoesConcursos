@@ -359,13 +359,24 @@ function Questoes(){
             </Modal>
             <div className='opcoesQuestao'>
                 <div className='total'>
-                    <h2 onClick={ListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
+                    {
+                        filtro.includes('simulado') ? 
+                        <></>
+                        :
+                        <h2 onClick={ListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
+                    }
                     <Tempo inicio={parseInt(localStorage.getItem(Config.TEMPO_PARAM))}/>
                 </div>
-                <div className='opcaoVerificacao'>
-                    <h2><BsChatLeftDotsFill onClick={openModalSolicitarRevisao}/></h2>
-                    <h2><BsQuestionLg onClick={openModalSolicitarResposta}/></h2>
-                </div>
+                {
+                    filtro.includes('simulado') ? 
+                    <>
+                    </>
+                    :
+                    <div className='opcaoVerificacao'>
+                        <h2><BsChatLeftDotsFill onClick={openModalSolicitarRevisao}/></h2>
+                        <h2><BsQuestionLg onClick={openModalSolicitarResposta}/></h2>
+                    </div>
+                }
             </div>
             <div className='Materia'>
                 <h2>Matéria: {questao?.materia}</h2>
@@ -403,15 +414,19 @@ function Questoes(){
                     })
                 }
             </div>
-            <div className='opcoesBotoesNavegacao'>
-                <div className='opcaoBotaoBefore'>
-                    <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true, false);}}/></h2>
+            {
+                filtro.includes('simulado') ? 
+                <></>
+                :
+                <div className='opcoesBotoesNavegacao'>
+                    <div className='opcaoBotaoBefore'>
+                        <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true, false);}}/></h2>
+                    </div>
+                    <div className='opcaoBotaoAfter'>
+                        <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false, true);}}/></h2>
+                    </div>
                 </div>
-                <div className='opcaoBotaoAfter'>
-                    <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false, true);}}/></h2>
-                </div>
-            </div>
-            <div ></div>
+            }
         </div>
     )
 }

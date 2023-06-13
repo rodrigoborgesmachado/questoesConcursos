@@ -22,7 +22,7 @@ const pages = ['Ranking dos usuários🔝', 'Provas📚', 'Simulados🧾'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
-const settings = ['Olá ' + localStorage.getItem(Config.Nome), 'Perfil👽', 'Histórico⏳', 'Sair👋'];
+const settings = ['Olá ' + localStorage.getItem(Config.Nome), 'Perfil👽', 'Histórico de Questões⏳', 'Histórico Simulados🧾','Sair👋'];
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
@@ -71,6 +71,9 @@ const ResponsiveAppBar = () => {
         navigate('/historico', {replace: true});
     }
     else if(setting === settings[3]){
+      navigate('/historicosimulado', {replace: true});
+    }
+    else if(setting === settings[4]){
         sair();
     }
   }

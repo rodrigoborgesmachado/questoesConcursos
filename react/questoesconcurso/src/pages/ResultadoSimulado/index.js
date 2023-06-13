@@ -8,24 +8,7 @@ import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgres
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Table } from 'react-bootstrap';
-
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: '100%', mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} />
-        </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.principal">
-            <h4>
-          {`${Math.round(
-            props.value,
-          )}%`}
-            </h4></Typography>
-        </Box>
-      </Box>
-    );
-  }
+import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 
 function Resultado(){
     const navigate = useNavigate();
@@ -33,22 +16,6 @@ function Resultado(){
     const[prova, setProva] = useState({});
     const[respostas, setResposta] = useState([]);
     const[loadding, setLoadding] = useState(true);
-
-    async function buscaProva(codigoProva){
-        setLoadding(true);
-        
-        await api.get('/Prova/getById?id=' + codigoProva)
-        .then((response) => {
-            if(response.data.success){
-                setProva(response.data.object);
-            }
-            setLoadding(false);
-        }).catch(() => {
-            toast.error('Erro ao buscar provas');
-            navigate('/', {replace: true});
-            return;
-        });
-    }
 
     async function buscaHistorico(codigoSimulado){
         if(!localStorage.getItem(Config.TOKEN)){
@@ -61,7 +28,8 @@ function Resultado(){
         .then((response) => {
             if(response.data.success){
                 setResposta(JSON.parse(response.data.object.respostas));
-                buscaProva(response.data.object.codigoProva);
+                setProva(response.data.object.prova);
+                setLoadding(false);
             }
         }).catch(() => {
             toast.error('Erro ao buscar simulado');

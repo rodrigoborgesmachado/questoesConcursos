@@ -8,9 +8,6 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
 
 function Admin(){
     const navigate = useNavigate();
