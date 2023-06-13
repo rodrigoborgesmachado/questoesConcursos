@@ -33,31 +33,44 @@ function Resultado(){
     const[respostas, setResposta] = useState([]);
     const[loadding, setLoadding] = useState(true);
 
-    useEffect(() => {
-        async function buscaProva(codigoProva){
-            if(!localStorage.getItem(Config.TOKEN)){
-                toast.info('Necessário logar para acessar!');
-                navigate('/', {replace: true});
-                return;
+    async function buscaProva(codigoProva){
+        setLoadding(true);
+        
+        await api.get('/Prova/getById?id=' + codigoProva)
+        .then((response) => {
+            if(response.data.success){
+                setProva(response.data.object);
             }
-            
-            await api.get('/Prova/getById?id=' + codigoProva)
-            .then((response) => {
-                if(response.data.success){
-                    setProva(response.data.object);
-                }
-                setLoadding(false);
-            }).catch(() => {
-                toast.error('Erro ao buscar provas');
-                navigate('/', {replace: true});
-                return;
-            });
+            setLoadding(false);
+        }).catch(() => {
+            toast.error('Erro ao buscar provas');
+            navigate('/', {replace: true});
+            return;
+        });
+    }
+
+    async function buscaHistorico(codigoSimulado){
+        if(!localStorage.getItem(Config.TOKEN)){
+            toast.info('Necessário logar para acessar!');
+            navigate('/', {replace: true});
+            return;
         }
         
-        buscaProva(filtro);
-        console.log(localStorage.getItem(Config.Historico + filtro));
-        if(JSON.parse(localStorage.getItem(Config.Historico + filtro)))
-            setResposta(JSON.parse(localStorage.getItem(Config.Historico + filtro)));
+        await api.get('/Simulado/getById?id=' + codigoSimulado)
+        .then((response) => {
+            if(response.data.success){
+                setResposta(JSON.parse(response.data.object.respostas));
+                buscaProva(response.data.object.codigoProva);
+            }
+        }).catch(() => {
+            toast.error('Erro ao buscar simulado');
+            navigate('/', {replace: true});
+            return;
+        });
+    }
+
+    useEffect(() => {
+        buscaHistorico(filtro);
     }, []);
 
     if(loadding){

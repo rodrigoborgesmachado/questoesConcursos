@@ -18,6 +18,7 @@ function Home(){
                 <Link className='botao' to={`/questoes/enem`}>Iniciar com questões do ENEM</Link>
                 <Link className='botao' to={`/materias`}>Selecionar questões por matéria</Link>
                 <Link className='botao' to={`/bancas`}>Selecionar questões por bancas</Link>
+                <Link className='botao' to={`/provas`}>Fazer simulado</Link>
             </div>
             <br/>
             <br/>

@@ -124,18 +124,31 @@ function Questoes(){
 
         setLoadding(true);
         await api.get(BuscaUrl(anterior, proxima))
-        .then((response) => {
+        .then(async (response) => {
             if(response.data.success){
                 setQuestao(response.data.object);
             }
             else{
-                alert(response.data.message);
                 var simulado = filtro.includes('simulado');
                 
                 if(response.data.message === 'Not registered'){
                     if(simulado){
-                        toast.success('Prova finalizada em ' + localStorage.getItem(parseInt(Config.TEMPO_PARAM)/60) + ' minutos!');
-                        navigate('/resultadosimulado/' + questao?.codigoProva, {replace: true});
+                        toast.success('Prova finalizada em ' + (parseInt(localStorage.getItem(Config.TEMPO_PARAM))/60) + ' minutos!');
+                        var data = {
+                            respostas: localStorage.getItem(Config.Historico),
+                            codigoProva: questao?.codigoProva,
+                            tempo: parseInt(localStorage.getItem(Config.TEMPO_PARAM))
+                        }
+
+                        await api.post('/Simulado', data)
+                        .then((response) => {
+                            localStorage.removeItem(Config.Historico);
+                            navigate('/resultadosimulado/' + response.data.object.codigo, {replace: true});
+                        })
+                        .catch(() => {
+                            toast.error('Error ao abrir resultado do simulado');
+                            navigate('/provas', {replace: true});
+                        });
                     }
                     else{
                         toast.success('Você respondeu todas as questões dessa prova!');
@@ -193,10 +206,10 @@ function Questoes(){
                     certa: response.data.object?.certa,
                     numeroQuestao: questao?.numeroQuestao
                 };
-                var historico = JSON.parse(localStorage.getItem(Config.Historico + questao?.codigoProva)) ?? new Array();
+                var historico = JSON.parse(localStorage.getItem(Config.Historico)) ?? new Array();
                 historico.push(resposta);
 
-                localStorage.setItem(Config.Historico + questao?.codigoProva, JSON.stringify(historico));
+                localStorage.setItem(Config.Historico, JSON.stringify(historico));
                 BuscarProximaQuestao(false, true);
             }
             else{
