@@ -4,9 +4,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify';
 import api from '../../services/api.js';
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { Table } from 'react-bootstrap';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 
@@ -14,6 +11,7 @@ function Resultado(){
     const navigate = useNavigate();
     const{filtro} = useParams();
     const[prova, setProva] = useState({});
+    const[tempo, setTempo] = useState(0);
     const[respostas, setResposta] = useState([]);
     const[loadding, setLoadding] = useState(true);
 
@@ -29,6 +27,7 @@ function Resultado(){
             if(response.data.success){
                 setResposta(JSON.parse(response.data.object.respostas));
                 setProva(response.data.object.prova);
+                setTempo(response.data.object.tempo);
                 setLoadding(false);
             }
         }).catch(() => {
@@ -60,7 +59,7 @@ function Resultado(){
                     <br/>
                     Link do gabarito: <a target="_blank" href={prova.linkGabarito}>📩</a>
                     <br/>
-                    Tempo: {parseInt(localStorage.getItem(Config.TEMPO_PARAM))/60} minutos
+                    Tempo: {tempo/60} minutos
                     <br/>
                     Quantidade de questões respondidas: {respostas.length }😁
                     <br/>
