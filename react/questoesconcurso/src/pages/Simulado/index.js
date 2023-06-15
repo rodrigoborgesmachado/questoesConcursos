@@ -48,6 +48,7 @@ function Simulado(){
 
     const handleChange = (selectedOptions, event) => {
         setProvasSelecionadas(selectedOptions.value);
+        navigate(`/questoes/simulado&${selectedOptions.value}`);
     }
 
     if(loadding){
@@ -78,9 +79,6 @@ function Simulado(){
             </h3>
             <div className="opcoes">
                 <Select closeMenuOnSelect={false} components={animatedComponents} options={provas} onChange={handleChange} />
-            </div>
-            <div >
-                <Link className='botao' to={`/questoes/simulado&${provasSelecionadas}`}>Iniciar</Link>
             </div>
         </div>
     )
