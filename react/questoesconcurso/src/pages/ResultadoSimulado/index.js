@@ -12,6 +12,7 @@ function Resultado(){
     const{filtro} = useParams();
     const[prova, setProva] = useState({});
     const[tempo, setTempo] = useState(0);
+    const[usuario, setUsuario] = useState(0);
     const[respostas, setResposta] = useState([]);
     const[loadding, setLoadding] = useState(true);
 
@@ -26,6 +27,7 @@ function Resultado(){
         .then((response) => {
             if(response.data.success){
                 setResposta(JSON.parse(response.data.object.respostas));
+                setUsuario(response.data.object.codigoUsuario);
                 setProva(response.data.object.prova);
                 setTempo(response.data.object.tempo);
                 setLoadding(false);
@@ -41,6 +43,29 @@ function Resultado(){
         buscaHistorico(filtro);
     }, []);
 
+
+    function baixarBoletinDetalhado(){
+        setLoadding(true);
+        api.get('/Simulado/reportDetail?codigoProva=' + prova.id + '&codigoUsuario=' + usuario)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                const link = document.createElement('a');
+                link.href = response.data.object;
+                link.download = 'Boletinho - Prova ' + prova.nomeProva.replace('/', '').replace('-', ' ') + localStorage.getItem(Config.Nome) + '.html';
+                link.click();
+            }
+            else{
+                toast.error('Simulado não encontrado');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao gerar o boletinho!');
+        })
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -55,6 +80,8 @@ function Resultado(){
             <br/>
             <div className='detalhesHistorico'>
                 <h3>
+                    Baixar boletin detalhado: <a target="_blank" onClick={() => baixarBoletinDetalhado()}>📩</a>
+                    <br/>
                     Link da prova: <a target="_blank" href={prova.linkProva}>📩</a>
                     <br/>
                     Link do gabarito: <a target="_blank" href={prova.linkGabarito}>📩</a>

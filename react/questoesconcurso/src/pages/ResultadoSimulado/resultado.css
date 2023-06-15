@@ -9,3 +9,7 @@
 .barraPrograsso{
     width: 80%;
 }
+
+.detalhesHistorico a{
+    cursor: pointer;
+}
