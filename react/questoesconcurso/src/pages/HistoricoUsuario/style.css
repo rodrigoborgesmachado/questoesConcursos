@@ -52,3 +52,8 @@
     background-color: rgb(37, 26, 166);
     color: #FFF;
 }
+
+.dadosResumidos a{
+    text-decoration: none;
+    cursor: pointer;
+}

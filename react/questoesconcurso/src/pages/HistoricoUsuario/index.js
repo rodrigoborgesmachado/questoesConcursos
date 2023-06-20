@@ -50,6 +50,28 @@ function HistoricoUsuario(){
         BuscarRespostas(value);
       };
 
+      function baixarBoletinDetalhado(){
+        setLoadding(true);
+        api.get('/RespostasQuestoes/reportDetail')
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                const link = document.createElement('a');
+                link.href = response.data.object;
+                link.download = 'Histórico - ' + localStorage.getItem(Config.Nome) + '.html';
+                link.click();
+            }
+            else{
+                toast.error('Histórico não encontrado');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao gerar o boletinho!');
+        })
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -66,6 +88,9 @@ function HistoricoUsuario(){
             <br/>
             <div className='dadosResumidos'>
                 Progresso:✅
+                <br/>
+                <br/>
+                Baixar histórico detalhado: <a target="_blank" onClick={() => baixarBoletinDetalhado()}>📩</a>
                 <br/>
                 <br/>
                 Total de questões tentadas: {qtTotal}😁
