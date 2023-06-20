@@ -12,8 +12,34 @@ function ListagemQuestoes(){
     const[loadding, setLoadding] = useState(true);
     const{filtro} = useParams();
     const[questoes, setQuestoes] = useState([])
+    const[prova, setProva] = useState({})
 
     useEffect(() => {
+        async function buscaProva(){
+            if(!localStorage.getItem(Config.TOKEN)){
+                toast.info('Necessário logar para acessar!');
+                navigate('/', {replace: true});
+                return;
+            }
+
+            await api.get(`/Prova/getById?id=${filtro}`)
+            .then((response) => {
+                if(response.data.success){
+                    setProva(response.data.object);
+                    buscaQuestoes();
+                }
+                else{
+                    navigate('/', {replace: true});
+                    toast.warn('Erro ao buscar');    
+                }
+            })
+            .catch(() => {
+                navigate('/', {replace: true});
+                toast.warn('Erro ao buscar');
+            })
+
+        }
+
         async function buscaQuestoes(){
             if(!localStorage.getItem(Config.TOKEN)){
                 toast.info('Necessário logar para acessar!');
@@ -39,7 +65,7 @@ function ListagemQuestoes(){
 
         }
 
-        buscaQuestoes();
+        buscaProva();
     }, [loadding])
 
     function abreQuestao(codigoQuestao){
@@ -60,6 +86,9 @@ function ListagemQuestoes(){
 
     return(
         <div className='containerpage'>
+            <h2>
+                Prova: {prova.nomeProva}
+            </h2>
             <div className='opcoesQuestoes'>
                 <h2>Questões</h2>
                 <div className='opcaoFiltro'>
