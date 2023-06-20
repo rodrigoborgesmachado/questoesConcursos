@@ -75,6 +75,9 @@ function Questoes(){
         if(filtro === 'enem'){
             return `/Questoes/getQuestaoAleatoria?tipo=ENEM`;
         }
+        else if(filtro === 'IFTM'){
+            return `/Questoes/getQuestaoAleatoria?tipo=IFTM`;
+        }
         else if(filtro.includes('materias')){
             return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&subject=` + filtro.replace('materias&', '');
         }
