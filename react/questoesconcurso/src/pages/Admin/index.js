@@ -101,6 +101,29 @@ function Admin(){
         buscaRespostas(value, usuarioFiltro.id);
       };
 
+      function baixarBoletinDetalhado(){
+        setLoadding(true);
+        console.log(usuarioFiltro);
+        api.get('/RespostasQuestoes/reportDetail?codigoUsuario=' + usuarioFiltro.value)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                const link = document.createElement('a');
+                link.href = response.data.object;
+                link.download = 'Histórico - ' + localStorage.getItem(Config.Nome) + '.html';
+                link.click();
+            }
+            else{
+                toast.error('Histórico não encontrado');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao gerar o boletinho!');
+        })
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -121,6 +144,9 @@ function Admin(){
                     </div>
                 </div>
                 <div className='respostas'>
+                    <p>
+                        Baixar histórico detalhado: <a target="_blank" onClick={() => baixarBoletinDetalhado()}>📩</a>
+                    </p>
                     <h3>
                         Histórico de questões respondidas por {usuarioFiltro.label}:
                     </h3>
