@@ -86,7 +86,7 @@ function ListagemQuestoes(){
 
     return(
         <div className='containerpage'>
-            <h2>
+            <h2 className='nomeProvaDescricao'>
                 Prova: {prova.nomeProva}
             </h2>
             <div className='opcoesQuestoes'>
