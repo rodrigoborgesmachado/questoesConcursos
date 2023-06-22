@@ -71,7 +71,7 @@ function ListagemProvas(){
     useEffect(() => {
         setLoadding(true);
 
-        buscaProvas(page);
+        buscaProvas(page, true);
     }, []);
 
     function abrirQuestao(codigo){
