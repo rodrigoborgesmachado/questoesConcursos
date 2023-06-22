@@ -133,7 +133,7 @@ function Questoes(){
                 
                 if(response.data.message === 'Not registered'){
                     if(simulado){
-                        toast.success('Prova finalizada em ' + (parseInt(localStorage.getItem(Config.TEMPO_PARAM))/60) + ' minutos!');
+                        toast.success('Prova finalizada!');
                         var data = {
                             respostas: localStorage.getItem(Config.Historico),
                             codigoProva: questao?.codigoProva,
@@ -143,6 +143,9 @@ function Questoes(){
                         await api.post('/Simulado', data)
                         .then((response) => {
                             localStorage.removeItem(Config.Historico);
+
+                            api.post('/Simulado/sendReportEmail?codigoSimulado=' + response.data.object.codigo);
+
                             navigate('/resultadosimulado/' + response.data.object.codigo, {replace: true});
                         })
                         .catch(() => {
@@ -192,7 +195,9 @@ function Questoes(){
 
     async function ValidaResposta(e, codigo){
         var simulado = filtro.includes('simulado');
-
+        if(simulado)
+            setLoadding(true);
+        
         await api.get(`/RespostasQuestoes/validaResposta`, {
             params:{
                 "id": codigo

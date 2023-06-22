@@ -46,7 +46,7 @@ function Resultado(){
 
     function baixarBoletinDetalhado(){
         setLoadding(true);
-        api.get('/Simulado/reportDetail?codigoProva=' + prova.id + '&codigoUsuario=' + usuario)
+        api.get('/Simulado/reportDetail?codigoSimulado=' + filtro)
         .then((response) => {
             setLoadding(false);
             if(response.data.success){

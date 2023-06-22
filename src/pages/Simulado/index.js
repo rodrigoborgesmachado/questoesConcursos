@@ -48,6 +48,8 @@ function Simulado(){
 
     const handleChange = (selectedOptions, event) => {
         setProvasSelecionadas(selectedOptions.value);
+        localStorage.setItem(Config.Historico, '');
+        localStorage.removeItem(Config.Historico);
         navigate(`/questoes/simulado&${selectedOptions.value}`);
     }
 
