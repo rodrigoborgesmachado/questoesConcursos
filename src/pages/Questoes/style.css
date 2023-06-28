@@ -87,20 +87,24 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: fit-content;
-    align-items: center;
-    justify-content: center;
+    max-width: 80%;
+    align-items: left;
+    justify-content: left;
 }
 
-.respostas{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.respostasLista{
     padding: 20px;
+    justify-items: left;
 }
 
-.respostas h4{
-    padding-left: 20px;
+.respostaLabel{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.respostaLabel h4{
+    padding-left: 10px;
 }
 
 .contextModal{

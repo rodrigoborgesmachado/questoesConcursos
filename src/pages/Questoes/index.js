@@ -398,29 +398,29 @@ function Questoes(){
                     :
                     <h4 dangerouslySetInnerHTML={createMarkup(questao?.campoQuestao)}></h4>
                 }
-            </div>
-            <br/>
-            <br/>
-            <div className='todasRespostas'>
-                {
-                    questao?.respostasQuestoes?.map((item) => {
-                        return(
-                            <div key={item.id} className='respostas'>
-                                <label className='respostas'>
-                                    <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
-                                    {
-                                    item.anexoResposta.length > 0 ? 
-                                        <div id="imagemResposta">
-                                            <img src={item.anexoResposta[0].anexo}/>
-                                        </div>
-                                    : 
-                                    <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
+                <br/>
+                <br/>
+                <div className='todasRespostas'>
+                    {
+                        questao?.respostasQuestoes?.map((item) => {
+                            return(
+                                <div key={item.id} className='respostasLista'>
+                                    <label className='respostaLabel'>
+                                        <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
+                                        {
+                                            item.anexoResposta.length > 0 ? 
+                                            <div id="imagemResposta">
+                                                <img src={item.anexoResposta[0].anexo}/>
+                                            </div>
+                                        : 
+                                        <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
                                     }
-                                </label>
-                            </div>
-                        )
-                    })
-                }
+                                    </label>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
             {
                 filtro.includes('simulado') ? 
