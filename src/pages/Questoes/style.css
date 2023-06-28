@@ -41,6 +41,8 @@
 }
 .opcaoVerificacao{
     display: flex;
+    flex-direction: column;
+    align-items: end;
     width: 100%;
     justify-content: right;
     margin-right: 20px;
@@ -130,6 +132,20 @@
     padding: 5% 5%;
 }
 
+.bodymodalComentario{
+    display: flex;
+    justify-content: left;
+    border: 5px;
+    padding: 5% 5%;
+    width: 100%;
+}
+
+.bodymodalComentario textarea{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: -10%;
+}
+
 .botoesModal{
     display: flex;
     justify-content: right;
@@ -164,3 +180,25 @@
     background-color: rgb(37, 26, 166);
     color: #FFF;
   }
+
+.contextComentarios {
+    display: flex;
+    flex-direction: column;    
+    width: 100%;
+    color: #fff;
+}
+
+.modalComentarios h4{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.modalComentarios sup{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.modalComentarios hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

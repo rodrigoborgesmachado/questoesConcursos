@@ -6,7 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
 import { BsChatLeftDotsFill } from "react-icons/bs";
-import { BsQuestionLg } from "react-icons/bs";
+import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import Modal from 'react-modal';
@@ -26,10 +27,24 @@ const customStyles = {
     },
   };
 
+  const customStylesComentario = {
+    content: {
+      left: '10%',
+      right: 'auto',
+      bottom: 'auto',
+      border: 0,
+      background: '#424242',
+      'border-radius': '5px',
+      width: '80%',
+    },
+  };
+
+
 function Questoes(){
     const navigate = useNavigate();
     const{filtro} = useParams();
     const[questao, setQuestao] = useState({});
+    const[comentarios, setComentarios] = useState([]);
     const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
     const[questoesTotal, setQuestoesTotal] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
     const[loadding, setLoadding] = useState(true);
@@ -39,7 +54,9 @@ function Questoes(){
     const [modalSolicitacao, setModalSolicitacao] = useState(false);
     const [modalSolicitaRespostaIsOpen, setModalSolicitaRespostaIsOpen] = useState(false);
     const [modalRespostaIsOpen, setModalRespostaIsOpen] = useState(false);
+    const [modalComentarioIsOpen, setModalComentarioIsOpen] = useState(false);
     const [textoResposta, setTextoResposta] = useState('');
+    const [comentario, setComentario] = useState('');
 
     function openModalSolicitacao() {
         setModalSolicitacao(true);
@@ -71,6 +88,14 @@ function Questoes(){
     
     function closeModalResposta() {
         setModalRespostaIsOpen(false);
+    }
+
+    function openModalComentario() {
+        setModalComentarioIsOpen(true);
+    }
+
+    function closeModalComentario() {
+        setModalComentarioIsOpen(false);
     }
 
     useEffect(() => {
@@ -136,6 +161,7 @@ function Questoes(){
         .then(async (response) => {
             if(response.data.success){
                 setQuestao(response.data.object);
+                buscarComentarios(response.data.object.id);
             }
             else{
                 var simulado = filtro.includes('simulado');
@@ -322,14 +348,75 @@ function Questoes(){
         }
     }
 
-    function abrirSolicitarResposta(){
-        closeModalSolicitacao();
-        openModalSolicitarResposta();
+    async function buscarComentarios(questaoId){
+        setLoadding(true);
+        await api.get('/ComentariosQuestoes/getByQuestao?questao=' + questaoId)
+        .then(async (response) => {
+            if(response.data.success){
+                setComentarios(response.data.object);
+            }
+            else{
+                toast.error('Erro ao buscar');
+            }
+
+            setLoadding(false);
+        }).catch(() => {
+            setLoadding(false);
+            toast.error('Erro ao buscar comentários');
+        });
     }
 
-    function abrirSolicitarRevisão(){
-        closeModalSolicitacao();
-        openModalSolicitarRevisao();
+    function montaData(data){
+        var temp = data.split('T')[0];
+        var temp2 = data.split('T')[1];
+        return temp.split('-')[2] + '/' + temp.split('-')[1] + '/' + temp.split('-')[0] + ' ' + temp2.split('.')[0];
+    }
+
+    async function fazComentario(){
+        var data = {
+            "comentario": comentario,
+            "codigoQuestao": questao?.id
+        };
+
+        setLoadding(true);
+
+        await api.post(`/ComentariosQuestoes`, 
+        data
+        )
+        .then((response) => {
+            setLoadding(false);
+            closeModalComentario();
+            setComentario('');
+
+            if(response.data.success){
+                toast.success('Comentário efetuado!');
+                buscarComentarios(data.codigoQuestao);
+            }
+            else{
+                toast.info('Erro ao comentar');
+                toast.warn(response.data.message);
+            }
+        }).catch(() => {
+            closeModalComentario();
+            toast.error('Erro ao comentar!');
+            return;
+        });
+    }
+
+    async function deleteComentario(comentario){
+        await api.delete('/ComentariosQuestoes?id=' + comentario)
+        .then((response) => {
+            if(response.data.success){
+                toast.success('Excluído');
+                buscarComentarios(questao?.id);
+            }
+            else{
+                toast.error('Erro ao excluir');
+            }
+        })
+        .catch(() => {
+            toast.error('Erro ao excluir');
+        })
     }
 
     if(loadding || !questao){
@@ -394,9 +481,26 @@ function Questoes(){
               style={customStyles}
               contentLabel="Example Modal"
             >
+            
                 <div className='contextModal'>
                     <div className='bodymodal'>
                         <h3>{textoResposta}</h3>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+              isOpen={modalComentarioIsOpen}
+              onRequestClose={closeModalComentario}
+              style={customStylesComentario}
+              contentLabel="Comentário"
+            >
+                <div className='contextModal'>
+                    <h3>Comentário:</h3>
+                    <div className='bodymodalComentario'>
+                        <textarea type='text' placeholder="Comentário" rows="10" value={comentario} onChange={(e) => setComentario(e.target.value)}/>
+                    </div>
+                    <div className='botoesModal'>
+                        <button onClick={fazComentario}>Comentar</button>
                     </div>
                 </div>
             </Modal>
@@ -460,12 +564,36 @@ function Questoes(){
                 filtro.includes('simulado') ? 
                 <></>
                 :
-                <div className='opcoesBotoesNavegacao'>
-                    <div className='opcaoBotaoBefore'>
-                        <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true, false);}}/></h2>
+                <div className='contextComentarios'>
+                    <div className='opcoesBotoesNavegacao'>
+                        <div className='opcaoBotaoBefore'>
+                            <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true, false);}}/></h2>
+                        </div>
+                        <div className='opcaoBotaoAfter'>
+                            <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false, true);}}/></h2>
+                        </div>
                     </div>
-                    <div className='opcaoBotaoAfter'>
-                        <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false, true);}}/></h2>
+                    <div className='modalComentarios'>
+                        <h3>Comentários✉️</h3>
+                        <br/>
+                        <div className='comentarios'>
+                            {
+                                comentarios?.map((comentario) => {
+                                    return(
+                                        <div id={comentario.codigo}>
+                                            <sup>{comentario.nomeUsuario } - {montaData(comentario.created)} {comentario.canEdit ? <><AiOutlineDelete onClick={() => deleteComentario(comentario.codigo)}/></> : <></>}</sup> 
+                                            <br/>
+                                            <h4 dangerouslySetInnerHTML={createMarkup(comentario.comentario)}>
+                                            </h4>
+                                            <hr/>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className='opcaoVerificacao'>
+                            <h2><BsChatLeftDotsFill onClick={openModalComentario}/></h2>
+                        </div>
                     </div>
                 </div>
             }
