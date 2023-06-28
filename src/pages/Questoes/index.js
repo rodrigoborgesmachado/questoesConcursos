@@ -277,7 +277,7 @@ function Questoes(){
             }
         })
         .then((response) => {
-            closeModalSolicitarRevisao();
+            closeModalSolicitacao();
             if(response.data.success){
                 toast.success('Solicitação enviada!');
             }
@@ -295,7 +295,7 @@ function Questoes(){
     async function buscaRespostaCorreta(){
         await api.get(`/RespostasQuestoes/getRespostaCorreta?questao=${questao?.id}`)
         .then((response) =>{
-            closeModalSolicitarResposta();
+            closeModalSolicitacao();
             if(response.data.success){
                 setTextoResposta(response.data?.object?.textoResposta);
                 openModalResposta();
@@ -353,8 +353,8 @@ function Questoes(){
                         <h3>O que deseja fazer?</h3>
                     </div>
                     <div className='botoesModalSolicitacao'>
-                        <button onClick={abrirSolicitarResposta}>Visualizar resposta</button>
-                        <button onClick={abrirSolicitarRevisão}>Solicitar revisão da questão</button>
+                        <button onClick={buscaRespostaCorreta}>Visualizar resposta</button>
+                        <button onClick={solicitarRevisao}>Solicitar revisão da questão</button>
                     </div>
                 </div>
             </Modal>
