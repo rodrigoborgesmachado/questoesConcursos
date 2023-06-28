@@ -36,9 +36,18 @@ function Questoes(){
     const[tentativas, setTentativas] = useState(0);
     const[maxTentativas] = useState(5);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [modalSolicitacao, setModalSolicitacao] = useState(false);
     const [modalSolicitaRespostaIsOpen, setModalSolicitaRespostaIsOpen] = useState(false);
     const [modalRespostaIsOpen, setModalRespostaIsOpen] = useState(false);
     const [textoResposta, setTextoResposta] = useState('');
+
+    function openModalSolicitacao() {
+        setModalSolicitacao(true);
+    }
+
+    function closeModalSolicitacao() {
+        setModalSolicitacao(false);
+    }
 
     function openModalSolicitarRevisao() {
         setIsOpen(true);
@@ -313,6 +322,16 @@ function Questoes(){
         }
     }
 
+    function abrirSolicitarResposta(){
+        closeModalSolicitacao();
+        openModalSolicitarResposta();
+    }
+
+    function abrirSolicitarRevisão(){
+        closeModalSolicitacao();
+        openModalSolicitarRevisao();
+    }
+
     if(loadding || !questao){
         return(
             <div className='loaddingDiv'>
@@ -323,6 +342,22 @@ function Questoes(){
 
     return(
         <div className="containerpage">
+            <Modal
+              isOpen={modalSolicitacao}
+              onRequestClose={closeModalSolicitacao}
+              style={customStyles}
+              contentLabel="Solicitação"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>O que deseja fazer?</h3>
+                    </div>
+                    <div className='botoesModalSolicitacao'>
+                        <button onClick={abrirSolicitarResposta}>Visualizar resposta</button>
+                        <button onClick={abrirSolicitarRevisão}>Solicitar revisão da questão</button>
+                    </div>
+                </div>
+            </Modal>
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModalSolicitarRevisao}
@@ -381,8 +416,7 @@ function Questoes(){
                     </>
                     :
                     <div className='opcaoVerificacao'>
-                        <h2><BsChatLeftDotsFill onClick={openModalSolicitarRevisao}/></h2>
-                        <h2><BsQuestionLg onClick={openModalSolicitarResposta}/></h2>
+                        <h2 onClick={openModalSolicitacao}>❓</h2>
                     </div>
                 }
             </div>

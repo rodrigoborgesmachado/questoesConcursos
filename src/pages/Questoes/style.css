@@ -137,7 +137,12 @@
     padding: 5% 5%;
 }
 
-.botoesModal button{
+.botoesModalSolicitacao{
+    display: flex;
+    flex-direction: column;
+}
+
+.botoesModal button, .botoesModalSolicitacao button{
     text-decoration: none;
     display: flex;
     justify-content: center;
@@ -155,7 +160,7 @@
     transition: all 0.5s;
 }
 
-.botoesModal button:hover{
+.botoesModal button:hover, .botoesModalSolicitacao button:hover{
     background-color: rgb(37, 26, 166);
     color: #FFF;
   }
