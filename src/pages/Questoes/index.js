@@ -484,7 +484,7 @@ function Questoes(){
             
                 <div className='contextModal'>
                     <div className='bodymodal'>
-                        <h3>{textoResposta}</h3>
+                        <h3 dangerouslySetInnerHTML={createMarkup(textoResposta)}></h3>
                     </div>
                 </div>
             </Modal>
