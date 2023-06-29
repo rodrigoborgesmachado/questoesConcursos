@@ -60,8 +60,6 @@
 }
 
 .descricaoQuestao{
-    display: flex;
-    flex-direction: column;
     width: 100%;
     max-width: 90%;
     align-items: center;
