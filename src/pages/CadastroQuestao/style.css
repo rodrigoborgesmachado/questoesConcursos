@@ -39,21 +39,22 @@
     cursor: pointer;
 }
 
-.respostas{
+.respostasCadastro{
     flex-direction: column;
-}
-
-.respostas div{
     width: 100%;
 }
 
-.respostas input{
+.respostasCadastro div{
+    width: 100%;
+}
+
+.respostasCadastro input{
     width: 100%;
     padding: 8px;
     border-radius: 10px;
 }
 
-.respostas button{
+.respostasCadastro button{
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 5px;

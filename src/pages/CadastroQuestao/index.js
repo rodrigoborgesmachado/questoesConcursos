@@ -189,32 +189,32 @@ function CadastraQuestao(){
                             :
                             <h4 dangerouslySetInnerHTML={createMarkup(questao.campoQuestao)}></h4>
                         }
-                    </div>
-                    <br/>
-                    <br/>
-                    <div className='todasRespostas'>
-                        {
-                            questao.respostasQuestoes.map((item) => {
-                                return(
-                                    <div key={item.codigo} className='respostas'>
-                                        <label className='respostas'>
-                                            <input type='radio' className='radioOption' checked={item.certa} name={'Radio_' + item.codigo} />
-                                            {
-                                                <>
+                        <br/>
+                        <br/>
+                        <div className='todasRespostas'>
+                            {
+                                questao.respostasQuestoes.map((item) => {
+                                    return(
+                                        <div key={item.codigo} className='respostas'>
+                                            <label className='respostas'>
+                                                <input type='radio' className='radioOption' checked={item.certa} name={'Radio_' + item.codigo} />
                                                 {
-                                                    item.anexoResposta.length > 0 ??
-                                                    <div id="imagemResposta">
-                                                        <img src={item.anexoResposta[0].anexo}/>
-                                                    </div>
+                                                    <>
+                                                    {
+                                                        item.anexoResposta.length > 0 ??
+                                                        <div id="imagemResposta">
+                                                            <img src={item.anexoResposta[0].anexo}/>
+                                                        </div>
+                                                    }
+                                                    <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
+                                                    </>
                                                 }
-                                                <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
-                                                </>
-                                            }
-                                        </label>
-                                    </div>
-                                )
-                            })
-                        }
+                                            </label>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </Modal>
@@ -354,7 +354,7 @@ function CadastraQuestao(){
                 <h3>
                   Respostas:
                 </h3>
-                <div className='respostas'>
+                <div className='respostasCadastro'>
                     {questao.respostasQuestoes.map((option, index) => (
                         <div  key={index}>
                             <label>

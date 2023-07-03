@@ -116,7 +116,7 @@ function Questoes(){
             return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&subject=` + filtro.replace('materias&', '');
         }
         else if(filtro.includes('bancas')){
-            return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&bancas` + filtro.replace('bancas&', '');
+            return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&bancas=` + filtro.replace('bancas&', '');
         }
         else if(filtro.includes('provas') || filtro.includes('simulado')){
             let temp =  `/Questoes/getQuestao?codigoProva=` + filtro.replace('provas&', '').replace('simulado&', '');
