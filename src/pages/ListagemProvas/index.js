@@ -83,7 +83,7 @@ function ListagemProvas(){
     }
 
     function abrirSimulado(codigo){
-        navigate('/questoes/simulado' + codigo, {replace: true});
+        navigate('/questoes/simulado&' + codigo, {replace: true});
     }
 
     function filtrar(){
