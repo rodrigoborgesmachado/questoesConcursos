@@ -26,14 +26,18 @@ const customStyles = {
   };
 
 function ListagemProvas(){
+    const{filtro} = useParams();
     const navigate = useNavigate();
     const[loadding, setLoadding] = useState(true);
     const[provas, setProvas] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [filtroNome, setFiltroNome] = useState('');
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(filtro);
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(7);
+    const [filtroEnem, setFiltroEnem] = useState(false);
+    const [filtroIftm, setFiltroIftm] = useState(false);
+    const [filtroBasico, setFiltroBasico] = useState(false);
 
     function openModal() {
         setIsOpen(true);
@@ -75,7 +79,11 @@ function ListagemProvas(){
     }, []);
 
     function abrirQuestao(codigo){
-        navigate('/listagemquestoes/' + codigo, {replace: true});
+        navigate('/prova/' + codigo, {replace: true});
+    }
+
+    function abrirSimulado(codigo){
+        navigate('/questoes/simulado' + codigo, {replace: true});
     }
 
     function filtrar(){
@@ -87,6 +95,9 @@ function ListagemProvas(){
 
     function limparFiltro(){
         closeModal();
+        setFiltroEnem(false);
+        setFiltroIftm(false);
+        setFiltroBasico(false);
         setFiltroNome('');
         setLoadding(true);
         setPage(1);
@@ -94,10 +105,32 @@ function ListagemProvas(){
     }
 
     const handleChange = (event, value) => {
+        navigate('/listagemprovas/' + value, {replace: true});
         setPage(value);
         setLoadding(true);
         buscaProvas(value);
       };
+
+    function FiltraEnem(e){
+        setFiltroEnem(!filtroEnem);
+        setFiltroIftm(false);
+        setFiltroBasico(false);
+        setFiltroNome('Enem');
+    }
+
+    function FiltraIftm(e){
+        setFiltroEnem(false);
+        setFiltroIftm(!filtroIftm);
+        setFiltroBasico(false);
+        setFiltroNome('IFTM');
+    }
+
+    function FiltraIBasico(e){
+        setFiltroEnem(false);
+        setFiltroIftm(false);
+        setFiltroBasico(!filtroBasico);
+        setFiltroNome(' ano');
+    }
 
     if(loadding){
         return(
@@ -123,12 +156,16 @@ function ListagemProvas(){
                     <div className='bodymodal'>
                         <h3>Filtros</h3>
                     </div>
-                    <div className='filtros'>
-                        <br/>
-                        <h4>
-                            Prova:
-                            <input type='text' value={filtroNome} onChange={(e) => setFiltroNome(e.target.value)}/>
+                    <div className='filtrosProva'>
+                        <h4 className='inputFiltro'>
+                            <input type='radio' className='radioOption' name={'Radio'} checked={filtroEnem} onClick={(e) => FiltraEnem(e)}/> ENEM
+                            <input type='radio' className='radioOption' name={'Radio'} checked={filtroIftm}  onClick={(e) => FiltraIftm(e)}/> IFTM
+                            <input type='radio' className='radioOption' name={'Radio'} checked={filtroBasico}  onClick={(e) => FiltraIBasico(e)}/> Ensino Fundamental
                         </h4>
+                        <h4>
+                            Nome da prova:
+                        </h4>
+                        <input type='text' value={filtroNome} onChange={(e) => setFiltroNome(e.target.value)}/>
                     </div>
                     <div className='botoesModalFiltro'>
                         <button onClick={limparFiltro}>Limpar</button>
@@ -191,6 +228,8 @@ function ListagemProvas(){
                                 }
                                 </h4>
                                 <button onClick={() => abrirQuestao(item.id)}>Visualizar questão✏️</button>
+                                <button onClick={() => abrirSimulado(item.id)}>Iniciar Simulado✏️</button>
+                                <br/>
                                 <br/>
                                 <br/>
                             </div>
@@ -200,7 +239,7 @@ function ListagemProvas(){
                 {
                     quantity > 0 ?
                     <Stack spacing={4}>
-                        <Pagination count={parseInt((quantity/quantityPerPage)+1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange}/>
+                        <Pagination count={parseInt((quantity/quantityPerPage)+1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange}/>
                     </Stack>    
                     :
                     <>

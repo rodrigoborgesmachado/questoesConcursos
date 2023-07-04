@@ -98,7 +98,7 @@ function Admin(){
     const handleChange = (event, value) => {
         setPage(value);
         setLoadding(true);
-        buscaRespostas(value, usuarioFiltro.id);
+        buscaRespostas(value, usuarioFiltro.value);
       };
 
       function baixarBoletinDetalhado(){
@@ -143,7 +143,7 @@ function Admin(){
                         <Select closeMenuOnSelect={false} components={animatedComponents} options={usuarios} onChange={handleUsuarios} style={{width: '100%'}}/>
                     </div>
                 </div>
-                <div className='respostas'>
+                <div className='respostasUsuarios'>
                     <p>
                         Baixar histórico detalhado: <a target="_blank" onClick={() => baixarBoletinDetalhado()}>📩</a>
                     </p>

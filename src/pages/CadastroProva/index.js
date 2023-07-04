@@ -37,7 +37,7 @@ function CadastraProva(){
         .then((response) => {
             if(response.data.success){
                 toast.success('Prova cadastrada com sucesso!');
-                navigate('/listagemprovas', {replace: true});
+                navigate('/listagemprovas/1', {replace: true});
             }
             else{
                 toast.info('Erro ao cadastrar!');

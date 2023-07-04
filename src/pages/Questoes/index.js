@@ -106,7 +106,10 @@ function Questoes(){
     }, [])
     
     function BuscaUrl(anterior = false, proxima = false){
-        if(filtro === 'enem'){
+        if(Number.isInteger(parseInt(filtro))){
+            return `/Questoes/getById?id=` + filtro;
+        }
+        else if(filtro === 'enem'){
             return `/Questoes/getQuestaoAleatoria?tipo=ENEM`;
         }
         else if(filtro === 'IFTM'){
@@ -190,7 +193,7 @@ function Questoes(){
                     }
                     else{
                         toast.success('Você respondeu todas as questões dessa prova!');
-                        navigate('/listagemprovas', {replace: true});
+                        navigate('/listagemprovas/1', {replace: true});
                     }
                     
                     return;
@@ -337,7 +340,7 @@ function Questoes(){
             navigate('/historico/', {replace: true});
         }
         else if(filtro.includes('codigoquestaolistagem')){
-            navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
+            navigate('/prova/' + questao?.codigoProva, {replace: true});
         }
         else if(filtro.includes('simulado')){
             localStorage.removeItem(Config.Historico);

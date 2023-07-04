@@ -20,12 +20,13 @@
     color: white;
 }
 
-.respostas{
+.respostasUsuarios{
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    width: 100%;
 }
 
-.respostas button{
+.respostasUsuarios button{
     text-decoration: none;
   display: flex;
   justify-content: center;

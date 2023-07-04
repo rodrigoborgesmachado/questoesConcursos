@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const pages = ['Ranking dos usuários🔝', 'Provas📚', 'Simulados🧾'];
+const pages = ['Ranking dos usuários🔝', 'Provas📚', 'Simulados🧾', 'Pratique Tabuada➕'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
@@ -51,12 +51,15 @@ const ResponsiveAppBar = () => {
         navigate('/ranking', {replace: true});
     }
     else if(page === pages[1]){
-      navigate('/listagemprovas', {replace: true});
+      navigate('/listagemprovas/1', {replace: true});
     }
     else if(page === pages[2]){
       navigate('/simulado', {replace: true});
     }
     else if(page === pages[3]){
+      window.open("https://www.tabuadadivertida.com/", "_blank");
+    }
+    else if(page === pages[4]){
       navigate('/admin', {replace: true});
     }
   }

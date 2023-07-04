@@ -31,8 +31,8 @@ function RoutesApp(){
                 <Route path='/materias' element={<Materias/>}/>
                 <Route path='/bancas' element={<Bancas/>}/>
                 <Route path='/simulado' element={<Simulado/>}/>
-                <Route path='/listagemprovas' element={<ListagemProvas/>}/>
-                <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>
+                <Route path='/listagemprovas/:filtro' element={<ListagemProvas/>}/>
+                <Route path='/prova/:filtro' element={<ListagemQuestoes/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/criarUsuario' element={<CriarUsuario/>}/>
                 <Route path='/ranking' element={<Ranking/>}/>

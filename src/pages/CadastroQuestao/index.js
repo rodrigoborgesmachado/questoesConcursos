@@ -124,7 +124,7 @@ function CadastraQuestao(){
         .then((response) => {
             if(response.data.success){
                 toast.success('Questão cadastrada com sucesso!');
-                navigate('/listagemquestoes/' + filtro, {replace: true});
+                navigate('/prova/' + filtro, {replace: true});
             }
             else{
                 toast.info('Erro ao cadastrar');
