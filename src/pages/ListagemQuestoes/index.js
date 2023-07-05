@@ -50,7 +50,7 @@ function ListagemQuestoes(){
             await api.get(`/Questoes/pagged?page=1&quantity=10000&anexos=false&codigoProva=${filtro}`)
             .then((response) => {
                 if(response.data.success){
-                    setQuestoes(response.data.object);
+                    setQuestoes(response.data.object.sort((a, b) => parseInt(a.numeroQuestao) - parseInt(b.numeroQuestao)));
                     setLoadding(false);
                 }
                 else{
