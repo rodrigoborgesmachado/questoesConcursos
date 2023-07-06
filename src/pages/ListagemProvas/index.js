@@ -227,8 +227,8 @@ function ListagemProvas(){
                                     :<></>*/
                                 }
                                 </h4>
-                                <button onClick={() => abrirQuestao(item.id)}>Visualizar questão✏️</button>
-                                <button onClick={() => abrirSimulado(item.id)}>Iniciar Simulado✏️</button>
+                                <button onClick={() => abrirQuestao(item.id)}>Visualizar questões✏️</button>
+                                <button onClick={() => abrirSimulado(item.id)}>Iniciar Simulado🧾</button>
                                 <br/>
                                 <br/>
                                 <br/>
