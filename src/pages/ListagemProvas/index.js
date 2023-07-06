@@ -105,6 +105,7 @@ function ListagemProvas(){
     }
 
     const handleChange = (event, value) => {
+        localStorage.setItem(Config.PaginaListagem, value);
         navigate('/listagemprovas/' + value, {replace: true});
         setPage(value);
         setLoadding(true);

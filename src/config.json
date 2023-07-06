@@ -9,5 +9,6 @@
     "CodigoUsuario":"codigousuario",
     "Nome":"nomeUsuario",
     "TEMPO_PARAM":"tempo",
-    "Historico": "historico"
+    "Historico": "historico",
+    "PaginaListagem": "PAGINALISTAGEM"
 }

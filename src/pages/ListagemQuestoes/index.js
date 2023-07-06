@@ -5,6 +5,7 @@ import {toast} from 'react-toastify';
 import api from '../../services/api.js';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BsFileEarmarkPlusFill } from "react-icons/bs";
+import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import Config from './../../config.json';
 
 function ListagemQuestoes(){
@@ -76,6 +77,11 @@ function ListagemQuestoes(){
         navigate('/cadastraQuestao/' + filtro, {replace: true});
     }
 
+    function voltarListagemProva(){
+        var page = localStorage.getItem(Config.PaginaListagem) == null ? '1' : localStorage.getItem(Config.PaginaListagem);
+        navigate('/listagemprovas/' + page, {replace: true});
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -86,6 +92,9 @@ function ListagemQuestoes(){
 
     return(
         <div className='containerpage'>
+            <div className='total'>
+                <h2 onClick={voltarListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
+            </div>
             <h2 className='nomeProvaDescricao'>
                 Prova: {prova.nomeProva}
             </h2>
