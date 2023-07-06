@@ -110,13 +110,30 @@ function CadastraQuestao(){
     }
 
     async function confirmaFormulario(){
-        setLoadding(true);
 
         var questaoPost = questao;
+
+        if(questao.respostasQuestoes.filter(r => r.certa).length == 0){
+            toast.warn('Nenhuma resposta foi marcada como certa!');
+            return;
+        }
 
         (questaoPost.respostasQuestoes).forEach(element => {
             element.certa = element.certa ? '1' : '2'
         });
+
+        if(questaoPost.materia == ''){
+            toast.warn('Matéria não foi preenchida!');
+            return;
+        }
+
+        if(questao.numeroQuestao == ''){
+            toast.warn('Número da questão não foi preenchido!');
+            return;
+        }
+
+        
+        setLoadding(true);
 
         await api.post(`/Questoes`, 
         questaoPost
@@ -196,17 +213,19 @@ function CadastraQuestao(){
                                 questao.respostasQuestoes.map((item) => {
                                     return(
                                         <div key={item.codigo} className='respostas'>
-                                            <label className='respostas'>
-                                                <input type='radio' className='radioOption' checked={item.certa} name={'Radio_' + item.codigo} />
+                                            <label className='respostaLabel'>
+                                                {console.log(item)}
+                                                <input type='radio' className='radioOption' checked={item.certa ?? true} name={'Radio_' + item.codigo} />
                                                 {
                                                     <>
                                                     {
-                                                        item.anexoResposta.length > 0 ??
+                                                        item.anexoResposta[0].anexo != '' ?
                                                         <div id="imagemResposta">
                                                             <img src={item.anexoResposta[0].anexo}/>
                                                         </div>
+                                                        :
+                                                        <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
                                                     }
-                                                    <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
                                                     </>
                                                 }
                                             </label>

@@ -106,6 +106,10 @@
     padding-left: 10px;
 }
 
+.respostaLabel img{
+    padding-left: 10px;
+}
+
 .contextModal{
     display: flex;
     flex-direction: column;    
