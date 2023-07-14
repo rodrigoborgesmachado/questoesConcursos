@@ -12,7 +12,7 @@ function RecoveryPass(){
 
     async function reset(){
         setLoadding(true);
-        await api.post(`/recuperasenha/recovery-pass?email=` + email)
+        await api.post(`/recuperasenha/recovery-pass?email=` + email + `&tipo=QuestoesAqui`)
             .then((response) => {
                 if(response.data.success){
                     toast.success('Você receberá um email com as instruções para recuperação da senha!');

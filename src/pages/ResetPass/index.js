@@ -28,7 +28,7 @@ function ResetPass(){
 
     async function reset(){
         setLoadding(true);
-        await api.post(`/recuperasenha/reset-pass?guid=` + guid + '&pass=' + stringToHash(senha))
+        await api.post(`/recuperasenha/reset-pass?guid=` + guid + '&pass=' + stringToHash(senha) + `&tipo=QuestoesAqui`)
             .then((response) => {
                 setLoadding(false);
                 if(response.data.success){
