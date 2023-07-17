@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import Config from "../../config.json";
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
+import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 
 function PerfilUsuario(){
     const[usuario, setUsuario] = useState();
@@ -46,7 +47,6 @@ function PerfilUsuario(){
                 <h2>
                     Dados do usuário
                 </h2>
-                <br/>
                 <h4>
                     Nome: {usuario?.usuario?.nome}
                     <br/>
@@ -61,7 +61,11 @@ function PerfilUsuario(){
                     <br/>
                     <br/>
                     Quantidade de questões acertadas: {usuario?.quantidadeQuestoesAcertadas}
+                    <br/>
+                    <br/>
+                    Taxa de acertos:
                 </h4>
+                <LinearProgressWithLabel value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} />
             </div>
         </div>
     )    
