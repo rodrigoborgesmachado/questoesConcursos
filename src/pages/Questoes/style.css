@@ -171,8 +171,8 @@
     font-size: 20px;
     padding: 10px;
     border-radius: 15px;
-    background-color: beige;
-    color: #121212;
+    background-color: #2F4F4F;
+    color: #FFF;
     cursor: pointer;
     transition: all 0.5s;
 }

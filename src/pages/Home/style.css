@@ -18,11 +18,11 @@
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.5s;
-    background-color:beige !important;
-    color: #000;
+    background-color:#2F4F4F !important;
+    color: #FFF;
   }
 
 .botaoRanking:hover{
-    background-color: #00008B !important;
+    background-color: #2F4F4F !important;
     color: #FFF;
 }

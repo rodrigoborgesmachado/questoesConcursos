@@ -9,7 +9,7 @@
 }
 
 .itens li{
-  background-color: beige;
+  background-color: #2F4F4F;
   border-radius: 15px;
 }
 
@@ -42,7 +42,7 @@
   font-size: 15px;
   padding: 10px;
   border-radius: 15px;
-  background-color: beige;
+  background-color: #2F4F4F;
   color: #121212;
   cursor: pointer;
   transition: all 0.5s;
