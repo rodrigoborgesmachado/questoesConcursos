@@ -284,6 +284,33 @@ function CadastraQuestao(){
                     > 
                         Add Imagem
                     </button>
+                    <button onClick={
+                        () => {
+                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#8730;</span>' });
+                            setContadorImagem(contadorImagem+1);
+                        }
+                    }
+                    > 
+                        Add raiz quadrada
+                    </button>
+                    <button onClick={
+                        () => {
+                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sup></sup>' });
+                            setContadorImagem(contadorImagem+1);
+                        }
+                    }
+                    > 
+                        Add elevação (sup)
+                    </button>
+                    <button onClick={
+                        () => {
+                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sub></sub>' });
+                            setContadorImagem(contadorImagem+1);
+                        }
+                    }
+                    > 
+                        Add citação (sub)
+                    </button>
                 </div>
                 </div>
                 <div className='camposQuestaoAdd'>
