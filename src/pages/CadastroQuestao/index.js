@@ -247,7 +247,7 @@ function CadastraQuestao(){
                   type="text"
                   placeholder="Descrição da questão" 
                   required 
-                  rows="30"
+                  rows="35"
                   value={questao.campoQuestao}
                   onChange={(event) =>
                     setQuestao({ ...questao, campoQuestao: event.target.value })
@@ -292,6 +292,15 @@ function CadastraQuestao(){
                     }
                     > 
                         Add raiz quadrada
+                    </button>
+                    <button onClick={
+                        () => {
+                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#960;</span>' });
+                            setContadorImagem(contadorImagem+1);
+                        }
+                    }
+                    > 
+                        Add Pi
                     </button>
                     <button onClick={
                         () => {
