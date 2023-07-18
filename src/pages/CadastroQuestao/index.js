@@ -92,6 +92,7 @@ function CadastraQuestao(){
     const[loadding, setLoadding] = useState(false);
 
     function openModal() {
+                                          console.log(questao);
         setModalIsOpen(true);
     }
     
@@ -214,7 +215,6 @@ function CadastraQuestao(){
                                     return(
                                         <div key={item.codigo} className='respostas'>
                                             <label className='respostaLabel'>
-                                                {console.log(item)}
                                                 <input type='radio' className='radioOption' checked={item.certa ?? true} name={'Radio_' + item.codigo} />
                                                 {
                                                     <>
@@ -375,29 +375,29 @@ function CadastraQuestao(){
                         type="file"
                         multiple="multiple"
                         onInput=
-                        {(event) =>
+                        {async (event) =>
                             {
-                                var reader = new FileReader();
-                                reader.onload = function (){
-                                    setQuestao({
-                                        ...questao,
-                                        anexosQuestoes: [
-                                          ...questao.anexosQuestoes.slice(0, questao.anexosQuestoes.length-1),
-                                          {
-                                            anexo: reader.result
-                                          },
-                                          ...questao.anexosQuestoes.slice(questao.anexosQuestoes.length),
-                                        ],
-                                      });
+                                var files = event.target.files;
+                                let lista = [];
+                                for(var i = 0; i < files.length; i++){
+                                    let reader = new FileReader();
+                                    reader.onload = function (){
+                                        lista.push(
+                                            {
+                                                anexo: reader.result
+                                            }
+                                        );
+                                    }
+                                    reader.onerror = function(error){
+                                        alert(error);
+                                    }
+                                    await reader.readAsDataURL(files[i]);
                                 }
-                                reader.onerror = function(error){
-                                    alert(error);
-                                }
-                                var file = event.target.files;
 
-                                for(var i = 0; i < file.length; i++){
-                                    reader.readAsDataURL(file[i]);
-                                }
+                                setQuestao({
+                                    ...questao,
+                                    anexosQuestoes: lista
+                                });
                             }
                         }
                     />
