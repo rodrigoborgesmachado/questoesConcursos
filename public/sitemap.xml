@@ -10,41 +10,51 @@
 <url>
   <loc>https://www.questoesaqui.com/</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>1.00</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/listagemprovas/1</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/prova/51</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/simulado</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/questoes/aleatoria</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/login</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/questoes/enem</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/questoes/IFTM</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/materias</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.questoesaqui.com/bancas</loc>
   <lastmod>2023-07-19T15:26:51+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 </urlset>
