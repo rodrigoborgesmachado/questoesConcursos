@@ -18,11 +18,11 @@ import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const pages = ['Ranking dos usuários🔝', 'Provas📚', 'Simulados🧾', 'Bancas🏛️', 'Matérias🏭', 'Pratique Tabuada➕'];
+const pages = ['Provas📚', 'Simulados🧾', 'Bancas🏛️', 'Matérias🏭', 'Pratique Tabuada➕'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
-const settings = ['Olá ' + localStorage.getItem(Config.Nome), 'Perfil👽', 'Histórico de Questões⏳', 'Histórico Simulados🧾','Sair👋'];
+const settings = ['Olá ' + localStorage.getItem(Config.Nome), 'Perfil👽', 'Histórico de Questões⏳', 'Histórico Simulados🧾', 'Ranking dos usuários🔝','Sair👋'];
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
@@ -48,24 +48,21 @@ const ResponsiveAppBar = () => {
   function SelecionaOpcao(page){
     handleCloseNavMenu();
     if(page === pages[0]){
-        navigate('/ranking', {replace: true});
-    }
-    else if(page === pages[1]){
       navigate('/listagemprovas/1', {replace: true});
     }
-    else if(page === pages[2]){
+    else if(page === pages[1]){
       navigate('/simulado', {replace: true});
     }
-    else if(page === pages[3]){
+    else if(page === pages[2]){
       navigate('/bancas', {replace: true});
     }
-    else if(page === pages[4]){
+    else if(page === pages[3]){
       navigate('/materias', {replace: true});
     }
-    else if(page === pages[5]){
+    else if(page === pages[4]){
       window.open("https://www.tabuadadivertida.com/", "_blank");
     }
-    else if(page === pages[6]){
+    else if(page === pages[5]){
       navigate('/admin', {replace: true});
     }
   }
@@ -83,6 +80,9 @@ const ResponsiveAppBar = () => {
       navigate('/historicosimulado', {replace: true});
     }
     else if(setting === settings[4]){
+        navigate('/ranking', {replace: true});
+    }
+    else if(setting === settings[5]){
         sair();
     }
   }
