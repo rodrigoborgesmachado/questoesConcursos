@@ -21,6 +21,7 @@ import Admin from './pages/Admin';
 import Config from './config.json';
 import Resultado from './pages/ResultadoSimulado';
 import HistoricoSimulado from './pages/HistoricoSimulado';
+import SimuladoSelecao from './pages/SimuladoSelecao';
 
 function RoutesApp(){
     return(
@@ -45,6 +46,7 @@ function RoutesApp(){
                 <Route path='/resetpass/:guid' element={<ResetPass/>}/>
                 <Route path='/resultadosimulado/:filtro' element={<Resultado/>}/>
                 <Route path='/historicosimulado/' element={<HistoricoSimulado/>}/>
+                <Route path='/simuladoselecao/' element={<SimuladoSelecao/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <Route path='/admin' element={<Admin/>}/>

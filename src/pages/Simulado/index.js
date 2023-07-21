@@ -1,65 +1,8 @@
-import { useEffect, useState } from "react";
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
-import api from '../../services/api.js';
-import {toast} from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Config from '../../config.json';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
 
 function Simulado(){
     const navigate = useNavigate();
-    const animatedComponents = makeAnimated();
-    const[provas, setProvas] = useState([]);
-    const[provasSelecionadas, setProvasSelecionadas] = useState([]);
-    const[loadding, setLoadding] = useState(true);
-
-    useEffect(() => {
-        async function buscaProvas(){
-            if(!localStorage.getItem(Config.TOKEN)){
-                toast.info('Necessário logar para acessar!');
-                navigate('/', {replace: true});
-                return;
-            }
-            
-            await api.get('/Prova/GetSimulados')
-            .then((response) => {
-                let prov = [];
-                if(response.data.success){
-                    response.data.object.forEach(element => {
-                        prov.push({
-                            value: element.codigo,
-                            label: element.nome
-                        })
-                    });
-                    setProvas(prov);
-                }
-                setLoadding(false);
-            }).catch(() => {
-                toast.error('Erro ao buscar provas');
-                navigate('/', {replace: true});
-                return;
-            });
-        }
-
-        buscaProvas();
-    }, []);
-
-    const handleChange = (selectedOptions, event) => {
-        setProvasSelecionadas(selectedOptions.value);
-        localStorage.setItem(Config.Historico, '');
-        localStorage.removeItem(Config.Historico);
-        navigate(`/questoes/simulado&${selectedOptions.value}`);
-    }
-
-    if(loadding){
-        return(
-            <div className='loaddingDiv'>
-                <img src={require('../../assets/hug.gif')} alt="Loading..." />
-            </div>
-        )
-    }
 
     return (
         <div className="containerpage">
@@ -75,13 +18,8 @@ function Simulado(){
                 <br/>
                 <br/>
                 Prepare-se para explorar o desconhecido, colocar suas habilidades à prova e descobrir seu potencial oculto. Entre no modo simulado agora mesmo e embarque em uma aventura educativa como nunca antes! 🚀🎓✨
-                <br/>
-                <br/>
-                Selecione sua prova:
+                <button className='botao' onClick={() => navigate('/simuladoselecao',{replace: true})}>Selecione sua prova</button>
             </h3>
-            <div className="opcoes">
-                <Select closeMenuOnSelect={false} components={animatedComponents} options={provas} onChange={handleChange} />
-            </div>
         </div>
     )
 }
