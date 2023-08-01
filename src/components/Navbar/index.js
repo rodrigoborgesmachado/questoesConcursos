@@ -100,7 +100,8 @@ const ResponsiveAppBar = () => {
     
     toast.success('Volte sempre!');
     navigate('/', {replace: true});
-}
+    window.location.href = '/';
+  }
 
   return (
     <AppBar position="static" className='varBarResponsive'>
