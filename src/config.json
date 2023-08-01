@@ -10,5 +10,6 @@
     "Nome":"nomeUsuario",
     "TEMPO_PARAM":"tempo",
     "Historico": "historico",
-    "PaginaListagem": "PAGINALISTAGEM"
+    "PaginaListagem": "PAGINALISTAGEM",
+    "FiltroProva": "FILTROPROVA"
 }

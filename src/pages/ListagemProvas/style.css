@@ -41,6 +41,10 @@
     margin-bottom: 20px;
 }
 
+.provaTitle{
+    width: 100%;
+}
+
 .opcaoFiltro{
     display: flex;
     width: 100%;

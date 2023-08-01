@@ -35,9 +35,6 @@ function ListagemProvas(){
     const [page, setPage] = useState(filtro);
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(7);
-    const [filtroEnem, setFiltroEnem] = useState(false);
-    const [filtroIftm, setFiltroIftm] = useState(false);
-    const [filtroBasico, setFiltroBasico] = useState(false);
 
     function openModal() {
         setIsOpen(true);
@@ -54,7 +51,11 @@ function ListagemProvas(){
             return;
         }
 
-        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage + (semFiltro ? '' : '&prova=' + filtroNome))
+        var tipo = localStorage.getItem(Config.FiltroProva) == 'Todas as provas' ? '' : localStorage.getItem(Config.FiltroProva);
+
+        tipo = tipo == '' ? '' : '&tipo=' + tipo;
+
+        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage + tipo + (semFiltro ? '' : '&prova=' + filtroNome))
         .then((response) => {
             if(response.data.success){
                 setProvas(response.data.object);
@@ -95,9 +96,6 @@ function ListagemProvas(){
 
     function limparFiltro(){
         closeModal();
-        setFiltroEnem(false);
-        setFiltroIftm(false);
-        setFiltroBasico(false);
         setFiltroNome('');
         setLoadding(true);
         setPage(1);
@@ -111,27 +109,6 @@ function ListagemProvas(){
         setLoadding(true);
         buscaProvas(value);
       };
-
-    function FiltraEnem(e){
-        setFiltroEnem(!filtroEnem);
-        setFiltroIftm(false);
-        setFiltroBasico(false);
-        setFiltroNome('Enem');
-    }
-
-    function FiltraIftm(e){
-        setFiltroEnem(false);
-        setFiltroIftm(!filtroIftm);
-        setFiltroBasico(false);
-        setFiltroNome('IFTM');
-    }
-
-    function FiltraIBasico(e){
-        setFiltroEnem(false);
-        setFiltroIftm(false);
-        setFiltroBasico(!filtroBasico);
-        setFiltroNome(' ano');
-    }
 
     if(loadding){
         return(
@@ -158,11 +135,6 @@ function ListagemProvas(){
                         <h3>Filtros</h3>
                     </div>
                     <div className='filtrosProva'>
-                        <h4 className='inputFiltro'>
-                            <input type='radio' className='radioOption' name={'Radio'} checked={filtroEnem} onClick={(e) => FiltraEnem(e)}/> ENEM
-                            <input type='radio' className='radioOption' name={'Radio'} checked={filtroIftm}  onClick={(e) => FiltraIftm(e)}/> IFTM
-                            <input type='radio' className='radioOption' name={'Radio'} checked={filtroBasico}  onClick={(e) => FiltraIBasico(e)}/> Ensino Fundamental
-                        </h4>
                         <h4>
                             Nome da prova:
                         </h4>
@@ -175,7 +147,7 @@ function ListagemProvas(){
                 </div>
             </Modal>
             <div className='opcoesProva'>
-                <h2><a onClick={limparFiltro}>Provas</a></h2>
+                <h2 className='provaTitle'><a onClick={limparFiltro}>Provas {localStorage.getItem(Config.FiltroProva)}</a></h2>
                 <div className='opcaoFiltro'>
                     {
                         localStorage.getItem(Config.ADMIN) == '1' ?

@@ -167,7 +167,8 @@ function CadastraProva(){
         .then((response) => {
             if(response.data.success){
                 toast.success('Prova cadastrada com sucesso!');
-                navigate('/listagemprovas/1', {replace: true});
+                var page = localStorage.getItem(Config.PaginaListagem) == null ? '1' : localStorage.getItem(Config.PaginaListagem);
+                navigate('/listagemprovas/' + page, {replace: true});
             }
             else{
                 toast.info('Erro ao cadastrar!');
@@ -200,7 +201,8 @@ function CadastraProva(){
         .then((response) => {
             if(response.data.success){
                 toast.success('Prova atualizada com sucesso!');
-                navigate('/listagemprovas/1', {replace: true});
+                var page = localStorage.getItem(Config.PaginaListagem) == null ? '1' : localStorage.getItem(Config.PaginaListagem);
+                navigate('/listagemprovas/' + page, {replace: true});
             }
             else{
                 toast.info('Erro ao atualizar!');

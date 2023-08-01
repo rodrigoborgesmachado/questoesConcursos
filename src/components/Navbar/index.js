@@ -17,6 +17,7 @@ import Config from './../../config.json';
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
+import api from '../../services/api.js';
 
 const pages = ['Provas📚', 'Simulados🧾', 'Bancas🏛️', 'Matérias🏭', 'Pratique Tabuada➕'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
@@ -28,7 +29,28 @@ const ResponsiveAppBar = () => {
     const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElProva, setAnchorElProva] = React.useState(null);
+    const [tipos, setTipos] = React.useState([]);
+
+  async function buscaTipos(){
+    await api.get('/TipoProva/getAll')
+    .then((response) => {
+        if(response.data.success){
+            setTipos(response.data.object);
+        }
+        else{
+            toast.warn('Erro ao buscar tipos');    
+        }
+    })
+    .catch(() => {
+        toast.warn('Erro ao buscar tipos');
+    })
+  }
+
+  React.useEffect(() => {
+    buscaTipos();
+  }, [])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,6 +61,14 @@ const ResponsiveAppBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenProvaMenu = (event) => {
+    setAnchorElProva(event.currentTarget);
+  };
+
+  const handleCloseProvaMenu = () => {
+    setAnchorElProva(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -85,6 +115,14 @@ const ResponsiveAppBar = () => {
     else if(setting === settings[5]){
         sair();
     }
+  }
+
+  function selecionaFiltroProva(descricao){
+    handleCloseProvaMenu();
+    handleCloseNavMenu();
+
+    localStorage.setItem(Config.FiltroProva, descricao);
+    window.location.href = '/listagemprovas/1';
   }
 
   function sair(){
@@ -156,11 +194,47 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
+                page != 'Provas📚' ?
                 <MenuItem key={page} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
                   </Typography>
                 </MenuItem>
+                :
+                <>
+                  <MenuItem key={page} onClick={handleOpenProvaMenu} >
+                    <Typography textAlign="center">
+                      {page}
+                    </Typography>
+                  </MenuItem>
+                  <Menu
+                    sx={{ ml: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElProva}
+                    keepMounted
+                    open={Boolean(anchorElProva)}
+                    onClose={handleCloseProvaMenu}
+                  >
+                    {
+                      tipos == [] ? 
+                      <MenuItem>
+                        <Typography textAlign="center">
+                            Carregando
+                          </Typography>
+                      </MenuItem>
+                      :
+                      <>
+                      {tipos.map((tipos) => (
+                        <MenuItem key={tipos.codigo} onClick={(e) => selecionaFiltroProva(tipos.descricao)}>
+                          <Typography textAlign="center">
+                              {tipos.descricao}
+                            </Typography>
+                        </MenuItem>
+                      ))}
+                      </>
+                    }
+                  </Menu>
+                </>
               ))}
             </Menu>
           </Box>
@@ -185,6 +259,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+              page != 'Provas📚' ?
               <Button
                 key={page}
                 onClick={(e) => SelecionaOpcao(page)}
@@ -192,6 +267,39 @@ const ResponsiveAppBar = () => {
               >
                 {page}
               </Button>
+              :
+              <>
+                <Button key={page} onClick={handleOpenProvaMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    {page}
+                </Button>
+                <Menu
+                  sx={{ ml: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElProva}
+                  keepMounted
+                  open={Boolean(anchorElProva)}
+                  onClose={handleCloseProvaMenu}
+                >
+                  {
+                    tipos == [] ? 
+                    <MenuItem>
+                      <Typography textAlign="center">
+                          Carregando
+                        </Typography>
+                    </MenuItem>
+                    :
+                    <>
+                    {tipos.map((tipos) => (
+                      <MenuItem key={tipos.codigo} onClick={(e) => selecionaFiltroProva(tipos.descricao)}>
+                        <Typography textAlign="center">
+                            {tipos.descricao}
+                          </Typography>
+                      </MenuItem>
+                    ))}
+                    </>
+                  }
+                </Menu>
+              </>
             ))}
           </Box>
 
