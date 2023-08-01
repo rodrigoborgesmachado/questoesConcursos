@@ -193,8 +193,18 @@ function ListagemProvas(){
                             <div key={item.id}>
                                 <h4>
                                 <div className='tituloProva'>
-                                    <b>📚{item.nomeProva}📚</b> 
+                                    <b>📚{item.nomeProva}📚{localStorage.getItem(Config.ADMIN) == '1' ? <a onClick={() => navigate('/cadastroProva/' + item.id, {replace: true})}>✏️</a> : <></>}</b> 
+                                    <sub><b>{
+                                    item.tipoProvaAssociado.map( (t, index) => {
+                                        return(
+                                            <>
+                                                {index == 0 ? t.tipoProva.descricao : ' | ' + t.tipoProva.descricao}
+                                            </>
+                                        )
+                                    })}</b></sub>
                                 </div>
+                                <br/>
+                                
                                 <br/>
                                 <b>Tipo:</b> {item.tipoProva}
                                 <br/>
@@ -203,6 +213,7 @@ function ListagemProvas(){
                                 <b>Banca:</b> {item.banca}
                                 <br/>
                                 <b>Data de aplicação:</b> {item.dataAplicacao}
+                                <br/>
                                 <br/>
                                 <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}🔥
                                 {

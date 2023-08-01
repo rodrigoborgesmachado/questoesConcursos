@@ -40,6 +40,7 @@ function RoutesApp(){
                 <Route path='/historico' element={<HistoricoUsuario/>}/>
                 <Route path='/perfil' element={<PerfilUsuario/>}/>
                 <Route path='/questoes/:filtro' element={<Questoes/>}/>
+                <Route path='/cadastroProva/:filtro' element={<CadastraProva/>}/>
                 <Route path='/cadastroProva' element={<CadastraProva/>}/>
                 <Route path='/cadastraQuestao/:filtro' element={<CadastraQuestao/>}/>
                 <Route path='/recoverypass' element={<RecoveryPass/>}/>
