@@ -65,3 +65,21 @@ body{
   color: #FFF;
 }
 
+.itensPaginacao{
+  width: 80%;
+  padding: 4px;
+}
+
+.itensPaginacao a{
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.itensPaginacao li{
+background-color: #2F4F4F;
+  border-radius: 15px;
+}
+
+.itensPaginacao button{
+  color: #FFF;
+}

@@ -1,18 +1,3 @@
-.itens{
-    width: 80%;
-    padding: 4px;
-}
-
-.itens a{
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.itens li{
-  background-color: #2F4F4F;
-  border-radius: 15px;
-}
-
 .dadosResumidos{
     width: 80%;
 }

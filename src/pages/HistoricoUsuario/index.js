@@ -103,7 +103,7 @@ function HistoricoUsuario(){
                 <br/>
                 <br/>
             </div>
-            <div className='itens'>
+            <div className='itensPaginacao'>
                 <h3>
                     Histórico de questões respondidas:
                 </h3>

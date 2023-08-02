@@ -220,16 +220,17 @@ function ListagemProvas(){
                         )
                     })
                 }
-                {
-                    quantity > 0 ?
-                    <Stack spacing={4}>
-                        <Pagination count={parseInt((quantity/quantityPerPage)+1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange}/>
-                    </Stack>    
-                    :
-                    <>
-                    </>
-                }
-                
+            </div>
+            <div className='itensPaginacao'>
+            {
+                quantity > 0 ?
+                <Stack spacing={4}>
+                    <Pagination count={parseInt((quantity/quantityPerPage)+1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange}/>
+                </Stack>    
+                :
+                <>
+                </>
+            }
             </div>
         </div>
     )
