@@ -216,7 +216,7 @@ const ResponsiveAppBar = () => {
                     onClose={handleCloseProvaMenu}
                   >
                     {
-                      tipos == [] ? 
+                      tipos == 0 ? 
                       <MenuItem>
                         <Typography textAlign="center">
                             Carregando
@@ -281,7 +281,7 @@ const ResponsiveAppBar = () => {
                   onClose={handleCloseProvaMenu}
                 >
                   {
-                    tipos == [] ? 
+                    tipos.length == 0 ? 
                     <MenuItem>
                       <Typography textAlign="center">
                           Carregando
