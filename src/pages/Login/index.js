@@ -69,20 +69,30 @@ function Login(){
     }
 
     return (
-        <div className="containerpage">
+        <div className="global-page-container">
+            <div className='global-panel'>
             <div className='login'>
-                <h2>
-                    Login
-                </h2>
-                <input type="email" name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
-                <h2>
-                    Senha
-                </h2>
+
+                <div className='login-wrapper'>
+                    <div className='login-selected'>
+                        Logar
+                    </div>
+                    <div className='login-unselected' onClick={criarUsuario}>
+                        Registrar
+                    </div>
+                </div>
+
+                <div className='separator'></div>
+
+                <label for="email">Email:</label>
+                <input type="email"  name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
+                <label for="email">Senha:</label>
                 <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
-                <Link className='botao' to={`/recoverypass`}>Esqueci minha senha</Link>
-                <button onClick={logar}>Logar</button>
-                <button onClick={criarUsuario}>Criar usuário</button>
+                <button className='global-button global-button--full-width' onClick={logar}>Logar</button>
+                <Link className='global-button global-button--basic global-button--full-width' to={`/recoverypass`}>Esqueci minha senha</Link>
             </div>
+            </div>
+            
         </div>
     )
 }

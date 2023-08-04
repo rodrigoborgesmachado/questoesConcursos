@@ -71,7 +71,8 @@ function CriarUsuario(){
     }
 
     return(
-        <div className="containerpage">
+        <div className="global-page-container">
+            <div className='global-panel'>
             <h2>
                 Cadastro de Usuário
             </h2>
@@ -92,8 +93,10 @@ function CriarUsuario(){
                     Data nascimento
                 </h3>
                 <input type='date' value={nascimento} onChange={(e) => setNascimento(e.target.value)}></input>
-                <button onClick={confirmaFormulario}>Confirma</button>
+                <button className='global-button global-button--full-width' onClick={confirmaFormulario}>Confirma</button>
             </div>
+            </div>
+            
         </div>
     )
 }

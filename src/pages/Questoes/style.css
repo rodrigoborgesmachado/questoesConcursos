@@ -197,26 +197,3 @@
     margin-bottom: 10px;
 }
 
-
-.global-button{
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    margin: 8px 8px 8px 0;
-    font-size: 15px;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.5s;
-    background-color: var(--button-color-primary);
-    color: var(--text-color-secondary);
-    font-weight: bold;
-    border: none;
-}
-
-.global-button--full-width{
-    width: 100% !important;
-}
