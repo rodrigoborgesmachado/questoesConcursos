@@ -15,7 +15,7 @@
     padding: 3px !important;
 }
 
-.provas button{
+/* .provas button{
     text-decoration: none;
   display: flex;
   justify-content: center;
@@ -31,7 +31,7 @@
   color: #FFF;
   cursor: pointer;
   transition: all 0.5s;
-}
+} */
 
 .opcoesProva{
     display: flex;

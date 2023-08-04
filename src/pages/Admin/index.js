@@ -163,7 +163,7 @@ function Admin(){
                                     <br/>
                                     Data resposta: {item.dataResposta?.replace('T', ' ')}
                                     <br/>
-                                    <button onClick={() => abreQuestao(item.codigoQuestao)}>Visualizar Questão✏️</button>
+                                    <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.codigoQuestao)}>Visualizar Questão✏️</button>
                                     <br/>
                                     <br/>
                                 </h4>

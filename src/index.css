@@ -350,3 +350,25 @@ footer a {
   color: var(--text-color-secondary);
   font-size: 19px;
 }
+
+.dadosResumidos{
+  width: 80%;
+}
+
+.descricao{
+  padding: 5xp;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.descricao h4{
+  padding: 4px;
+  margin: 4px;
+}
+
+.dadosResumidos a{
+  text-decoration: none;
+  cursor: pointer;
+}
