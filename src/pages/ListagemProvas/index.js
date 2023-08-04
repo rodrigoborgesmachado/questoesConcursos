@@ -113,7 +113,7 @@ function ListagemProvas(){
     if(loadding){
         return(
             <div className='loaddingDiv'>
-                <img src={require('../../assets/hug.gif')} alt="Loading..." />
+               <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }
