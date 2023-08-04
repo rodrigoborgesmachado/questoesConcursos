@@ -123,7 +123,7 @@ function ListagemProvas(){
     }
     
     return(
-        <div className='containerpage'>
+        <div className='global-page-container'>
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}

@@ -524,6 +524,10 @@ footer a {
   border: 1px solid var(--panel-border-color);
 }
 
+table{
+  width: 100%;
+}
+
 
 /* .login{
   margin-top: 5%;

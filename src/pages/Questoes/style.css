@@ -30,7 +30,6 @@
 .total{
     width: 100%;
     justify-content: left;
-    margin-left: 20px;
 }
 .opcaoVerificacao{
     display: flex;
@@ -54,7 +53,6 @@
 
 .descricaoQuestao{
     width: 100%;
-    max-width: 90%;
     align-items: center;
     justify-content: center;
 }
