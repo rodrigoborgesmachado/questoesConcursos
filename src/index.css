@@ -23,6 +23,7 @@
   --color-surface-variant: #1F1F1F;
 
   --loader-color: var(--primary-color);
+  --panel-border-color : #eaebeb;
 
 
 }
@@ -508,6 +509,20 @@ footer a {
   
 }
 
+.todasRespostas{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: left;
+  justify-content: left;
+  gap: 16px;
+}
+
+.global-respostasLista{
+  padding: 20px;
+  justify-items: left;
+  border: 1px solid var(--panel-border-color);
+}
 
 
 /* .login{

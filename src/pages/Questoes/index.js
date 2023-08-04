@@ -431,7 +431,7 @@ function Questoes(){
     }
 
     return(
-        <div className="containerpage">
+        <div className="global-page-container">
             <Modal
               isOpen={modalSolicitacao}
               onRequestClose={closeModalSolicitacao}
@@ -545,7 +545,7 @@ function Questoes(){
                     {
                         questao?.respostasQuestoes?.map((item) => {
                             return(
-                                <div key={item.id} className='respostasLista'>
+                                <div key={item.id} className='global-respostasLista'>
                                     <label className='respostaLabel'>
                                         <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
                                         {
