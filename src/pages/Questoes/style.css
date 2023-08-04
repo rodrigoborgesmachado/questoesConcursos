@@ -24,6 +24,7 @@
     margin: 20px;
     padding-left: 30px;
     padding-right: 30px;
+    color: var(--text-color-primary);
 }
 
 .opcaoBotaoBefore{
@@ -186,7 +187,7 @@
     display: flex;
     flex-direction: column;    
     width: 100%;
-    color: #fff;
+    color: var(--text-color-primary);
 }
 
 .modalComentarios h4{

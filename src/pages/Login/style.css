@@ -21,29 +21,6 @@
     border-radius: 10px;
 }
 
-.login button{
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
-    margin-top: 20px;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #2F4F4F;
-    color: #FFF;
-    cursor: pointer;
-    transition: all 0.5s;
-  }
-  
-  .login button:hover{
-    background-color: rgb(37, 26, 166);
-    color: #FFF;
-  }
-
 .login a{
     width: 20%;
     padding: 5px;

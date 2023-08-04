@@ -143,8 +143,8 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar position="static" className='varBarResponsive'>
-      <Container maxWidth="xl" className='conNav'>
-        <Toolbar disableGutters className='toolNav'>
+ <div className='conNav'>
+        <div disableGutters className='toolNav'>
           <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -346,8 +346,8 @@ const ResponsiveAppBar = () => {
             }
             
           </Box>
-        </Toolbar>
-      </Container>
+        </div>
+      </div>
     </AppBar>
   );
 };
