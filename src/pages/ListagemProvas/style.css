@@ -72,12 +72,7 @@
     justify-content: left;
     border: 5px;
     padding: 5% 5%;
-}
-
-.provas button:hover{
-    background-color: rgb(37, 26, 166);
-    color: #FFF;
-}
+} 
 
 .provas a{
     text-decoration: none;
