@@ -450,6 +450,10 @@ footer a {
   cursor: pointer;
 }
 
+.timerdiv{
+  margin-top: 16px;
+}
+
 
 /* Estilos dos componentes globais */
 
@@ -504,6 +508,13 @@ footer a {
     color: var(--button-color-primary);
     border: 1px solid var(--button-color-primary);
 }
+
+.global-button--transparent:hover{
+    color: var(--background-color);
+    background-color: var(--button-color-primary);
+    border: 1px solid var(--button-color-primary);
+}
+
 
 .global-page-container{
   display: flex;
