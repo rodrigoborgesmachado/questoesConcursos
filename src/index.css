@@ -77,11 +77,17 @@ body {
   width: 100%;
 }
 
+table{
+  border-radius: 4px;
+}
+
 table, tr, td{
   align-items: center;
   text-align: center;
-  background-color: rgba(93, 89, 89, 0.177);
+  background-color: var(--secundary-color);
   padding: 4px;
+  border-bottom: solid 1px var(--text-color-primary-light);
+  border-spacing: 0px;
 }
 
 .posicao{
