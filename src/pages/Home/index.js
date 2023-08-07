@@ -57,7 +57,7 @@ function Home() {
 
             <div className="separator"></div>
 
-            <div className="containerpage">
+            <div className="containerpage global-extraBottom">
                 <div className='botoes-type2'>
                     <Link className='botao-type2' to={`/questoes/aleatoria`}>
                         Questões aleatórias

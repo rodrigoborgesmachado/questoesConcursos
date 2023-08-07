@@ -42,6 +42,13 @@
   --panel-border-color : #eaebeb;
 
 
+/* Espaçamentos padrões */
+--default-padding:8px;
+--default-border-radius:4px;
+
+
+
+
 }
 
 
@@ -78,14 +85,14 @@ body {
 }
 
 table{
-  border-radius: 4px;
+  border-radius: var(--default-border-radius);
 }
 
 table, tr, td{
   align-items: center;
   text-align: center;
   background-color: var(--secundary-color);
-  padding: 4px;
+  padding: var(--default-padding);
   border-bottom: solid 1px var(--text-color-primary-light);
   border-spacing: 0px;
 }
@@ -136,7 +143,7 @@ table, tr, td{
 }
 
 .botao-type2:hover {
-  background: var(--secundary-color-hover);
+  filter: brightness(0.6);
 }
 
 .paragrafo1 {
@@ -327,7 +334,7 @@ table, tr, td{
 
 footer {
   font-size: 8px;
-  padding: 4px;
+  padding: 16px;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -578,6 +585,10 @@ footer a {
   color: var(--text-color-primary);
   max-width: 1080px;
   width: 100%;
+}
+
+.global-extraBottom{
+  margin-bottom: 80px;
 }
 
 .global-page-container--login{

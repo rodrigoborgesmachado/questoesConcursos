@@ -85,7 +85,7 @@ function HistoricoUsuario(){
             <h2>
                 Histórico de questões
             </h2>
-            <br/>
+            <div className="separator"></div>
             <div className='dadosResumidos'>
                 Progresso:✅
                 <br/>
