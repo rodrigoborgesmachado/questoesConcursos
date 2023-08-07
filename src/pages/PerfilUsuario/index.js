@@ -47,6 +47,7 @@ function PerfilUsuario(){
                 <h2>
                     Dados do usuário
                 </h2>
+                <div className='separator separator--withMargins'></div>
                 <h4>
                     Nome: {usuario?.usuario?.nome}
                     <br/>

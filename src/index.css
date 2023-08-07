@@ -19,7 +19,7 @@
 
 
 
-  --text-color-primary: #FFFFFF;
+  --text-color-primary: #C9D1D9;
   
   --text-color-secondary: #FFFFFF;
   --text-color-accent: #2CDEBF;
@@ -27,7 +27,7 @@
   --text-color-button: #FFFFFF;
   
   --button-color-secondary: rgb(37, 26, 166);
-  --separator-color-primary: rgba(0, 0, 0, .12);
+  --separator-color-primary: rgba(48,54,61,0.48);;
   --shadow-color-primary: rgba(0, 0, 0, .12);
   --shadow-color-secondary: rgba(0, 0, 0, .12);
   --separator-marker-color-primary: #006B59;
