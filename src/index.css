@@ -3,10 +3,10 @@
   --background-color: #121212;
 
   /* Cor do header, footer e outros elementos principais */
-  --primary-color: #0a192f;
+  --primary-color: #161623;
 
   /* Cor dos painéis */
-  --secundary-color: #172a46;
+  --secundary-color: #4D5B7D;
     /* Cor dos painéis */
     --secundary-color-hover: #383838;
 
@@ -14,8 +14,8 @@
   --text-color-primary-light: #cdd7f7;
 
   /* Cores do botão principal */
-  --button-color-primary: #2eac68;
-  --button-color-primary-hover: #1c673e;
+  --button-color-primary: #8A2BE2;
+  --button-color-primary-hover: #4B0082;
 
 
 
