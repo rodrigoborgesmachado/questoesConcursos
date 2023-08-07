@@ -65,7 +65,13 @@ function PerfilUsuario(){
                     <br/>
                     Taxa de acertos:
                 </h4>
-                <LinearProgressWithLabel value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} />
+                {/* <LinearProgressWithLabel  color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} /> */}
+                <LinearProgressWithLabel sx={{
+                  backgroundColor: 'white',
+                  '& .MuiLinearProgress-bar': {
+                    backgroundColor: 'green'
+                  }
+                }} color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} />
             </div>
         </div>
     )    

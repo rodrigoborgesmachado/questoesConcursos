@@ -1,14 +1,14 @@
 :root {
-  --primary-color: #004d25;
-  --secundary-color: #FFFFFF;
-  --background-color: #fafafa;
-  --text-color-primary: #191C1B;
-  --text-color-primary-light: #0000008a;
+  --primary-color: #191d43;
+  --secundary-color: #191d43;
+  --background-color: #0e0f2e;
+  --text-color-primary: #FFFFFF;
+  --text-color-primary-light: #FFFFFF;
   --text-color-secondary: #FFFFFF;
   --text-color-accent: #2CDEBF;
   --text-color-code: #426278;
   --text-color-button: #FFFFFF;
-  --button-color-primary: #004d25;
+  --button-color-primary: #191d43;
   --button-color-primary-hover: #98B643;
   --button-color-secondary: rgb(37, 26, 166);
   --separator-color-primary: rgba(0, 0, 0, .12);
@@ -90,6 +90,7 @@ body {
   flex-direction: column-reverse;
   max-width: 180px;
   background-color: var(--secundary-color);
+  fill: var(--text-color-primary-light);
 }
 
 .botao-type2:hover {
