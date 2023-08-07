@@ -211,8 +211,9 @@ function ListagemProvas(){
                                     :<></>*/
                                 }
                                 </h4>
-                                <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
-                                <button className='global-button global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button>
+                                <div className='global-buttonWrapper'>
+                                    <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
+                                    <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button></div>
                                 <br/>
                                 <br/>
                                 <br/>
