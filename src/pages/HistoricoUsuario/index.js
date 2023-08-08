@@ -82,7 +82,7 @@ function HistoricoUsuario() {
 
     return (
         <div className='containerpage'>
-            <div className='dados glogal-infoPanel'>
+            <div className='dados global-infoPanel'>
                 <h2>
                     Histórico de questões
                 </h2>
@@ -112,7 +112,7 @@ function HistoricoUsuario() {
                 </div>
             </div>
 
-            <div className='itensPaginacao glogal-infoPanel'>
+            <div className='itensPaginacao global-infoPanel'>
                 <h3>
                     Histórico de questões respondidas:
                 </h3>

@@ -43,7 +43,7 @@ function PerfilUsuario(){
 
     return(
         <div className="containerpage">
-            <div className='dados glogal-infoPanel'>
+            <div className='dados global-infoPanel'>
                 <h2>
                     Dados do usuário
                 </h2>

@@ -162,7 +162,7 @@ function ListagemProvas() {
                 {
                     provas.map((item) => {
                         return (
-                            <div className='glogal-infoPanel' key={item.id}>
+                            <div className='global-infoPanel' key={item.id}>
                                 <h4>
                                     <div className='tituloProva'>
                                         <b>📚{item.nomeProva}📚{localStorage.getItem(Config.ADMIN) == '1' ? <a onClick={() => navigate('/cadastroProva/' + item.id, { replace: true })}>✏️</a> : <></>}</b>

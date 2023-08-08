@@ -419,7 +419,11 @@ footer a {
 
 .dadosResumidos > * {
   margin-top: var(--default-padding);
-} 
+}
+
+.dadosResumidos-h3 > * {
+  margin-top: 24px;
+}
 
 .descricao{
   padding: 5xp;
@@ -539,7 +543,7 @@ footer a {
   max-width: 512px;
 }
 
-.glogal-infoPanel{
+.global-infoPanel{
   padding: 24px;
   box-shadow: var(--mdc-protected-button-container-elevation, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
   color: var(--text-color-primary);
@@ -548,7 +552,7 @@ footer a {
   width: 100%;
 }
 
-.glogal-infoPanel + .glogal-infoPanel{
+.global-infoPanel + .global-infoPanel{
   margin-top: 16px;
 }
 

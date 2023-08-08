@@ -547,7 +547,7 @@ function Questoes(){
                     {
                         questao?.respostasQuestoes?.map((item) => {
                             return(
-                                <div key={item.id} className='dados glogal-infoPanel'>
+                                <div key={item.id} className='dados global-infoPanel'>
                                     <label className='respostaLabel'>
                                         <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
                                         {
