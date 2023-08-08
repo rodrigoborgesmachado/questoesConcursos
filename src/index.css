@@ -80,7 +80,7 @@ body {
 
 
 .containerpage table{
-  margin-top: 50px;
+  margin-top: 16px;
   width: 100%;
 }
 
@@ -624,7 +624,7 @@ footer a {
   flex-direction: column;
   margin-top: 8px;
   height: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 48px;
   padding: 20px 8px;
   color: var(--text-color-primary);
   max-width: 1080px;

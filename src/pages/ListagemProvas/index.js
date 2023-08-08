@@ -162,7 +162,7 @@ function ListagemProvas() {
                 {
                     provas.map((item) => {
                         return (
-                            <div key={item.id}>
+                            <div className='glogal-infoPanel' key={item.id}>
                                 <h4>
                                     <div className='tituloProva'>
                                         <b>📚{item.nomeProva}📚{localStorage.getItem(Config.ADMIN) == '1' ? <a onClick={() => navigate('/cadastroProva/' + item.id, { replace: true })}>✏️</a> : <></>}</b>
@@ -227,11 +227,17 @@ function ListagemProvas() {
                     })
                 }
             </div>
-            <div className='itensPaginacao'>
+            <div className='itensPaginacao global-mt'>
                 {
                     quantity > 0 ?
                         <Stack spacing={4}>
-                            <Pagination count={parseInt((quantity / quantityPerPage) + 1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                            <Pagination sx={{
+                    '& .Mui-selected': {
+                        color: 'white'},
+                    '& .MuiPaginationItem-root': {
+                        color: 'white',
+                  
+                  }}} count={parseInt((quantity / quantityPerPage) + 1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
                         :
                         <>

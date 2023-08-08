@@ -137,7 +137,7 @@ function HistoricoUsuario() {
                                         Data resposta: {item.dataResposta?.replace('T', ' ')}
                                    </p>
 
-                                    <div className='global-buttonWrapper-toEnd'>
+                                    <div className='global-buttonWrapper'>
                                         <button className='global-button' onClick={() => abreQuestao(item.codigoQuestao)}>✏️ Visualizar Questão</button>
                                     </div>
 

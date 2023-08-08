@@ -1,7 +1,6 @@
 .provas{
-    width: 80%;
-    padding: 10px;
-    margin-top: 3%;
+    width: 100%;
+    max-width: 800px;
 }
 
 .provas h4{
@@ -36,9 +35,10 @@
 .opcoesProva{
     display: flex;
     flex-direction: row;
-    width: 80%;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 800px;
 }
 
 .provaTitle{
