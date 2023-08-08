@@ -103,7 +103,11 @@ function HistoricoUsuario() {
                         Progresso de questões resolvidas corretamente: {quantity} de {qtTotal}
                     </p>
                     <p>
-                        <LinearProgressWithLabel value={parseInt((quantity / qtTotal) * 100)} />
+                        <LinearProgressWithLabel sx={{
+                  backgroundColor: '#4B0082',
+                  '& .MuiLinearProgress-bar': {
+                    backgroundColor: '#8A2BE2'
+                  }}} value={parseInt((quantity / qtTotal) * 100)} />
                     </p>
                 </div>
             </div>

@@ -441,6 +441,15 @@ footer a {
   cursor: pointer;
 }
 
+.descricaoQuestao > *{
+  margin-top: var(--default-padding);
+}
+
+.descricaoQuestao > .separator{
+  margin-top: 24px;
+  margin-bottom: var(--default-padding);
+}
+
 
 .loaddingDiv{
   width: 90%;
@@ -609,9 +618,21 @@ footer a {
 }
 
 
-.global-page-container{
+.global-pageContainer{
   display: flex;
   align-items: center;
+  flex-direction: column;
+  margin-top: 8px;
+  height: 100%;
+  margin-bottom: 18px;
+  padding: 20px 8px;
+  color: var(--text-color-primary);
+  max-width: 1080px;
+  width: 100%;
+}
+
+.global-pageContainer-left{
+  display: flex;
   flex-direction: column;
   margin-top: 8px;
   height: 100%;
@@ -626,7 +647,7 @@ footer a {
   margin-bottom: 80px;
 }
 
-.global-page-container--login{
+.global-pageContainer--login{
   
 }
 
@@ -636,7 +657,6 @@ footer a {
   width: 100%;
   align-items: left;
   justify-content: left;
-  gap: 16px;
 }
 
 .global-respostasLista{

@@ -45,7 +45,7 @@ function Ranking(){
     }
 
     return(
-        <div className="global-page-container">
+        <div className="global-pageContainer">
             <h2>
                 Ranking
             </h2>

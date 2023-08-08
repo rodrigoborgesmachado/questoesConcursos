@@ -69,7 +69,7 @@ function Login() {
     }
 
     return (
-        <div className="global-page-container">
+        <div className="global-pageContainer">
             <div className='global-panel'>
                 <div className='login'>
 

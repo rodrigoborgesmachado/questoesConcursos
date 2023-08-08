@@ -71,7 +71,7 @@ function CriarUsuario(){
     }
 
     return(
-        <div className="global-page-container">
+        <div className="global-pageContainer">
             <div className='global-panel'>
             <h2>
                 Cadastro de Usuário

@@ -98,7 +98,11 @@ function Resultado(){
                 </h3>
             </div>
             <div className='barraPrograsso'>
-                <LinearProgressWithLabel value={Math.round(parseInt((respostas.filter((item) => item.certa === '1').length/respostas.length)*100))} />
+                <LinearProgressWithLabel sx={{
+                  backgroundColor: '#4B0082',
+                  '& .MuiLinearProgress-bar': {
+                    backgroundColor: '#8A2BE2'
+                  }}} value={Math.round(parseInt((respostas.filter((item) => item.certa === '1').length/respostas.length)*100))} />
             </div>
             <div className='respostasHistorico'>
                 <Table>

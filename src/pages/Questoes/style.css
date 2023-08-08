@@ -72,15 +72,6 @@
     display: block;
 }
 
-.todasRespostas{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: left;
-    justify-content: left;
-    gap: 16px;
-}
-
 .global-respostasLista{
     padding: 20px;
     justify-items: left;

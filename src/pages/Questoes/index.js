@@ -431,7 +431,7 @@ function Questoes(){
     }
 
     return(
-        <div className="global-page-container">
+        <div className="global-pageContainer-left">
             <Modal
               isOpen={modalSolicitacao}
               onRequestClose={closeModalSolicitacao}
@@ -533,6 +533,9 @@ function Questoes(){
             <div className='Materia'>
                 <h2>Matéria: {questao?.materia}</h2>
             </div>
+
+            <div className="separator separator--withMargins"></div>
+            
             <div className='descricaoQuestao'>
                 {
                     questao?.anexosQuestoes?.length > 0 ?
@@ -544,7 +547,7 @@ function Questoes(){
                     {
                         questao?.respostasQuestoes?.map((item) => {
                             return(
-                                <div key={item.id} className='global-respostasLista'>
+                                <div key={item.id} className='dados glogal-infoPanel'>
                                     <label className='respostaLabel'>
                                         <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
                                         {
