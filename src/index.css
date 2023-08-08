@@ -107,7 +107,7 @@ table, tr, td{
 .containerpage-type1 {
   display: flex;
   margin-top: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   padding: 20px 8px;
   color: var(--text-color-primary);
   max-width: 1080px;
@@ -160,7 +160,7 @@ table, tr, td{
   font-size: 56px;
   font-weight: 700;
   line-height: 56px;
-  margin: 15px 5px;
+  margin: 16px 0px;
   color: var(--text-color-secondary);
 
 }
@@ -169,7 +169,7 @@ table, tr, td{
   font-size: 20px;
   font-weight: 300;
   line-height: 28px;
-  margin: 15px 0 25px;
+  margin: 16px 0 24px;
   color: var(--text-color-secondary);
 }
 
@@ -209,7 +209,7 @@ table, tr, td{
   flex-direction: column;
   margin-top: 8px;
   height: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 48px;
   padding: 20px 8px;
   color: var(--text-color-primary);
   max-width: 1080px;
@@ -240,8 +240,8 @@ table, tr, td{
 }
 
 .separator--withMargins {
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .containerpage-type3 {
@@ -410,8 +410,16 @@ footer a {
 }
 
 .dadosResumidos{
-  width: 80%;
+  
 }
+
+.dados{
+  width: 100%;
+}
+
+.dadosResumidos > * {
+  margin-top: var(--default-padding);
+} 
 
 .descricao{
   padding: 5xp;
@@ -421,9 +429,11 @@ footer a {
   width: 100%;
 }
 
+.descricao + .descricao{
+  margin-top: 16px;
+}
+
 .descricao h4{
-  padding: 4px;
-  margin: 4px;
 }
 
 .dadosResumidos a{
@@ -520,6 +530,23 @@ footer a {
   max-width: 512px;
 }
 
+.glogal-infoPanel{
+  padding: 24px;
+  box-shadow: var(--mdc-protected-button-container-elevation, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
+  color: var(--text-color-primary);
+  border: 1px solid var(--separator-color-primary);
+  border-radius: 18px;
+  width: 100%;
+}
+
+.glogal-infoPanel + .glogal-infoPanel{
+  margin-top: 16px;
+}
+
+.global-mt{
+  margin-top: var(--default-padding);
+}
+
 
 .global-buttonWrapper{
   display: flex;
@@ -527,6 +554,10 @@ footer a {
   flex-direction: column;
 }
 
+.global-buttonWrapper-toEnd{
+  display: flex;
+  justify-content: flex-end;
+}
 
 .global-button{
   text-decoration: none;
@@ -648,3 +679,27 @@ table{
   border-radius: 4px;
   font-size: x-small;   
 } */
+
+
+.botaoRanking{
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.5s;
+  background-color:#2F4F4F !important;
+  color: #FFF;
+}
+
+.botaoRanking:hover{
+  background-color: #2F4F4F !important;
+  color: #FFF;
+}

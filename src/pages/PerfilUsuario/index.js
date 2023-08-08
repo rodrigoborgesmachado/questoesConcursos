@@ -43,34 +43,41 @@ function PerfilUsuario(){
 
     return(
         <div className="containerpage">
-            <div className='dados'>
+            <div className='dados glogal-infoPanel'>
                 <h2>
                     Dados do usuário
                 </h2>
                 <div className='separator separator--withMargins'></div>
-                <h4>
+                <div className='dadosResumidos'>
+                    <p className='global-mt'>
                     Nome: {usuario?.usuario?.nome}
-                    <br/>
-                    <br/>
+                    </p>
+                    <p className='global-mt'>
                     Email: {usuario?.usuario?.email}
-                    <br/>
-                    <br/>
+                    </p>
+                    <p className='global-mt'>
                     Perfil: {usuario?.usuario?.admin === "1" ? 'Administrador' : 'Aluno'}
-                    <br/>
-                    <br/>
+                    </p>
+                    <p className='global-mt'>
                     Quantidade de questões resolvidas: {usuario?.quantidadeQuestoesResolvidas}
-                    <br/>
-                    <br/>
+                    </p>
+                    <p className='global-mt'>
                     Quantidade de questões acertadas: {usuario?.quantidadeQuestoesAcertadas}
-                    <br/>
-                    <br/>
+                    </p>
+                    <p className='global-mt'>
                     Taxa de acertos:
-                </h4>
+                    </p>
+                    
+                    
+                    
+                    
+                    
+                </div>
                 {/* <LinearProgressWithLabel  color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} /> */}
-                <LinearProgressWithLabel sx={{
-                  backgroundColor: 'white',
+                <LinearProgressWithLabel className='global-mt' sx={{
+                  backgroundColor: '#4B0082',
                   '& .MuiLinearProgress-bar': {
-                    backgroundColor: 'green'
+                    backgroundColor: '#8A2BE2'
                   }
                 }} color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} />
             </div>
