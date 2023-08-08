@@ -96,7 +96,7 @@ function ListagemQuestoes(){
                 <h2 onClick={voltarListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
             </div>
             <h2 className='nomeProvaDescricao'>
-                Prova: {prova.nomeProva}
+                Prova: {prova.nomeProva} 
             </h2>
             <div className='opcoesQuestoes'>
                 <h2>Questões</h2>
@@ -150,9 +150,9 @@ function ListagemQuestoes(){
                                         <>
                                         {
                                             item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "0")) !== undefined ? 
-                                            <button className='errado' onClick={() => abreQuestao(item.id)}>Responder</button>
+                                            <button className='global-button-wrong global-button--full-width' onClick={() => abreQuestao(item.id)}>Responder</button>
                                             :
-                                            <button className='responder' onClick={() => abreQuestao(item.id)}>Responder</button>
+                                            <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.id)}>Responder</button>
                                         }
                                         </>
                                         }

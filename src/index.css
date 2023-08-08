@@ -16,6 +16,8 @@
   /* Cores do botão principal */
   --button-color-primary: #8A2BE2;
   --button-color-primary-hover: #4B0082;
+  --button-color-primary-wrong: #B00020;
+  --button-color-primary-wrong-hover: #CF6679;
 
 
 
@@ -560,6 +562,10 @@ footer a {
   margin-top: var(--default-padding);
 }
 
+.global-fullW{
+  width: 100%;
+}
+
 
 .global-buttonWrapper{
   display: flex;
@@ -588,6 +594,28 @@ footer a {
   font-weight: bold;
   border: none;
 }
+
+.global-button-wrong{
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.5s;
+  color: var(--text-color-secondary);
+  font-weight: bold;
+  border: none;
+  background-color: var(--button-color-primary-wrong);
+}
+
+.global-button-wrong:hover{
+  background-color: var(--button-color-primary-wrong-hover);
+}
+
 
 .global-button:hover{
   /* filter: brightness(0.6); */
@@ -640,7 +668,7 @@ footer a {
   flex-direction: column;
   margin-top: 8px;
   height: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 48px;
   padding: 20px 8px;
   color: var(--text-color-primary);
   max-width: 1080px;
