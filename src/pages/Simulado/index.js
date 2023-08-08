@@ -18,7 +18,7 @@ function Simulado(){
                 <br/>
                 <br/>
                 Prepare-se para explorar o desconhecido, colocar suas habilidades à prova e descobrir seu potencial oculto. Entre no modo simulado agora mesmo e embarque em uma aventura educativa como nunca antes! 🚀🎓✨
-                <button className='global-button global-button--full-width' onClick={() => navigate('/simuladoselecao',{replace: true})}>Selecione sua prova</button>
+                <button className='global-button global-button--full-width global-button--mt' onClick={() => navigate('/simuladoselecao',{replace: true})}>Selecione sua prova</button>
             </h3>
         </div>
     )

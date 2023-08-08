@@ -19,7 +19,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 
-const pages = ['Provas📚', 'Simulados🧾', 'Bancas🏛️', 'Matérias🏭', 'Pratique Tabuada➕'];
+const pages = ['📚 Provas', '🧾 Simulados', '🏛️ Bancas', '🏭 Matérias', '➕Pratique Tabuada'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }

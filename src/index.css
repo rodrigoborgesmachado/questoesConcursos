@@ -554,6 +554,10 @@ footer a {
   width: 100% !important;
 }
 
+.global-button--mt{
+  margin-top: var(--default-padding);
+}
+
 .global-button--basic{
   width: 100% !important;
   background-color: transparent;
