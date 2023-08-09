@@ -50,8 +50,13 @@
 
 .descricaoQuestao{
     width: 100%;
+    margin-top: 16px;
     align-items: center;
     justify-content: center;
+}
+
+.Materia{
+    margin-top: 16px;
 }
 
 .descricaoQuestao h4, i{
