@@ -1,43 +1,22 @@
-.cadastroDeQuestao{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-}
-
-.cadastroDeQuestao h3{
+.global-infoPanel h3{
     padding: 10px;
     justify-content: left;
     justify-self: left;
     align-self: flex-start;
 }
 
-.cadastroDeQuestao input{
+.global-infoPanel input{
     width: 100%;
     padding: 8px;
     border-radius: 10px;
 }
 
-.cadastroDeQuestao textarea{
+.global-infoPanel textarea{
     width: 100%;
     padding: 8px;
     border-radius: 10px;
 }
 
-
-.cadastroDeQuestao button{
-    margin-top: 30px;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 30%;
-    font-size: 20px;
-    background-color: #116feb;
-    color: #FFF;
-    border-radius: 10px;
-    text-decoration:none;
-    cursor: pointer;
-}
 
 .respostasCadastro{
     flex-direction: column;
@@ -69,18 +48,6 @@
 
 .addQuestao{
     width: 100%;
-}
-
-.addQuestao button{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 15%;
-    font-size: 15px;
-    background-color: #025018;
-    color: #FFF;
-    border-radius: 10px;
-    text-decoration:none;
-    cursor: pointer;
 }
 
 .campoQuestao{
@@ -134,4 +101,13 @@
     height: 100%;
     margin-left: 0;
     margin-top: 30px;
+}
+
+.addQuestao{
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+}
+.addQuestao button{
+    margin-top: 8px;
 }

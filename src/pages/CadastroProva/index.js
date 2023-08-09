@@ -283,7 +283,7 @@ function CadastraProva(){
     }
 
     return(
-        <div className="containerpage">
+        <div className="global-pageContainer-left">
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
@@ -305,57 +305,59 @@ function CadastraProva(){
                     </div>
                 </div>
             </Modal>
-            <div className='total'>
-                <h2 onClick={voltarListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
-            </div>
-            <h2>
-                Cadastro de Prova
-            </h2>
-            <div className='criarUsuario'>
-                <h3>
-                    Nome
-                </h3>
-                <input type='text' value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                <h3>
-                    Local
-                </h3>
-                <input type='text' value={local} name='local' id='local' onChange={(e) => setLocal(e.target.value)}></input>
-                <h3>
-                    Tipo da prova
-                </h3>
-                <input type='text' value={tipo} name='tipo' id='tipo' onChange={(e) => setTipo(e.target.value)}></input>
-                <h3>
-                    Data da aplicação
-                </h3>
-                <input type='text' value={dataAplicacao} name='dataAplicacao' id='dataAplicacao' onChange={(e) => setDataAplicacao(e.target.value)}></input>
-                <h3>
-                    Banca
-                </h3>
-                <input type='text' value={banca} name='banca' id='banca' onChange={(e) => setBanca(e.target.value)}></input>
-                <h3>
-                    Link para download da prova
-                </h3>
-                <input type='text' value={linkProva} name='linkProva' id='linkProva' onChange={(e) => setLinkProva(e.target.value)}></input>
-                <h3>
-                    Link para download do gabarito
-                </h3>
-                <input type='text' value={linkGabarito} name='linkGabarito' id='linkGabarito' onChange={(e) => setLinkGabarito(e.target.value)}></input>
-                <h3>
-                    Observação sobre a prova
-                </h3>
-                <input type='text' value={observacaoProva} name='observacaoProva' id='observacaoProva' onChange={(e) => setObservacaoProva(e.target.value)}></input>
-                <h3>
-                    Observação sobre o gabarito
-                </h3>
-                <input type='text' value={observacaoGabarito} name='observacaoGabarito' id='observacaoGabarito' onChange={(e) => setObservacaoGabarito(e.target.value)}></input>
-                <h3>
-                    Tipos:
-                </h3>
-                <div className="tiposProva">
-                    <Select closeMenuOnSelect={false} components={animatedComponents} options={tipos} value={selected} isMulti onChange={handleChange} />
-                    <button onClick={() => openModal()}>➕</button>
+            <div className='global-infoPanel'>
+                <div className='total'>
+                    <button className='global-button global-button--transparent' onClick={voltarListagemProva}>Voltar</button>
                 </div>
-                <button onClick={confirmaFormulario}>Confirma</button>
+                <h2 className='formularioCadastroProva'>
+                    Cadastro de Prova
+                </h2>
+                <div className='criarUsuario'>
+                    <h3>
+                        Nome
+                    </h3>
+                    <input type='text' value={nome} onChange={(e) => setNome(e.target.value)}></input>
+                    <h3>
+                        Local
+                    </h3>
+                    <input type='text' value={local} name='local' id='local' onChange={(e) => setLocal(e.target.value)}></input>
+                    <h3>
+                        Tipo da prova
+                    </h3>
+                    <input type='text' value={tipo} name='tipo' id='tipo' onChange={(e) => setTipo(e.target.value)}></input>
+                    <h3>
+                        Data da aplicação
+                    </h3>
+                    <input type='text' value={dataAplicacao} name='dataAplicacao' id='dataAplicacao' onChange={(e) => setDataAplicacao(e.target.value)}></input>
+                    <h3>
+                        Banca
+                    </h3>
+                    <input type='text' value={banca} name='banca' id='banca' onChange={(e) => setBanca(e.target.value)}></input>
+                    <h3>
+                        Link para download da prova
+                    </h3>
+                    <input type='text' value={linkProva} name='linkProva' id='linkProva' onChange={(e) => setLinkProva(e.target.value)}></input>
+                    <h3>
+                        Link para download do gabarito
+                    </h3>
+                    <input type='text' value={linkGabarito} name='linkGabarito' id='linkGabarito' onChange={(e) => setLinkGabarito(e.target.value)}></input>
+                    <h3>
+                        Observação sobre a prova
+                    </h3>
+                    <input type='text' value={observacaoProva} name='observacaoProva' id='observacaoProva' onChange={(e) => setObservacaoProva(e.target.value)}></input>
+                    <h3>
+                        Observação sobre o gabarito
+                    </h3>
+                    <input type='text' value={observacaoGabarito} name='observacaoGabarito' id='observacaoGabarito' onChange={(e) => setObservacaoGabarito(e.target.value)}></input>
+                    <h3>
+                        Tipos:
+                    </h3>
+                    <div className="tiposProva">
+                        <Select closeMenuOnSelect={false} components={animatedComponents} options={tipos} value={selected} isMulti onChange={handleChange} />
+                        <button className='global-button global-button--transparent' onClick={() => openModal()}>Adicionar Tipo</button>
+                    </div>
+                    <button className='global-button global-button' onClick={confirmaFormulario}>Confirma</button>
+                </div>
             </div>
         </div>
     )

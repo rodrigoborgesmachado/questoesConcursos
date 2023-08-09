@@ -43,15 +43,10 @@
 }
 
 .tiposProva button{
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 3px;
-    padding: 0;
-    width: 45px;
-    font-size: 20px;
-    background-color: #FFF;
-    color: #FFF;
-    border-radius: 10px;
-    text-decoration:none;
-    cursor: pointer;
+    margin: 8px;
+}
+
+.formularioCadastroProva{
+    margin-top: 32px;
+    margin-bottom: 32px;
 }

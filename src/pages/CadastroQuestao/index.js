@@ -168,6 +168,10 @@ function CadastraQuestao(){
         return createMarkup(temp);
     }
 
+    function voltarListagemQuestoes(){
+        navigate('/prova/' + filtro, { replace: true });
+    }
+
     if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0' ){
         navigate('/login', {replace: true});
     }
@@ -187,7 +191,7 @@ function CadastraQuestao(){
     }
 
     return(
-        <div className="containerpage">
+        <div className="global-pageContainer-left">
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
@@ -237,7 +241,10 @@ function CadastraQuestao(){
                     </div>
                 </div>
             </Modal>
-            <div className="cadastroDeQuestao">
+            <div className="global-infoPanel">
+                <div className='total'>
+                    <button className='global-button global-button--transparent' onClick={voltarListagemQuestoes}>Voltar</button>
+                </div>
                 <h3>
                   Descrição:
                 </h3>
@@ -254,28 +261,28 @@ function CadastraQuestao(){
                   }
                   />
                 <div className='botaoQuestao'>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => 
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<b></b>' })
                     }
                     > 
                         Negrito
                     </button>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => 
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<i></i>' })
                     }
                     > 
                         Itálico
                     </button>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => 
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<br>' })
                     }
                     > 
                         Saltar linha
                     </button>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => {
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<img src="#" alt="Anexo" id="divAnexo' + contadorImagem + '"/>' });
                             setContadorImagem(contadorImagem+1);
@@ -284,7 +291,7 @@ function CadastraQuestao(){
                     > 
                         Add Imagem
                     </button>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => {
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#8730;</span>' });
                             setContadorImagem(contadorImagem+1);
@@ -293,7 +300,7 @@ function CadastraQuestao(){
                     > 
                         Add raiz quadrada
                     </button>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => {
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#960;</span>' });
                             setContadorImagem(contadorImagem+1);
@@ -302,7 +309,7 @@ function CadastraQuestao(){
                     > 
                         Add Pi
                     </button>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => {
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sup></sup>' });
                             setContadorImagem(contadorImagem+1);
@@ -311,7 +318,7 @@ function CadastraQuestao(){
                     > 
                         Add elevação (sup)
                     </button>
-                    <button onClick={
+                    <button className='global-button global-button--transparent' onClick={
                         () => {
                             setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sub></sub>' });
                             setContadorImagem(contadorImagem+1);
@@ -374,6 +381,7 @@ function CadastraQuestao(){
                     <input
                         type="file"
                         multiple="multiple"
+                        className='global-button global-button--transparent'
                         onInput=
                         {async (event) =>
                             {
@@ -466,6 +474,7 @@ function CadastraQuestao(){
                                 </h3>
                                 <input
                                     type='file'
+                                    className='global-button global-button--transparent'
                                     onInput=
                                     {(event) =>
                                         {
@@ -506,18 +515,22 @@ function CadastraQuestao(){
                         </div>
                     ))}
                 </div>
-                <div className='addQuestao'>
-                    <button type="button" 
+                <button type="button" 
+                    className='global-button global-button--transparent'
                     onClick={adicionaQuestao}>
-                      Adicionar Resposta
-                    </button>
-                </div>
-                <br />
-                <br />
-                <button onClick={openModal}> 
-                    Testar Layout
+                  Adicionar Resposta
                 </button>
-                <button onClick={confirmaFormulario}>Cadastrar Questão</button>
+                <div className='addQuestao'>
+                    <button 
+                        className='global-button global-button--transparent'
+                        onClick={openModal}> 
+                        Testar Layout
+                    </button>
+                    <button 
+                        className='global-button global-button'
+                        onClick={confirmaFormulario}>Cadastrar Questão</button>
+                </div>
+                
             </div>
         </div>
     )
