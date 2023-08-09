@@ -16,9 +16,7 @@
 .opcoesQuestoes{
     display: flex;
     flex-direction: row;
-    width: 80%;
     justify-content: space-around;
-    margin-bottom: 20px;
 }
 
 .opcaoFiltro{

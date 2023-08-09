@@ -91,9 +91,9 @@ function ListagemQuestoes(){
     }
 
     return(
-        <div className='containerpage'>
+        <div className='global-pageContainer-left'>
             <div className='total'>
-                <h2 onClick={voltarListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
+                <button className='global-button global-button--transparent' onClick={voltarListagemProva}>Voltar</button>
             </div>
             <h2 className='nomeProvaDescricao'>
                 Prova: {prova.nomeProva} 
@@ -110,7 +110,7 @@ function ListagemQuestoes(){
                 </div>
             </div>
             
-            <div className='questoes'>
+            <div className='global-fullW'>
             <Table>
                 <thead>
                     <tr>

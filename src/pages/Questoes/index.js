@@ -596,7 +596,7 @@ function Questoes(){
                             }
                         </div>
                         <div className='opcaoVerificacao'>
-                            <div><BsChatLeftDotsFill onClick={openModalComentario}/>Deixar comentário</div>
+                            <div onClick={openModalComentario} className='global-button'><BsChatLeftDotsFill/>Deixar comentário</div>
                         </div>
                     </div>
                 </div>

@@ -88,15 +88,20 @@ body {
 
 table{
   border-radius: var(--default-border-radius);
+  border: solid 1px var(--separator-color-primary);
+  margin-top: var(--default-padding);
 }
 
 table, tr, td{
   align-items: center;
   text-align: center;
-  background-color: var(--secundary-color);
   padding: var(--default-padding);
-  border-bottom: solid 1px var(--text-color-primary-light);
+  border-bottom: solid 1px var(--separator-color-primary);
   border-spacing: 0px;
+}
+
+th{
+  padding: var(--default-padding);
 }
 
 .posicao{
@@ -142,6 +147,7 @@ table, tr, td{
   max-width: 180px;
   background-color: var(--secundary-color);
   fill: var(--text-color-primary-light);
+  height: 180px;
 }
 
 .botao-type2:hover {
@@ -556,6 +562,16 @@ footer a {
 
 .global-infoPanel + .global-infoPanel{
   margin-top: 16px;
+}
+
+.global-table{
+  background-color: transparent !important;
+  table{
+    background-color: transparent !important;
+  }
+  th{
+    background-color: transparent !important;
+  }
 }
 
 .global-mt{
