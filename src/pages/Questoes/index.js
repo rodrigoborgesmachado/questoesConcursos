@@ -442,9 +442,10 @@ function Questoes(){
                     <div className='bodymodal'>
                         <h3>O que deseja fazer?</h3>
                     </div>
-                    <div className='botoesModalSolicitacao'>
-                        <button onClick={buscaRespostaCorreta}>Visualizar resposta</button>
-                        <button onClick={solicitarRevisao}>Solicitar revisão da questão</button>
+                    <div className='separator separator--withMargins'></div>
+                    <div className='global-buttonWrapper'>
+                        <button className='global-button' onClick={buscaRespostaCorreta}>Visualizar resposta</button>
+                        <button className='global-button' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
                     </div>
                 </div>
             </Modal>

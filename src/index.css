@@ -43,10 +43,13 @@
   --loader-color: var(--primary-color);
   --panel-border-color : #eaebeb;
 
+  --modal-background-color:rgba(255, 255, 255, 0.25);
+
 
 /* Espaçamentos padrões */
 --default-padding:8px;
 --default-border-radius:4px;
+--default-border-radius-extra:16px;
 
 
 
@@ -106,7 +109,7 @@ th{
 
 .posicao{
   font-weight: bold;
-  background-color: #191970;
+  background-color: var(--secundary-color);
 }
 
 
@@ -270,18 +273,12 @@ th{
   padding: 16px;
   box-shadow: var(--mdc-protected-button-container-elevation, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
   text-decoration: unset;
-  color: black;
-  /* display: flex; */
-  gap: 10px;
+  gap: var(--default-padding);
   text-align: center;
-  border-radius: 18px;
+  border-radius: var(--default-border-radius-extra);
   background-color: var(--secundary-color);
   max-width: 330px;
   height: 270px;
-}
-
-.containerpage h3 {
-  /* margin-top: 20px; */
 }
 
 .botao {
@@ -373,24 +370,6 @@ footer a {
 .button-base:hover {
   background-color: var(--button-color-secondary);
   ;
-  color: var(--text-color-secondary);
-}
-
-.button-primary {
-  cursor: pointer;
-  background-color: var(--primary-color);
-  padding: 8px 16px 8px 16px;
-  text-decoration: none;
-  border-radius: 4px;
-  color: white;
-  border: none;
-  transition: all 0.5s;
-  box-shadow: var(--mdc-protected-button-container-elevation, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
-
-}
-
-.button-primary:hover {
-  background-color: var(--button-color-secondary);
   color: var(--text-color-secondary);
 }
 
@@ -539,7 +518,7 @@ footer a {
 /* Sobescrever elementos que já existem */
 
 .ReactModal__Overlay{
-  background-color: rgba(255, 255, 255, 0.25) !important;
+  background-color: var(--modal-background-color) !important;
 }
 
 .ReactModal__Content{
@@ -652,9 +631,8 @@ footer a {
   background-color: var(--button-color-primary-wrong-hover);
 }
 
-
 .global-button:hover{
-  /* filter: brightness(0.6); */
+
   background-color: var(--button-color-primary-hover);
 }
 
@@ -685,7 +663,6 @@ footer a {
     border: 1px solid var(--button-color-primary);
 }
 
-
 .global-pageContainer{
   display: flex;
   align-items: center;
@@ -715,10 +692,6 @@ footer a {
   margin-bottom: 80px;
 }
 
-.global-pageContainer--login{
-  
-}
-
 .todasRespostas{
   display: flex;
   flex-direction: column;
@@ -737,57 +710,8 @@ table{
   width: 100%;
 }
 
-
-/* .login{
-  margin-top: 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.login h2{
-  padding: 5px;
-  justify-content: left;
-  justify-self: left;
-  align-self: flex-start;
-  margin-left: 25%;
-} */
-
 .login input{
   width: 100%;
   padding: 8px;
   border-radius: 4px;
-}
-
-/* .login a{
-  width: 20%;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: x-small;   
-} */
-
-
-.botaoRanking{
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  margin-top: 20px;
-  font-size: 20px;
-  padding: 10px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 0.5s;
-  background-color:#2F4F4F !important;
-  color: #FFF;
-}
-
-.botaoRanking:hover{
-  background-color: #2F4F4F !important;
-  color: #FFF;
 }
