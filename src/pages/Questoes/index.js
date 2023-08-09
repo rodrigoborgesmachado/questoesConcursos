@@ -499,11 +499,12 @@ function Questoes(){
             >
                 <div className='contextModal'>
                     <h3>Comentário:</h3>
+                    <div className="separator separator--withMargins"></div>
                     <div className='bodymodalComentario'>
                         <textarea type='text' placeholder="Comentário" rows="10" value={comentario} onChange={(e) => setComentario(e.target.value)}/>
                     </div>
                     <div className='botoesModal'>
-                        <button onClick={fazComentario}>Comentar</button>
+                        <button className='global-button global-fullW' onClick={fazComentario}>Comentar</button>
                     </div>
                 </div>
             </Modal>
@@ -580,24 +581,25 @@ function Questoes(){
                         </div>
                     </div>
                     <div className='modalComentarios'>
-                        <h3>Comentários✉️</h3>
-                        <div className='comentarios'>
+                        <h2>Comentários✉️</h2>
+                        <div className='comentarios global-infoPanel global-mt'>
                             {
                                 comentarios?.map((comentario) => {
                                     return(
-                                        <div id={comentario.codigo}>
+                                        <div className='comentario' id={comentario.codigo}>
                                             <sup>{comentario.nomeUsuario } - {montaData(comentario.created)} {comentario.canEdit ? <><AiOutlineDelete onClick={() => deleteComentario(comentario.codigo)}/></> : <></>}</sup> 
                                             <h4 dangerouslySetInnerHTML={createMarkup(comentario.comentario)}>
                                             </h4>
-                                            <hr/>
+                                            <div className='separator separator--withMargins'></div>
                                         </div>
                                     )
                                 })
                             }
-                        </div>
                         <div className='opcaoVerificacao'>
-                            <div onClick={openModalComentario} className='global-button'><BsChatLeftDotsFill/>Deixar comentário</div>
+                            <div onClick={openModalComentario} className='global-button global-button--transparent'><BsChatLeftDotsFill/>Deixar comentário</div>
                         </div>
+                        </div>
+                        
                     </div>
                 </div>
             }

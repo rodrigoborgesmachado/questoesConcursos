@@ -536,6 +536,21 @@ footer a {
 }
 
 
+/* Sobescrever elementos que já existem */
+
+.ReactModal__Overlay{
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.ReactModal__Content{
+  background-color: var(--background-color) !important;
+  .contextModal{
+    background-color: var(--background-color) !important;
+  }
+
+}
+
+
 /* Estilos dos componentes globais */
 
 .global-panel{
@@ -550,6 +565,11 @@ footer a {
   width: 100%;
   max-width: 512px;
 }
+
+.global-miniW{
+  max-width: 480px;
+}
+
 
 .global-infoPanel{
   padding: 24px;

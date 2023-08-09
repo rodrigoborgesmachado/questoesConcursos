@@ -70,7 +70,7 @@ function Login() {
 
     return (
         <div className="global-pageContainer">
-            <div className='global-panel'>
+            <div className='global-infoPanel global-miniW'>
                 <div className='login'>
 
                     <div className='login-wrapper'>
@@ -87,7 +87,7 @@ function Login() {
                     <input type="email" name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
                     <label for="email">Senha:</label>
                     <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
-                    <div>
+                    <div className='global-buttonWrapper'>
                         <button className='global-button global-button--full-width' onClick={logar}>Logar</button>
                         <Link className='global-button global-button--basic global-button--full-width' to={`/recoverypass`}>Esqueci minha senha</Link>
                     </div>

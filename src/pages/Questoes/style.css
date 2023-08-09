@@ -104,35 +104,30 @@
     display: flex;
     justify-content: left;
     border: 5px;
-    padding: 5% 5%;
 }
 
 .bodymodal{
     display: flex;
     justify-content: left;
     border: 5px;
-    padding: 5% 5%;
 }
 
 .bodymodalComentario{
     display: flex;
     justify-content: left;
     border: 5px;
-    padding: 5% 5%;
+    margin-bottom: 16px;
     width: 100%;
 }
 
 .bodymodalComentario textarea{
     width: 100%;
     padding: 10px;
-    margin-bottom: -10%;
 }
 
 .botoesModal{
     display: flex;
     justify-content: right;
-    border: 5px;
-    padding: 5% 5%;
 }
 
 .botoesModalSolicitacao{
@@ -140,48 +135,9 @@
     flex-direction: column;
 }
 
-.botoesModal button, .botoesModalSolicitacao button{
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    margin-top: 20px;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #2F4F4F;
-    color: #FFF;
-    cursor: pointer;
-    transition: all 0.5s;
-}
-
-.botoesModal button:hover, .botoesModalSolicitacao button:hover{
-    background-color: rgb(37, 26, 166);
-    color: #FFF;
-  }
-
 .contextComentarios {
     display: flex;
     flex-direction: column;    
     width: 100%;
     color: var(--text-color-primary);
 }
-
-.modalComentarios h4{
-    padding-left: 10%;
-    padding-right: 10%;
-}
-
-.modalComentarios sup{
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
-.modalComentarios hr{
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-

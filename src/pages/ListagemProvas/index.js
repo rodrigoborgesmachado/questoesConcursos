@@ -134,6 +134,7 @@ function ListagemProvas() {
                     <div className='bodymodal'>
                         <h3>Filtros</h3>
                     </div>
+                    <div className="separator separator--withMargins"></div>
                     <div className='filtrosProva'>
                         <h4>
                             Nome da prova:
@@ -141,8 +142,8 @@ function ListagemProvas() {
                         <input type='text' value={filtroNome} onChange={(e) => setFiltroNome(e.target.value)} />
                     </div>
                     <div className='botoesModalFiltro'>
-                        <button onClick={limparFiltro}>Limpar</button>
-                        <button onClick={filtrar}>Filtrar</button>
+                        <button className='global-button global-button--transparent' onClick={limparFiltro}>Limpar</button>
+                        <button className='global-button' onClick={filtrar}>Filtrar</button>
                     </div>
                 </div>
             </Modal>
