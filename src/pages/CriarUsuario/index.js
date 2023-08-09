@@ -29,6 +29,10 @@ function CriarUsuario(){
         return hash;
     }
 
+    function logarUsuario() {
+        navigate('/login', { replace: true });
+    }
+
     async function confirmaFormulario(){
         setLoadding(true);
         await api.post(`/Usuarios`, 
@@ -72,29 +76,25 @@ function CriarUsuario(){
 
     return(
         <div className="global-pageContainer">
-            <div className='global-panel'>
-            <h2>
-                Cadastro de Usuário
-            </h2>
-            <div className='criarUsuario'>
-                <h3>
-                    Nome
-                </h3>
-                <input type='text' value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                <h3>
-                    Email
-                </h3>
+            <div className='global-infoPanel global-miniW login'>
+            <div className='login-wrapper'>
+                        <div className='login-unselected' onClick={logarUsuario}>
+                            Logar
+                        </div>
+                        <div className='login-selected'>
+                            Registrar
+                        </div>
+                    </div>
+                    <div className='separator'></div>
+                <label for="nome">Nome:</label>
+                <input id='nome' type='text' value={nome} onChange={(e) => setNome(e.target.value)}></input>
+                <label for="email">Email:</label>
                 <input type='email' value={email} name='email' id='email' onChange={(e) => setEmail(e.target.value)}></input>
-                <h3>
-                    Senha
-                </h3>
-                <input type='password' value={senha} onChange={(e) => setSenha(e.target.value)}></input>
-                <h3>
-                    Data nascimento
-                </h3>
-                <input type='date' value={nascimento} onChange={(e) => setNascimento(e.target.value)}></input>
+                <label for="password">Senha:</label>
+                <input id='password' type='password' value={senha} onChange={(e) => setSenha(e.target.value)}></input>
+                <label for="date">Data nascimento:</label>
+                <input id='date' type='date' value={nascimento} onChange={(e) => setNascimento(e.target.value)}></input>
                 <button className='global-button global-button--full-width' onClick={confirmaFormulario}>Confirma</button>
-            </div>
             </div>
             
         </div>
