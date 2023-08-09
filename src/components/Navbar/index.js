@@ -194,7 +194,7 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                page != 'Provas📚' ?
+                page != '📚 Provas' ?
                 <MenuItem key={page} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
@@ -259,7 +259,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              page != 'Provas📚' ?
+              page != '📚 Provas' ?
               <Button
                 key={page}
                 onClick={(e) => SelecionaOpcao(page)}
