@@ -85,18 +85,18 @@ function ListagemQuestoes(){
     if(loadding){
         return(
             <div className='loaddingDiv'>
-                <img src={require('../../assets/hug.gif')} alt="Loading..." />
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }
 
     return(
-        <div className='containerpage'>
+        <div className='global-pageContainer-left'>
             <div className='total'>
-                <h2 onClick={voltarListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
+                <button className='global-button global-button--transparent' onClick={voltarListagemProva}>Voltar</button>
             </div>
             <h2 className='nomeProvaDescricao'>
-                Prova: {prova.nomeProva}
+                Prova: {prova.nomeProva} 
             </h2>
             <div className='opcoesQuestoes'>
                 <h2>Questões</h2>
@@ -110,7 +110,7 @@ function ListagemQuestoes(){
                 </div>
             </div>
             
-            <div className='questoes'>
+            <div className='global-fullW'>
             <Table>
                 <thead>
                     <tr>
@@ -145,14 +145,14 @@ function ListagemQuestoes(){
                                     </td>
                                     <td>
                                         {item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "1")) !== undefined ? 
-                                        <button className='respondida' onClick={() => abreQuestao(item.id)}>Respondida</button>
+                                        <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.id)}>Respondida</button>
                                         :
                                         <>
                                         {
                                             item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "0")) !== undefined ? 
-                                            <button className='errado' onClick={() => abreQuestao(item.id)}>Responder</button>
+                                            <button className='global-button-wrong global-button--full-width' onClick={() => abreQuestao(item.id)}>Responder</button>
                                             :
-                                            <button className='responder' onClick={() => abreQuestao(item.id)}>Responder</button>
+                                            <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.id)}>Responder</button>
                                         }
                                         </>
                                         }

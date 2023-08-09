@@ -1,7 +1,6 @@
 .provas{
-    width: 80%;
-    padding: 10px;
-    margin-top: 3%;
+    width: 100%;
+    max-width: 800px;
 }
 
 .provas h4{
@@ -15,7 +14,7 @@
     padding: 3px !important;
 }
 
-.provas button{
+/* .provas button{
     text-decoration: none;
   display: flex;
   justify-content: center;
@@ -31,14 +30,15 @@
   color: #FFF;
   cursor: pointer;
   transition: all 0.5s;
-}
+} */
 
 .opcoesProva{
     display: flex;
     flex-direction: row;
-    width: 80%;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 800px;
 }
 
 .provaTitle{
@@ -64,20 +64,13 @@
     display: flex;
     justify-content: left;
     border: 5px;
-    padding: 5% 5%;
 }
 
 .bodymodal{
     display: flex;
     justify-content: left;
     border: 5px;
-    padding: 5% 5%;
-}
-
-.provas button:hover{
-    background-color: rgb(37, 26, 166);
-    color: #FFF;
-}
+} 
 
 .provas a{
     text-decoration: none;
@@ -97,23 +90,8 @@
     display: flex;
     flex-direction: row;
     justify-content: end;
-}
-
-.botoesModalFiltro button{
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    margin-top: 20px;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #2F4F4F;
-    color: #FFF;
-    cursor: pointer;
-    transition: all 0.5s;
+    gap: 16px;
+    margin-top: 16px;
 }
 
 .filtrosProva{
@@ -125,12 +103,11 @@
 .filtrosProva h4{
     width: 100%;
     margin-top: 0;
-    padding: 10px;
 }
 
 .filtrosProva input{
     padding: 8px;
-    margin-left: 10px;
+    margin-top: 16px;
     border-radius: 10px;
 }
 

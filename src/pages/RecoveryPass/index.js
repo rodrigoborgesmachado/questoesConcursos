@@ -36,19 +36,20 @@ function RecoveryPass(){
     if(loadding){
         return(
             <div className='loaddingDiv'>
-                <img src={require('../../assets/hug.gif')} alt="Loading..." />
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }
 
     return (
-        <div className="containerpage">
-            <div className='login'>
+        <div className="containerpage ">
+            <div className='global-infoPanel global-miniW login'>
                 <h2>
                     Login
                 </h2>
+                <div className="separator"></div>
                 <input type="email" name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
-                <button onClick={reset}>Resetar a senha</button>
+                <button className='global-button global-button--full-width' onClick={reset}>Resetar a senha</button>
             </div>
         </div>
     )

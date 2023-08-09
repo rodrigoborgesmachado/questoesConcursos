@@ -1,9 +1,9 @@
 .criarUsuario{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: normal;
     justify-content: center;
-    width: 80%;
+    width: 100%;
 }
 
 .criarUsuario h3{
@@ -16,17 +16,4 @@
     width: 100%;
     padding: 8px;
     border-radius: 10px;
-}
-
-.criarUsuario button{
-    margin-top: 30px;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 30%;
-    font-size: 20px;
-    background-color: #116feb;
-    color: #FFF;
-    border-radius: 10px;
-    text-decoration:none;
-    cursor: pointer;
 }

@@ -39,13 +39,13 @@ function Ranking(){
     if(loadding){
         return(
             <div className='loaddingDiv'>
-                <img src={require('../../assets/hug.gif')} alt="Loading..." />
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }
 
     return(
-        <div className="containerpage">
+        <div className="global-pageContainer">
             <h2>
                 Ranking
             </h2>

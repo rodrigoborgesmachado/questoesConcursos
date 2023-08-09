@@ -425,13 +425,13 @@ function Questoes(){
     if(loadding || !questao){
         return(
             <div className='loaddingDiv'>
-                <img src={require('../../assets/hug.gif')} alt="Loading..." />
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }
 
     return(
-        <div className="containerpage">
+        <div className="global-pageContainer-left">
             <Modal
               isOpen={modalSolicitacao}
               onRequestClose={closeModalSolicitacao}
@@ -442,9 +442,10 @@ function Questoes(){
                     <div className='bodymodal'>
                         <h3>O que deseja fazer?</h3>
                     </div>
-                    <div className='botoesModalSolicitacao'>
-                        <button onClick={buscaRespostaCorreta}>Visualizar resposta</button>
-                        <button onClick={solicitarRevisao}>Solicitar revisão da questão</button>
+                    <div className='separator separator--withMargins'></div>
+                    <div className='global-buttonWrapper'>
+                        <button className='global-button' onClick={buscaRespostaCorreta}>Visualizar resposta</button>
+                        <button className='global-button' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
                     </div>
                 </div>
             </Modal>
@@ -499,11 +500,12 @@ function Questoes(){
             >
                 <div className='contextModal'>
                     <h3>Comentário:</h3>
+                    <div className="separator separator--withMargins"></div>
                     <div className='bodymodalComentario'>
                         <textarea type='text' placeholder="Comentário" rows="10" value={comentario} onChange={(e) => setComentario(e.target.value)}/>
                     </div>
                     <div className='botoesModal'>
-                        <button onClick={fazComentario}>Comentar</button>
+                        <button className='global-button global-fullW' onClick={fazComentario}>Comentar</button>
                     </div>
                 </div>
             </Modal>
@@ -513,7 +515,7 @@ function Questoes(){
                         filtro.includes('simulado') ? 
                         <></>
                         :
-                        <h2 onClick={ListagemProva}><BsFillArrowLeftCircleFill size={40}/></h2>
+                        <button className='global-button global-button--transparent' onClick={ListagemProva}>Voltar</button>
                     }
                     <Tempo inicio={parseInt(localStorage.getItem(Config.TEMPO_PARAM))}/>
                 </div>
@@ -523,15 +525,19 @@ function Questoes(){
                     </>
                     :
                     <div className='opcaoVerificacao'>
-                        <h2 onClick={openModalSolicitacao}>❓</h2>
+                        <button className='global-button global-button--transparent' onClick={openModalSolicitacao}>Opções</button>
                     </div>
                 }
             </div>
+
+            <div className="separator separator--withMargins"></div>
+
             <div className='Materia'>
                 <h2>Matéria: {questao?.materia}</h2>
             </div>
-            <br/>
-            <br/>
+
+            <div className="separator separator--withMargins"></div>
+            
             <div className='descricaoQuestao'>
                 {
                     questao?.anexosQuestoes?.length > 0 ?
@@ -539,13 +545,11 @@ function Questoes(){
                     :
                     <h4 dangerouslySetInnerHTML={createMarkup(questao?.campoQuestao)}></h4>
                 }
-                <br/>
-                <br/>
                 <div className='todasRespostas'>
                     {
                         questao?.respostasQuestoes?.map((item) => {
                             return(
-                                <div key={item.id} className='respostasLista'>
+                                <div key={item.id} className='dados global-infoPanel'>
                                     <label className='respostaLabel'>
                                         <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
                                         {
@@ -562,6 +566,7 @@ function Questoes(){
                         })
                     }
                 </div>
+                <div className="separator separator--withMargins"></div>
             </div>
             {
                 filtro.includes('simulado') ? 
@@ -570,33 +575,32 @@ function Questoes(){
                 <div className='contextComentarios'>
                     <div className='opcoesBotoesNavegacao'>
                         <div className='opcaoBotaoBefore'>
-                            <h2><BsFillArrowLeftCircleFill size={40} onClick={() => {BuscarProximaQuestao(true, false);}}/></h2>
+                            <button className='global-button' onClick={() => {BuscarProximaQuestao(true, false);}}>Questão anterior</button>
                         </div>
                         <div className='opcaoBotaoAfter'>
-                            <h2><BsFillArrowRightCircleFill size={40} onClick={() => {BuscarProximaQuestao(false, true);}}/></h2>
+                            <button className='global-button' onClick={() => {BuscarProximaQuestao(false, true);}}>Próxima questão</button>
                         </div>
                     </div>
                     <div className='modalComentarios'>
-                        <h3>Comentários✉️</h3>
-                        <br/>
-                        <div className='comentarios'>
+                        <h2>Comentários✉️</h2>
+                        <div className='comentarios global-infoPanel global-mt'>
                             {
                                 comentarios?.map((comentario) => {
                                     return(
-                                        <div id={comentario.codigo}>
+                                        <div className='comentario' id={comentario.codigo}>
                                             <sup>{comentario.nomeUsuario } - {montaData(comentario.created)} {comentario.canEdit ? <><AiOutlineDelete onClick={() => deleteComentario(comentario.codigo)}/></> : <></>}</sup> 
-                                            <br/>
                                             <h4 dangerouslySetInnerHTML={createMarkup(comentario.comentario)}>
                                             </h4>
-                                            <hr/>
+                                            <div className='separator separator--withMargins'></div>
                                         </div>
                                     )
                                 })
                             }
-                        </div>
                         <div className='opcaoVerificacao'>
-                            <h2><BsChatLeftDotsFill onClick={openModalComentario}/></h2>
+                            <div onClick={openModalComentario} className='global-button global-button--transparent'><BsChatLeftDotsFill/>Deixar comentário</div>
                         </div>
+                        </div>
+                        
                     </div>
                 </div>
             }

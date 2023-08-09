@@ -19,7 +19,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 
-const pages = ['Provas📚', 'Simulados🧾', 'Bancas🏛️', 'Matérias🏭', 'Pratique Tabuada➕'];
+const pages = ['📚 Provas', '🧾 Simulados', '🏛️ Bancas', '🏭 Matérias', '➕Pratique Tabuada'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
@@ -143,8 +143,8 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar position="static" className='varBarResponsive'>
-      <Container maxWidth="xl" className='conNav'>
-        <Toolbar disableGutters className='toolNav'>
+ <div className='conNav'>
+        <div disableGutters className='toolNav'>
           <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -194,7 +194,7 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                page != 'Provas📚' ?
+                page != '📚 Provas' ?
                 <MenuItem key={page} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
@@ -259,7 +259,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              page != 'Provas📚' ?
+              page != '📚 Provas' ?
               <Button
                 key={page}
                 onClick={(e) => SelecionaOpcao(page)}
@@ -346,8 +346,8 @@ const ResponsiveAppBar = () => {
             }
             
           </Box>
-        </Toolbar>
-      </Container>
+        </div>
+      </div>
     </AppBar>
   );
 };

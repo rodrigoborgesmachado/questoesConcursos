@@ -91,7 +91,7 @@ function HistoricoSimulado(){
     if(loadding){
         return(
             <div className='loaddingDiv'>
-                <img src={require('../../assets/hug.gif')} alt="Loading..." />
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
         )
     }
@@ -179,7 +179,7 @@ function HistoricoSimulado(){
                                 </td>
                                 <td>
                                     <h4>
-                                        <button onClick={() => abreResultado(item.codigo)} className='botao'>Visualizar</button>
+                                        <button onClick={() => abreResultado(item.codigo)} className='global-button'>Visualizar</button>
                                     </h4>
                                 </td>
                             </tr>
