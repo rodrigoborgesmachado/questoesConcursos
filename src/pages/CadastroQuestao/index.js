@@ -249,85 +249,84 @@ function CadastraQuestao(){
                   Descrição:
                 </h3>
                 <div className='campoQuestao'>
-                <br/>
-                <textarea
-                  type="text"
-                  placeholder="Descrição da questão" 
-                  required 
-                  rows="35"
-                  value={questao.campoQuestao}
-                  onChange={(event) =>
-                    setQuestao({ ...questao, campoQuestao: event.target.value })
-                  }
-                  />
-                <div className='botaoQuestao'>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => 
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<b></b>' })
-                    }
-                    > 
-                        Negrito
-                    </button>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => 
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<i></i>' })
-                    }
-                    > 
-                        Itálico
-                    </button>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => 
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<br>' })
-                    }
-                    > 
-                        Saltar linha
-                    </button>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => {
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<img src="#" alt="Anexo" id="divAnexo' + contadorImagem + '"/>' });
-                            setContadorImagem(contadorImagem+1);
+                    <textarea
+                      type="text"
+                      placeholder="Descrição da questão" 
+                      required 
+                      rows="35"
+                      value={questao.campoQuestao}
+                      onChange={(event) =>
+                        setQuestao({ ...questao, campoQuestao: event.target.value })
+                      }
+                    />
+                    <div className='botaoQuestao'>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => 
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<b></b>' })
                         }
-                    }
-                    > 
-                        Add Imagem
-                    </button>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => {
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#8730;</span>' });
-                            setContadorImagem(contadorImagem+1);
+                        > 
+                            Negrito
+                        </button>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => 
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<i></i>' })
                         }
-                    }
-                    > 
-                        Add raiz quadrada
-                    </button>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => {
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#960;</span>' });
-                            setContadorImagem(contadorImagem+1);
+                        > 
+                            Itálico
+                        </button>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => 
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<br>' })
                         }
-                    }
-                    > 
-                        Add Pi
-                    </button>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => {
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sup></sup>' });
-                            setContadorImagem(contadorImagem+1);
+                        > 
+                            Saltar linha
+                        </button>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => {
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<img src="#" alt="Anexo" id="divAnexo' + contadorImagem + '"/>' });
+                                setContadorImagem(contadorImagem+1);
+                            }
                         }
-                    }
-                    > 
-                        Add elevação (sup)
-                    </button>
-                    <button className='global-button global-button--transparent' onClick={
-                        () => {
-                            setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sub></sub>' });
-                            setContadorImagem(contadorImagem+1);
+                        > 
+                            Add Imagem
+                        </button>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => {
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#8730;</span>' });
+                                setContadorImagem(contadorImagem+1);
+                            }
                         }
-                    }
-                    > 
-                        Add citação (sub)
-                    </button>
-                </div>
+                        > 
+                            Add raiz quadrada
+                        </button>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => {
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<span>&#960;</span>' });
+                                setContadorImagem(contadorImagem+1);
+                            }
+                        }
+                        > 
+                            Add Pi
+                        </button>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => {
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sup></sup>' });
+                                setContadorImagem(contadorImagem+1);
+                            }
+                        }
+                        > 
+                            Add elevação (sup)
+                        </button>
+                        <button className='global-button global-button--transparent' onClick={
+                            () => {
+                                setQuestao({ ...questao, campoQuestao: questao.campoQuestao + '<sub></sub>' });
+                                setContadorImagem(contadorImagem+1);
+                            }
+                        }
+                        > 
+                            Add citação (sub)
+                        </button>
+                    </div>
                 </div>
                 <div className='camposQuestaoAdd'>
                     <h3>
@@ -344,7 +343,6 @@ function CadastraQuestao(){
                             })
                         }
                     />
-                    <br/>
                     <h3>
                         Matéria:
                     </h3>
@@ -359,7 +357,6 @@ function CadastraQuestao(){
                             })
                         }
                     />
-                    <br/>
                     <h3>
                         Número da questão:
                     </h3>
@@ -374,7 +371,6 @@ function CadastraQuestao(){
                             })
                         }
                     />
-                    <br/>
                     <h3>
                         Anexos da questão:
                     </h3>
@@ -410,10 +406,6 @@ function CadastraQuestao(){
                         }
                     />
                 </div>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
                 <h3>
                   Respostas:
                 </h3>
