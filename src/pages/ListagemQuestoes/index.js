@@ -145,7 +145,7 @@ function ListagemQuestoes(){
                                     </td>
                                     <td>
                                         {item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "1")) !== undefined ? 
-                                        <button className='respondida' onClick={() => abreQuestao(item.id)}>Respondida</button>
+                                        <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.id)}>Respondida</button>
                                         :
                                         <>
                                         {

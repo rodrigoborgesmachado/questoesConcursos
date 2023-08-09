@@ -19,6 +19,9 @@
   --button-color-primary-wrong: #B00020;
   --button-color-primary-wrong-hover: #CF6679;
 
+  --button-color-primary-right: rgb(56, 142, 60);
+  --button-color-primary-right-hover: rgb(56, 142, 60, 0.9);
+
 
 
   --text-color-primary: #C9D1D9;
@@ -636,9 +639,32 @@ footer a {
   background-color: var(--button-color-primary-wrong);
 }
 
+
 .global-button-wrong:hover{
   background-color: var(--button-color-primary-wrong-hover);
 }
+
+.global-button-right{
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.5s;
+  color: var(--text-color-secondary);
+  font-weight: bold;
+  border: none;
+  background-color: var(--button-color-primary-right);
+}
+
+.global-button-right:hover{
+  background-color: var(--button-color-primary-right-hover);
+}
+
 
 .global-button:hover{
 
