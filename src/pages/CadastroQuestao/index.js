@@ -1,5 +1,5 @@
 import './style.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Config from '../../config.json';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -24,6 +24,7 @@ const customStyles = {
 function CadastraQuestao(){
     const navigate = useNavigate();
     const{filtro} = useParams();
+    const{questaoCode} = useParams();
     const[contadorImagem, setContadorImagem] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -91,8 +92,42 @@ function CadastraQuestao(){
     });
     const[loadding, setLoadding] = useState(false);
 
+    async function buscaQuestao(codigo){
+        if(!localStorage.getItem(Config.TOKEN)){
+            toast.info('Necessário logar para acessar!');
+            navigate('/', {replace: true});
+            return;
+        }
+
+        await api.get('/Questoes/getById?id=' + codigo)
+        .then((response) => {
+            if(response.data.success){
+                setQuestao(response.data.object);
+
+                setLoadding(false);
+            }
+            else{
+                navigate('/', {replace: true});
+                toast.warn('Erro ao buscar questão');    
+            }
+        })
+        .catch(() => {
+            navigate('/', {replace: true});
+            toast.warn('Erro ao buscar questão');
+        })
+    }
+    
+    useEffect(() => {
+        if(questaoCode != undefined){
+            setLoadding(true);
+            buscaQuestao(questaoCode);
+        }
+        else{
+            setLoadding(false);
+        }
+    }, []);
+
     function openModal() {
-                                          console.log(questao);
         setModalIsOpen(true);
     }
     

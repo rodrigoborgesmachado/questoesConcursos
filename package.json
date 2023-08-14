@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cp routes.json build/",
+    "build": "react-scripts build && cp routes.json build/ && cp robots.txt build/ && cp sitemap.xml build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
