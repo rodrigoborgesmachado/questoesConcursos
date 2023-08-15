@@ -12,10 +12,10 @@ function Home() {
                         Bem-vindo ao maravilhoso mundo do
                     </div>
                     <div className='paragrafo2'>
-                        QuestoesAqui
+                        Questões Aqui
                     </div>
                     <div className='paragrafo3'>
-                        Aqui, você vai embarcar em uma aventura incrível de preparação para o Enem, Vestibulares e concursos públicos, desvendando mistérios e desafios em forma de questões de provas anteriores.
+                        Aqui, você vai embarcar em uma aventura incrível de preparação para o Enem, Vestibulares e concursos públicos, desvendando mistérios e desafios em forma de questões. Faça questões de concursos, questões do Enem, de vestibulares e estude observando seu progresso e podendo ter em primeira mão o que precisa para estudar.
                     </div>
 
                 </div>
