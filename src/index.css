@@ -135,10 +135,6 @@ th{
   overflow: hidden;
 }
 
-.containerpage-type1-text {
-  min-width: 510px;
-}
-
 .botoes-type2 {
   display: flex;
   gap: var(--double-default-spacing);
@@ -174,7 +170,7 @@ th{
   text-transform: uppercase;
   color: var(--text-color-secondary);
   font-family: "Nunito Sans", Arial, sans-serif;
-
+  
 }
 
 .paragrafo2 {
