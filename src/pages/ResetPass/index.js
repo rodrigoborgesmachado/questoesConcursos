@@ -59,7 +59,7 @@ function ResetPass(){
     }
 
     return (
-        <div className="containerpage">
+        <div className="containerpage global-fullW">
             <div className='login'>
                 <h2>
                     Nova senha

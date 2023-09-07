@@ -5,7 +5,7 @@ function Simulado(){
     const navigate = useNavigate();
 
     return (
-        <div className="containerpage">
+        <div className="containerpage global-fullW">
             <div className='global-infoPanel'>
             <h1>Simulados:</h1>
             <div className='separator separator--withMargins'></div>

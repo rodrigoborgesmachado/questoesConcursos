@@ -75,7 +75,7 @@ function Resultado(){
     }
 
     return(
-        <div className="containerpage">
+        <div className="containerpage global-fullW">
             <h1>Resultado simulado prova {prova.nomeProva}:</h1>
             <br/>
             <div className='detalhesHistorico'>

@@ -133,7 +133,7 @@ function Admin() {
     }
 
     return (
-        <div className="containerpage">
+        <div className="containerpage global-fullW">
             <div className='dados global-infoPanel'>
                 <h1>Admin</h1>
                 <div className="separator separator--withMargins"></div>
