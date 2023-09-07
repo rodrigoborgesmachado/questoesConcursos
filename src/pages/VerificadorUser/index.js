@@ -7,17 +7,17 @@ function VerificadorUser(){
     const{guid} = useParams();
     const navigate = useNavigate();
     const[loadding, setLoadding] = useState(true);
+    const[validado, setValidado] = useState(false);
 
     async function ValidaUsuario(){
         setLoadding(true);
         await api.get('/Usuarios/liberauser?guid=' + guid)
         .then((response) => {
+            setLoadding(false);
             if(response.data.success){
                 toast.success('Usuário validado com sucesso! Login liberado!');
-                navigate('/login', {replace: true});
             }
             else{
-                setLoadding(false);
                 toast.error('Não foi possível liberar o usuário!');
             }
         });
@@ -37,7 +37,16 @@ function VerificadorUser(){
 
     return(
         <div className="containerpage global-fullW">
-            Não foi possível liberar o usuário
+            {
+                validado ? 
+                <p>
+                    ⚠️Não foi possível liberar o usuário! Entre em contato com o suporte: sunsalesystem@outlook.com⚠️
+                </p>
+                :
+                <p>
+                    ✅Usuário validado! Login liberado!✅
+                </p>
+            }
         </div>
     )
 }
