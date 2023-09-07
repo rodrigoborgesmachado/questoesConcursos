@@ -70,8 +70,8 @@ function SimuladoSelecao() {
     }
 
     return (
-        <div className="containerpage">
-            <div className="global-infoPanel">
+        <div className="containerpage global-fullW">
+            <div className="dados global-infoPanel">
                 <h2 id="title">Selecione a prova para iniciar o simulado:</h2>
                 <div className='separator separator--withMargins'></div>
                 <div className="opcoes">
