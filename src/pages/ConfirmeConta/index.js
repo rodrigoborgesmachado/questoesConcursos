@@ -1,11 +1,21 @@
 import { useParams } from 'react-router-dom';
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
+import { useState } from 'react';
 
 function ConfirmeConta(){
     const{mail} = useParams();
+    const[quantidadeEnvio, setQuantidadeEnvio] = useState(1);
 
     async function ReenviaEmail(){
+
+        if(quantidadeEnvio > 5){
+            toast.warn('Já foi tentado mais de ' + quantidadeEnvio + ' vezes o envio! Entre em contato com o suporte (sunsalesystem@outlook.com)!');
+            return;
+        }
+        
+        setQuantidadeEnvio(quantidadeEnvio+1);
+
         await api.get('/Usuarios/reenviaEmailConfirmacao?mail=' + mail)
         .then((response) => {
             if(response.data.success){
