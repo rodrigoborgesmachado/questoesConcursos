@@ -23,6 +23,7 @@ import Resultado from './pages/ResultadoSimulado';
 import HistoricoSimulado from './pages/HistoricoSimulado';
 import SimuladoSelecao from './pages/SimuladoSelecao';
 import AtualizaSenha from './pages/AtualizaSenha';
+import VerificadorUser from './pages/VerificadorUser';
 
 function RoutesApp(){
     return(
@@ -51,6 +52,7 @@ function RoutesApp(){
                 <Route path='/historicosimulado/' element={<HistoricoSimulado/>}/>
                 <Route path='/simuladoselecao/' element={<SimuladoSelecao/>}/>
                 <Route path='/atualizasenha/' element={<AtualizaSenha/>}/>
+                <Route path='/valida/:guid' element={<AtualizaSenha/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <Route path='/admin' element={<Admin/>}/>
