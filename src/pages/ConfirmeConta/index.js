@@ -22,11 +22,11 @@ function ConfirmeConta(){
                 toast.success('Email reenviado!');
             }
             else{
-                toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte!');
+                toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte (sunsalesystem@outlook.com)!');
             }
         })
         .catch(() => {
-            toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte!');
+            toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte! (sunsalesystem@outlook.com)');
         })
     }
 
