@@ -54,7 +54,7 @@ function RoutesApp(){
                 <Route path='/simuladoselecao/' element={<SimuladoSelecao/>}/>
                 <Route path='/atualizasenha/' element={<AtualizaSenha/>}/>
                 <Route path='/valida/:guid' element={<VerificadorUser/>}/>
-                <Route path='/confirmesuaconta' element={<ConfirmeConta/>}/>
+                <Route path='/confirmesuaconta/:mail' element={<ConfirmeConta/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <Route path='/admin' element={<Admin/>}/>
