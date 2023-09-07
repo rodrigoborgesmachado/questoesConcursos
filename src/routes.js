@@ -22,6 +22,7 @@ import Config from './config.json';
 import Resultado from './pages/ResultadoSimulado';
 import HistoricoSimulado from './pages/HistoricoSimulado';
 import SimuladoSelecao from './pages/SimuladoSelecao';
+import AtualizaSenha from './pages/AtualizaSenha';
 
 function RoutesApp(){
     return(
@@ -49,6 +50,7 @@ function RoutesApp(){
                 <Route path='/resultadosimulado/:filtro' element={<Resultado/>}/>
                 <Route path='/historicosimulado/' element={<HistoricoSimulado/>}/>
                 <Route path='/simuladoselecao/' element={<SimuladoSelecao/>}/>
+                <Route path='/atualizasenha/' element={<AtualizaSenha/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <Route path='/admin' element={<Admin/>}/>

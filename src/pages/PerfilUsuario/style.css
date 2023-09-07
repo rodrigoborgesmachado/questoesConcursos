@@ -1,0 +1,7 @@
+.dadosResumidos p{
+    margin-top: 24px;
+}
+
+.dadosResumidos span{
+    cursor: pointer;
+}

@@ -32,7 +32,7 @@
   --text-color-button: #FFFFFF;
   
   --button-color-secondary: rgb(37, 26, 166);
-  --separator-color-primary: rgba(48,54,61,0.48);;
+  --separator-color-primary: rgba(173, 179, 187, 0.48);;
   --shadow-color-primary: rgba(0, 0, 0, .12);
   --shadow-color-secondary: rgba(0, 0, 0, .12);
   --separator-marker-color-primary: #006B59;
@@ -43,7 +43,7 @@
   --color-surface: #FAFDFA;
   --color-surface-variant: #1F1F1F;
 
-  --loader-color: var(--primary-color);
+  --loader-color: #8A2BE2;
   --panel-border-color : #eaebeb;
 
   --modal-background-color:rgba(255, 255, 255, 0.25);
@@ -746,4 +746,10 @@ table{
   width: 100%;
   padding: 8px;
   border-radius: 4px;
+}
+
+.global-input{
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
 }
