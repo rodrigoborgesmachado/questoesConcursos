@@ -122,6 +122,28 @@ function ListagemProvas() {
         navigate('/cadastroProva', { replace: true });
     }
 
+    async function baixarProva(codigo, nome){
+        setLoadding(true);
+        await api.get('/Prova/downloadProva?codigo=' + codigo)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                const link = document.createElement('a');
+                link.href = response.data.object;
+                link.download = 'Prova ' + nome.replace('/', '').replace('-', ' ') + '.html';
+                link.click();
+            }
+            else{
+                toast.error('Prova não encontrada');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao gerar a prova!');
+        })
+    }
+
     return (
         <div className='global-pageContainer'>
             <Modal
@@ -186,6 +208,8 @@ function ListagemProvas() {
                                     <b>Banca:</b> {item.banca}
                                     <br />
                                     <b>Data de aplicação:</b> {item.dataAplicacao}
+                                    <br />
+                                    <b onClick={() => baixarProva(item.id, item.nomeProva)}>Baixar prova 🔽</b> 
                                     <br />
                                     <br />
                                     <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}🔥
