@@ -122,3 +122,7 @@
 .inputFiltro input{
     margin-right: 10px;
 }
+
+.clickOption{
+    cursor: pointer;
+}

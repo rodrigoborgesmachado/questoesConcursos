@@ -66,6 +66,31 @@ function Resultado(){
         })
     }
 
+    async function baixarArquivo(codigo, nome, prova){
+        setLoadding(true);
+        let url = prova ? '/Prova/downloadProva?codigo=' : '/Prova/downloadGabarito?codigo=';
+        url += codigo;
+
+        await api.get(url)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                const link = document.createElement('a');
+                link.href = response.data.object;
+                link.download = (prova ? 'Prova ' : 'Gabarito ') + nome.replace('/', '').replace('-', ' ') + '.html';
+                link.click();
+            }
+            else{
+                toast.error((prova ? 'Prova' : 'Gabarito') + ' não encontrada');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao gerar a prova!');
+        })
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -81,19 +106,26 @@ function Resultado(){
             <div className='detalhesHistorico'>
                 <h3>
                     Baixar boletin detalhado: <a target="_blank" onClick={() => baixarBoletinDetalhado()}>📩</a>
-                    <br/>
-                    Link da prova: <a target="_blank" href={prova.linkProva}>📩</a>
-                    <br/>
-                    Link do gabarito: <a target="_blank" href={prova.linkGabarito}>📩</a>
-                    <br/>
+                </h3>
+                <h3>
+                    <b className='clickOption' onClick={() => baixarArquivo(prova.id, prova.nomeProva, true)}>Baixar Prova 🔽</b> 
+                </h3>
+                <h3>
+                    <b className='clickOption' onClick={() => baixarArquivo(prova.id, prova.nomeProva, false)}>Baixar Gabarito 🔽</b> 
+                </h3>
+                <h3>
                     Tempo: {tempo/60} minutos
-                    <br/>
+                </h3>
+                <h3>
                     Quantidade de questões respondidas: {respostas.length }😁
-                    <br/>
+                </h3>
+                <h3>
                     Quantidade de questões respondidas certas: {respostas.filter((item) => item.certa === '1').length}🤩
-                    <br/>
+                </h3>
+                <h3>
                     Taxa de acertos: {Math.round((respostas.filter((item) => item.certa === '1').length/respostas.length)*100)}%
-                    <br/>
+                </h3>
+                <h3>
                     Pontuação final: {Math.round((respostas.filter((item) => item.certa === '1').length/respostas.length)*100)} de 100
                 </h3>
             </div>

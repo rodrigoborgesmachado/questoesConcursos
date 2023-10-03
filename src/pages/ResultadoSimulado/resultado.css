@@ -2,6 +2,10 @@
     width: 80%;
 }
 
+.detalhesHistorico h3{
+    padding: 8px;
+}
+
 .respostasHistorico{
     width: 80%;
 }

@@ -122,19 +122,22 @@ function ListagemProvas() {
         navigate('/cadastroProva', { replace: true });
     }
 
-    async function baixarProva(codigo, nome){
+    async function baixarArquivo(codigo, nome, prova){
         setLoadding(true);
-        await api.get('/Prova/downloadProva?codigo=' + codigo)
+        let url = prova ? '/Prova/downloadProva?codigo=' : '/Prova/downloadGabarito?codigo=';
+        url += codigo;
+
+        await api.get(url)
         .then((response) => {
             setLoadding(false);
             if(response.data.success){
                 const link = document.createElement('a');
                 link.href = response.data.object;
-                link.download = 'Prova ' + nome.replace('/', '').replace('-', ' ') + '.html';
+                link.download = (prova ? 'Prova ' : 'Gabarito ') + nome.replace('/', '').replace('-', ' ') + '.html';
                 link.click();
             }
             else{
-                toast.error('Prova não encontrada');
+                toast.error((prova ? 'Prova' : 'Gabarito') + ' não encontrada');
             }
         })
         .catch((error) => {
@@ -209,7 +212,9 @@ function ListagemProvas() {
                                     <br />
                                     <b>Data de aplicação:</b> {item.dataAplicacao}
                                     <br />
-                                    <b onClick={() => baixarProva(item.id, item.nomeProva)}>Baixar prova 🔽</b> 
+                                    <b className='clickOption' onClick={() => baixarArquivo(item.id, item.nomeProva, true)}>Baixar Prova 🔽</b> 
+                                    <br />
+                                    <b className='clickOption' onClick={() => baixarArquivo(item.id, item.nomeProva, false)}>Baixar Gabarito 🔽</b> 
                                     <br />
                                     <br />
                                     <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}🔥
