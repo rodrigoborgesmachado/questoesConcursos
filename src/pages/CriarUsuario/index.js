@@ -41,8 +41,7 @@ function CriarUsuario(){
             nome: nome,
             email: email,
             pass:stringToHash(senha)+'',
-            dataNascimento: nascimento,
-            admin:'0'
+            dataNascimento: nascimento
         }
         )
         .then((response) => {
