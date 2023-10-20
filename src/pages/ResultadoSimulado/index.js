@@ -66,6 +66,20 @@ function Resultado(){
         })
     }
 
+    function enviarBoletinhoPorEmail(){
+        setLoadding(true);
+        api.post('/Simulado/sendReportEmail?codigoSimulado=' + filtro)
+        .then((response) => {
+            setLoadding(false);
+            toast.info('Email enviado!');
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao eniar o boletinho!');
+        })
+    }
+
     async function baixarArquivo(codigo, nome, prova){
         setLoadding(true);
         let url = prova ? '/Prova/downloadProva?codigo=' : '/Prova/downloadGabarito?codigo=';
@@ -106,6 +120,9 @@ function Resultado(){
             <div className='detalhesHistorico'>
                 <h3>
                     Baixar boletin detalhado: <a target="_blank" onClick={() => baixarBoletinDetalhado()}>📩</a>
+                </h3>
+                <h3>
+                    Reenviar boletinho por email: <a target='_blank' onClick={() => enviarBoletinhoPorEmail()}>📩</a>
                 </h3>
                 <h3>
                     <b className='clickOption' onClick={() => baixarArquivo(prova.id, prova.nomeProva, true)}>Baixar Prova 🔽</b> 
