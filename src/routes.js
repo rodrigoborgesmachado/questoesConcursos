@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Erro from './pages/Erro';
 import Questoes from './pages/Questoes';
@@ -25,6 +26,7 @@ import SimuladoSelecao from './pages/SimuladoSelecao';
 import AtualizaSenha from './pages/AtualizaSenha';
 import VerificadorUser from './pages/VerificadorUser';
 import ConfirmeConta from './pages/ConfirmeConta';
+import Contato from './pages/Contato/contato';
 
 function RoutesApp(){
     return(
@@ -61,8 +63,10 @@ function RoutesApp(){
                     :
                     <></>
                 }
+                <Route path='/contato' element={<Contato/>}/>
                 <Route path='*' element={<Erro/>}/>
             </Routes>
+            <Footer/>
         </BrowserRouter>
     )
 }

@@ -45,9 +45,15 @@ function Login() {
 
                 //navigate('/', {replace: true});
                 window.location.href = '/';
-            }).catch(() => {
+            }).catch((response) => {
                 setLoadding(false);
-                toast.error('Usuário ou senhas incorretos');
+                if(response.response.status == 300){
+                    toast.error('Usuário não verificado! Favor acessar seu email ou entre em contato com o suporte!');
+                }
+                else{
+                    toast.error('Usuário ou senhas incorretos');
+                }
+
                 return;
             });
     }

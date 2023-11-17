@@ -1,3 +1,4 @@
+import "./style.css";
 import { useParams } from 'react-router-dom';
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
@@ -6,6 +7,7 @@ import { useState } from 'react';
 function ConfirmeConta(){
     const{mail} = useParams();
     const[quantidadeEnvio, setQuantidadeEnvio] = useState(1);
+    const [loadding, setLoadding] = useState(false);
 
     async function ReenviaEmail(){
 
@@ -14,10 +16,13 @@ function ConfirmeConta(){
             return;
         }
         
+        setLoadding(true);
         setQuantidadeEnvio(quantidadeEnvio+1);
 
         await api.get('/Usuarios/reenviaEmailConfirmacao?mail=' + mail)
         .then((response) => {
+            setLoadding(false);
+
             if(response.data.success){
                 toast.success('Email reenviado!');
             }
@@ -26,17 +31,26 @@ function ConfirmeConta(){
             }
         })
         .catch(() => {
+            setLoadding(false);
             toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte! (sunsalesystem@outlook.com)');
         })
+    }
+    
+    if (loadding) {
+        return (
+            <div className='loaddingDiv'>
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
+        )
     }
 
     return(
         <div className="containerpage global-fullW">
             <div className='dados global-infoPanel'>
-                <p>
+                <h2 className="center-h2">
                     Você receberá um email para validar sua conta em até 5 minutos.
-                </p>
-                <button className='global-button' onClick={() => ReenviaEmail()}>Reenviar email</button>
+                </h2>
+                <button className='global-button reenviar-button' onClick={() => ReenviaEmail()}>Reenviar email</button>
             </div>
         </div>
     )

@@ -753,3 +753,8 @@ table{
   padding: 8px;
   border-radius: 10px;
 }
+
+.center-h2{
+  display: flex;
+  justify-content: center;
+}

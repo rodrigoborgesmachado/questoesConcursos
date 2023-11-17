@@ -1,0 +1,14 @@
+.info-contato a{
+    text-decoration: none;
+    color: white;
+}
+
+.info-contato p{
+    margin: 16px;
+}
+
+.info-contato{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
