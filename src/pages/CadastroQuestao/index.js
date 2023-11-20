@@ -24,16 +24,17 @@ const customStyles = {
 function CadastraQuestao(){
     const navigate = useNavigate();
     const{filtro} = useParams();
+    const{numero} = useParams();
     const{questaoCode} = useParams();
     const[contadorImagem, setContadorImagem] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const[questao, setQuestao] = useState({
-        campoQuestao: '',
+        campoQuestao: '<b>Questão ' + numero + '</b><br><br>',
         observacaoQuestao: '',
         materia: '',
         codigoProva: filtro,
-        numeroQuestao: '',
+        numeroQuestao: numero,
         ativo: '1',
         updatedOn: '2023-05-07',
         respostasUsuarios:[],
@@ -260,7 +261,7 @@ function CadastraQuestao(){
                                                     {
                                                         item.anexoResposta[0].anexo != '' ?
                                                         <div id="imagemResposta">
-                                                            <img src={item.anexoResposta[0].anexo}/>
+                                                            <img src={item.anexoResposta[0]?.anexo}/>
                                                         </div>
                                                         :
                                                         <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>

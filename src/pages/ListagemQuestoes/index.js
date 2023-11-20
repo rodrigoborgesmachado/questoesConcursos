@@ -74,7 +74,12 @@ function ListagemQuestoes(){
     }
 
     function addQuestao(){
-        navigate('/cadastraQuestao/' + filtro, {replace: true});
+        var proximoNumero = 1;
+
+        if(questoes.length > 1)
+            proximoNumero = questoes[questoes?.length -1].numeroQuestao + 1;
+
+        navigate('/cadastraQuestao/' + filtro + '/' + proximoNumero, {replace: true});
     }
 
     function voltarListagemProva(){

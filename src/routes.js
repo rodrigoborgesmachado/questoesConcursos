@@ -47,8 +47,8 @@ function RoutesApp(){
                 <Route path='/questoes/:filtro' element={<Questoes/>}/>
                 <Route path='/cadastroProva/:filtro' element={<CadastraProva/>}/>
                 <Route path='/cadastroProva' element={<CadastraProva/>}/>
-                <Route path='/cadastraQuestao/:filtro' element={<CadastraQuestao/>}/>
-                <Route path='/cadastraQuestao/:filtro/:questaoCode' element={<CadastraQuestao/>}/>
+                <Route path='/cadastraQuestao/:filtro/:numero' element={<CadastraQuestao/>}/>
+                <Route path='/cadastraQuestao/:filtro/:numero/:questaoCode' element={<CadastraQuestao/>}/>
                 <Route path='/recoverypass' element={<RecoveryPass/>}/>
                 <Route path='/resetpass/:guid' element={<ResetPass/>}/>
                 <Route path='/resultadosimulado/:filtro' element={<Resultado/>}/>
