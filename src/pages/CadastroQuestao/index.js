@@ -30,7 +30,7 @@ function CadastraQuestao(){
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const[questao, setQuestao] = useState({
-        campoQuestao: '<b>Questão ' + numero + '</b><br><br>',
+        campoQuestao: '<b>Questão ' + (numero > 10 ? numero : '0' + numero) + '</b><br><br>',
         observacaoQuestao: '',
         materia: '',
         codigoProva: filtro,
