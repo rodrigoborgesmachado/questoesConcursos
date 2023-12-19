@@ -144,9 +144,16 @@ function ListagemQuestoes(){
                                 <tr key={item.id}>
                                     <td className='option'>
                                         <a>
-                                            <h4 onClick={() => editaQuestao(item.id)}>
-                                            ✏️{item.numeroQuestao}
-                                            </h4>
+                                            {
+                                                localStorage.getItem(Config.ADMIN) === '1' ?
+                                                <h4 onClick={() => editaQuestao(item.id)}>
+                                                    ✏️{item.numeroQuestao}
+                                                </h4>
+                                                :
+                                                <h4 onClick={() => abreQuestao(item.id)}>
+                                                    ✏️{item.numeroQuestao}
+                                                </h4>
+                                            }
                                         </a>
                                     </td>
                                     <td>
