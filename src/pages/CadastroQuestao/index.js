@@ -103,6 +103,9 @@ function CadastraQuestao(){
         await api.get('/Questoes/getById?id=' + codigo)
         .then((response) => {
             if(response.data.success){
+                for(var i = 0; i < response.data.object.respostasQuestoes.length;i++){
+                    response.data.object.respostasQuestoes[i].certa = response.data.object.respostasQuestoes[i].certa == '1';
+                }
                 setQuestao(response.data.object);
 
                 setLoadding(false);
@@ -141,7 +144,7 @@ function CadastraQuestao(){
           ...questao,
           respostasQuestoes: [
             ...questao.respostasQuestoes,
-            { textoResposta: "", certa: false },
+            { textoResposta: "", certa: false, anexoResposta: [] },
           ],
         });
     }
@@ -172,24 +175,46 @@ function CadastraQuestao(){
         
         setLoadding(true);
 
-        await api.post(`/Questoes`, 
-        questaoPost
-        )
-        .then((response) => {
-            if(response.data.success){
-                toast.success('Questão cadastrada com sucesso!');
-                navigate('/prova/' + filtro, {replace: true});
-            }
-            else{
-                toast.info('Erro ao cadastrar');
-                toast.warn(response.data.message);
-            }
-            setLoadding(false);
-        }).catch(() => {
-            setLoadding(false);
-            toast.error('Erro ao criar a questão!');
-            return;
-        });
+        if(questaoCode != undefined){
+            await api.put(`/Questoes`, 
+            questaoPost
+            )
+            .then((response) => {
+                if(response.data.success){
+                    toast.success('Questão editada com sucesso!');
+                    navigate('/prova/' + filtro, {replace: true});
+                }
+                else{
+                    toast.info('Erro ao editar');
+                    toast.warn(response.data.message);
+                }
+                setLoadding(false);
+            }).catch(() => {
+                setLoadding(false);
+                toast.error('Erro ao criar a questão!');
+                return;
+            });
+        }
+        else{
+            await api.post(`/Questoes`, 
+            questaoPost
+            )
+            .then((response) => {
+                if(response.data.success){
+                    toast.success('Questão cadastrada com sucesso!');
+                    navigate('/prova/' + filtro, {replace: true});
+                }
+                else{
+                    toast.info('Erro ao cadastrar');
+                    toast.warn(response.data.message);
+                }
+                setLoadding(false);
+            }).catch(() => {
+                setLoadding(false);
+                toast.error('Erro ao criar a questão!');
+                return;
+            });
+        }
     }
 
     function createMarkup(text) { return {__html: text}; };
@@ -197,7 +222,7 @@ function CadastraQuestao(){
     function createMarkupWithImages(text, anexos){
         let temp = text;
         
-        for(let i = 0; i< anexos.length; i++){
+        for(let i = 0; i< anexos?.length; i++){
             temp = temp.replace(`<img src="#" alt="Anexo" id="divAnexo${i}"/>`, `<img src=\"${anexos[i].anexo}\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`);
         }
 
@@ -242,7 +267,7 @@ function CadastraQuestao(){
                     <br/>
                     <div className='descricaoQuestao'>
                         {
-                            questao.anexosQuestoes.length > 0 ?
+                            questao.anexosQuestoes?.length > 0 ?
                             <h4 dangerouslySetInnerHTML={createMarkupWithImages(questao.campoQuestao, questao.anexosQuestoes)}></h4>
                             :
                             <h4 dangerouslySetInnerHTML={createMarkup(questao.campoQuestao)}></h4>
@@ -259,7 +284,7 @@ function CadastraQuestao(){
                                                 {
                                                     <>
                                                     {
-                                                        item.anexoResposta[0].anexo != '' ?
+                                                        item.anexoResposta.length > 0 ?
                                                         <div id="imagemResposta">
                                                             <img src={item.anexoResposta[0]?.anexo}/>
                                                         </div>
@@ -556,7 +581,7 @@ function CadastraQuestao(){
                     </button>
                     <button 
                         className='global-button global-button'
-                        onClick={confirmaFormulario}>Cadastrar Questão</button>
+                        onClick={confirmaFormulario}> {questaoCode != undefined ? <>Editar Questão</> : <>Cadastrar Questão</>}</button>
                 </div>
                 
             </div>

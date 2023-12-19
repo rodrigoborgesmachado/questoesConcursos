@@ -73,6 +73,10 @@ function ListagemQuestoes(){
         navigate('/questoes/codigoquestaolistagem:' + codigoQuestao, {replace: true});
     }
 
+    function editaQuestao(codigoQuestao){
+        navigate('/cadastraQuestao/' + filtro + '/1/' + codigoQuestao, {replace: true});
+    }
+
     function addQuestao(){
         var proximoNumero = 1;
 
@@ -138,10 +142,12 @@ function ListagemQuestoes(){
                         questoes.map((item) => {
                             return(
                                 <tr key={item.id}>
-                                    <td>
-                                        <h4 onClick={() => abreQuestao(item.id)}>
-                                        ✏️{item.numeroQuestao}
-                                        </h4>
+                                    <td className='option'>
+                                        <a>
+                                            <h4 onClick={() => editaQuestao(item.id)}>
+                                            ✏️{item.numeroQuestao}
+                                            </h4>
+                                        </a>
                                     </td>
                                     <td>
                                         <h4 onClick={() => abreQuestao(item.id)}>
