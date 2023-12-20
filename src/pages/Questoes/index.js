@@ -321,6 +321,10 @@ function Questoes(){
         });
     }
 
+    function editaQuestao(){
+        navigate('/cadastraQuestao/' + questao?.codigoProva + '/1/' + questao?.id, {replace: true});
+    }
+
     async function buscaRespostaCorreta(){
         await api.get(`/RespostasQuestoes/getRespostaCorreta?questao=${questao?.id}`)
         .then((response) =>{
@@ -446,6 +450,12 @@ function Questoes(){
                     <div className='global-buttonWrapper'>
                         <button className='global-button' onClick={buscaRespostaCorreta}>Visualizar resposta</button>
                         <button className='global-button' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
+                        {
+                            localStorage.getItem(Config.ADMIN) === '1' ?
+                            <button className='global-button' onClick={editaQuestao}>Editar questão</button>
+                            :
+                            <></>
+                        }
                     </div>
                 </div>
             </Modal>
