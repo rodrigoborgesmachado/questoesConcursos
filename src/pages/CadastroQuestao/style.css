@@ -105,3 +105,9 @@
 .addQuestao button{
     margin-top: 8px;
 }
+
+.sameLine {
+    width: 30% !important;
+    display: flex;
+    flex-direction: row;
+}

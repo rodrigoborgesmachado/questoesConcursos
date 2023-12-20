@@ -139,7 +139,7 @@ function CadastraQuestao(){
         setModalIsOpen(false);
     }
 
-    function adicionaQuestao(){
+    function adicionaResposta(){
         setQuestao({
           ...questao,
           respostasQuestoes: [
@@ -147,6 +147,16 @@ function CadastraQuestao(){
             { textoResposta: "", certa: false, anexoResposta: [] },
           ],
         });
+    }
+
+    function removeResposta(index){
+        setQuestao({
+            ...questao,
+            respostasQuestoes: [
+                ...questao.respostasQuestoes.slice(0, index),
+                ...questao.respostasQuestoes.splice(index + 1)
+            ],
+          });
     }
 
     async function confirmaFormulario(){
@@ -474,26 +484,46 @@ function CadastraQuestao(){
                     {questao.respostasQuestoes.map((option, index) => (
                         <div  key={index}>
                             <label>
-                                <h3>
-                                Resposta {index + 1}:
-                            </h3>
+                                <div className='sameLine'>
+                                    <h3>
+                                    Resposta {index + 1}: 
+                                    </h3>
+                                    <button  type="button" className='global-button global-button--transparent' onClick={() => removeResposta(index)}>Remove</button>
+                                </div>
                             <input
                                 type="text"
                                 value={option.textoResposta}
-                                onChange={(event) =>
-                                    setQuestao({
-                                      ...questao,
-                                      respostasQuestoes: [
-                                        ...questao.respostasQuestoes.slice(0, index),
-                                        {
-                                          textoResposta: event.target.value,
-                                          certa: questao.respostasQuestoes[index].certa,
-                                          anexoResposta: questao.respostasQuestoes[index].anexoResposta,
-                                        },
-                                        ...questao.respostasQuestoes.slice(index + 1),
-                                      ],
-                                    })
-                                  }
+                                onChange={(event) =>{
+                                    if(questaoCode != undefined){
+                                        setQuestao({
+                                          ...questao,
+                                          respostasQuestoes: [
+                                            ...questao.respostasQuestoes.slice(0, index),
+                                            {
+                                              codigo: questao.respostasQuestoes[index].codigo,
+                                              textoResposta: event.target.value,
+                                              certa: questao.respostasQuestoes[index].certa,
+                                              anexoResposta: questao.respostasQuestoes[index].anexoResposta,
+                                            },
+                                            ...questao.respostasQuestoes.slice(index + 1),
+                                          ],
+                                        })
+                                    }
+                                    else{
+                                        setQuestao({
+                                            ...questao,
+                                            respostasQuestoes: [
+                                              ...questao.respostasQuestoes.slice(0, index),
+                                              {
+                                                textoResposta: event.target.value,
+                                                certa: questao.respostasQuestoes[index].certa,
+                                                anexoResposta: questao.respostasQuestoes[index].anexoResposta,
+                                              },
+                                              ...questao.respostasQuestoes.slice(index + 1),
+                                            ],
+                                          })
+                                    }
+                                }}
                             />
                             </label>
                             <label>
@@ -570,7 +600,7 @@ function CadastraQuestao(){
                 </div>
                 <button type="button" 
                     className='global-button global-button--transparent'
-                    onClick={adicionaQuestao}>
+                    onClick={adicionaResposta}>
                   Adicionar Resposta
                 </button>
                 <div className='addQuestao'>
