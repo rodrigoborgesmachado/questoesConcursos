@@ -182,7 +182,7 @@ function CadastraQuestao(){
             .then((response) => {
                 if(response.data.success){
                     toast.success('Questão editada com sucesso!');
-                    navigate('/prova/' + filtro, {replace: true});
+                    navigate('/questoes/codigoquestaolistagem:' + questaoCode, {replace: true});
                 }
                 else{
                     toast.info('Erro ao editar');
