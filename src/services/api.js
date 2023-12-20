@@ -20,7 +20,7 @@ if (token) {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-      if (error.response && (error.response.status === 401 || error.response.status === 500) ) {
+      if (error.code === "ERR_NETWORK" || (error.response && error.response.status === 401)) {
         localStorage.setItem(Config.LOGADO, 0);
         localStorage.setItem(Config.USUARIO, '');
         localStorage.setItem(Config.TOKEN, '');
