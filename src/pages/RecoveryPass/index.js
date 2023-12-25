@@ -42,8 +42,8 @@ function RecoveryPass(){
     }
 
     return (
-        <div className="containerpage ">
-            <div className='global-infoPanel global-miniW login'>
+        <div className="containerpage global-fullW">
+            <div className='global-infoPanel login'>
                 <h2>
                     Login
                 </h2>
