@@ -294,7 +294,7 @@ function CadastraQuestao(){
                                                 {
                                                     <>
                                                     {
-                                                        item.anexoResposta.length > 0 ?
+                                                        item.anexoResposta.length > 0 && item.anexoResposta[0].anexo != ''?
                                                         <div id="imagemResposta">
                                                             <img src={item.anexoResposta[0]?.anexo}/>
                                                         </div>
