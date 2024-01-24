@@ -27,6 +27,9 @@ import AtualizaSenha from './pages/AtualizaSenha';
 import VerificadorUser from './pages/VerificadorUser';
 import ConfirmeConta from './pages/ConfirmeConta';
 import Contato from './pages/Contato/contato';
+import NotasCorte from './pages/NotasCorte/notasCorte';
+import CalculadoraEnem from './pages/CalculadoraEnem/calculadoraEnem';
+import { NextPlanTwoTone } from '@mui/icons-material';
 
 function RoutesApp(){
     return(
@@ -64,6 +67,8 @@ function RoutesApp(){
                     <></>
                 }
                 <Route path='/contato' element={<Contato/>}/>
+                <Route path='/notasCorte' element={<NotasCorte/>}/>
+                <Route path='/calculadoraEnem' element={<CalculadoraEnem/>}/>
                 <Route path='*' element={<Erro/>}/>
             </Routes>
             <Footer/>

@@ -19,7 +19,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 
-const pages = ['📚 Provas', '🧾 Simulados', '🏛️ Bancas', '🏭 Matérias', '➕Pratique Tabuada'];
+const pages = ['📚 Provas', '🧾 Simulados', '🎓 Sisu', '➕Pratique Tabuada'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
@@ -31,6 +31,7 @@ const ResponsiveAppBar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElProva, setAnchorElProva] = React.useState(null);
+    const [anchorElSisu, setAnchorElSisu] = React.useState(null);
     const [tipos, setTipos] = React.useState([]);
 
   async function buscaTipos(){
@@ -71,28 +72,27 @@ const ResponsiveAppBar = () => {
     setAnchorElProva(null);
   };
 
+  const handleOpenSisuMenu = (event) => {
+    setAnchorElSisu(event.currentTarget);
+  };
+
+  const handleCloseSisuMenu = () => {
+    setAnchorElSisu(null);
+  };
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
   function SelecionaOpcao(page){
     handleCloseNavMenu();
-    if(page === pages[0]){
-      navigate('/listagemprovas/1', {replace: true});
-    }
-    else if(page === pages[1]){
+    if(page === pages[1]){
       navigate('/simulado', {replace: true});
     }
-    else if(page === pages[2]){
-      navigate('/bancas', {replace: true});
-    }
     else if(page === pages[3]){
-      navigate('/materias', {replace: true});
-    }
-    else if(page === pages[4]){
       window.open("https://www.tabuadadivertida.com/", "_blank");
     }
-    else if(page === pages[5]){
+    else if(page === pages[4]){
       navigate('/admin', {replace: true});
     }
   }
@@ -139,6 +139,18 @@ const ResponsiveAppBar = () => {
     toast.success('Volte sempre!');
     navigate('/', {replace: true});
     window.location.href = '/';
+  }
+
+  function abreTelaNotaDeCorte(){
+    handleCloseSisuMenu();
+    handleCloseNavMenu();
+    navigate('/notasCorte', {replace: true});
+  }
+
+  function abreTelaCalculadoraEnem(){
+    handleCloseSisuMenu();
+    handleCloseNavMenu();
+    navigate('/calculadoraEnem', {replace: true});
   }
 
   return (
@@ -193,16 +205,17 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                page != '📚 Provas' ?
-                <MenuItem key={page} onClick={(e) => SelecionaOpcao(page)}>
+              {pages.map((page, index) => (
+                index != 0 && index != 2 ?
+                <MenuItem key={index} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
                   </Typography>
                 </MenuItem>
                 :
+                index == 0?
                 <>
-                  <MenuItem key={page} onClick={handleOpenProvaMenu} >
+                  <MenuItem key={index} onClick={handleOpenProvaMenu} >
                     <Typography textAlign="center">
                       {page}
                     </Typography>
@@ -235,6 +248,33 @@ const ResponsiveAppBar = () => {
                     }
                   </Menu>
                 </>
+                :
+                <>
+                  <MenuItem key={page} onClick={handleOpenSisuMenu} >
+                    <Typography textAlign="center">
+                      {page}
+                    </Typography>
+                  </MenuItem>
+                  <Menu
+                    sx={{ ml: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElSisu}
+                    keepMounted
+                    open={Boolean(anchorElSisu)}
+                    onClose={handleCloseSisuMenu}
+                  >
+                    <MenuItem onClick={(e) => abreTelaNotaDeCorte()}>
+                      <Typography textAlign="center">
+                          Notas de corte
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem onClick={(e) => abreTelaCalculadoraEnem()}>
+                      <Typography textAlign="center">
+                          Calculadora Enem
+                      </Typography>
+                    </MenuItem>
+                  </Menu>
+                </>
               ))}
             </Menu>
           </Box>
@@ -258,18 +298,18 @@ const ResponsiveAppBar = () => {
             <a href='/'>ConQuest</a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              page != '📚 Provas' ?
+            {pages.map((page, index) => (
+              index != 0 && index != 2 ?
               <Button
-                key={page}
+                key={index}
                 onClick={(e) => SelecionaOpcao(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
-              :
-              <>
-                <Button key={page} onClick={handleOpenProvaMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+              : index == 0 ?
+              <> 
+                <Button key={index} onClick={handleOpenProvaMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                     {page}
                 </Button>
                 <Menu
@@ -298,6 +338,31 @@ const ResponsiveAppBar = () => {
                     ))}
                     </>
                   }
+                </Menu>
+              </>
+              :
+              <> 
+                <Button key={index} onClick={handleOpenSisuMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    {page}
+                </Button>
+                <Menu
+                  sx={{ ml: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElSisu}
+                  keepMounted
+                  open={Boolean(anchorElSisu)}
+                  onClose={handleCloseSisuMenu}
+                >
+                  <MenuItem onClick={(e) => abreTelaNotaDeCorte()}>
+                    <Typography textAlign="center">
+                        Notas de corte
+                      </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={(e) => abreTelaCalculadoraEnem()}>
+                      <Typography textAlign="center">
+                          Calculadora Enem
+                      </Typography>
+                    </MenuItem>
                 </Menu>
               </>
             ))}

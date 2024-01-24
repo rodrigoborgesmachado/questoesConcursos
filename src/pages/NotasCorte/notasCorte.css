@@ -1,0 +1,11 @@
+.filtroSisu{
+    margin: 24px;
+}
+.filtroSisu h4{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.pointer{
+    cursor: pointer;
+}

@@ -1,0 +1,36 @@
+.mediaCalculadora{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.itensCalculadora{
+    margin: 24px;
+}
+
+.itemCalculadora{
+    margin-bottom: 12px;
+}
+
+.dadosCalculadora{
+    margin: 8px;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pesoCalculadora{
+    display: flex;
+    flex-direction: column;
+}
+
+.opcoesBotoesCalculadora{
+    display: flex;
+    margin: 8px;
+}
+
+.opcoesBotoesCalculadora button{
+    margin-left: 8px;
+}
