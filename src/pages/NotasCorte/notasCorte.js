@@ -32,6 +32,7 @@ function NotasCorte(){
     const [resultados, setResultados] = useState([]);
     const [dadosCurso, setDadosCurso] = useState([]);
     const [modosConcorrencia, setModosConcorrencia] = useState([]);
+    const [isMobile, setIsMobile] = useState(false);
     const [filtro, setFiltro] = useState(
         {
             instituicao:[],
@@ -74,6 +75,16 @@ function NotasCorte(){
         }
         setLoadding(true);
         buscaInstituicoes();
+
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768); // Adjust the threshold as needed
+        };
+      
+        // Initial check on component mount
+        handleResize();
+      
+        // Listen for window resize events
+        window.addEventListener('resize', handleResize);
     }, []);
 
     async function buscaCursos(instituicao) {
@@ -118,7 +129,7 @@ function NotasCorte(){
             var notaCorte2021;
             var notaCorte2022;
             var notaCorte2023;
-            modosConcorrencia.forEach(item => {
+            unique.forEach(item => {
                 var temp = response.data.object.filter(o => o.desricaoModoConcorrencia === item);
                 notaCorte2019 = temp.filter(t => t.year === 2019)[0]?.notaCorte;
                 notaCorte2020 = temp.filter(t => t.year === 2020)[0]?.notaCorte;
@@ -134,7 +145,7 @@ function NotasCorte(){
                 })
             });
             setResultados(list);
-
+            console.log(list);
             setLoadding(false);
         }).catch(() => {
             toast.error('Erro ao buscar cursos');
@@ -220,70 +231,114 @@ function NotasCorte(){
                         <br/>
                         <br/>
                         <h3>Notas de Corte:</h3>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <h3>
-                                            Modo Concorrência
-                                        </h3>
-                                    </th>
-                                    <th>
-                                        <h3>
-                                            2019
-                                        </h3>
-                                    </th>
-                                    <th>
-                                        <h3>
-                                            2020
-                                        </h3>
-                                    </th>
-                                    <th>
-                                        <h3>
-                                            2021
-                                        </h3>
-                                    </th>
-                                    <th>
-                                        <h3>
-                                            2022
-                                        </h3>
-                                    </th>
-                                    <th>
-                                        <h3>
-                                            2023
-                                        </h3>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    resultados.map((item, index) => {
-                                        return(
-                                            <tr key={index}>
-                                                <td onClick={() => openModal(index)} className='pointer'>
-                                                    {(index+1)}
-                                                </td>
-                                                <td>
-                                                    {item.corte2019}
-                                                </td>
-                                                <td>
-                                                    {item.corte2020}
-                                                </td>
-                                                <td>
-                                                    {item.corte2021}
-                                                </td>
-                                                <td>
-                                                    {item.corte2022}
-                                                </td>
-                                                <td>
-                                                    {item.corte2023}
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </Table>
+                        {
+                            isMobile ? 
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <h3>
+                                                Modo Concorrência
+                                            </h3>
+                                        </th>
+                                        <th>
+                                            <h3>
+                                                2022
+                                            </h3>
+                                        </th>
+                                        <th>
+                                            <h3>
+                                                2023
+                                            </h3>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        resultados.map((item, index) => {
+                                            return(
+                                                <tr key={index}>
+                                                    <td onClick={() => openModal(index)} className='pointer'>
+                                                        {(index+1)}
+                                                    </td>
+                                                    <td>
+                                                        {item.corte2022}
+                                                    </td>
+                                                    <td>
+                                                        {item.corte2023}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                            :
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <h3>
+                                                Modo Concorrência
+                                            </h3>
+                                        </th>
+                                        <th>
+                                            <h3>
+                                                2019
+                                            </h3>
+                                        </th>
+                                        <th>
+                                            <h3>
+                                                2020
+                                            </h3>
+                                        </th>
+                                        <th>
+                                            <h3>
+                                                2021
+                                            </h3>
+                                        </th>
+                                        <th>
+                                            <h3>
+                                                2022
+                                            </h3>
+                                        </th>
+                                        <th>
+                                            <h3>
+                                                2023
+                                            </h3>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        resultados.map((item, index) => {
+                                            return(
+                                                <tr key={index}>
+                                                    <td onClick={() => openModal(index)} className='pointer'>
+                                                        {(index+1)}
+                                                    </td>
+                                                    <td>
+                                                        {item.corte2019}
+                                                    </td>
+                                                    <td>
+                                                        {item.corte2020}
+                                                    </td>
+                                                    <td>
+                                                        {item.corte2021}
+                                                    </td>
+                                                    <td>
+                                                        {item.corte2022}
+                                                    </td>
+                                                    <td>
+                                                        {item.corte2023}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        }
                         <br/>
                         <div>
                             <h4><b>Obs: Notas zeradas significa que não houve candidatos, notas vazias significa que não houve a modalidade naquele ano.</b></h4>
