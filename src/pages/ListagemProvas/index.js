@@ -147,6 +147,28 @@ function ListagemProvas() {
         })
     }
 
+    async function AtualizaStatus(id, status){
+        setLoadding(true);
+        let url = '/Prova/updateStatus?id=' +  id + '&active=' + (status == '0' ? 'true' : 'false');
+
+        await api.put(url)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                toast.success('Atualizado com sucesso!');
+                buscaProvas(page);
+            }
+            else{
+                toast.error('Não foi possível atualizar');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Não foi possível atualizar');
+        })
+    }
+
     return (
         <div className='global-pageContainer'>
             <Modal
@@ -202,7 +224,14 @@ function ListagemProvas() {
                                             })}</b></sub>
                                     </div>
                                     <br />
-
+                                    {
+                                        localStorage.getItem(Config.ADMIN) == '1' ?
+                                            <>
+                                                Status: <b>{item.isActive == '1' ? 'ATIVO' : 'DESATIVADO'}</b>
+                                            </>
+                                            :
+                                            <></>
+                                    }
                                     <br />
                                     <b>Tipo:</b> {item.tipoProva}
                                     <br />
@@ -234,19 +263,16 @@ function ListagemProvas() {
                                         </>
                                     }
                                     <br />
-                                    {
-                                        /*item.linkProva ?
-                                        <a className='botaoBaixarArquivo' target="_blank" href={item.linkProva}><CloudDownloadIcon/> Prova</a>
-                                        :<></>
-                                    }
-                                    <br/>
-                                    {
-                                        item.linkGabarito ?
-                                        <a className='botaoBaixarArquivo' target="_blank" href={item.linkGabarito}><CloudDownloadIcon/> Gabarito</a>
-                                        :<></>*/
-                                    }
                                 </h4>
                                 <div className='global-buttonWrapper'>
+                                    {
+                                        localStorage.getItem(Config.ADMIN) == '1' ?
+                                            <>
+                                                <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(item.id, item.isActive)}>{item.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
+                                            </>
+                                            :
+                                            <></>
+                                    }
                                     <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
                                     <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button></div>
                                 <br />
