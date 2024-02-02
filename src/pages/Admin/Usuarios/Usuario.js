@@ -114,7 +114,7 @@ function Usuarios(){
                 </div>
             </Modal>
             <div className='dados global-infoPanel'>
-                <h3>Usuarios:</h3>
+                <h3>Usuarios ({quantity}):</h3>
                 <Table>
                     <thead>
                         <tr>
@@ -182,7 +182,7 @@ function Usuarios(){
                 '& .MuiPaginationItem-root': {
                     color: 'white',
                 
-                }}} count={parseInt((quantity / quantityPerPage) + 1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                }}} count={parseInt(Math.ceil(quantity / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
                     :
                     <>

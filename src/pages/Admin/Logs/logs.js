@@ -113,7 +113,7 @@ function Logs(){
                 </div>
             </Modal>
             <div className='dados global-infoPanel'>
-                <h3>Logs:</h3>
+                <h3>Logs ({quantity}):</h3>
                 <Table>
                     <thead>
                         <tr>
@@ -173,7 +173,7 @@ function Logs(){
                 '& .MuiPaginationItem-root': {
                     color: 'white',
                 
-                }}} count={parseInt((quantity / quantityPerPage) + 1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                }}} count={parseInt(Math.ceil(quantity / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
                     :
                     <>

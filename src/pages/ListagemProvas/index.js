@@ -293,7 +293,7 @@ function ListagemProvas() {
                     '& .MuiPaginationItem-root': {
                         color: 'white',
                   
-                  }}} count={parseInt((quantity / quantityPerPage) + 1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                  }}} count={parseInt(Math.ceil(quantity / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
                         :
                         <>

@@ -135,7 +135,7 @@ function ListagemQuestoes(){
                 <></>
             }
             <div className='opcoesQuestoes'>
-                <h2>Questões</h2>
+                <h2>Questões (Total: {quantity})</h2>
                 <div className='opcaoFiltro'>
                     {
                         localStorage.getItem(Config.ADMIN) == '1' ?
@@ -256,7 +256,7 @@ function ListagemQuestoes(){
                     '& .MuiPaginationItem-root': {
                         color: 'white',
                   
-                  }}} count={parseInt((quantity / quantityPerPage) + 1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                  }}} count={parseInt(Math.ceil(quantity / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
                         :
                         <>
