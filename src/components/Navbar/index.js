@@ -192,6 +192,12 @@ const ResponsiveAppBar = () => {
     navigate('/usuarios', {replace: true});
   }
 
+  function abreTelaHistoricoTabuadaDivertida(){
+    handleCloseAdminMenu();
+    handleCloseNavMenu();
+    navigate('/historicotabuadadivertida', {replace: true});
+  }
+
   return (
     <AppBar position="static" className='varBarResponsive'>
  <div className='conNav'>
@@ -355,6 +361,11 @@ const ResponsiveAppBar = () => {
                           Lista todas questões
                       </Typography>
                     </MenuItem>
+                    <MenuItem onClick={(e) => abreTelaHistoricoTabuadaDivertida()}>
+                      <Typography textAlign="center">
+                          Histórico Tabuada Divertida
+                      </Typography>
+                    </MenuItem>
                   </Menu>
                 </>
               ))}
@@ -484,6 +495,11 @@ const ResponsiveAppBar = () => {
                   <MenuItem onClick={(e) => abreTelaQuestoes()}>
                     <Typography textAlign="center">
                         Lista todas questões
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={(e) => abreTelaHistoricoTabuadaDivertida()}>
+                    <Typography textAlign="center">
+                        Histórico Tabuada Divertida
                     </Typography>
                   </MenuItem>
                 </Menu>

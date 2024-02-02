@@ -32,6 +32,7 @@ import CalculadoraEnem from './pages/CalculadoraEnem/calculadoraEnem';
 import DashBoard from './pages/Admin/DashBoard/DashBoard';
 import Logs from './pages/Admin/Logs/logs';
 import Usuarios from './pages/Admin/Usuarios/Usuario';
+import HistoricoTabuadaDivertida from './pages/Admin/HIstoricoTabuadaDivertida/HistoricoTabuadaDivertida';
 
 function RoutesApp(){
     return(
@@ -69,6 +70,7 @@ function RoutesApp(){
                         <Route path='/dashboard' element={<DashBoard/>}/>
                         <Route path='/logs' element={<Logs/>}/>
                         <Route path='/usuarios' element={<Usuarios/>}/>
+                        <Route path='/historicotabuadadivertida' element={<HistoricoTabuadaDivertida/>}/>
                     </>
                     :
                     <></>

@@ -113,6 +113,28 @@ function ListagemQuestoes(){
         buscaQuestoes(value);
     };
 
+    async function AtualizaStatus(id, status){
+        setLoadding(true);
+        let url = '/Prova/updateStatus?id=' +  id + '&active=' + (status == '0' ? 'true' : 'false');
+
+        await api.put(url)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                toast.success('Atualizado com sucesso!');
+                buscaProva();
+            }
+            else{
+                toast.error('Não foi possível atualizar');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Não foi possível atualizar');
+        })
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -128,25 +150,47 @@ function ListagemQuestoes(){
             </div>
             {
                 filtro != -1 ?
-                <h2 className='nomeProvaDescricao'>
+                <h3 className='nomeProvaDescricao'>
                     Prova: {prova?.nomeProva} 
-                </h2>
+                    <br/>
+                    Banca: {prova?.banca}
+                    <br/>
+                    Tipo: {prova?.tipoProva}
+                    <br/>
+                    Local: {prova?.local}
+                    <br />
+                    {
+                        localStorage.getItem(Config.ADMIN) == '1' ?
+                            <>
+                                Status: <b>{prova?.isActive == '1' ? 'ATIVO' : 'DESATIVADO'}</b>
+                            </>
+                            :
+                            <></>
+                    }
+                </h3>
                 :
                 <></>
             }
             <div className='opcoesQuestoes'>
-                <h2>Questões (Total: {quantity})</h2>
+                {
+                    localStorage.getItem(Config.ADMIN) == '1' ?
+                        <>
+                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(prova?.id, prova?.isActive)}>{prova?.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
+                        </>
+                        :
+                        <></>
+                }
                 <div className='opcaoFiltro'>
                     {
                         localStorage.getItem(Config.ADMIN) == '1' ?
-                        <h2 onClick={addQuestao}><BsFileEarmarkPlusFill/>  Adicionar</h2>
+                        <h3 onClick={addQuestao}><BsFileEarmarkPlusFill/>  Adicionar</h3>
                         :
                         <></>
                     }
                 </div>
             </div>
-            
             <div className='global-fullW'>
+            <h3>Questões (Total: {quantity})</h3>
             <Table>
                 <thead>
                     <tr>
