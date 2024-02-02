@@ -321,6 +321,28 @@ function Questoes(){
         });
     }
 
+    async function revisar(){
+        await api.get(`/Questoes/revisar`, {
+            params:{
+                "id": questao?.id
+            }
+        })
+        .then((response) => {
+            closeModalSolicitacao();
+            if(response.data.success){
+                toast.success('Questão revisada!');
+            }
+            else{
+                toast.warn('Erro ao enviar solicitação!');
+            }
+            BuscarProximaQuestao();
+        }).catch(() => {
+            toast.warn('Erro ao solicitar!');
+            navigate('/', {replace: true});
+            return;
+        });
+    }
+
     function editaQuestao(){
         navigate('/cadastraQuestao/' + questao?.codigoProva + '/1/' + questao?.id, {replace: true});
     }
@@ -344,7 +366,7 @@ function Questoes(){
             navigate('/historico/', {replace: true});
         }
         else if(filtro.includes('codigoquestaolistagem')){
-            navigate('/prova/' + questao?.codigoProva, {replace: true});
+            navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
         }
         else if(filtro.includes('simulado')){
             localStorage.removeItem(Config.Historico);
@@ -452,7 +474,10 @@ function Questoes(){
                         <button className='global-button' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
                         {
                             localStorage.getItem(Config.ADMIN) === '1' ?
-                            <button className='global-button' onClick={editaQuestao}>Editar questão</button>
+                            <>
+                                <button className='global-button' onClick={editaQuestao}>Editar questão</button>
+                                <button className='global-button' onClick={() => revisar()}>Colocar questão como revisada</button>
+                            </>
                             :
                             <></>
                         }

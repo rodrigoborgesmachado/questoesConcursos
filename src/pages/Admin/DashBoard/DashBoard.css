@@ -1,0 +1,20 @@
+@media only screen and (max-width: 1000px) {
+    .dadosDashboard{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    /* Add additional styles specific to smartphones */
+}
+
+@media only screen and (min-width: 1001px) {
+    .dadosDashboard{
+        display: flex;
+        justify-content: space-between;
+    }
+    /* Add additional styles specific to smartphones */
+}
+
+.itemUsuarios{
+    padding: 16px;
+}

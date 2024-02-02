@@ -5,8 +5,9 @@ import {toast} from 'react-toastify';
 import api from '../../services/api.js';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BsFileEarmarkPlusFill } from "react-icons/bs";
-import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import Config from './../../config.json';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 function ListagemQuestoes(){
     const navigate = useNavigate();
@@ -14,59 +15,74 @@ function ListagemQuestoes(){
     const{filtro} = useParams();
     const[questoes, setQuestoes] = useState([])
     const[prova, setProva] = useState({})
+    const [page, setPage] = useState(1);
+    const [quantity, setQuantity] = useState(1);
+    const [quantityPerPage] = useState(10);
+
+    async function buscaProva(){
+        if(!localStorage.getItem(Config.TOKEN)){
+            toast.info('Necessário logar para acessar!');
+            navigate('/', {replace: true});
+            return;
+        }
+
+        await api.get(`/Prova/getById?id=${filtro}`)
+        .then((response) => {
+            if(response.data.success){
+                setProva(response.data.object);
+                buscaQuestoes(page);
+            }
+            else{
+                navigate('/', {replace: true});
+                toast.warn('Erro ao buscar');    
+            }
+        })
+        .catch(() => {
+            navigate('/', {replace: true});
+            toast.warn('Erro ao buscar');
+        })
+
+    }
+
+    async function buscaQuestoes(page){
+        if(!localStorage.getItem(Config.TOKEN)){
+            toast.info('Necessário logar para acessar!');
+            navigate('/', {replace: true});
+            return;
+        }
+
+        await api.get(filtro != -1 ? `/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false&codigoProva=${filtro}` : `/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false`)
+        .then((response) => {
+            if(response.data.success){
+                if(filtro!= -1){
+                    setQuestoes(response.data.object.sort((a, b) => parseInt(a.numeroQuestao) - parseInt(b.numeroQuestao)));
+                }
+                else{
+                    setQuestoes(response.data.object);
+                }
+                setQuantity(response.data.total);
+                setLoadding(false);
+            }
+            else{
+                navigate('/', {replace: true});
+                toast.warn('Erro ao buscar');    
+            }
+        })
+        .catch(() => {
+            navigate('/', {replace: true});
+            toast.warn('Erro ao buscar');
+        })
+
+    }
 
     useEffect(() => {
-        async function buscaProva(){
-            if(!localStorage.getItem(Config.TOKEN)){
-                toast.info('Necessário logar para acessar!');
-                navigate('/', {replace: true});
-                return;
-            }
 
-            await api.get(`/Prova/getById?id=${filtro}`)
-            .then((response) => {
-                if(response.data.success){
-                    setProva(response.data.object);
-                    buscaQuestoes();
-                }
-                else{
-                    navigate('/', {replace: true});
-                    toast.warn('Erro ao buscar');    
-                }
-            })
-            .catch(() => {
-                navigate('/', {replace: true});
-                toast.warn('Erro ao buscar');
-            })
-
+        if(filtro != -1){
+            buscaProva();
         }
-
-        async function buscaQuestoes(){
-            if(!localStorage.getItem(Config.TOKEN)){
-                toast.info('Necessário logar para acessar!');
-                navigate('/', {replace: true});
-                return;
-            }
-
-            await api.get(`/Questoes/pagged?page=1&quantity=10000&anexos=false&codigoProva=${filtro}`)
-            .then((response) => {
-                if(response.data.success){
-                    setQuestoes(response.data.object.sort((a, b) => parseInt(a.numeroQuestao) - parseInt(b.numeroQuestao)));
-                    setLoadding(false);
-                }
-                else{
-                    navigate('/', {replace: true});
-                    toast.warn('Erro ao buscar');    
-                }
-            })
-            .catch(() => {
-                navigate('/', {replace: true});
-                toast.warn('Erro ao buscar');
-            })
-
+        else{
+            buscaQuestoes(page);
         }
-
-        buscaProva();
     }, [loadding])
 
     function abreQuestao(codigoQuestao){
@@ -91,6 +107,12 @@ function ListagemQuestoes(){
         navigate('/listagemprovas/' + page, {replace: true});
     }
 
+    const handleChange = (event, value) => {
+        setPage(value);
+        setLoadding(true);
+        buscaQuestoes(value);
+    };
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -104,9 +126,14 @@ function ListagemQuestoes(){
             <div className='total'>
                 <button className='global-button global-button--transparent' onClick={voltarListagemProva}>Voltar</button>
             </div>
-            <h2 className='nomeProvaDescricao'>
-                Prova: {prova.nomeProva} 
-            </h2>
+            {
+                filtro != -1 ?
+                <h2 className='nomeProvaDescricao'>
+                    Prova: {prova?.nomeProva} 
+                </h2>
+                :
+                <></>
+            }
             <div className='opcoesQuestoes'>
                 <h2>Questões</h2>
                 <div className='opcaoFiltro'>
@@ -123,6 +150,13 @@ function ListagemQuestoes(){
             <Table>
                 <thead>
                     <tr>
+                        {
+                            filtro == -1 ?
+                            <th>
+                                Código
+                            </th>
+                            :<></>
+                        }
                         <th>
                             <h4>
                             Nº Questão
@@ -133,6 +167,13 @@ function ListagemQuestoes(){
                             Matéria
                             </h4>
                         </th>
+                        {
+                            filtro == -1 ?
+                            <th>
+                                Prova
+                            </th>
+                            :<></>
+                        }
                         <th>
                         </th>
                     </tr>
@@ -142,6 +183,22 @@ function ListagemQuestoes(){
                         questoes.map((item) => {
                             return(
                                 <tr key={item.id}>
+                                    {
+                                        filtro == -1 ?
+                                        <td className='option'>
+                                            {
+                                                localStorage.getItem(Config.ADMIN) === '1' ?
+                                                <h4 onClick={() => editaQuestao(item.id)}>
+                                                    ✏️{item.id}
+                                                </h4>
+                                                :
+                                                <h4 onClick={() => abreQuestao(item.id)}>
+                                                    ✏️{item.id}
+                                                </h4>
+                                            }
+                                        </td>
+                                        :<></>
+                                    }
                                     <td className='option'>
                                         <a>
                                             {
@@ -161,6 +218,13 @@ function ListagemQuestoes(){
                                         {item.materia}
                                         </h4>
                                     </td>
+                                    {
+                                        filtro == -1 ?
+                                        <td>
+                                            {item.prova?.nomeProva}
+                                        </td>
+                                        :<></>
+                                    }
                                     <td>
                                         {item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "1")) !== undefined ? 
                                         <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.id)}>Respondida</button>
@@ -182,6 +246,24 @@ function ListagemQuestoes(){
                 </tbody>
             </Table>
             </div>
+            <div className='itensPaginacao global-mt'>
+                {
+                    quantity > 0 ?
+                        <Stack spacing={4}>
+                            <Pagination sx={{
+                    '& .Mui-selected': {
+                        color: 'white'},
+                    '& .MuiPaginationItem-root': {
+                        color: 'white',
+                  
+                  }}} count={parseInt((quantity / quantityPerPage) + 1)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                        </Stack>
+                        :
+                        <>
+                        </>
+                }
+            </div>
+
         </div>
     )
 }

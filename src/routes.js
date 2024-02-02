@@ -18,7 +18,7 @@ import CadastraProva from './pages/CadastroProva';
 import CadastraQuestao from './pages/CadastroQuestao';
 import RecoveryPass from './pages/RecoveryPass';
 import ResetPass from './pages/ResetPass';
-import Admin from './pages/Admin';
+import HistoricoUsuarioAdmin from './pages/Admin/HistoricoUsuario';
 import Config from './config.json';
 import Resultado from './pages/ResultadoSimulado';
 import HistoricoSimulado from './pages/HistoricoSimulado';
@@ -29,7 +29,9 @@ import ConfirmeConta from './pages/ConfirmeConta';
 import Contato from './pages/Contato/contato';
 import NotasCorte from './pages/NotasCorte/notasCorte';
 import CalculadoraEnem from './pages/CalculadoraEnem/calculadoraEnem';
-import { NextPlanTwoTone } from '@mui/icons-material';
+import DashBoard from './pages/Admin/DashBoard/DashBoard';
+import Logs from './pages/Admin/Logs/logs';
+import Usuarios from './pages/Admin/Usuarios/Usuario';
 
 function RoutesApp(){
     return(
@@ -41,7 +43,7 @@ function RoutesApp(){
                 <Route path='/bancas' element={<Bancas/>}/>
                 <Route path='/simulado' element={<Simulado/>}/>
                 <Route path='/listagemprovas/:filtro' element={<ListagemProvas/>}/>
-                <Route path='/prova/:filtro' element={<ListagemQuestoes/>}/>
+                <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/criarUsuario' element={<CriarUsuario/>}/>
                 <Route path='/ranking' element={<Ranking/>}/>
@@ -62,7 +64,12 @@ function RoutesApp(){
                 <Route path='/confirmesuaconta/:mail' element={<ConfirmeConta/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
-                    <Route path='/admin' element={<Admin/>}/>
+                    <>
+                        <Route path='/historicoadmin' element={<HistoricoUsuarioAdmin/>}/>
+                        <Route path='/dashboard' element={<DashBoard/>}/>
+                        <Route path='/logs' element={<Logs/>}/>
+                        <Route path='/usuarios' element={<Usuarios/>}/>
+                    </>
                     :
                     <></>
                 }

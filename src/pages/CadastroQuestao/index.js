@@ -212,7 +212,7 @@ function CadastraQuestao(){
             .then((response) => {
                 if(response.data.success){
                     toast.success('Questão cadastrada com sucesso!');
-                    navigate('/prova/' + filtro, {replace: true});
+                    navigate('/listagemquestoes/' + filtro, {replace: true});
                 }
                 else{
                     toast.info('Erro ao cadastrar');
@@ -240,7 +240,7 @@ function CadastraQuestao(){
     }
 
     function voltarListagemQuestoes(){
-        navigate('/prova/' + filtro, { replace: true });
+        navigate('/listagemquestoes/' + filtro, { replace: true });
     }
 
     if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0' ){

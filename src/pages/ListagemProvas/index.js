@@ -80,7 +80,7 @@ function ListagemProvas() {
     }, []);
 
     function abrirQuestao(codigo) {
-        navigate('/prova/' + codigo, { replace: true });
+        navigate('/listagemquestoes/' + codigo, { replace: true });
     }
 
     function abrirSimulado(codigo) {

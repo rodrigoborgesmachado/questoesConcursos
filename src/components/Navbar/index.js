@@ -32,6 +32,7 @@ const ResponsiveAppBar = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElProva, setAnchorElProva] = React.useState(null);
     const [anchorElSisu, setAnchorElSisu] = React.useState(null);
+    const [anchorElAdmin, setAnchorElAdmin] = React.useState(null);
     const [tipos, setTipos] = React.useState([]);
 
   async function buscaTipos(){
@@ -80,6 +81,14 @@ const ResponsiveAppBar = () => {
     setAnchorElSisu(null);
   };
 
+  const handleOpenAdminMenu = (event) => {
+    setAnchorElAdmin(event.currentTarget);
+  };
+
+  const handleCloseAdminMenu = () => {
+    setAnchorElAdmin(null);
+  };
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -93,7 +102,7 @@ const ResponsiveAppBar = () => {
       window.open("https://www.tabuadadivertida.com/", "_blank");
     }
     else if(page === pages[4]){
-      navigate('/admin', {replace: true});
+      abreTelaListagemHistoricoUsuario();
     }
   }
 
@@ -153,6 +162,36 @@ const ResponsiveAppBar = () => {
     navigate('/calculadoraEnem', {replace: true});
   }
 
+  function abreTelaListagemHistoricoUsuario(){
+    handleCloseAdminMenu();
+    handleCloseNavMenu();
+    navigate('/historicoadmin', {replace: true});
+  }
+
+  function abreTelaDashboard(){
+    handleCloseAdminMenu();
+    handleCloseNavMenu();
+    navigate('/dashboard', {replace: true});
+  }
+
+  function abreTelaQuestoes(){
+    handleCloseAdminMenu();
+    handleCloseNavMenu();
+    navigate('/listagemquestoes/-1', {replace: true});
+  }
+
+  function abreTelaLogs(){
+    handleCloseAdminMenu();
+    handleCloseNavMenu();
+    navigate('/logs', {replace: true});
+  }
+
+  function abreTelaUsuarios(){
+    handleCloseAdminMenu();
+    handleCloseNavMenu();
+    navigate('/usuarios', {replace: true});
+  }
+
   return (
     <AppBar position="static" className='varBarResponsive'>
  <div className='conNav'>
@@ -206,7 +245,7 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page, index) => (
-                index != 0 && index != 2 ?
+                index != 0 && index != 2 && index != 4 ?
                 <MenuItem key={index} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
@@ -249,6 +288,7 @@ const ResponsiveAppBar = () => {
                   </Menu>
                 </>
                 :
+                index == 2?
                 <>
                   <MenuItem key={page} onClick={handleOpenSisuMenu} >
                     <Typography textAlign="center">
@@ -271,6 +311,48 @@ const ResponsiveAppBar = () => {
                     <MenuItem onClick={(e) => abreTelaCalculadoraEnem()}>
                       <Typography textAlign="center">
                           Calculadora Enem
+                      </Typography>
+                    </MenuItem>
+                  </Menu>
+                </>
+                :
+                <>
+                  <MenuItem key={page} onClick={handleOpenAdminMenu} >
+                    <Typography textAlign="center">
+                      {page}
+                    </Typography>
+                  </MenuItem>
+                  <Menu
+                    sx={{ ml: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElAdmin}
+                    keepMounted
+                    open={Boolean(anchorElAdmin)}
+                    onClose={handleCloseAdminMenu}
+                  >
+                    <MenuItem onClick={(e) => abreTelaDashboard()}>
+                      <Typography textAlign="center">
+                          DashBoard
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem onClick={(e) => abreTelaLogs()}>
+                      <Typography textAlign="center">
+                          Logs
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem onClick={(e) => abreTelaUsuarios()}>
+                      <Typography textAlign="center">
+                          Usuarios
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem onClick={(e) => abreTelaListagemHistoricoUsuario()}>
+                      <Typography textAlign="center">
+                          Histórico de usuários
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem onClick={(e) => abreTelaQuestoes()}>
+                      <Typography textAlign="center">
+                          Lista todas questões
                       </Typography>
                     </MenuItem>
                   </Menu>
@@ -299,7 +381,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page, index) => (
-              index != 0 && index != 2 ?
+              index != 0 && index != 2 && index != 4 ?
               <Button
                 key={index}
                 onClick={(e) => SelecionaOpcao(page)}
@@ -341,6 +423,7 @@ const ResponsiveAppBar = () => {
                 </Menu>
               </>
               :
+              index == 2 ?
               <> 
                 <Button key={index} onClick={handleOpenSisuMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                     {page}
@@ -363,6 +446,46 @@ const ResponsiveAppBar = () => {
                           Calculadora Enem
                       </Typography>
                     </MenuItem>
+                </Menu>
+              </>
+              :
+              <> 
+                <Button key={index} onClick={handleOpenAdminMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    {page}
+                </Button>
+                <Menu
+                  sx={{ ml: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElAdmin}
+                  keepMounted
+                  open={Boolean(anchorElAdmin)}
+                  onClose={handleCloseAdminMenu}
+                >
+                  <MenuItem onClick={(e) => abreTelaDashboard()}>
+                    <Typography textAlign="center">
+                        DashBoard
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={(e) => abreTelaLogs()}>
+                    <Typography textAlign="center">
+                        Logs
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={(e) => abreTelaUsuarios()}>
+                    <Typography textAlign="center">
+                        Usuarios
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={(e) => abreTelaListagemHistoricoUsuario()}>
+                    <Typography textAlign="center">
+                        Histórico de usuários
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={(e) => abreTelaQuestoes()}>
+                    <Typography textAlign="center">
+                        Lista todas questões
+                    </Typography>
+                  </MenuItem>
                 </Menu>
               </>
             ))}

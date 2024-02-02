@@ -1,6 +1,6 @@
 import './admin.css';
-import api from '../../services/api.js';
-import Config from './../../config.json';
+import api from '../../../services/api.js';
+import Config from '../../../config.json';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import makeAnimated from 'react-select/animated';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 
-function Admin() {
+function HistoricoUsuarioAdmin() {
     const navigate = useNavigate();
     const animatedComponents = makeAnimated();
     const [loadding, setLoadding] = useState(false);
@@ -201,4 +201,4 @@ function Admin() {
     )
 }
 
-export default Admin;
+export default HistoricoUsuarioAdmin;
