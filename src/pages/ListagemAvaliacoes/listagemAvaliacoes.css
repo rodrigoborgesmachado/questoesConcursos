@@ -1,0 +1,17 @@
+.opcoesFiltro{
+    display: flex;
+    justify-content: space-between;
+    margin: 16px;
+    margin-bottom: 0px !important;
+}
+
+.link{
+    cursor: pointer;
+}
+
+.botoesModalFiltroAvaliacoes{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 16px;
+}

@@ -4,14 +4,29 @@ import Config from '../../config.json';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 function CriarUsuario(){
     const navigate = useNavigate();
+    const animatedComponents = makeAnimated();
 
     const[nome, setNome] = useState('');
     const[email, setEmail] = useState('');
     const[senha, setSenha] = useState('');
     const[nascimento, setNascimento] = useState('');
+    const[instituicao, setInstituicao] = useState('');
+    const[perfis] = useState([
+        {
+            value:0,
+            label:'Aluno'
+        },
+        {
+            value:2,
+            label:'Professor'
+        },
+    ]);
+    const[perfilSelecionado, setPerfilSelecionado] = useState(0);
     const[loadding, setLoadding] = useState(false);
 
     function stringToHash(string) {
@@ -35,13 +50,14 @@ function CriarUsuario(){
 
     async function confirmaFormulario(){
         setLoadding(true);
-        await api.post(`/Usuarios`, 
+        await api.post(`/Usuarios?perfil=${perfilSelecionado}`, 
         {
             login: email,
             nome: nome,
             email: email,
             pass:stringToHash(senha)+'',
-            dataNascimento: nascimento
+            dataNascimento: nascimento,
+            instituicao: instituicao
         }
         )
         .then((response) => {
@@ -59,6 +75,10 @@ function CriarUsuario(){
             toast.error('Erro ao criar usuário');
             return;
         });
+    }
+
+    const handleChange = (selectedOption, event) => {
+        setPerfilSelecionado(selectedOption.value);
     }
 
     if(localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1'){
@@ -93,6 +113,13 @@ function CriarUsuario(){
                 <input id='password' type='password' value={senha} onChange={(e) => setSenha(e.target.value)}></input>
                 <label for="date">Data nascimento:</label>
                 <input id='date' type='date' value={nascimento} onChange={(e) => setNascimento(e.target.value)}></input>
+                <label for="perfil">Perfil:</label>
+                <div id='perfil' className="opcoes">
+                    <Select closeMenuOnSelect={false} components={animatedComponents} options={perfis} onChange={handleChange} />
+                </div>
+                <label for="date">Instituição:</label>
+                <input id='date' type='text' value={instituicao} selectedOption={perfilSelecionado} onChange={(e) => setInstituicao(e.target.value)}></input>
+
                 <button className='global-button global-button--full-width' onClick={confirmaFormulario}>Confirma</button>
             </div>
             

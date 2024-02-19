@@ -94,7 +94,7 @@ function Usuarios(){
                         <h3>Log</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
-                    <div>
+                    <div className="detalhesModal">
                         <h4>
                             Id: {usuarios[index].id}
                             <br/>
@@ -108,7 +108,9 @@ function Usuarios(){
                             <br/>
                             Foi verificado: {usuarios[index].isVerified}
                             <br/>
-                            Admin: {usuarios[index].admin}
+                            Perfil: {usuarios[index].tipoPerfil?.descricao}
+                            <br/>
+                            Instituicao: {usuarios[index].instituicao}
                         </h4>
                     </div>
                 </div>
@@ -126,6 +128,9 @@ function Usuarios(){
                             </th>
                             <th>
                                 Email
+                            </th>
+                            <th>
+                                Perfil
                             </th>
                             <th>
                                 Verificado
@@ -153,6 +158,11 @@ function Usuarios(){
                                         <td>
                                             <h4>
                                                 {item.email}
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <h4>
+                                                {item.tipoPerfil?.descricao}
                                             </h4>
                                         </td>
                                         <td>

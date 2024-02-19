@@ -6,10 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
 import { BsChatLeftDotsFill } from "react-icons/bs";
-import { AiOutlineEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
-import { BsFillArrowLeftCircleFill } from "react-icons/bs";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import Modal from 'react-modal';
 import Tempo from './../../components/Tempo/tempo.js';
 
@@ -57,6 +54,7 @@ function Questoes(){
     const [modalComentarioIsOpen, setModalComentarioIsOpen] = useState(false);
     const [textoResposta, setTextoResposta] = useState('');
     const [comentario, setComentario] = useState('');
+    const[nextAvaliacao, setNextAvaliacao] = useState(-1);
 
     function openModalSolicitacao() {
         setModalSolicitacao(true);
@@ -149,6 +147,16 @@ function Questoes(){
             return temp;
 
         }
+        else if(filtro.includes('avaliacao')){
+            setNextAvaliacao(proxima || !anterior ? nextAvaliacao + 1 : nextAvaliacao -1);
+
+            let temp =  `/Questoes/getByAvaliacao?avaliacao=` + filtro.replace('avaliacao&', '');
+            temp += "&numeroQuestao=" + (proxima || !anterior ? nextAvaliacao + 1 : nextAvaliacao -1);
+
+
+            return temp;
+
+        }
         return `/Questoes/getQuestaoAleatoria?tipo=GENERIC`;
     }
 
@@ -168,6 +176,7 @@ function Questoes(){
             }
             else{
                 var simulado = filtro.includes('simulado');
+                var avaliacao = filtro.includes('avaliacao');
                 
                 if(response.data.message === 'Not registered'){
                     if(simulado){
@@ -190,6 +199,10 @@ function Questoes(){
                             toast.error('Error ao abrir resultado do simulado');
                             navigate('/simulado', {replace: true});
                         });
+                    }
+                    else if(avaliacao){
+                        toast.success('Você respondeu todas as questões dessa avaliação!');
+                        navigate('/resultadoAvaliacao/' + filtro.split('avaliacao&')[1], {replace: true});
                     }
                     else{
                         toast.success('Você respondeu todas as questões dessa prova!');
@@ -233,7 +246,9 @@ function Questoes(){
 
     async function ValidaResposta(e, codigo){
         var simulado = filtro.includes('simulado');
-        if(simulado)
+        var avaliacao = filtro.includes('avaliacao');
+
+        if(simulado || avaliacao)
             setLoadding(true);
         
         await api.get(`/RespostasQuestoes/validaResposta`, {
@@ -253,6 +268,10 @@ function Questoes(){
                 historico.push(resposta);
 
                 localStorage.setItem(Config.Historico, JSON.stringify(historico));
+                BuscarProximaQuestao(false, true);
+            }
+            else if(avaliacao){
+                GravaRespostaAvaliacao(filtro.replace('avaliacao&', ''), questao?.id, codigo);
                 BuscarProximaQuestao(false, true);
             }
             else{
@@ -372,6 +391,10 @@ function Questoes(){
             localStorage.removeItem(Config.Historico);
             navigate('/simulado', {replace: true});
         }
+        else if(filtro.includes('avaliacao')){
+            localStorage.removeItem(Config.Historico);
+            navigate('/avaliacoes/' + filtro.replace('avaliacao&', ''), {replace: true});
+        }
         else{
             navigate('/', {replace: true});
         }
@@ -445,6 +468,23 @@ function Questoes(){
         })
         .catch(() => {
             toast.error('Erro ao excluir');
+        })
+    }
+
+    function GravaRespostaAvaliacao(codigoAvalioacao, codigoQuestao, codigoResposta){
+        setLoadding(true);
+
+        api.post('/RespostasAvaliacoes', {
+            idAvaliacao: codigoAvalioacao,
+            idQuestao: codigoQuestao,
+            idResposta: codigoResposta
+        }).then(response => {
+            if(response.data.success){
+                toast.success('Resposta armazenada!');
+            }
+            else
+                toast.error('Erro ao armazenar resposta!');
+            setLoadding(false);
         })
     }
 
@@ -547,7 +587,7 @@ function Questoes(){
             <div className='opcoesQuestao'>
                 <div className='total'>
                     {
-                        filtro.includes('simulado') ? 
+                        filtro.includes('simulado') || filtro.includes('avaliacao') ? 
                         <></>
                         :
                         <button className='global-button global-button--transparent' onClick={ListagemProva}>Voltar</button>
@@ -604,7 +644,7 @@ function Questoes(){
                 <div className="separator separator--withMargins"></div>
             </div>
             {
-                filtro.includes('simulado') ? 
+                filtro.includes('simulado') || filtro.includes('avaliacao') ? 
                 <></>
                 :
                 <div className='contextComentarios'>

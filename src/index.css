@@ -758,3 +758,27 @@ table{
   display: flex;
   justify-content: center;
 }
+
+.center-text{
+  text-align: center;
+}
+
+.opcoes-botoes{
+  margin: 16px;
+}
+
+.opcoes-botoes button{
+  margin-bottom: 8px;
+}
+
+.alunosResponderamAvaliacao{
+  margin-top: 24px;
+}
+
+.alunosResponderamAvaliacao h4{
+  margin-bottom: 16px;
+}
+
+.select-item{
+  color: black;
+}

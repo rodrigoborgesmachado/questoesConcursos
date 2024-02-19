@@ -1,12 +1,10 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -19,11 +17,22 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 
-const pages = ['📚 Provas', '🧾 Simulados', '🎓 Sisu', '➕Pratique Tabuada'];
+const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '🎓 Sisu', '➕Pratique Tabuada'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
-const settings = ['Olá ' + localStorage.getItem(Config.Nome), 'Perfil👽', 'Histórico de Questões⏳', 'Histórico Simulados🧾', 'Ranking dos usuários🔝','Sair👋'];
+
+const settings = ['Olá ' + localStorage.getItem(Config.Nome)];
+settings.push('Perfil👽');
+
+if(localStorage.getItem(Config.ADMIN) === '2'){
+  settings.push('Minhas Avaliações');
+}
+
+settings.push('Histórico de Questões⏳');
+settings.push('Histórico Simulados🧾');
+settings.push('Ranking dos usuários🔝');
+settings.push('Sair👋');
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
@@ -33,6 +42,7 @@ const ResponsiveAppBar = () => {
     const [anchorElProva, setAnchorElProva] = React.useState(null);
     const [anchorElSisu, setAnchorElSisu] = React.useState(null);
     const [anchorElAdmin, setAnchorElAdmin] = React.useState(null);
+    const [anchorElMinhasAvaliacoes, setAnchorElMinhasAvaliacoes] = React.useState(null);
     const [tipos, setTipos] = React.useState([]);
 
   async function buscaTipos(){
@@ -93,35 +103,46 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const handleOpenMinhasAvaliacoes = (event) => {
+    setAnchorElMinhasAvaliacoes(event.currentTarget);
+  };
+
+  const handleCloseMinhasAvaliacoes = () => {
+    setAnchorElMinhasAvaliacoes(null);
+    setAnchorElUser(null);
+  };
+
   function SelecionaOpcao(page){
     handleCloseNavMenu();
     if(page === pages[1]){
       navigate('/simulado', {replace: true});
     }
-    else if(page === pages[3]){
-      window.open("https://www.tabuadadivertida.com/", "_blank");
+    else if(page === pages[2]){
+      navigate('/avaliacoes', {replace: true});
     }
     else if(page === pages[4]){
-      abreTelaListagemHistoricoUsuario();
+      window.open("https://www.tabuadadivertida.com/", "_blank");
     }
   }
 
   function SelecionaOpcaoUsuario(setting){
-    handleCloseUserMenu();
+    if(setting !== 'Minhas Avaliações'){
+      handleCloseUserMenu();
+    }
     
-    if(setting === settings[1]){
+    if(setting === 'Perfil👽'){
       navigate('/perfil', {replace: true});
     }
-    else if(setting === settings[2]){
+    else if(setting === 'Histórico de Questões⏳'){
         navigate('/historico', {replace: true});
     }
-    else if(setting === settings[3]){
+    else if(setting === 'Histórico Simulados🧾'){
       navigate('/historicosimulado', {replace: true});
     }
-    else if(setting === settings[4]){
+    else if(setting === 'Ranking dos usuários🔝'){
         navigate('/ranking', {replace: true});
     }
-    else if(setting === settings[5]){
+    else if(setting === 'Sair👋'){
         sair();
     }
   }
@@ -198,9 +219,21 @@ const ResponsiveAppBar = () => {
     navigate('/historicotabuadadivertida', {replace: true});
   }
 
+  function abreTelaCadastroAvaliacao(){
+    handleCloseMinhasAvaliacoes();
+    handleCloseUserMenu();
+    navigate('/cadastroavaliacao', {replace: true});
+  }
+
+  function abreTelaMinhasAvaliacoes(){
+    handleCloseMinhasAvaliacoes();
+    handleCloseUserMenu();
+    navigate('/listagemminhasavaliacoes', {replace: true});
+  }
+
   return (
     <AppBar position="static" className='varBarResponsive'>
- <div className='conNav'>
+      <div className='conNav'>
         <div disableGutters className='toolNav'>
           <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -251,7 +284,7 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page, index) => (
-                index != 0 && index != 2 && index != 4 ?
+                index != 0 && index != 3 && index != 5 ?
                 <MenuItem key={index} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
@@ -294,7 +327,7 @@ const ResponsiveAppBar = () => {
                   </Menu>
                 </>
                 :
-                index == 2?
+                index == 3?
                 <>
                   <MenuItem key={page} onClick={handleOpenSisuMenu} >
                     <Typography textAlign="center">
@@ -392,7 +425,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page, index) => (
-              index != 0 && index != 2 && index != 4 ?
+              index != 0 && index != 3 && index != 5 ?
               <Button
                 key={index}
                 onClick={(e) => SelecionaOpcao(page)}
@@ -434,7 +467,7 @@ const ResponsiveAppBar = () => {
                 </Menu>
               </>
               :
-              index == 2 ?
+              index == 3 ?
               <> 
                 <Button key={index} onClick={handleOpenSisuMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                     {page}
@@ -538,11 +571,41 @@ const ResponsiveAppBar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
+                  {settings.map((setting, index) => (
                     <MenuItem key={setting} onClick={(e) => SelecionaOpcaoUsuario(setting)}>
-                      <Typography textAlign="center">
+                    {
+                      index == 2  && localStorage.getItem(Config.ADMIN) === '2'?
+                      <>
+                        <Typography key={setting} onClick={handleOpenMinhasAvaliacoes}>
+                            {setting}
+                        </Typography>
+                        <Menu
+                          sx={{ ml: '45px' }}
+                          id="menu-appbar"
+                          anchorEl={anchorElMinhasAvaliacoes}
+                          keepMounted
+                          open={Boolean(anchorElMinhasAvaliacoes)}
+                          onClose={handleCloseMinhasAvaliacoes}
+                        >
+                          <MenuItem onClick={(e) => abreTelaCadastroAvaliacao()}>
+                            <Typography textAlign="center">
+                                Cadastrar
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={(e) => abreTelaMinhasAvaliacoes()}>
+                            <Typography textAlign="center">
+                                Listar Avaliações
+                            </Typography>
+                          </MenuItem>
+                        </Menu>
+                      </>
+                      :
+                        <Typography textAlign="center">
                           {setting}
                         </Typography>
+                      
+                      
+                    }
                     </MenuItem>
                   ))}
                 </Menu>

@@ -1,0 +1,36 @@
+.toggleButton{
+    color: #4D5B7D;
+    background-color: #4D5B7D;
+}
+
+.toggleButtonClicked{
+    background-color: #4D5B7D;
+}
+
+.leftContent{
+    align-self: start;
+    display: flex;
+}
+
+.leftContent h3{
+    color: #fff;
+}
+
+.vis{
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.filtros-questoes{
+    margin: 16px;
+}
+
+.filtros-questoes h4{
+    margin-top: 8px;
+}
+
+.botao-filtrar{
+    margin: 8px;
+    display: flex;
+    justify-content: end;
+}

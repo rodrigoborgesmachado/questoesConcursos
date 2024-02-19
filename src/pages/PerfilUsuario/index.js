@@ -6,6 +6,8 @@ import api from '../../services/api.js';
 import {toast} from 'react-toastify';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 import Modal from 'react-modal';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 const customStyles = {
     content: {
@@ -23,11 +25,26 @@ const customStyles = {
   };
 
 function PerfilUsuario(){
+    const animatedComponents = makeAnimated();
     const[usuario, setUsuario] = useState();
     const navigate = useNavigate();
     const[loadding, setLoadding] = useState(false);
     const[novoNome, setNovoNome] = useState('');
+    const[novoInstituicao, setNovaInstituicao] = useState('');
     const [modalNomeIsOpen, setIsOpenModalNome] = useState(false);
+    const [modalInsituicaoIsOpen, setIsOpenModalInsituicao] = useState(false);
+    const [modalPerfilIsOpen, setIsOpenModalPerfil] = useState(false);
+    const[perfis] = useState([
+        {
+            value:0,
+            label:'Aluno'
+        },
+        {
+            value:2,
+            label:'Professor'
+        },
+    ]);
+    const[perfilSelecionado, setPerfilSelecionado] = useState(0);
 
     function openModalNome() {
         setIsOpenModalNome(true);
@@ -35,6 +52,22 @@ function PerfilUsuario(){
 
     function closeModalNome() {
         setIsOpenModalNome(false);
+    }
+
+    function openModalInstituicao() {
+        setIsOpenModalInsituicao(true);
+    }
+
+    function closeModalInstituicao() {
+        setIsOpenModalInsituicao(false);
+    }
+
+    function openModalPerfil() {
+        setIsOpenModalPerfil(true);
+    }
+
+    function closeModalPerfil() {
+        setIsOpenModalPerfil(false);
     }
     
     async function BuscaDadosUsuario(){
@@ -69,6 +102,16 @@ function PerfilUsuario(){
         navigate('/atualizasenha', true);
     }
 
+    function openEditInstituicao(){
+        setNovoNome(usuario.usuario.instituicao);
+        openModalInstituicao();
+    }
+
+    function openEditPerfil(){
+        setPerfilSelecionado(usuario.usuario.tipoPerfil.id);
+        openModalPerfil();
+    }
+
     async function atualizaNome(){
         setLoadding(true);
         await api.put(`/Usuarios/updateName?name=` + novoNome, {})
@@ -87,6 +130,50 @@ function PerfilUsuario(){
             toast.error('Erro ao atualizar!');
             return;
         });
+    }
+
+    async function atualizaInstituicao(){
+        setLoadding(true);
+        await api.put(`/Usuarios/updateInstituicao?instituicao=` + novoInstituicao, {})
+        .then((response) => {
+            if(response.data.success){
+                toast.success('Atualizado com sucesso!');
+                closeModalInstituicao();
+                BuscaDadosUsuario();
+            }
+            else{
+                toast.info('Erro ao atualizar!');
+                setLoadding(false);
+            }
+        }).catch(() => {
+            setLoadding(false);
+            toast.error('Erro ao atualizar!');
+            return;
+        });
+    }
+
+    async function atualizaPerfil(){
+        setLoadding(true);
+        await api.put(`/Usuarios/updatePerfil?perfil=` + perfilSelecionado, {})
+        .then((response) => {
+            if(response.data.success){
+                toast.success('Atualizado com sucesso!');
+                closeModalPerfil();
+                BuscaDadosUsuario();
+            }
+            else{
+                toast.info('Erro ao atualizar!');
+                setLoadding(false);
+            }
+        }).catch(() => {
+            setLoadding(false);
+            toast.error('Erro ao atualizar!');
+            return;
+        });
+    }
+
+    const handleChange = (selectedOption, event) => {
+        setPerfilSelecionado(selectedOption.value);
     }
 
     if(loadding){
@@ -116,6 +203,42 @@ function PerfilUsuario(){
                     </div>
                 </div>
             </Modal>
+            <Modal
+              isOpen={modalInsituicaoIsOpen}
+              onRequestClose={closeModalInstituicao}
+              style={customStyles}
+              contentLabel="Atualização Instituicao"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>Insituição:</h3>
+                    </div>
+                    <div className='separator separator--withMargins'></div>
+                    <div className='global-buttonWrapper'>
+                        <input type='text' className='global-input' value={novoInstituicao} onChange={(e) => setNovaInstituicao(e.target.value)}/>
+                        <button className='global-button' onClick={() => atualizaInstituicao()}>Atualizar</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+              isOpen={modalPerfilIsOpen}
+              onRequestClose={closeModalPerfil}
+              style={customStyles}
+              contentLabel="Atualização de Perfil"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>Perfil:</h3>
+                    </div>
+                    <div className='separator separator--withMargins'></div>
+                    <div className='global-buttonWrapper'>
+                        <div className='opcoes'>
+                            <Select closeMenuOnSelect={false} components={animatedComponents} options={perfis} onChange={handleChange} />
+                        </div>
+                        <button className='global-button' onClick={() => atualizaPerfil()}>Atualizar</button>
+                    </div>
+                </div>
+            </Modal>
             <div className='dados global-infoPanel'>
                 <h2>
                     Dados do usuário
@@ -132,7 +255,10 @@ function PerfilUsuario(){
                     Senha: ****** <span onClick={() => openEditSenha()}>✎</span>
                     </p>
                     <p className='global-mt'>
-                    Perfil: {usuario?.usuario?.admin === "1" ? 'Administrador' : 'Aluno'}
+                    Perfil: {usuario?.usuario?.tipoPerfil?.descricao} <span onClick={() => openEditPerfil()}>✎</span>
+                    </p>
+                    <p className='global-mt'>
+                    Instituição: {usuario?.usuario?.instituicao}<span onClick={() => openEditInstituicao()}>✎</span>
                     </p>
                     <p className='global-mt'>
                     Quantidade de questões resolvidas: {usuario?.quantidadeQuestoesResolvidas}
@@ -143,11 +269,6 @@ function PerfilUsuario(){
                     <p className='global-mt'>
                     Taxa de acertos:
                     </p>
-                    
-                    
-                    
-                    
-                    
                 </div>
                 {/* <LinearProgressWithLabel  color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} /> */}
                 <LinearProgressWithLabel className='global-mt' sx={{

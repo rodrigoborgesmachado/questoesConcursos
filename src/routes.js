@@ -33,6 +33,11 @@ import DashBoard from './pages/Admin/DashBoard/DashBoard';
 import Logs from './pages/Admin/Logs/logs';
 import Usuarios from './pages/Admin/Usuarios/Usuario';
 import HistoricoTabuadaDivertida from './pages/Admin/HIstoricoTabuadaDivertida/HistoricoTabuadaDivertida';
+import CadastroAvaliacao from './pages/CadastroAvaliacao/cadastroAvaliacao';
+import MinhasAvaliacoes from './pages/MinhasAvaliacoes';
+import ListagemAvaliacoes from './pages/ListagemAvaliacoes/listagemAvaliacoes';
+import Avaliacao from './pages/Avaliacao';
+import ResultadoAvaliacao from './pages/ResultadoAvaliacao/resultadoAvaliacao';
 
 function RoutesApp(){
     return(
@@ -63,6 +68,8 @@ function RoutesApp(){
                 <Route path='/atualizasenha/' element={<AtualizaSenha/>}/>
                 <Route path='/valida/:guid' element={<VerificadorUser/>}/>
                 <Route path='/confirmesuaconta/:mail' element={<ConfirmeConta/>}/>
+                <Route path='/avaliacoes' element={<ListagemAvaliacoes/>}/>
+                <Route path='/avaliacoes/:code' element={<Avaliacao/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <>
@@ -73,11 +80,20 @@ function RoutesApp(){
                         <Route path='/historicotabuadadivertida' element={<HistoricoTabuadaDivertida/>}/>
                     </>
                     :
-                    <></>
+                    localStorage.getItem(Config.ADMIN) === '2' ?
+                    <>
+                        <Route path='/cadastroavaliacao' element={<CadastroAvaliacao/>}/>
+                        <Route path='/cadastroavaliacao/:filtro' element={<CadastroAvaliacao/>}/>
+                        <Route path='/listagemminhasavaliacoes' element={<MinhasAvaliacoes/>}/>
+                    </>
+                    :
+                    <>
+                    </>
                 }
                 <Route path='/contato' element={<Contato/>}/>
                 <Route path='/notasCorte' element={<NotasCorte/>}/>
                 <Route path='/calculadoraEnem' element={<CalculadoraEnem/>}/>
+                <Route path='/resultadoAvaliacao/:code' element={<ResultadoAvaliacao/>}/>
                 <Route path='*' element={<Erro/>}/>
             </Routes>
             <Footer/>
