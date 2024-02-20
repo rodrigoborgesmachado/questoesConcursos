@@ -595,7 +595,7 @@ function Questoes(){
                     <Tempo inicio={parseInt(localStorage.getItem(Config.TEMPO_PARAM))}/>
                 </div>
                 {
-                    filtro.includes('simulado') ? 
+                    filtro.includes('simulado') || filtro.includes('avaliacao') ? 
                     <>
                     </>
                     :
