@@ -11,5 +11,6 @@
     "TEMPO_PARAM":"tempo",
     "Historico": "historico",
     "PaginaListagem": "PAGINALISTAGEM",
-    "FiltroProva": "FILTROPROVA"
+    "FiltroProva": "FILTROPROVA",
+    "lastLink": "LASTLINK"
 }

@@ -24,6 +24,18 @@ const customStyles = {
     },
   };
 
+  const customStylesAssunto = {
+    content: {
+      left: '25%',
+      right: 'auto',
+      bottom: 'auto',
+      border: 0,
+      background: '#424242',
+      'border-radius': '5px',
+      width: '50%',
+    },
+  };
+
   const customStylesComentario = {
     content: {
       left: '10%',
@@ -39,6 +51,8 @@ const customStyles = {
 
 function Questoes(){
     const navigate = useNavigate();
+    const searchParams = new URLSearchParams(window.location.search);
+
     const{filtro} = useParams();
     const[questao, setQuestao] = useState({});
     const[comentarios, setComentarios] = useState([]);
@@ -55,6 +69,8 @@ function Questoes(){
     const [textoResposta, setTextoResposta] = useState('');
     const [comentario, setComentario] = useState('');
     const[nextAvaliacao, setNextAvaliacao] = useState(-1);
+    const [modalAssuntoIsOpen, setModalAssuntoIsOpen] = useState(false);
+    const [assunto, setAssunto] = useState('');
 
     function openModalSolicitacao() {
         setModalSolicitacao(true);
@@ -96,6 +112,15 @@ function Questoes(){
         setModalComentarioIsOpen(false);
     }
 
+    function openModalAssunto() {
+        setAssunto(questao.assunto);
+        setModalAssuntoIsOpen(true);
+    }
+
+    function closeModalAssunto() {
+        setModalAssuntoIsOpen(false);
+    }
+
     useEffect(() => {
         if(loadding){
             BuscarProximaQuestao();
@@ -129,6 +154,9 @@ function Questoes(){
         }
         else if(filtro.includes('codigoquestaohistorico')){
             return `/Questoes/getById?id=` + filtro.replace('codigoquestaohistorico:', '');
+        }
+        else if(filtro.includes('codigoquestaolistagemsemprova')){
+            return `/Questoes/getById?id=` + filtro.replace('codigoquestaolistagemsemprova:', '');
         }
         else if(filtro.includes('codigoquestaolistagem')){
             if(!proxima && !anterior){
@@ -224,6 +252,32 @@ function Questoes(){
             }
             setQuestoesTotal(questoesTotal+1);
             localStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, questoesTotal);
+            setLoadding(false);
+        }).catch(() => {
+            toast.error('Erro ao buscar questão');
+            navigate('/', {replace: true});
+            return;
+        });
+    }
+
+    async function BuscarQuestaoById(id){
+        if(!localStorage.getItem(Config.TOKEN)){
+            toast.info('Necessário logar para acessar!');
+            navigate('/', {replace: true});
+            return;
+        }
+
+        setLoadding(true);
+        await api.get('/questoes/getById?id=' + id)
+        .then(async (response) => {
+            if(response.data.success){
+                setQuestao(response.data.object);
+                buscarComentarios(response.data.object.id);
+            }
+            else{
+                toast.error('Erro ao buscar questão');
+            }
+
             setLoadding(false);
         }).catch(() => {
             toast.error('Erro ao buscar questão');
@@ -384,6 +438,9 @@ function Questoes(){
         if(filtro.includes('codigoquestaohistorico')){
             navigate('/historico/', {replace: true});
         }
+        else if(filtro.includes('codigoquestaolistagemsemprova')){
+            navigate('/listagemquestoes' + (searchParams.get('page') ? '?page=' + searchParams.get('page') : ''), {replace: true});
+        }
         else if(filtro.includes('codigoquestaolistagem')){
             navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
         }
@@ -396,7 +453,7 @@ function Questoes(){
             navigate('/avaliacoes/' + filtro.replace('avaliacao&', ''), {replace: true});
         }
         else{
-            navigate('/', {replace: true});
+            navigate(localStorage.getItem(Config.lastLink), {replace: true});
         }
     }
 
@@ -488,6 +545,37 @@ function Questoes(){
         })
     }
 
+    async function atualizaAssunto(){
+        var data = {
+            "CodigoQuestao": questao?.id,
+            "Assunto": assunto
+        };
+
+        setLoadding(true);
+
+        await api.put(`/questoes/updateAssunto`, 
+        data
+        )
+        .then((response) => {
+            setLoadding(false);
+            closeModalAssunto();
+            closeModalSolicitacao();
+
+            if(response.data.success){
+                toast.success('Assunto alterado!');
+                BuscarQuestaoById(questao?.id);
+            }
+            else{
+                toast.info('Erro ao alterar assunto');
+                toast.warn(response.data.message);
+            }
+        }).catch(() => {
+            closeModalComentario();
+            toast.error('Erro ao alterar assunto!');
+            return;
+        });
+    }
+
     if(loadding || !questao){
         return(
             <div className='loaddingDiv'>
@@ -517,6 +605,14 @@ function Questoes(){
                             <>
                                 <button className='global-button' onClick={editaQuestao}>Editar questão</button>
                                 <button className='global-button' onClick={() => revisar()}>Colocar questão como revisada</button>
+                            </>
+                            :
+                            <></>
+                        }
+                        {
+                            localStorage.getItem(Config.ADMIN) === '1' || localStorage.getItem(Config.ADMIN) === '1'?
+                            <>
+                                <button className='global-button' onClick={openModalAssunto}>Alterar Assunto</button>
                             </>
                             :
                             <></>
@@ -584,6 +680,23 @@ function Questoes(){
                     </div>
                 </div>
             </Modal>
+            <Modal
+              isOpen={modalAssuntoIsOpen}
+              onRequestClose={closeModalAssunto}
+              style={customStylesAssunto}
+              contentLabel="Comentário"
+            >
+                <div className='contextModal'>
+                    <h3>Assunto:</h3>
+                    <div className="separator separator--withMargins"></div>
+                    <div className='bodymodalAssunto'>
+                        <input type='text' placeholder="Assunto" value={assunto} onChange={(e) => setAssunto(e.target.value)}/>
+                    </div>
+                    <div className='botoesModal'>
+                        <button className='global-button global-fullW' onClick={atualizaAssunto}>Alterar</button>
+                    </div>
+                </div>
+            </Modal>
             <div className='opcoesQuestao'>
                 <div className='total'>
                     {
@@ -609,7 +722,15 @@ function Questoes(){
 
             <div className='Materia'>
                 <h2>Matéria: {questao?.materia}</h2>
+                {
+                    questao?.assunto ?
+                    <h3>
+                        Assunto: {questao?.assunto}
+                    </h3>
+                    :<></>
+                }
             </div>
+
 
             <div className="separator separator--withMargins"></div>
             
@@ -648,14 +769,19 @@ function Questoes(){
                 <></>
                 :
                 <div className='contextComentarios'>
-                    <div className='opcoesBotoesNavegacao'>
-                        <div className='opcaoBotaoBefore'>
-                            <button className='global-button' onClick={() => {BuscarProximaQuestao(true, false);}}>Questão anterior</button>
+                    {
+                        filtro.includes('codigoquestaolistagemsemprova') ?
+                        <></>
+                        :
+                        <div className='opcoesBotoesNavegacao'>
+                            <div className='opcaoBotaoBefore'>
+                                <button className='global-button' onClick={() => {BuscarProximaQuestao(true, false);}}>Questão anterior</button>
+                            </div>
+                            <div className='opcaoBotaoAfter'>
+                                <button className='global-button' onClick={() => {BuscarProximaQuestao(false, true);}}>Próxima questão</button>
+                            </div>
                         </div>
-                        <div className='opcaoBotaoAfter'>
-                            <button className='global-button' onClick={() => {BuscarProximaQuestao(false, true);}}>Próxima questão</button>
-                        </div>
-                    </div>
+                    }
                     <div className='modalComentarios'>
                         <h2>Comentários✉️</h2>
                         <div className='comentarios global-infoPanel global-mt'>

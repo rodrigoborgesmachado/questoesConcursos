@@ -41,6 +41,7 @@ function HistoricoUsuario() {
     }, [])
 
     function abreQuestao(codigoQuestao) {
+        localStorage.setItem(Config.lastLink, "/historico");
         navigate('/questoes/codigoquestaohistorico:' + codigoQuestao, { replace: true });
     }
 

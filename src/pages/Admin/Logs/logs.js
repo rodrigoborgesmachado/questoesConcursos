@@ -74,6 +74,17 @@ function Logs(){
         buscaDados(value);
     };
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    }
+
     if (loadding) {
         return (
             <div className='loaddingDiv'>
@@ -95,20 +106,13 @@ function Logs(){
                         <h3>Log</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
-                    <div>
-                        <h4>
-                            Id: {logs[index].id}
-                            <br/>
-                            Descrição: {logs[index].descricao}
-                            <br/>
-                            Data de criação: {logs[index].created}
-                            <br/>
-                            Data de atualização: {logs[index].updated}
-                            <br/>
-                            Tipo: {logs[index].tipo}
-                            <br/>
-                            StackTrace: {logs[index].stackTrace}
-                        </h4>
+                    <div className="detalhes-modal-separado">
+                        <h4>Id: {logs[index].id}</h4>
+                        <h4>Descrição: {logs[index].descricao}</h4>
+                        <h4>Data de criação: {formatDate(logs[index].created)}</h4>
+                        <h4>Data de atualização: {formatDate(logs[index].updated)}</h4>
+                        <h4>Tipo: {logs[index].tipo}</h4>
+                        <h4>StackTrace: {logs[index].stackTrace}</h4>
                     </div>
                 </div>
             </Modal>
@@ -148,7 +152,7 @@ function Logs(){
                                         </td>
                                         <td>
                                             <h4>
-                                                {item.created}
+                                                {formatDate(item.created)}
                                             </h4>
                                         </td>
                                         <td className='option'>

@@ -42,6 +42,7 @@ function Bancas() {
         }
 
         buscaBancas();
+        localStorage.setItem(Config.lastLink, "/bancas");
     }, []);
 
     const handleChange = (selectedOptions, event) => {

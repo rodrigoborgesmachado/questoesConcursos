@@ -32,6 +32,7 @@ content: {
 const filtroBanca=1;
 const filtroProva=2;
 const filtroMateria=3;
+const filtroAssuntos=4;
 
 function CadastroAvaliacao(){
     const navigate = useNavigate();
@@ -55,6 +56,8 @@ function CadastroAvaliacao(){
     const[selectedMaterias, setSelectedMaterias ] = useState([]);
     const[bancas, setBancas] = useState([]);
     const[selectedBancas, setSelectedBancas ] = useState([]);
+    const[assuntos, setAssuntos] = useState([]);
+    const[selectedAssuntos, setSelectedAssuntos ] = useState([]);
     const[filtrando, setFiltrando ] = useState(true);
     const[acao, setAcao ] = useState('I');
 
@@ -102,17 +105,26 @@ function CadastroAvaliacao(){
     useEffect(() => {
         buscaDadosFiltro(filtroBanca);
         buscaDadosFiltro(filtroMateria);
+        buscaDadosFiltro(filtroAssuntos);
     }, [selectedProvas]);
 
     useEffect(() => {
         buscaDadosFiltro(filtroProva);
         buscaDadosFiltro(filtroMateria);
+        buscaDadosFiltro(filtroAssuntos);
     }, [selectedBancas]);
 
     useEffect(() => {
         buscaDadosFiltro(filtroBanca);
         buscaDadosFiltro(filtroProva);
+        buscaDadosFiltro(filtroAssuntos);
     }, [selectedMaterias]);
+
+    useEffect(() => {
+        buscaDadosFiltro(filtroBanca);
+        buscaDadosFiltro(filtroProva);
+        buscaDadosFiltro(filtroMateria);
+    }, [selectedAssuntos]);
 
     function openModalQuestoesAvaliacao() {
         setPageQuestoesAvaliacao(1);
@@ -129,6 +141,7 @@ function CadastroAvaliacao(){
         await buscaDadosFiltro(filtroBanca);
         await buscaDadosFiltro(filtroProva);
         await buscaDadosFiltro(filtroMateria);
+        await buscaDadosFiltro(filtroAssuntos);
 
         setLoadding(false);
 
@@ -194,6 +207,18 @@ function CadastroAvaliacao(){
         setSelectedBancas(selectedOptions);
     }
 
+    const handleChangeSelectAssuntos = async (selectedOptions, event) => {
+        let temp = [];
+        selectedOptions.forEach((item) => {
+            temp.push({
+                banca: item.value
+            }
+            );
+        })
+
+        setSelectedAssuntos(selectedOptions);
+    }
+
     function montaBusca(){
         var retorno = '';
 
@@ -218,6 +243,13 @@ function CadastroAvaliacao(){
             })
         }
 
+        if(selectedAssuntos.length > 0){
+            retorno += "&assuntos="
+            selectedAssuntos.forEach((i, index) => {
+                retorno += index > 0 ? ";" + i.value : i.value;
+            })
+        }
+
         return retorno;
     }
 
@@ -230,8 +262,11 @@ function CadastroAvaliacao(){
         else if(tipo == filtroProva){
             url = '/Prova/GetAllProvasName';
         }
-        else{
+        else if(tipo == filtroMateria){
             url = '/Prova/GetAllMaterias';
+        }
+        else{
+            url = '/Prova/GetAllAssuntos';
         }
 
         await api.get(url + '?1=1' + montaBusca())
@@ -251,8 +286,11 @@ function CadastroAvaliacao(){
                 else if(tipo == filtroProva){
                     setProvas(t);
                 }
-                else{
+                else if(tipo == filtroMateria){
                     setMaterias(t);
+                }
+                else{
+                    setAssuntos(t);
                 }
             }
             else{
@@ -468,6 +506,9 @@ function CadastroAvaliacao(){
                                 
                                 <h4>Matérias:</h4>
                                 <Select className='tiposProva' closeMenuOnSelect={false} components={animatedComponents} options={materias} value={selectedMaterias} isMulti onChange={handleChangeSelectMateria} />
+
+                                <h4>Assuntos:</h4>
+                                <Select className='tiposProva' closeMenuOnSelect={false} components={animatedComponents} options={assuntos} value={selectedAssuntos} isMulti onChange={handleChangeSelectAssuntos} />
 
                                 <div className='botao-filtrar'>
                                     <button className='global-button global-button' onClick={filtrarQuestoes}>Filtrar</button>

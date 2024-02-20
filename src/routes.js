@@ -49,6 +49,7 @@ function RoutesApp(){
                 <Route path='/bancas' element={<Bancas/>}/>
                 <Route path='/simulado' element={<Simulado/>}/>
                 <Route path='/listagemprovas/:filtro' element={<ListagemProvas/>}/>
+                <Route path='/listagemquestoes' element={<ListagemQuestoes/>}/>
                 <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/criarUsuario' element={<CriarUsuario/>}/>

@@ -9,6 +9,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
 import { BsFunnelFill } from "react-icons/bs";
+import Config from './../../config.json';
 
 const customStyles = {
     content: {
@@ -43,6 +44,12 @@ function ListagemAvaliacoes(){
     }
 
     async function BuscaAvaliacoes(page){
+        if (!localStorage.getItem(Config.TOKEN)) {
+            toast.info('Necessário logar para acessar!');
+            navigate('/', { replace: true });
+            return;
+        }
+
         setLoadding(true);
         await api.get(`/Avaliacao/pagged?page=${page}&quantity=${quantityPerPage}&chave=${chave}`)
         .then((response) => {

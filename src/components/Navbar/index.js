@@ -17,7 +17,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 
-const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '🎓 Sisu', '➕Pratique Tabuada'];
+const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu', '➕Pratique Tabuada'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
@@ -120,7 +120,10 @@ const ResponsiveAppBar = () => {
     else if(page === pages[2]){
       navigate('/avaliacoes', {replace: true});
     }
-    else if(page === pages[4]){
+    else if(page === pages[3]){
+      navigate('/listagemquestoes', {replace: true});
+    }
+    else if(page === pages[5]){
       window.open("https://www.tabuadadivertida.com/", "_blank");
     }
   }
@@ -198,7 +201,7 @@ const ResponsiveAppBar = () => {
   function abreTelaQuestoes(){
     handleCloseAdminMenu();
     handleCloseNavMenu();
-    navigate('/listagemquestoes/-1', {replace: true});
+    navigate('/listagemquestoes', {replace: true});
   }
 
   function abreTelaLogs(){
@@ -284,7 +287,7 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page, index) => (
-                index != 0 && index != 3 && index != 5 ?
+                index != 0 && index != 4 && index != 6 ?
                 <MenuItem key={index} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
@@ -327,7 +330,7 @@ const ResponsiveAppBar = () => {
                   </Menu>
                 </>
                 :
-                index == 3?
+                index == 4?
                 <>
                   <MenuItem key={page} onClick={handleOpenSisuMenu} >
                     <Typography textAlign="center">
@@ -425,7 +428,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page, index) => (
-              index != 0 && index != 3 && index != 5 ?
+              index != 0 && index != 4 && index != 6 ?
               <Button
                 key={index}
                 onClick={(e) => SelecionaOpcao(page)}
@@ -467,7 +470,7 @@ const ResponsiveAppBar = () => {
                 </Menu>
               </>
               :
-              index == 3 ?
+              index == 4 ?
               <> 
                 <Button key={index} onClick={handleOpenSisuMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                     {page}

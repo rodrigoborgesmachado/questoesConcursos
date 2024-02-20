@@ -12,6 +12,8 @@ function MinhasAvaliacoes(){
     const[avaliacoes, setAvaliacoes] = useState([]);
 
     async function BuscaAvaliacoes(){
+        
+
         await api.get('/Avaliacao/getAll')
         .then((response) => {
             if(response.data.success){
@@ -37,7 +39,7 @@ function MinhasAvaliacoes(){
     }
 
     function abrirRespostas(id){
-        navigate('/resultadoAvaliacao/' + id, {replace: true});
+        navigate('/resultadoAvaliacao/' + id + '?page=1', {replace: true});
     }
 
     if (loadding) {

@@ -146,3 +146,13 @@
     width: 100%;
     color: var(--text-color-primary);
 }
+
+.bodymodalAssunto{
+    width: 100%;
+}
+
+.bodymodalAssunto input{
+    padding: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+}

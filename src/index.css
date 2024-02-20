@@ -782,3 +782,21 @@ table{
 .select-item{
   color: black;
 }
+
+.detalhes-modal-separado{
+  display: flex;
+  flex-direction: column;
+}
+
+.detalhes-modal-separado h4{
+  margin: 8px;
+}
+
+.opcoes-top-tabela{
+  display: flex;
+  justify-content: space-between;
+}
+
+.link{
+  cursor: pointer;
+}

@@ -13,6 +13,7 @@ function ResultadoAvaliacao(){
     const{code} = useParams();
     const[loadding, setLoadding] = useState(true);
     const animatedComponents = makeAnimated();
+    const searchParams = new URLSearchParams(window.location.search);
 
     const[avaliacao, setAvaliacao] = useState({});
     const[respostas, setRespostas] = useState([]);
@@ -109,7 +110,13 @@ function ResultadoAvaliacao(){
     }
 
     function voltar(){
-        navigate('/avaliacoes/' + code, {replace: true});
+        if(searchParams.get('page') && searchParams.get('page') == "1"){
+            navigate('/listagemminhasavaliacoes', {replace: true});
+        }
+        else{
+            navigate('/avaliacoes/' + code, {replace: true});
+        }
+
     }
 
     const handleChangeSelect = (selectedOptions, event) => {

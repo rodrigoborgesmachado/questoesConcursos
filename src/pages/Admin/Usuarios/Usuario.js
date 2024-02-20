@@ -73,6 +73,17 @@ function Usuarios(){
         buscaDados(value);
     };
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    }
+
     if (loadding) {
         return (
             <div className='loaddingDiv'>
@@ -94,24 +105,17 @@ function Usuarios(){
                         <h3>Log</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
-                    <div className="detalhesModal">
-                        <h4>
-                            Id: {usuarios[index].id}
-                            <br/>
-                            Login: {usuarios[index].login}
-                            <br/>
-                            Nome: {usuarios[index].nome}
-                            <br/>
-                            Email: {usuarios[index].email}
-                            <br/>
-                            Data de nascimento: {usuarios[index].dataNascimento}
-                            <br/>
-                            Foi verificado: {usuarios[index].isVerified}
-                            <br/>
-                            Perfil: {usuarios[index].tipoPerfil?.descricao}
-                            <br/>
-                            Instituicao: {usuarios[index].instituicao}
-                        </h4>
+                    <div className="detalhes-modal-separado">
+                        <h4>Id: {usuarios[index].id}</h4>
+                        <h4>Login: {usuarios[index].login}</h4>
+                        <h4>Nome: {usuarios[index].nome}</h4>
+                        <h4>Email: {usuarios[index].email}</h4>
+                        <h4>Data de nascimento: {usuarios[index].dataNascimento}</h4>
+                        <h4>Foi verificado: {usuarios[index].isVerified == "1" ? "Sim" : "Não"}</h4>
+                        <h4>Perfil: {usuarios[index].tipoPerfil?.descricao}</h4>
+                        <h4>Instituicao: {usuarios[index].instituicao}</h4>
+                        <h4>Criado: {formatDate(usuarios[index].created)}</h4>
+                        <h4>Atualizado: {formatDate(usuarios[index].updated)}</h4>
                     </div>
                 </div>
             </Modal>
@@ -131,6 +135,9 @@ function Usuarios(){
                             </th>
                             <th>
                                 Perfil
+                            </th>
+                            <th>
+                                Criado
                             </th>
                             <th>
                                 Verificado
@@ -163,6 +170,11 @@ function Usuarios(){
                                         <td>
                                             <h4>
                                                 {item.tipoPerfil?.descricao}
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <h4>
+                                                {formatDate(item.created)}
                                             </h4>
                                         </td>
                                         <td>
