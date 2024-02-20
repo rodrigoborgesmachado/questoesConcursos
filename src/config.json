@@ -12,5 +12,9 @@
     "Historico": "historico",
     "PaginaListagem": "PAGINALISTAGEM",
     "FiltroProva": "FILTROPROVA",
-    "lastLink": "LASTLINK"
+    "lastLink": "LASTLINK",
+    "filtroBancasSelecionadas":"FILTROBANCASSELECIONADAS",
+    "filtroProvasSelecionadas":"FILTROPROVASSELECIONADAS",
+    "filtroMateriasSelecionadas":"FILTROMATERIASSELECIONADAS",
+    "filtroAssuntosSelecionadas":"FILTROASSUNTOSSELECIONADAS"
 }

@@ -46,13 +46,13 @@ function ListagemQuestoes(){
     const [modalFiltroIsOpen, setModalFiltroIsOpen] = useState(false);
 
     const [bancas, setBancas] = useState([]);
-    const [selectedBancas, setSelectedBancas] = useState([]);
+    const [selectedBancas, setSelectedBancas] = useState(localStorage.getItem(Config.filtroBancasSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroBancasSelecionadas)) : []);
     const [materias, setMaterias] = useState([]);
-    const [selectedMaterias, setSelectedMaterias] = useState([]);
+    const [selectedMaterias, setSelectedMaterias] = useState(localStorage.getItem(Config.filtroMateriasSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroMateriasSelecionadas)) : []);
     const [assuntos, setAssuntos] = useState([]);
-    const [selectedAssuntos, setSelectedAssuntos] = useState([]);
+    const [selectedAssuntos, setSelectedAssuntos] = useState(localStorage.getItem(Config.filtroAssuntosSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroAssuntosSelecionadas)) : []);
     const [provas, setProvas] = useState([]);
-    const [selectedProvas, setSelectedProvas] = useState([]);
+    const [selectedProvas, setSelectedProvas] = useState(localStorage.getItem(Config.filtroProvasSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroProvasSelecionadas)) : []);
 
     async function openModalFiltro() {
         setLoadding(true);
@@ -76,6 +76,7 @@ function ListagemQuestoes(){
             buscaDadosFiltro(filtroBanca);
             buscaDadosFiltro(filtroMateria);
             buscaDadosFiltro(filtroAssuntos);
+            localStorage.setItem(Config.filtroProvasSelecionadas, JSON.stringify(selectedProvas));
         }
     }, [selectedProvas]);
 
@@ -84,6 +85,7 @@ function ListagemQuestoes(){
             buscaDadosFiltro(filtroProva);
             buscaDadosFiltro(filtroMateria);
             buscaDadosFiltro(filtroAssuntos);
+            localStorage.setItem(Config.filtroBancasSelecionadas, JSON.stringify(selectedBancas));
         }
     }, [selectedBancas]);
 
@@ -92,6 +94,7 @@ function ListagemQuestoes(){
             buscaDadosFiltro(filtroBanca);
             buscaDadosFiltro(filtroProva);
             buscaDadosFiltro(filtroAssuntos);
+            localStorage.setItem(Config.filtroMateriasSelecionadas, JSON.stringify(selectedMaterias));
         }
     }, [selectedMaterias]);
 
@@ -100,6 +103,7 @@ function ListagemQuestoes(){
             buscaDadosFiltro(filtroBanca);
             buscaDadosFiltro(filtroProva);
             buscaDadosFiltro(filtroMateria);
+            localStorage.setItem(Config.filtroAssuntosSelecionadas, JSON.stringify(selectedAssuntos));
         }
     }, [selectedAssuntos]);
 
