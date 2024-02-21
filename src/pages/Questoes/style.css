@@ -156,3 +156,25 @@
     width: 100%;
     margin-bottom: 16px;
 }
+
+.fraction {
+    display: inline-block;
+    font-size: 24px; /* Tamanho da fonte da fração */
+}
+.numerator {
+    border-bottom: 1px solid black; /* Linha horizontal abaixo do numerador */
+    padding-bottom: 2px; /* Espaçamento abaixo do numerador */
+    border-color: white;
+}
+.denominator {
+    padding-top: 2px; /* Espaçamento acima do denominador */
+}
+.operator {
+    padding-top: 8px;
+    margin: 8px;
+    font-size: 24px; /* Tamanho da fonte do operador */
+    vertical-align: middle; /* Alinhar verticalmente */
+}
+.conta{
+    display: flex;
+}

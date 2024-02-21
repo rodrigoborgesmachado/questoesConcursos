@@ -33,6 +33,7 @@ function CadastraQuestao(){
         campoQuestao: '<b>Questão ' + (numero > 10 ? numero : '0' + numero) + '</b><br><br>',
         observacaoQuestao: '',
         materia: '',
+        assunto: '',
         codigoProva: filtro,
         numeroQuestao: numero,
         ativo: '1',
@@ -177,6 +178,11 @@ function CadastraQuestao(){
             return;
         }
 
+        if(questaoPost.assunto == ''){
+            toast.warn('Assunto não foi preenchido!');
+            return;
+        }
+
         if(questao.numeroQuestao == ''){
             toast.warn('Número da questão não foi preenchido!');
             return;
@@ -272,6 +278,7 @@ function CadastraQuestao(){
                 <div className='contextModal'>
                     <div className='Materia'>
                         <h2>Matéria: {questao?.materia}</h2>
+                        <h3>Assunto: {questao?.assunto}</h3>
                     </div>
                     <br/>
                     <br/>
@@ -425,6 +432,20 @@ function CadastraQuestao(){
                             setQuestao({
                               ...questao,
                               materia: event.target.value
+                            })
+                        }
+                    />
+                    <h3>
+                        Assunto:
+                    </h3>
+                    <input
+                        type="text"
+                        value={questao.assunto}
+                        onChange={
+                            (event) =>
+                            setQuestao({
+                              ...questao,
+                              assunto: event.target.value
                             })
                         }
                     />
