@@ -7,22 +7,10 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-modal';
+import { customStyles } from '../../services/functions.js';
 
-const customStyles = {
-    content: {
-      top: '30%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      border: 0,
-      background: '#424242',
-      marginRight: '-50%',
-      'border-radius': '5px',
-      transform: 'translate(-50%, -50%)',
-      width: '50%'
-    },
-  };
 function CalculadoraEnem(){
+    const style = customStyles();
     const animatedComponents = makeAnimated();
     const navigate = useNavigate();
     const [loadding, setLoadding] = useState(true);
@@ -158,7 +146,7 @@ function CalculadoraEnem(){
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
-              style={customStyles}
+              style={style}
               contentLabel="Filtro"
             >
                 <div className='contextModal'>

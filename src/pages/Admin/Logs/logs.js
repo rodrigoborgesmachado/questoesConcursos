@@ -8,24 +8,10 @@ import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { customStyles, formatDate } from "../../../services/functions.js";
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        border: 0,
-        background: '#424242',
-        marginRight: '-50%',
-        'border-radius': '5px',
-        transform: 'translate(-50%, -50%)',
-        width: '60%',
-        overflow: "auto",
-        position: "fixed"
-    },
-};
 function Logs(){
+    const style = customStyles();
     const navigate = useNavigate();
     const [loadding, setLoadding] = useState(true);
     const [logs, setlogs] = useState([])
@@ -74,17 +60,6 @@ function Logs(){
         buscaDados(value);
     };
 
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        
-        return `${day}/${month}/${year} ${hours}:${minutes}`;
-    }
-
     if (loadding) {
         return (
             <div className='loaddingDiv'>
@@ -98,7 +73,7 @@ function Logs(){
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                style={customStyles}
+                style={style}
                 contentLabel="Filtro"
             >
                 <div className='contextModal'>

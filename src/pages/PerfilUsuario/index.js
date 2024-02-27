@@ -8,23 +8,10 @@ import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 import Modal from 'react-modal';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
-const customStyles = {
-    content: {
-      top: '20%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      border: 0,
-      background: '#424242',
-      marginRight: '-50%',
-      'border-radius': '5px',
-      transform: 'translate(-50%, -50%)',
-      width: '50%'
-    },
-  };
+import { customStyles } from '../../services/functions.js';
 
 function PerfilUsuario(){
+    const style = customStyles();
     const animatedComponents = makeAnimated();
     const[usuario, setUsuario] = useState();
     const navigate = useNavigate();
@@ -189,7 +176,7 @@ function PerfilUsuario(){
             <Modal
               isOpen={modalNomeIsOpen}
               onRequestClose={closeModalNome}
-              style={customStyles}
+              style={style}
               contentLabel="Atualização nome"
             >
                 <div className='contextModal'>
@@ -206,7 +193,7 @@ function PerfilUsuario(){
             <Modal
               isOpen={modalInsituicaoIsOpen}
               onRequestClose={closeModalInstituicao}
-              style={customStyles}
+              style={style}
               contentLabel="Atualização Instituicao"
             >
                 <div className='contextModal'>
@@ -223,7 +210,7 @@ function PerfilUsuario(){
             <Modal
               isOpen={modalPerfilIsOpen}
               onRequestClose={closeModalPerfil}
-              style={customStyles}
+              style={style}
               contentLabel="Atualização de Perfil"
             >
                 <div className='contextModal'>

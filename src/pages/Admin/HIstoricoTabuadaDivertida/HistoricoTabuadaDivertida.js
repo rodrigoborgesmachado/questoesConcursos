@@ -8,24 +8,10 @@ import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { customStyles } from "../../../services/functions.js";
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        border: 0,
-        background: '#424242',
-        marginRight: '-50%',
-        'border-radius': '5px',
-        transform: 'translate(-50%, -50%)',
-        width: '60%',
-        overflow: "auto",
-        position: "fixed"
-    },
-};
 function HistoricoTabuadaDivertida(){
+    const styles = customStyles();
     const navigate = useNavigate();
     const [loadding, setLoadding] = useState(true);
     const [HistoricoTabuadaDivertida, setHistoricoTabuadaDivertida] = useState([])
@@ -86,7 +72,7 @@ function HistoricoTabuadaDivertida(){
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                style={customStyles}
+                style={styles}
                 contentLabel="Filtro"
             >
                 <div className='contextModal'>

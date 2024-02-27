@@ -9,20 +9,7 @@ import { BsChatLeftDotsFill } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
 import Modal from 'react-modal';
 import Tempo from './../../components/Tempo/tempo.js';
-
-const customStyles = {
-    content: {
-      top: '20%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      border: 0,
-      background: '#424242',
-      marginRight: '-50%',
-      'border-radius': '5px',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
+import { customStyles } from '../../services/functions.js';
 
   const customStylesAssunto = {
     content: {
@@ -50,6 +37,7 @@ const customStyles = {
 
 
 function Questoes(){
+    const style = customStyles();
     const navigate = useNavigate();
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -589,7 +577,7 @@ function Questoes(){
             <Modal
               isOpen={modalSolicitacao}
               onRequestClose={closeModalSolicitacao}
-              style={customStyles}
+              style={style}
               contentLabel="Solicitação"
             >
                 <div className='contextModal'>
@@ -623,7 +611,7 @@ function Questoes(){
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModalSolicitarRevisao}
-              style={customStyles}
+              style={style}
               contentLabel="Example Modal"
             >
                 <div className='contextModal'>
@@ -638,7 +626,7 @@ function Questoes(){
             <Modal
               isOpen={modalSolicitaRespostaIsOpen}
               onRequestClose={closeModalSolicitarResposta}
-              style={customStyles}
+              style={style}
               contentLabel="Example Modal"
             >
                 <div className='contextModal'>
@@ -653,7 +641,7 @@ function Questoes(){
             <Modal
               isOpen={modalRespostaIsOpen}
               onRequestClose={closeModalResposta}
-              style={customStyles}
+              style={style}
               contentLabel="Example Modal"
             >
             

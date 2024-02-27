@@ -5,23 +5,10 @@ import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
 import Modal from 'react-modal';
-
-const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      width: '90%',
-      height: '80%',
-      border: 0,
-      background: '#424242',
-      marginRight: '-50%',
-      'border-radius': '5px',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
-
+import { customStyles } from '../../services/functions.js';
 
 function CadastraQuestao(){
+    const style = customStyles();
     const navigate = useNavigate();
     const{filtro} = useParams();
     const{numero} = useParams();
@@ -272,7 +259,7 @@ function CadastraQuestao(){
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
-              style={customStyles}
+              style={style}
               contentLabel="Questão"
             >
                 <div className='contextModal'>

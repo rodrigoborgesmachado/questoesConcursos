@@ -10,22 +10,10 @@ import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
 import { BsFunnelFill, BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
+import { customStyles } from '../../services/functions.js';
 
-const customStyles = {
-    content: {
-        top: '30%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        border: 0,
-        background: '#424242',
-        marginRight: '-50%',
-        'border-radius': '5px',
-        transform: 'translate(-50%, -50%)',
-        width: '50%'
-    },
-};
 function ListagemAvaliacoes(){
+    const style = customStyles();
     const navigate = useNavigate();
     const [loadding, setLoadding] = useState(false);
     const[avaliacoes, setAvaliacoes] = useState([]);
@@ -103,7 +91,7 @@ function ListagemAvaliacoes(){
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                style={customStyles}
+                style={style}
                 contentLabel="Filtro"
             >
                 <div className='contextModal'>

@@ -9,26 +9,10 @@ import Modal from 'react-modal';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-
-
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        border: 0,
-        background: '#424242',
-        marginRight: '-50%',
-        'border-radius': '5px',
-        transform: 'translate(-50%, -50%)',
-        width: '60%',
-        overflow: "auto",
-        position: "fixed"
-    },
-};
+import { customStyles } from '../../../services/functions.js';
 
 function DashBoard(){
+    const styles = customStyles();
     const navigate = useNavigate();
     const [dados, setDados] = useState({});
     const [loadding, setLoadding] = useState(true);
@@ -148,7 +132,7 @@ function DashBoard(){
             <Modal
                 isOpen={modalQuestoesIsOpen}
                 onRequestClose={closeModalQuestoes}
-                style={customStyles}
+                style={styles}
                 contentLabel="Filtro"
             >
                 <div className='contextModal'>
@@ -228,7 +212,7 @@ function DashBoard(){
             <Modal
                 isOpen={modalProvasIsOpen}
                 onRequestClose={closeModalProvas}
-                style={customStyles}
+                style={styles}
                 contentLabel="Filtro"
             >
                 <div className='contextModal'>

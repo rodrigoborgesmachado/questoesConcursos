@@ -8,23 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import Modal from 'react-modal';
-import InfoIcon from '@mui/icons-material/Info';
+import { customStyles } from '../../services/functions.js';
 
-const customStyles = {
-    content: {
-      top: '30%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      border: 0,
-      background: '#424242',
-      marginRight: '-50%',
-      'border-radius': '5px',
-      transform: 'translate(-50%, -50%)',
-      width: '50%'
-    },
-  };
 function NotasCorte(){
+    const style = customStyles();
     const animatedComponents = makeAnimated();
     const navigate = useNavigate();
     const [instituicoes, setInstituicoes] = useState([]);
@@ -193,7 +180,7 @@ function NotasCorte(){
              <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
-              style={customStyles}
+              style={style}
               contentLabel="Filtro"
             >
                 <div className='contextModal'>

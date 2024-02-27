@@ -9,23 +9,10 @@ import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
-
-const customStyles = {
-    content: {
-        top: '30%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        border: 0,
-        background: '#424242',
-        marginRight: '-50%',
-        'border-radius': '5px',
-        transform: 'translate(-50%, -50%)',
-        width: '50%'
-    },
-};
+import { customStyles } from '../../services/functions.js';
 
 function ListagemProvas() {
+    const style = customStyles();
     const { filtro } = useParams();
     const navigate = useNavigate();
     const [loadding, setLoadding] = useState(true);
@@ -174,7 +161,7 @@ function ListagemProvas() {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                style={customStyles}
+                style={style}
                 contentLabel="Filtro"
             >
                 <div className='contextModal'>
