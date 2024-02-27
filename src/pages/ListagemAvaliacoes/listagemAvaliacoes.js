@@ -11,6 +11,7 @@ import Modal from 'react-modal';
 import { BsFunnelFill, BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
 import { customStyles } from '../../services/functions.js';
+import FilterComponent from '../../components/FilterComponent/index.js';
 
 function ListagemAvaliacoes(){
     const style = customStyles();
@@ -22,24 +23,28 @@ function ListagemAvaliacoes(){
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(7);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [filtro, setFiltro] = useState('');
+    const [filtrarChave, setFiltrarChave] = useState(true);
 
     function openModal() {
         setIsOpen(true);
     }
 
     function closeModal() {
+        setFiltrarChave(true);
         setIsOpen(false);
     }
 
-    async function BuscaAvaliacoes(page){
+    async function BuscaAvaliacoes(){
         if (!localStorage.getItem(Config.TOKEN)) {
             toast.info('Necessário logar para acessar!');
             navigate('/', { replace: true });
             return;
         }
 
+        closeModal();
         setLoadding(true);
-        await api.get(`/Avaliacao/pagged?page=${page}&quantity=${quantityPerPage}&chave=${chave}`)
+        await api.get(`/Avaliacao/pagged?page=${page}&quantity=${quantityPerPage}&chave=${chave}` + filtro)
         .then((response) => {
             if(response.data.success){
                 setAvaliacoes(response.data.object);
@@ -58,17 +63,16 @@ function ListagemAvaliacoes(){
     }
 
     useEffect(() => {
-        BuscaAvaliacoes(page);
     }, []);
+
+    useEffect(() => {
+        BuscaAvaliacoes();
+    }, [page])
 
     const handleChange = (event, value) => {
         setPage(value);
         BuscaAvaliacoes(value);
     };
-
-    function filtrar(){
-
-    }
 
     function openAvaliacao(id){
         navigate('/avaliacoes/' + id, { replace: true });
@@ -94,20 +98,26 @@ function ListagemAvaliacoes(){
                 style={style}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
-                    <div className='bodymodal'>
-                        <h3>Filtros</h3>
+                {
+                    filtrarChave ?
+                    <div className='contextModal'>
+                        <div className='bodymodal'>
+                            <h3>Filtros</h3>
+                        </div>
+                        <div className="separator separator--withMargins"></div>
+                        <div className='filtrosProva'>
+                            <h4>Filtrar chave</h4>
+                            <input type='text' value={chave} onChange={(e) => setChave(e.target.value)}></input>
+                        </div>
+                        <div className="separator separator--withMargins"></div>
+                        <div className='botoesModalFiltroAvaliacoes'>
+                            <button className='global-button global-button' onClick={BuscaAvaliacoes}>Buscar</button>
+                            <button className='global-button global-button' onClick={() => setFiltrarChave(false)}>Mais filtros</button>
+                        </div>
                     </div>
-                    <div className="separator separator--withMargins"></div>
-                    <div className='filtrosProva'>
-                        <h4>Filtrar chave</h4>
-                        <input type='text' value={chave} onChange={(e) => setChave(e.target.value)}></input>
-                    </div>
-                    <div className="separator separator--withMargins"></div>
-                    <div className='botoesModalFiltroAvaliacoes'>
-                        <button className='global-button global-button' onClick={filtrar}>Buscar</button>
-                    </div>
-                </div>
+                    :
+                    <FilterComponent buscaQuestoesFiltrando={BuscaAvaliacoes} setFiltro={setFiltro} showProfessores={true}/>
+                }
             </Modal>
             <div className='global-infoPanel'>
                 <div>

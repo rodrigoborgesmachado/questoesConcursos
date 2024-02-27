@@ -10,8 +10,10 @@ const filtroBanca=1;
 const filtroProva=2;
 const filtroMateria=3;
 const filtroAssuntos=4;
+const filtroProfessores=5;
+const filtroTipos=6;
 
-function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, showMaterias = true, showAssuntos=true, showProvas=true }){
+function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, showMaterias = true, showAssuntos=true, showProvas=true, showProfessores=false, showTipos=true }){
     const navigate = useNavigate();
     const animatedComponents = makeAnimated();
     const[loadding, setLoadding] = useState(true);
@@ -23,7 +25,11 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
     const [selectedAssuntos, setSelectedAssuntos] = useState(localStorage.getItem(Config.filtroAssuntosSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroAssuntosSelecionadas)) : []);
     const [provas, setProvas] = useState([]);
     const [selectedProvas, setSelectedProvas] = useState(localStorage.getItem(Config.filtroProvasSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroProvasSelecionadas)) : []);
-
+    const [professores, setProfessores] = useState([]);
+    const [selectedProfessores, setSelectedProfessores] = useState(localStorage.getItem(Config.filtroProfessoresSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroProfessoresSelecionadas)) : []);
+    const [tipos, setTipos] = useState([]);
+    const [selectedtipos, setSelectedTipos] = useState(localStorage.getItem(Config.filtroTiposSelecionados) ? JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados)) : []);
+    const [first, setFirst] = useState(true);
     useEffect(() => {
         setLoadding(true);
 
@@ -31,84 +37,112 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
         buscaDadosFiltro(filtroProva);
         buscaDadosFiltro(filtroMateria);
         buscaDadosFiltro(filtroAssuntos);
+        buscaDadosFiltro(filtroProfessores);
+        buscaDadosFiltro(filtroTipos);
 
         setLoadding(false);
+        setFirst(false);
     }, [])
 
     useEffect(() => {
-        buscaDadosFiltro(filtroBanca);
-        buscaDadosFiltro(filtroMateria);
-        buscaDadosFiltro(filtroAssuntos);
-        localStorage.setItem(Config.filtroProvasSelecionadas, JSON.stringify(selectedProvas));
+        if(!first){
+            buscaDadosFiltro(filtroBanca);
+            buscaDadosFiltro(filtroMateria);
+            buscaDadosFiltro(filtroAssuntos);
+            buscaDadosFiltro(filtroProfessores);
+            buscaDadosFiltro(filtroTipos);
+            localStorage.setItem(Config.filtroProvasSelecionadas, JSON.stringify(selectedProvas));
+        }
     }, [selectedProvas]);
 
     useEffect(() => {
-        buscaDadosFiltro(filtroProva);
-        buscaDadosFiltro(filtroMateria);
-        buscaDadosFiltro(filtroAssuntos);
-        localStorage.setItem(Config.filtroBancasSelecionadas, JSON.stringify(selectedBancas));
+        if(!first){
+            buscaDadosFiltro(filtroProva);
+            buscaDadosFiltro(filtroMateria);
+            buscaDadosFiltro(filtroAssuntos);
+            buscaDadosFiltro(filtroProfessores);
+            buscaDadosFiltro(filtroTipos);
+            localStorage.setItem(Config.filtroBancasSelecionadas, JSON.stringify(selectedBancas));
+        }
     }, [selectedBancas]);
 
     useEffect(() => {
-        buscaDadosFiltro(filtroBanca);
-        buscaDadosFiltro(filtroProva);
-        buscaDadosFiltro(filtroAssuntos);
-        localStorage.setItem(Config.filtroMateriasSelecionadas, JSON.stringify(selectedMaterias));
+        if(!first){
+            buscaDadosFiltro(filtroBanca);
+            buscaDadosFiltro(filtroProva);
+            buscaDadosFiltro(filtroAssuntos);
+            buscaDadosFiltro(filtroProfessores);
+            buscaDadosFiltro(filtroTipos);
+            localStorage.setItem(Config.filtroMateriasSelecionadas, JSON.stringify(selectedMaterias));
+        }
     }, [selectedMaterias]);
 
     useEffect(() => {
-        buscaDadosFiltro(filtroBanca);
-        buscaDadosFiltro(filtroProva);
-        buscaDadosFiltro(filtroMateria);
-        localStorage.setItem(Config.filtroAssuntosSelecionadas, JSON.stringify(selectedAssuntos));
+        if(!first){
+            buscaDadosFiltro(filtroBanca);
+            buscaDadosFiltro(filtroProva);
+            buscaDadosFiltro(filtroMateria);
+            buscaDadosFiltro(filtroProfessores);
+            buscaDadosFiltro(filtroTipos);
+            localStorage.setItem(Config.filtroAssuntosSelecionadas, JSON.stringify(selectedAssuntos));
+        }
     }, [selectedAssuntos]);
 
-    const handleChangeSelectProva = (selectedOptions, event) => {
-        let temp = [];
-        selectedOptions.forEach((item) => {
-            temp.push({
-                codigoProva: item.value
-            }
-            );
-        })
+    useEffect(() => {
+        if(!first){
+            buscaDadosFiltro(filtroBanca);
+            buscaDadosFiltro(filtroProva);
+            buscaDadosFiltro(filtroMateria);
+            buscaDadosFiltro(filtroProfessores);
+            buscaDadosFiltro(filtroTipos);
+            localStorage.setItem(Config.filtroAssuntosSelecionadas, JSON.stringify(selectedAssuntos));
+        }
+    }, [selectedAssuntos]);
 
+    useEffect(() => {
+        if(!first){
+            buscaDadosFiltro(filtroBanca);
+            buscaDadosFiltro(filtroProva);
+            buscaDadosFiltro(filtroMateria);
+            buscaDadosFiltro(filtroAssuntos);
+            buscaDadosFiltro(filtroTipos);
+            localStorage.setItem(Config.filtroProfessoresSelecionadas, JSON.stringify(selectedProfessores));
+        }
+    }, [selectedProfessores]);
+
+    useEffect(() => {
+        if(!first){
+            buscaDadosFiltro(filtroBanca);
+            buscaDadosFiltro(filtroProva);
+            buscaDadosFiltro(filtroMateria);
+            buscaDadosFiltro(filtroAssuntos);
+            buscaDadosFiltro(filtroProfessores);
+            localStorage.setItem(Config.filtroTiposSelecionados, JSON.stringify(selectedtipos));
+        }
+    }, [selectedtipos]);
+
+    const handleChangeSelectProva = (selectedOptions, event) => {
         setSelectedProvas(selectedOptions);
     }
 
     const handleChangeSelectMateria = (selectedOptions, event) => {
-        let temp = [];
-        selectedOptions.forEach((item) => {
-            temp.push({
-                materia: item.value
-            }
-            );
-        })
-
         setSelectedMaterias(selectedOptions);
     }
 
     const handleChangeSelectBanca = async (selectedOptions, event) => {
-        let temp = [];
-        selectedOptions.forEach((item) => {
-            temp.push({
-                banca: item.value
-            }
-            );
-        })
-
         setSelectedBancas(selectedOptions);
     }
 
     const handleChangeSelectAssunto = (selectedOptions, event) => {
-        let temp = [];
-        selectedOptions.forEach((item) => {
-            temp.push({
-                materia: item.value
-            }
-            );
-        })
-
         setSelectedAssuntos(selectedOptions);
+    }
+
+    const handleChangeSelectProfessor = (selectedOptions, event) => {
+        setSelectedProfessores(selectedOptions);
+    }
+
+    const handleChangeSelectTipo = (selectedOptions, event) => {
+        setSelectedTipos(selectedOptions);
     }
 
     function montaBusca(){
@@ -142,6 +176,20 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
             })
         }
 
+        if(selectedProfessores.length > 0){
+            retorno += "&professor="
+            selectedProfessores.forEach((i, index) => {
+                retorno += index > 0 ? ";" + i.value : i.value;
+            })
+        }
+
+        if(selectedtipos.length > 0){
+            retorno += "&tipos="
+            selectedtipos.forEach((i, index) => {
+                retorno += index > 0 ? ";" + i.value : i.value;
+            })
+        }
+
         setFiltro(retorno);
         return retorno;
     }
@@ -155,6 +203,10 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
             return !showMaterias;
         if(tipo == filtroProva)
             return !showProvas;
+        if(tipo == filtroProfessores)
+            return !showProfessores;
+        if(tipo == filtroTipos)
+            return !showTipos;
     }
 
     async function buscaDadosFiltro(tipo){
@@ -173,8 +225,14 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
         else if(tipo == filtroMateria){
             url = '/Prova/GetAllMaterias';
         }
-        else{
+        else if(tipo == filtroAssuntos){
             url = '/Prova/GetAllAssuntos';
+        }
+        else if(tipo == filtroProfessores){
+            url = '/Avaliacao/getProfessores';
+        }
+        else{
+            url = '/Prova/GetAllTipos';
         }
 
         await api.get(url + '?1=1' + montaBusca())
@@ -197,8 +255,14 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
                 else if(tipo == filtroMateria){
                     setMaterias(t);
                 }
-                else{
+                else if(tipo ==filtroAssuntos){
                     setAssuntos(t);
+                }
+                else if(tipo == filtroProfessores){
+                    setProfessores(t);   
+                }
+                else{
+                    setTipos(t);
                 }
             }
             else{
@@ -217,6 +281,8 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
         setSelectedBancas([]);
         setSelectedMaterias([]);
         setSelectedProvas([]);
+        setSelectedProfessores([]);
+        setSelectedTipos([]);
     }
 
     if(loadding){
@@ -235,6 +301,15 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
                 </div>
                 <div className="separator separator--withMargins"></div>
                 <div className='filtros-questoes'>
+                    {
+                        showProfessores ? 
+                        <>
+                            <h4>Professor:</h4>
+                            <Select className='tiposProva' closeMenuOnSelect={false} components={animatedComponents} options={professores} value={selectedProfessores} isMulti onChange={handleChangeSelectProfessor} />
+                        </>
+                        :<></>
+                    }
+
                     {
                         showBancas ? 
                         <>
@@ -267,6 +342,15 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
                         <>
                             <h4>Assuntos:</h4>
                             <Select className='tiposProva' closeMenuOnSelect={false} components={animatedComponents} options={assuntos} value={selectedAssuntos} isMulti onChange={handleChangeSelectAssunto} />
+                        </>
+                        :<></>
+                    }
+
+                    {
+                        showTipos ?
+                        <>
+                            <h4>Tipos de avaliação:</h4>
+                            <Select className='tiposProva' closeMenuOnSelect={false} components={animatedComponents} options={tipos} value={selectedtipos} isMulti onChange={handleChangeSelectTipo} />
                         </>
                         :<></>
                     }

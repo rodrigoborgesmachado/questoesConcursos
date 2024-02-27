@@ -16,5 +16,7 @@
     "filtroBancasSelecionadas":"FILTROBANCASSELECIONADAS",
     "filtroProvasSelecionadas":"FILTROPROVASSELECIONADAS",
     "filtroMateriasSelecionadas":"FILTROMATERIASSELECIONADAS",
-    "filtroAssuntosSelecionadas":"FILTROASSUNTOSSELECIONADAS"
+    "filtroAssuntosSelecionadas":"FILTROASSUNTOSSELECIONADAS",
+    "filtroProfessoresSelecionadas":"FILTROPROFESSORESSELECIONADAS",
+    "filtroTiposSelecionados":"FILTROTIPOSSELECIONADOS"
 }
