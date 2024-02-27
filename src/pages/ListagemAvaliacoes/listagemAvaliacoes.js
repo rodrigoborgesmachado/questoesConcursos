@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
-import { BsFunnelFill } from "react-icons/bs";
+import { BsFunnelFill, BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
 
 const customStyles = {
@@ -86,6 +86,10 @@ function ListagemAvaliacoes(){
         navigate('/avaliacoes/' + id, { replace: true });
     }
 
+    function addAvaliacao(){
+        navigate('/cadastroavaliacao?previus=avaliacoes', { replace: true });
+    }
+
     if (loadding) {
         return (
             <div className='loaddingDiv'>
@@ -118,6 +122,14 @@ function ListagemAvaliacoes(){
                 </div>
             </Modal>
             <div className='global-infoPanel'>
+                <div>
+                    {
+                        localStorage.getItem(Config.ADMIN) === '2' ?
+                        <h3 className='link' onClick={addAvaliacao} ><BsFileEarmarkPlusFill/>Adicionar avaliação</h3>
+                        :
+                        <></>
+                    }
+                </div>
                 <div className='opcoesFiltro'>
                     <h3>Avaliações</h3>
                     <h3 className='link'><BsFunnelFill onClick={openModal} /></h3>

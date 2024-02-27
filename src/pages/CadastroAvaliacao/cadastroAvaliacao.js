@@ -39,6 +39,7 @@ function CadastroAvaliacao(){
     const{filtro} = useParams();
     const animatedComponents = makeAnimated();
     const [loadding, setLoadding] = useState(false);
+    const searchParams = new URLSearchParams(window.location.search);
 
     const[classPublic, setClassPublic] = useState('toggleButtonClicked');
     const[nome, setNome] = useState('');
@@ -390,6 +391,10 @@ function CadastroAvaliacao(){
         });
     }
 
+    function voltar(){
+        navigate('/' + searchParams.get('previus'), {replace: true});
+    }
+
     if (loadding) {
         return (
             <div className='loaddingDiv'>
@@ -608,6 +613,9 @@ function CadastroAvaliacao(){
                     </div>
             </Modal>
             <div className='global-infoPanel'>
+                <div className='total'>
+                    <button className='global-button global-button--transparent' onClick={voltar}>Voltar</button>
+                </div>
                 <h2 className='formularioCadastroProva'>
                     Cadastro de Avaliações
                 </h2>

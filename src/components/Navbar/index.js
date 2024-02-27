@@ -225,7 +225,7 @@ const ResponsiveAppBar = () => {
   function abreTelaCadastroAvaliacao(){
     handleCloseMinhasAvaliacoes();
     handleCloseUserMenu();
-    navigate('/cadastroavaliacao', {replace: true});
+    navigate('/cadastroavaliacao?previus=', {replace: true});
   }
 
   function abreTelaMinhasAvaliacoes(){

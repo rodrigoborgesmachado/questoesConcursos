@@ -84,6 +84,26 @@ function Usuarios(){
         return `${day}/${month}/${year} ${hours}:${minutes}`;
     }
 
+    async function ReenviaEmail(mail){
+        setLoadding(true);
+
+        await api.get('/Usuarios/reenviaEmailConfirmacao?mail=' + mail)
+        .then((response) => {
+            setLoadding(false);
+
+            if(response.data.success){
+                toast.success('Email reenviado!');
+            }
+            else{
+                toast.warn('Não foi possível reenviar o email.');
+            }
+        })
+        .catch(() => {
+            setLoadding(false);
+            toast.warn('Não foi possível reenviar o email.');
+        })
+    }
+
     if (loadding) {
         return (
             <div className='loaddingDiv'>
@@ -111,7 +131,15 @@ function Usuarios(){
                         <h4>Nome: {usuarios[index].nome}</h4>
                         <h4>Email: {usuarios[index].email}</h4>
                         <h4>Data de nascimento: {usuarios[index].dataNascimento}</h4>
-                        <h4>Foi verificado: {usuarios[index].isVerified == "1" ? "Sim" : "Não"}</h4>
+                        <h4>
+                            Foi verificado: {usuarios[index].isVerified == "1" ? "Sim" : "Não"} 
+                            {
+                                usuarios[index].isVerified == "1" ? 
+                                <></> 
+                                : 
+                                <button className='global-button' onClick={() => ReenviaEmail(usuarios[index])}>Reenviar email</button>
+                            }
+                        </h4>
                         <h4>Perfil: {usuarios[index].tipoPerfil?.descricao}</h4>
                         <h4>Instituicao: {usuarios[index].instituicao}</h4>
                         <h4>Criado: {formatDate(usuarios[index].created)}</h4>
@@ -141,6 +169,9 @@ function Usuarios(){
                             </th>
                             <th>
                                 Verificado
+                            </th>
+                            <th>
+
                             </th>
                             <th>
 
@@ -181,6 +212,13 @@ function Usuarios(){
                                             <h4>
                                                 {item.isVerified}
                                             </h4>
+                                        </td>
+                                        <td>
+                                            {
+                                                item.isVerified == '0' ?
+                                                <button className='global-button' onClick={() => ReenviaEmail(item.email)}>Reenviar email</button>
+                                                :<></>
+                                            }
                                         </td>
                                         <td className='option'>
                                             <h4 onClick={() => openModal(index)}>

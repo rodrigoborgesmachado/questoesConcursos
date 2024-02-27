@@ -4,6 +4,8 @@ import { Table } from 'react-bootstrap';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import api from '../../services/api.js';
 import { toast } from 'react-toastify';
+import Config from './../../config.json';
+import { BsFileEarmarkPlusFill } from "react-icons/bs";
 
 function MinhasAvaliacoes(){
     const navigate = useNavigate();
@@ -12,10 +14,11 @@ function MinhasAvaliacoes(){
     const[avaliacoes, setAvaliacoes] = useState([]);
 
     async function BuscaAvaliacoes(){
-        
+        setLoadding(true);
 
         await api.get('/Avaliacao/getAll')
         .then((response) => {
+            setLoadding(false);
             if(response.data.success){
                 setAvaliacoes(response.data.object);
             }
@@ -35,11 +38,15 @@ function MinhasAvaliacoes(){
     }, []);
 
     function openAvaliacao(id){
-        navigate('/cadastroavaliacao/' + id, {replace: true});
+        navigate('/cadastroavaliacao/' + id + '?previus=listagemminhasavaliacoes', {replace: true});
     }
 
     function abrirRespostas(id){
         navigate('/resultadoAvaliacao/' + id + '?page=1', {replace: true});
+    }
+
+    function addAvaliacao(){
+        navigate('/cadastroavaliacao?previus=listagemminhasavaliacoes', { replace: true });
     }
 
     if (loadding) {
@@ -53,7 +60,15 @@ function MinhasAvaliacoes(){
     return(
         <div className="containerpage global-fullW">
             <div className='global-infoPanel'>
-                <h3>Minhas Avaliações</h3>
+                <div className='opcoesFiltro'>
+                    <h3>Minhas Avaliações</h3>
+                    {
+                        localStorage.getItem(Config.ADMIN) === '2' ?
+                        <h3 className='link' onClick={addAvaliacao} ><BsFileEarmarkPlusFill/>Adicionar avaliação</h3>
+                        :
+                        <></>
+                    }
+                </div>
                 <Table>
                     <thead>
                         <tr>
