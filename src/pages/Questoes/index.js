@@ -47,18 +47,17 @@ function Questoes(){
     const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
     const[questoesTotal, setQuestoesTotal] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
     const[loadding, setLoadding] = useState(true);
-    const[tentativas, setTentativas] = useState(0);
-    const[maxTentativas] = useState(5);
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const [modalSolicitacao, setModalSolicitacao] = useState(false);
-    const [modalSolicitaRespostaIsOpen, setModalSolicitaRespostaIsOpen] = useState(false);
-    const [modalRespostaIsOpen, setModalRespostaIsOpen] = useState(false);
-    const [modalComentarioIsOpen, setModalComentarioIsOpen] = useState(false);
-    const [textoResposta, setTextoResposta] = useState('');
-    const [comentario, setComentario] = useState('');
+    const[modalIsOpen, setIsOpen] = useState(false);
+    const[modalSolicitacao, setModalSolicitacao] = useState(false);
+    const[modalSolicitaRespostaIsOpen, setModalSolicitaRespostaIsOpen] = useState(false);
+    const[modalRespostaIsOpen, setModalRespostaIsOpen] = useState(false);
+    const[modalComentarioIsOpen, setModalComentarioIsOpen] = useState(false);
+    const[textoResposta, setTextoResposta] = useState('');
+    const[comentario, setComentario] = useState('');
     const[nextAvaliacao, setNextAvaliacao] = useState(-1);
-    const [modalAssuntoIsOpen, setModalAssuntoIsOpen] = useState(false);
-    const [assunto, setAssunto] = useState('');
+    const[modalAssuntoIsOpen, setModalAssuntoIsOpen] = useState(false);
+    const[assunto, setAssunto] = useState('');
+    const[page, setPage] = useState(parseInt(searchParams.get('page')));
 
     function openModalSolicitacao() {
         setModalSolicitacao(true);
@@ -116,64 +115,20 @@ function Questoes(){
         }
     }, [])
     
-    function BuscaUrl(anterior = false, proxima = false){
-        if(Number.isInteger(parseInt(filtro))){
-            return `/Questoes/getById?id=` + filtro;
+    function BuscaUrl(anterior = false, proxima = false, page=1){
+        var query = searchParams;
+        if(proxima)
+        {
+            query.delete('id');
         }
-        else if(filtro === 'enem'){
-            return `/Questoes/getQuestaoAleatoria?tipo=ENEM`;
+        else if(anterior)
+        {
+            query.delete('id');
         }
-        else if(filtro === 'IFTM'){
-            return `/Questoes/getQuestaoAleatoria?tipo=IFTM`;
-        }
-        else if(filtro.includes('materias')){
-            return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&subject=` + filtro.replace('materias&', '');
-        }
-        else if(filtro.includes('bancas')){
-            return `/Questoes/getQuestaoAleatoria?tipo=GENERIC&bancas=` + filtro.replace('bancas&', '');
-        }
-        else if(filtro.includes('provas') || filtro.includes('simulado')){
-            let temp =  `/Questoes/getQuestao?codigoProva=` + filtro.replace('provas&', '').replace('simulado&', '');
 
-            if(Object.keys(questao).length > 0){
-                temp += "&numeroQuestao=" + (parseInt(questao?.numeroQuestao) + 1 - (anterior ? 2 : 0));
-            }
-            return temp;
-        }
-        else if(filtro.includes('codigoquestaohistorico')){
-            return `/Questoes/getById?id=` + filtro.replace('codigoquestaohistorico:', '');
-        }
-        else if(filtro.includes('codigoquestaolistagemsemprova')){
-            return `/Questoes/getById?id=` + filtro.replace('codigoquestaolistagemsemprova:', '');
-        }
-        else if(filtro.includes('codigoquestaolistagem')){
-            if(!proxima && !anterior){
-                return `/Questoes/getById?id=` + filtro.replace('codigoquestaolistagem:', '');
-            }
-
-            let temp =  `/Questoes/getQuestao?codigoProva=` + questao?.codigoProva;
-            let num = parseInt(questao?.numeroQuestao);
-            if(anterior)
-                num -=1;
-            else
-                num +=1;
-
-            temp += "&numeroQuestao=" + num;
-
-            return temp;
-
-        }
-        else if(filtro.includes('avaliacao')){
-            setNextAvaliacao(proxima || !anterior ? nextAvaliacao + 1 : nextAvaliacao -1);
-
-            let temp =  `/Questoes/getByAvaliacao?avaliacao=` + filtro.replace('avaliacao&', '');
-            temp += "&numeroQuestao=" + (proxima || !anterior ? nextAvaliacao + 1 : nextAvaliacao -1);
-
-
-            return temp;
-
-        }
-        return `/Questoes/getQuestaoAleatoria?tipo=GENERIC`;
+        var url = `/Questoes/pagged?page=${page}&quantity=1&anexos=true&` + query;
+       
+        return url;
     }
 
     async function BuscarProximaQuestao(anterior = false, proxima = false){
@@ -184,17 +139,29 @@ function Questoes(){
         }
 
         setLoadding(true);
-        await api.get(BuscaUrl(anterior, proxima))
+
+        var numQuestao = page;
+        if(proxima)
+        {
+            numQuestao +=1;
+        }
+        else if(numQuestao>1 && anterior)
+        {
+            numQuestao -=1;
+        }
+        setPage(numQuestao);
+
+        await api.get(BuscaUrl(anterior, proxima, numQuestao))
         .then(async (response) => {
-            if(response.data.success){
-                setQuestao(response.data.object);
-                buscarComentarios(response.data.object.id);
+            if(response.data.success && response.data.quantity > 0){
+                setQuestao(response.data.object[0]);
+                buscarComentarios(response.data.object[0].id);
             }
             else{
                 var simulado = filtro.includes('simulado');
                 var avaliacao = filtro.includes('avaliacao');
                 
-                if(response.data.message === 'Not registered'){
+                if(response.data.quantity == 0){
                     if(simulado){
                         toast.success('Prova finalizada!');
                         var data = {
@@ -228,14 +195,8 @@ function Questoes(){
                     return;
                 }
 
-                if(tentativas > maxTentativas){
-                    toast.warn('Não há mais questões com esses filtros!');
-                    navigate('/', {replace: true});
-                    return;
-                }
-
-                setTentativas(tentativas+1);
-                BuscarProximaQuestao();
+                toast.warn('Não há mais questões com esses filtros!');
+                navigate('/', {replace: true});
                 return;
             }
             setQuestoesTotal(questoesTotal+1);
@@ -349,7 +310,10 @@ function Questoes(){
                 }
                 e.target.parentElement.appendChild(div);
     
-                if(filtro.includes('codigoquestaohistorico')){
+                if(filtro.includes('codigoquestaohistoricoadmin')){
+                    navigate('/historicoadmin', true);
+                }
+                else if(filtro.includes('codigoquestaohistorico')){
                     navigate('/historico', true);
                 }
             }
@@ -423,11 +387,14 @@ function Questoes(){
     }
 
     function ListagemProva(){
-        if(filtro.includes('codigoquestaohistorico')){
+        if(filtro.includes('codigoquestaohistoricoadmin')){
+            navigate('/historicoadmin/', {replace: true});
+        }
+        else if(filtro.includes('codigoquestaohistorico')){
             navigate('/historico/', {replace: true});
         }
         else if(filtro.includes('codigoquestaolistagemsemprova')){
-            navigate('/listagemquestoes' + (searchParams.get('page') ? '?page=' + searchParams.get('page') : ''), {replace: true});
+            navigate('/listagemquestoes' + (searchParams.get('pageListagem') ? '?page=' + searchParams.get('pageListagem') : ''), {replace: true});
         }
         else if(filtro.includes('codigoquestaolistagem')){
             navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
@@ -758,7 +725,7 @@ function Questoes(){
                 :
                 <div className='contextComentarios'>
                     {
-                        filtro.includes('codigoquestaolistagemsemprova') ?
+                        Number.isInteger(parseInt(filtro)) || filtro.includes('codigoquestaohistorico') || filtro.includes('codigoquestaounica') ?
                         <></>
                         :
                         <div className='opcoesBotoesNavegacao'>

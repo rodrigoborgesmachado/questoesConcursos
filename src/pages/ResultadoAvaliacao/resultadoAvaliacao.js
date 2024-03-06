@@ -7,6 +7,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Config from './../../config.json';
 import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
+import {abreQuestao} from './../../services/functions.js'
 
 function ResultadoAvaliacao(){
     const navigate = useNavigate();
@@ -92,12 +93,6 @@ function ResultadoAvaliacao(){
         if(localStorage.getItem(Config.ADMIN) === '2')
             BuscaUsuarios(code);
     }, [])
-
-    function openQuestao(id){
-        const url = window.location.protocol + '/questoes/codigoquestaolistagem:' + id;
-        // Open a new tab with the specified URL
-        window.open(url, '_blank');
-    }
 
     function questoesCertas(){
         let retorno = 0;
@@ -221,7 +216,7 @@ function ResultadoAvaliacao(){
                                             {item.resposta.certa == "1" ? 'Correta✅' : 'Errado❌'}
                                         </td>
                                         <td className='option'>
-                                            <h4 onClick={() => openQuestao(item.questao.id)}>
+                                            <h4 onClick={() => abreQuestao(item.questao.id)}>
                                                 <VisibilityIcon className='vis'/>
                                             </h4>
                                         </td>

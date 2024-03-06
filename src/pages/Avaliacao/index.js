@@ -30,7 +30,7 @@ function Avaliacao(){
     }, [])
 
     function abrirAvaliacao(id){
-        navigate('/questoes/avaliacao&' + id, { replace: true });
+        navigate('/questoes/avaliacao&' + id + '?avaliacao=' + id + '&page=0', { replace: true });
     }
 
     function abrirRespostas(id){

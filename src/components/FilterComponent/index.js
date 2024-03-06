@@ -5,6 +5,7 @@ import {toast} from 'react-toastify';
 import Config from './../../config.json';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
+import { MontaFiltrosLocalSession } from '../../services/functions.js';
 
 const filtroBanca=1;
 const filtroProva=2;
@@ -146,49 +147,7 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
     }
 
     function montaBusca(){
-        var retorno = '';
-
-        if(selectedProvas.length > 0){
-            retorno += "&provas="
-            selectedProvas.forEach((i, index) => {
-                retorno += index > 0 ? ";" + i.value : i.value;
-            })
-        }
-
-        if(selectedMaterias.length > 0){
-            retorno += "&materias="
-            selectedMaterias.forEach((i, index) => {
-                retorno += index > 0 ? ";" + i.value : i.value;
-            })
-        }
-
-        if(selectedBancas.length > 0){
-            retorno += "&bancas="
-            selectedBancas.forEach((i, index) => {
-                retorno += index > 0 ? ";" + i.value : i.value;
-            })
-        }
-
-        if(selectedAssuntos.length > 0){
-            retorno += "&assuntos="
-            selectedAssuntos.forEach((i, index) => {
-                retorno += index > 0 ? ";" + i.value : i.value;
-            })
-        }
-
-        if(selectedProfessores.length > 0){
-            retorno += "&professor="
-            selectedProfessores.forEach((i, index) => {
-                retorno += index > 0 ? ";" + i.value : i.value;
-            })
-        }
-
-        if(selectedtipos.length > 0){
-            retorno += "&tipos="
-            selectedtipos.forEach((i, index) => {
-                retorno += index > 0 ? ";" + i.value : i.value;
-            })
-        }
+        var retorno = MontaFiltrosLocalSession();
 
         setFiltro(retorno);
         return retorno;

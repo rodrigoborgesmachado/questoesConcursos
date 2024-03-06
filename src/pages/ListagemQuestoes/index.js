@@ -10,7 +10,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
 import FilterComponent from '../../components/FilterComponent/index.js';
-import { customStyles } from '../../services/functions.js';
+import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
 
 function ListagemQuestoes(){
     const style = customStyles();
@@ -25,7 +25,7 @@ function ListagemQuestoes(){
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(10);
     const [modalFiltroIsOpen, setModalFiltroIsOpen] = useState(false);
-    const [filtroMontado, setFiltroMontado] = useState('');
+    const [filtroMontado, setFiltroMontado] = useState(MontaFiltrosLocalSession());
 
     async function openModalFiltro() {
         setModalFiltroIsOpen(true);
@@ -73,7 +73,7 @@ function ListagemQuestoes(){
             return;
         }
 
-        await api.get(filtro ? `/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false&codigoProva=${filtro}` : `/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false` + filtroMontado)
+        await api.get(`/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : filtroMontado))
         .then((response) => {
             if(response.data.success){
                 if(filtro){
@@ -107,8 +107,8 @@ function ListagemQuestoes(){
         }
     }, [loadding])
 
-    function abreQuestao(codigoQuestao){
-        navigate((filtro ? '/questoes/codigoquestaolistagem:': '/questoes/codigoquestaolistagemsemprova:') + codigoQuestao + '?page=' + page, {replace: true});
+    function abreQuestao(codigoQuestao, index){
+        navigate((filtro ? '/questoes/codigoquestaolistagem:?codigoProva=' + filtro: '/questoes/codigoquestaolistagemsemprova?1=1') + '&id=' + codigoQuestao + '&pageListagem=' + page + '&page=' + (index+page) + '&' + MontaFiltrosLocalSession(), {replace: true});
     }
 
     function editaQuestao(codigoQuestao){
@@ -271,7 +271,7 @@ function ListagemQuestoes(){
                 </thead>
                 <tbody>
                     {
-                        questoes.map((item) => {
+                        questoes.map((item, index) => {
                             return(
                                 <tr key={item.id}>
                                     {
@@ -283,7 +283,7 @@ function ListagemQuestoes(){
                                                     ✏️{item.id}
                                                 </h4>
                                                 :
-                                                <h4 onClick={() => abreQuestao(item.id)}>
+                                                <h4 onClick={() => abreQuestao(item.id, index)}>
                                                     ✏️{item.id}
                                                 </h4>
                                             }
@@ -298,19 +298,19 @@ function ListagemQuestoes(){
                                                     ✏️{item.numeroQuestao}
                                                 </h4>
                                                 :
-                                                <h4 onClick={() => abreQuestao(item.id)}>
+                                                <h4 onClick={() => abreQuestao(item.id, index)}>
                                                     ✏️{item.numeroQuestao}
                                                 </h4>
                                             }
                                         </a>
                                     </td>
                                     <td>
-                                        <h4 onClick={() => abreQuestao(item.id)}>
+                                        <h4 onClick={() => abreQuestao(item.id, index)}>
                                         {item.materia}
                                         </h4>
                                     </td>
                                     <td>
-                                        <h4 onClick={() => abreQuestao(item.id)}>
+                                        <h4 onClick={() => abreQuestao(item.id, index)}>
                                         {item.assunto}
                                         </h4>
                                     </td>
@@ -323,14 +323,14 @@ function ListagemQuestoes(){
                                     }
                                     <td>
                                         {item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "1")) !== undefined ? 
-                                        <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.id)}>Respondida</button>
+                                        <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.id, index)}>Respondida</button>
                                         :
                                         <>
                                         {
                                             item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "0")) !== undefined ? 
-                                            <button className='global-button-wrong global-button--full-width' onClick={() => abreQuestao(item.id)}>Responder</button>
+                                            <button className='global-button-wrong global-button--full-width' onClick={() => abreQuestao(item.id, index)}>Responder</button>
                                             :
-                                            <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.id)}>Responder</button>
+                                            <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.id, index)}>Responder</button>
                                         }
                                         </>
                                         }

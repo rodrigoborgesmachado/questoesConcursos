@@ -42,7 +42,7 @@ function HistoricoUsuario() {
 
     function abreQuestao(codigoQuestao) {
         localStorage.setItem(Config.lastLink, "/historico");
-        navigate('/questoes/codigoquestaohistorico:' + codigoQuestao, { replace: true });
+        navigate('/questoes/codigoquestaohistorico:' + codigoQuestao + '?id=' + codigoQuestao + '&page=0', { replace: true });
     }
 
     const handleChange = (event, value) => {

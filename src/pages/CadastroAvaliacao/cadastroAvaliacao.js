@@ -13,7 +13,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import FilterComponent from '../../components/FilterComponent/index.js';
-import { customStylesQuestoes } from '../../services/functions.js';
+import { customStylesQuestoes, abreQuestao } from '../../services/functions.js';
 
 function CadastroAvaliacao(){
     const styles = customStylesQuestoes();
@@ -97,12 +97,6 @@ function CadastroAvaliacao(){
 
     function setColor(value){
         setClassPublic(value ? 'toggleButtonClicked' : 'toggleButton');
-    }
-
-    function abreQuestao(codigoQuestao){
-        const url = window.location.protocol + '/questoes/codigoquestaolistagem:' + codigoQuestao;
-        // Open a new tab with the specified URL
-        window.open(url, '_blank');
     }
 
     const handleChange = (event, value) => {
