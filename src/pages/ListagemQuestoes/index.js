@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import api from '../../services/api.js';
 import { useParams, useNavigate } from 'react-router-dom';
-import { BsFunnelFill, BsFileEarmarkPlusFill } from "react-icons/bs";
+import { BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -72,8 +72,9 @@ function ListagemQuestoes(){
             navigate('/', {replace: true});
             return;
         }
-
-        await api.get(`/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : filtroMontado))
+        setLoadding(true);
+        
+        await api.get(`/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : MontaFiltrosLocalSession()))
         .then((response) => {
             if(response.data.success){
                 if(filtro){
@@ -105,7 +106,7 @@ function ListagemQuestoes(){
         else{
             buscaQuestoes(page);
         }
-    }, [loadding])
+    }, [])
 
     function abreQuestao(codigoQuestao, index){
         navigate((filtro ? '/questoes/codigoquestaolistagem:?codigoProva=' + filtro: '/questoes/codigoquestaolistagemsemprova?1=1') + '&id=' + codigoQuestao + '&pageListagem=' + page + '&page=' + (index+page) + '&' + MontaFiltrosLocalSession(), {replace: true});
@@ -225,7 +226,7 @@ function ListagemQuestoes(){
                 !filtro ? 
                 <div className='opcoes-top-tabela'>
                     <h3>Questões (Total: {quantity})</h3>
-                    <h2><BsFunnelFill className='link' onClick={openModalFiltro} /></h2>
+                    <h3 className='link'><button className='global-button global-button--transparent' onClick={openModalFiltro}>Filtrar</button></h3>
                 </div>
                 :
                 <div className=''>

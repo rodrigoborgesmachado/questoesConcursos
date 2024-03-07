@@ -4,7 +4,7 @@ import api from '../../services/api.js';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import Config from "../../config.json";
-import { BsFunnelFill, BsFileEarmarkPlusFill } from "react-icons/bs";
+import { BsFileEarmarkPlusFill } from "react-icons/bs";
 import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -182,7 +182,7 @@ function ListagemProvas() {
                 </div>
             </Modal>
             <div className='opcoesProva'>
-                <h2 className='provaTitle'><a onClick={limparFiltro}>Provas {localStorage.getItem(Config.FiltroProva)}</a></h2>
+                <h3 className='provaTitle'><a onClick={limparFiltro}>Provas {localStorage.getItem(Config.FiltroProva)}</a></h3>
                 <div className='opcaoFiltro'>
                     {
                         localStorage.getItem(Config.ADMIN) == '1' ?
@@ -190,7 +190,7 @@ function ListagemProvas() {
                             :
                             <></>
                     }
-                    <h2><BsFunnelFill onClick={openModal} /></h2>
+                    <h3 className='link'><button className='global-button global-button--transparent' onClick={openModal}>Filtrar</button></h3>
                 </div>
             </div>
             <div className='provas'>

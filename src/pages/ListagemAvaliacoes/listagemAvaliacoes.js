@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
-import { BsFunnelFill, BsFileEarmarkPlusFill } from "react-icons/bs";
+import {  BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
 import { customStyles } from '../../services/functions.js';
 import FilterComponent from '../../components/FilterComponent/index.js';
@@ -130,7 +130,7 @@ function ListagemAvaliacoes(){
                 </div>
                 <div className='opcoesFiltro'>
                     <h3>Avaliações</h3>
-                    <h3 className='link'><BsFunnelFill onClick={openModal} /></h3>
+                    <h3 className='link'><button className='global-button global-button--transparent' onClick={openModal}>Filtrar</button></h3>
                 </div>
                 <Table>
                     <thead>

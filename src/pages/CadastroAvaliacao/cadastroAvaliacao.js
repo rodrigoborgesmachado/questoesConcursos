@@ -13,7 +13,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import FilterComponent from '../../components/FilterComponent/index.js';
-import { customStylesQuestoes, abreQuestao } from '../../services/functions.js';
+import { customStylesQuestoes, abreQuestao, MontaFiltrosLocalSession } from '../../services/functions.js';
 
 function CadastroAvaliacao(){
     const styles = customStylesQuestoes();
@@ -109,7 +109,7 @@ function CadastroAvaliacao(){
     };
 
     async function buscaQuestoes(page){
-        await api.get('/Questoes/pagged' + '?page=' + page + '&quantity=' + quantityPerPage + '&anexos=false' + filtroQuestoes)
+        await api.get('/Questoes/pagged' + '?page=' + page + '&quantity=' + quantityPerPage + '&anexos=false' + MontaFiltrosLocalSession())
         .then((response) => {
             if(response.data.success){
                 setQuestoes(response.data.object);
