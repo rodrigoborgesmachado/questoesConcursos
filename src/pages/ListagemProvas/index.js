@@ -9,7 +9,8 @@ import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
-import { customStyles } from '../../services/functions.js';
+import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
+import FilterComponent from '../../components/FilterComponent/index.js';
 
 function ListagemProvas() {
     const style = customStyles();
@@ -18,10 +19,10 @@ function ListagemProvas() {
     const [loadding, setLoadding] = useState(true);
     const [provas, setProvas] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [filtroNome, setFiltroNome] = useState('');
     const [page, setPage] = useState(filtro);
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(7);
+    const [filtroMontado, setFiltroMontado] = useState(MontaFiltrosLocalSession());
 
     function openModal() {
         setIsOpen(true);
@@ -31,18 +32,14 @@ function ListagemProvas() {
         setIsOpen(false);
     }
 
-    async function buscaProvas(page, semFiltro) {
+    async function buscaProvas(page) {
         if (!localStorage.getItem(Config.TOKEN)) {
             toast.info('Necessário logar para acessar!');
             navigate('/', { replace: true });
             return;
         }
 
-        var tipo = localStorage.getItem(Config.FiltroProva) == 'Todas as provas' ? '' : localStorage.getItem(Config.FiltroProva);
-
-        tipo = tipo == '' ? '' : '&tipo=' + tipo;
-
-        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage + tipo + (semFiltro ? '' : '&prova=' + filtroNome))
+        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage + MontaFiltrosLocalSession())
             .then((response) => {
                 if (response.data.success) {
                     setProvas(response.data.object);
@@ -63,7 +60,7 @@ function ListagemProvas() {
     useEffect(() => {
         setLoadding(true);
 
-        buscaProvas(page, true);
+        buscaProvas(page);
     }, []);
 
     function abrirQuestao(codigo) {
@@ -79,14 +76,6 @@ function ListagemProvas() {
         setLoadding(true);
         setPage(1);
         buscaProvas(1);
-    }
-
-    function limparFiltro() {
-        closeModal();
-        setFiltroNome('');
-        setLoadding(true);
-        setPage(1);
-        buscaProvas(1, true);
     }
 
     const handleChange = (event, value) => {
@@ -164,25 +153,10 @@ function ListagemProvas() {
                 style={style}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
-                    <div className='bodymodal'>
-                        <h3>Filtros</h3>
-                    </div>
-                    <div className="separator separator--withMargins"></div>
-                    <div className='filtrosProva'>
-                        <h4>
-                            Nome da prova:
-                        </h4>
-                        <input type='text' value={filtroNome} onChange={(e) => setFiltroNome(e.target.value)} />
-                    </div>
-                    <div className='botoesModalFiltro'>
-                        <button className='global-button global-button--transparent' onClick={limparFiltro}>Limpar</button>
-                        <button className='global-button' onClick={filtrar}>Filtrar</button>
-                    </div>
-                </div>
+                <FilterComponent buscaQuestoesFiltrando={filtrar}  setFiltro={setFiltroMontado} showMaterias={false} showAssuntos={false}/>
             </Modal>
             <div className='opcoesProva'>
-                <h3 className='provaTitle'><a onClick={limparFiltro}>Provas {localStorage.getItem(Config.FiltroProva)}</a></h3>
+                <h3 className='provaTitle'><a>Provas {JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados)).length > 0 ? JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados))[0].label : ''}</a></h3>
                 <div className='opcaoFiltro'>
                     {
                         localStorage.getItem(Config.ADMIN) == '1' ?

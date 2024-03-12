@@ -49,6 +49,7 @@ function Login() {
                 setLoadding(false);
                 if(response.response.status == 300){
                     toast.error('Usuário não verificado! Favor acessar seu email ou entre em contato com o suporte!');
+                    ReenviaEmail(email);
                 }
                 else{
                     toast.error('Usuário ou senhas incorretos');
@@ -56,6 +57,26 @@ function Login() {
 
                 return;
             });
+    }
+
+    async function ReenviaEmail(mail){
+        setLoadding(true);
+
+        await api.get('/Usuarios/reenviaEmailConfirmacao?mail=' + mail)
+        .then((response) => {
+            setLoadding(false);
+
+            if(response.data.success){
+                toast.success('Email de ativação reenviado!');
+            }
+            else{
+                toast.warn('Não foi possível reenviar o email.');
+            }
+        })
+        .catch(() => {
+            setLoadding(false);
+            toast.warn('Não foi possível reenviar o email.');
+        })
     }
 
     function criarUsuario() {

@@ -154,7 +154,24 @@ const ResponsiveAppBar = () => {
     handleCloseProvaMenu();
     handleCloseNavMenu();
 
-    localStorage.setItem(Config.FiltroProva, descricao);
+    if(descricao != 'Todas as provas'){
+      var list = [];
+      list.push({
+        value: descricao,
+        label: descricao
+      });
+  
+      localStorage.setItem(Config.filtroTiposSelecionados, JSON.stringify(list));
+    }
+    else{
+      localStorage.setItem(Config.filtroTiposSelecionados, JSON.stringify([]));
+      localStorage.setItem(Config.filtroProfessoresSelecionadas, JSON.stringify([]));
+      localStorage.setItem(Config.filtroAssuntosSelecionadas, JSON.stringify([]));
+      localStorage.setItem(Config.filtroMateriasSelecionadas, JSON.stringify([]));
+      localStorage.setItem(Config.filtroProvasSelecionadas, JSON.stringify([]));
+      localStorage.setItem(Config.filtroBancasSelecionadas, JSON.stringify([]));
+    }
+    
     window.location.href = '/listagemprovas/1';
   }
 
