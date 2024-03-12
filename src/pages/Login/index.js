@@ -70,7 +70,7 @@ function Login() {
                 toast.success('Email de ativação reenviado!');
             }
             else{
-                toast.warn('Não foi possível reenviar o email.');
+                toast.warn(response.data.message);
             }
         })
         .catch(() => {

@@ -239,6 +239,12 @@ const ResponsiveAppBar = () => {
     navigate('/historicotabuadadivertida', {replace: true});
   }
 
+  function abreTelaHistoricoRespostas(){
+    handleCloseAdminMenu();
+    handleCloseNavMenu();
+    navigate('/historicorespostas', {replace: true});
+  }
+
   function abreTelaCadastroAvaliacao(){
     handleCloseMinhasAvaliacoes();
     handleCloseUserMenu();
@@ -419,6 +425,11 @@ const ResponsiveAppBar = () => {
                           Histórico Tabuada Divertida
                       </Typography>
                     </MenuItem>
+                    <MenuItem onClick={(e) => abreTelaHistoricoRespostas()}>
+                      <Typography textAlign="center">
+                          Histórico Respostas
+                      </Typography>
+                    </MenuItem>
                   </Menu>
                 </>
               ))}
@@ -555,6 +566,11 @@ const ResponsiveAppBar = () => {
                         Histórico Tabuada Divertida
                     </Typography>
                   </MenuItem>
+                  <MenuItem onClick={(e) => abreTelaHistoricoRespostas()}>
+                      <Typography textAlign="center">
+                          Histórico Respostas
+                      </Typography>
+                    </MenuItem>
                 </Menu>
               </>
             ))}

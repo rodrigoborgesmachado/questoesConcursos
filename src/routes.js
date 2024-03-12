@@ -38,6 +38,7 @@ import MinhasAvaliacoes from './pages/MinhasAvaliacoes';
 import ListagemAvaliacoes from './pages/ListagemAvaliacoes/listagemAvaliacoes';
 import Avaliacao from './pages/Avaliacao';
 import ResultadoAvaliacao from './pages/ResultadoAvaliacao/resultadoAvaliacao';
+import HistoricoRespostas from './pages/Admin/HistoricoRespostas/HistoricoRespostas';
 
 function RoutesApp(){
     return(
@@ -79,6 +80,7 @@ function RoutesApp(){
                         <Route path='/logs' element={<Logs/>}/>
                         <Route path='/usuarios' element={<Usuarios/>}/>
                         <Route path='/historicotabuadadivertida' element={<HistoricoTabuadaDivertida/>}/>
+                        <Route path='/historicorespostas' element={<HistoricoRespostas/>}/>
                     </>
                     :
                     localStorage.getItem(Config.ADMIN) === '2' ?

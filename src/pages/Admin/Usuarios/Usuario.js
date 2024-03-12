@@ -20,6 +20,8 @@ function Usuarios(){
     const [page, setPage] = useState(1);
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(20);
+    const [modalFiltroIsOpen, setModalFiltroIsOpen] = useState(false);
+    const [filtro, setFiltro] = useState('');
 
     function openModal(index) {
         setIndex(index);
@@ -30,6 +32,14 @@ function Usuarios(){
         setModalIsOpen(false);
     }
 
+    function openModalFiltro() {
+        setModalFiltroIsOpen(true);
+    }
+
+    function closeModalFiltro() {
+        setModalFiltroIsOpen(false);
+    }
+
     async function buscaDados(page) {
         if (!localStorage.getItem(Config.TOKEN)) {
             toast.info('Necessário logar para acessar!');
@@ -37,7 +47,7 @@ function Usuarios(){
             return;
         }
 
-        await api.get(`/Usuarios/pagged?page=${page}&quantity=${quantityPerPage}`)
+        await api.get(`/Usuarios/pagged?page=${page}&quantity=${quantityPerPage}${(filtro ? '&email=' + filtro : '')}`)
             .then((response) => {
                 setUsuarios(response.data.object);
                 setQuantity(response.data.total);
@@ -122,8 +132,31 @@ function Usuarios(){
                     </div>
                 </div>
             </Modal>
+            <Modal
+                isOpen={modalFiltroIsOpen}
+                onRequestClose={closeModalFiltro}
+                style={style}
+                contentLabel="Filtro"
+            >
+                <div className='contextModal'>
+                    <div className='bodymodal'>
+                        <h3>Filtro</h3>
+                    </div>
+                    <div className="separator separator--withMargins"></div>
+                        <h4>Email:</h4>
+                    <div className="detalhes-modal-separado criarUsuario">
+                        <input type='text' value={filtro} onChange={(e) => setFiltro(e.target.value)}/>
+                    </div>
+                    <div className='botoesModalFiltro'>
+                        <button className='global-button global-button' onClick={() => buscaDados(1)}>Filtrar</button>
+                    </div>
+                </div>
+            </Modal>
             <div className='dados global-infoPanel'>
-                <h3>Usuarios ({quantity}):</h3>
+                <div className='opcoes-top-tabela'>
+                    <h3>Usuarios ({quantity}):</h3>
+                    <h3 className='link'><button className='global-button global-button--transparent' onClick={openModalFiltro}>Filtrar</button></h3>
+                </div>
                 <Table>
                     <thead>
                         <tr>

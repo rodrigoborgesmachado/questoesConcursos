@@ -8,20 +8,18 @@ import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { customStyles, formatDate } from "../../../services/functions.js";
+import { customStyles, formatDate, abreQuestao } from "../../../services/functions.js";
 
-function Logs(){
+function HistoricoRespostas(){
     const style = customStyles();
     const navigate = useNavigate();
     const [loadding, setLoadding] = useState(true);
-    const [logs, setlogs] = useState([])
+    const [historicoRespostas, setHistoricoRespostas] = useState([])
     const [index, setIndex] = useState(0)
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [page, setPage] = useState(1);
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(20);
-    const [modalFiltroIsOpen, setModalFiltroIsOpen] = useState(false);
-    const [filtro, setFiltro] = useState('');
 
     function openModal(index) {
         setIndex(index);
@@ -32,25 +30,16 @@ function Logs(){
         setModalIsOpen(false);
     }
 
-    function openModalFiltro() {
-        setModalFiltroIsOpen(true);
-    }
-
-    function closeModalFiltro() {
-        setModalFiltroIsOpen(false);
-    }
-
     async function buscaDados(page) {
         if (!localStorage.getItem(Config.TOKEN)) {
             toast.info('Necessário logar para acessar!');
             navigate('/', { replace: true });
             return;
         }
-        closeModalFiltro();
 
-        await api.get(`/Logger/pagged?page=${page}&quantity=${quantityPerPage}${(filtro ? '&message=' + filtro : '')}`)
+        await api.get(`/respostasusuaro/pagged?page=${page}&quantity=${quantityPerPage}`)
             .then((response) => {
-                setlogs(response.data.object);
+                setHistoricoRespostas(response.data.object);
                 setQuantity(response.data.total);
                 setLoadding(false);
             }).catch(() => {
@@ -92,51 +81,37 @@ function Logs(){
                     </div>
                     <div className="separator separator--withMargins"></div>
                     <div className="detalhes-modal-separado">
-                        <h4>Id: {logs[index].id}</h4>
-                        <h4>Descrição: {logs[index].descricao}</h4>
-                        <h4>Data de criação: {formatDate(logs[index].created)}</h4>
-                        <h4>Data de atualização: {formatDate(logs[index].updated)}</h4>
-                        <h4>Tipo: {logs[index].tipo}</h4>
-                        <h4>StackTrace: {logs[index].stackTrace}</h4>
-                    </div>
-                </div>
-            </Modal>
-            <Modal
-                isOpen={modalFiltroIsOpen}
-                onRequestClose={closeModalFiltro}
-                style={style}
-                contentLabel="Filtro"
-            >
-                <div className='contextModal'>
-                    <div className='bodymodal'>
-                        <h3>Filtro</h3>
-                    </div>
-                    <div className="separator separator--withMargins"></div>
-                        <h4>Descrição:</h4>
-                    <div className="detalhes-modal-separado criarUsuario">
-                        <input type='text' value={filtro} onChange={(e) => setFiltro(e.target.value)}/>
-                    </div>
-                    <div className='botoesModalFiltro'>
-                        <button className='global-button global-button' onClick={() => buscaDados(1)}>Filtrar</button>
+                        <h4>Id: {historicoRespostas[index].id}</h4>
+                        <h4>Nome: {historicoRespostas[index].usuario.nome}</h4>
+                        <h4>Email: {historicoRespostas[index].usuario.email}</h4>
+                        <h4>Data da resposta: {formatDate(historicoRespostas[index].dataResposta)}</h4>
+                        <h4>Prova: {historicoRespostas[index].questao.prova.nomeProva}</h4>
+                        <button className='global-button global-button--full-width' onClick={() => abreQuestao(historicoRespostas[index].questao.id)}>Visualizar Questão</button>
                     </div>
                 </div>
             </Modal>
             <div className='dados global-infoPanel'>
-                <div className='opcoes-top-tabela'>
-                    <h3>Logs ({quantity}):</h3>
-                    <h3 className='link'><button className='global-button global-button--transparent' onClick={openModalFiltro}>Filtrar</button></h3>
-                </div>
+                <h3>Histórico de respostas ({quantity}):</h3>
                 <Table>
                     <thead>
                         <tr>
                             <th>
-                                Código
+                                Id
                             </th>
                             <th>
-                                Descrição
+                                Nome
+                            </th>
+                            <th>
+                                Questão
+                            </th>
+                            <th>
+                                Prova
                             </th>
                             <th>
                                 Data
+                            </th>
+                            <th>
+                                Certa
                             </th>
                             <th>
 
@@ -145,7 +120,7 @@ function Logs(){
                     </thead>
                     <tbody>
                         {
-                            logs.map((item, index) => {
+                            historicoRespostas.map((item, index) => {
                                 return(
                                     <tr key={index}>
                                         <td className='option'>
@@ -155,13 +130,28 @@ function Logs(){
                                         </td>
                                         <td>
                                             <h4>
-                                                {item.descricao}
+                                                {item.usuario.nome}
                                             </h4>
                                         </td>
                                         <td>
                                             <h4>
-                                                {formatDate(item.created)}
+                                                {item.questao.id}
                                             </h4>
+                                        </td>
+                                        <td>
+                                            <h4>
+                                                {item.questao.prova.id}
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <h4>
+                                                {formatDate(item.dataResposta)}
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            {
+                                                item.resposta.certa == '1' ? 'Certa':'Errada'
+                                            }
                                         </td>
                                         <td className='option'>
                                             <h4 onClick={() => openModal(index)}>
@@ -196,4 +186,4 @@ function Logs(){
     )
 }
 
-export default Logs;
+export default HistoricoRespostas;
