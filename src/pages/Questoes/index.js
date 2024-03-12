@@ -369,7 +369,7 @@ function Questoes(){
     }
 
     function editaQuestao(){
-        navigate('/cadastraQuestao/' + questao?.codigoProva + '/1/' + questao?.id, {replace: true});
+        navigate('/cadastraQuestao/' + questao?.codigoProva + '/1/' + questao?.id + '?' + searchParams, {replace: true});
     }
 
     async function buscaRespostaCorreta(){

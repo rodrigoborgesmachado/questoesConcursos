@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import { customStyles } from '../../services/functions.js';
 
 function CadastraQuestao(){
+    const searchParams = new URLSearchParams(window.location.search);
     const style = customStyles();
     const navigate = useNavigate();
     const{filtro} = useParams();
@@ -185,7 +186,7 @@ function CadastraQuestao(){
             .then((response) => {
                 if(response.data.success){
                     toast.success('Questão editada com sucesso!');
-                    navigate('/questoes/codigoquestaolistagem:' + questaoCode, {replace: true});
+                    navigate(`/questoes/codigoquestaolistagem:?${searchParams}`, {replace: true});
                 }
                 else{
                     toast.info('Erro ao editar');
@@ -205,7 +206,7 @@ function CadastraQuestao(){
             .then((response) => {
                 if(response.data.success){
                     toast.success('Questão cadastrada com sucesso!');
-                    navigate('/listagemquestoes/' + filtro, {replace: true});
+                    navigate(`/questoes/codigoquestaolistagem:?${searchParams}`, {replace: true});
                 }
                 else{
                     toast.info('Erro ao cadastrar');
@@ -233,7 +234,7 @@ function CadastraQuestao(){
     }
 
     function voltarListagemQuestoes(){
-        navigate('/listagemquestoes/' + filtro, { replace: true });
+        navigate('/questoes/codigoquestaolistagem:?' + searchParams, { replace: true });
     }
 
     if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0' ){
