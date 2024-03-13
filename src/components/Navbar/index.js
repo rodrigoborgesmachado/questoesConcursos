@@ -215,12 +215,6 @@ const ResponsiveAppBar = () => {
     navigate('/dashboard', {replace: true});
   }
 
-  function abreTelaQuestoes(){
-    handleCloseAdminMenu();
-    handleCloseNavMenu();
-    navigate('/listagemquestoes', {replace: true});
-  }
-
   function abreTelaLogs(){
     handleCloseAdminMenu();
     handleCloseNavMenu();
@@ -415,11 +409,6 @@ const ResponsiveAppBar = () => {
                           Histórico de usuários
                       </Typography>
                     </MenuItem>
-                    <MenuItem onClick={(e) => abreTelaQuestoes()}>
-                      <Typography textAlign="center">
-                          Lista todas questões
-                      </Typography>
-                    </MenuItem>
                     <MenuItem onClick={(e) => abreTelaHistoricoTabuadaDivertida()}>
                       <Typography textAlign="center">
                           Histórico Tabuada Divertida
@@ -554,11 +543,6 @@ const ResponsiveAppBar = () => {
                   <MenuItem onClick={(e) => abreTelaListagemHistoricoUsuario()}>
                     <Typography textAlign="center">
                         Histórico de usuários
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={(e) => abreTelaQuestoes()}>
-                    <Typography textAlign="center">
-                        Lista todas questões
                     </Typography>
                   </MenuItem>
                   <MenuItem onClick={(e) => abreTelaHistoricoTabuadaDivertida()}>

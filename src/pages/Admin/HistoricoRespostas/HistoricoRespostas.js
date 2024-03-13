@@ -37,7 +37,7 @@ function HistoricoRespostas(){
             return;
         }
 
-        await api.get(`/respostasusuaro/pagged?page=${page}&quantity=${quantityPerPage}`)
+        await api.get(`/respostasusuaro/pagged?page=${page}&quantity=${quantityPerPage}&idUser=-1`)
             .then((response) => {
                 setHistoricoRespostas(response.data.object);
                 setQuantity(response.data.total);
