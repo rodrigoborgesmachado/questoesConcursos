@@ -2,6 +2,7 @@ import api from '../../services/api.js';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
+import DownloadIcon from '@mui/icons-material/Download';
 
 function Avaliacao(){
     const navigate = useNavigate();
@@ -45,6 +46,31 @@ function Avaliacao(){
         return {__html: text}; 
     };
 
+    async function baixarArquivo(codigo, nome, prova){
+        setLoadding(true);
+        let url = prova ? '/Avaliacao/downloadProva?codigo=' : '/Avaliacao/downloadGabarito?codigo=';
+        url += codigo;
+
+        await api.get(url)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                const link = document.createElement('a');
+                link.href = response.data.object;
+                link.download = (prova ? 'Prova ' : 'Gabarito ') + nome.replace('/', '').replace('-', ' ') + '.html';
+                link.click();
+            }
+            else{
+                toast.error((prova ? 'Prova' : 'Gabarito') + ' não encontrada');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao gerar a prova!');
+        })
+    }
+
     if(loadding){
         return(
             <div className='loaddingDiv'>
@@ -66,6 +92,12 @@ function Avaliacao(){
                     <h4>Instituição: {avaliacao.usuario.instituicao}</h4>
                     <h4>Quantidade de questões: {avaliacao.questoesAvaliacao.length}</h4>
                     <h4>Nota total: {avaliacao.notaTotal}</h4>
+                    <h4 className='vis' onClick={() => baixarArquivo(avaliacao.id, avaliacao.nome, true)}>
+                        Baixar avaliação <DownloadIcon/>
+                    </h4>
+                    <h4 className='vis' onClick={() => baixarArquivo(avaliacao.id, avaliacao.nome, false)}>
+                        Baixar gabarito <DownloadIcon/>
+                    </h4>
                     {
                         avaliacao.orientacao ? 
                         <>
