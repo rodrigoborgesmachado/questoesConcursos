@@ -109,7 +109,7 @@ function ListagemQuestoes(){
     }, [])
 
     function abreQuestao(codigoQuestao, index){
-        navigate((filtro ? '/questoes/codigoquestaolistagem:?codigoProva=' + filtro: '/questoes/codigoquestaolistagemsemprova?1=1') + '&id=' + codigoQuestao + '&pageListagem=' + page + '&page=' + (index+page) + '&' + MontaFiltrosLocalSession(), {replace: true});
+        navigate((filtro ? '/questoes/codigoquestaolistagem:?codigoProva=' + filtro : '/questoes/codigoquestaolistagemsemprova?1=1') + '&id=' + codigoQuestao + '&pageListagem=' + page + '&page=' + (quantityPerPage*(page-1) + (index+1)) + '&' + MontaFiltrosLocalSession(), {replace: true});
     }
 
     function editaQuestao(codigoQuestao){
