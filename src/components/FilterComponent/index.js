@@ -5,7 +5,7 @@ import {toast} from 'react-toastify';
 import Config from './../../config.json';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
-import { MontaFiltrosLocalSession } from '../../services/functions.js';
+import { MontaFiltrosLocalSession, LimpaFiltrosLocalSession } from '../../services/functions.js';
 
 const filtroBanca=1;
 const filtroProva=2;
@@ -236,12 +236,8 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
     }
 
     async function limparFiltro(){
-        setSelectedAssuntos([]);
-        setSelectedBancas([]);
-        setSelectedMaterias([]);
-        setSelectedProvas([]);
-        setSelectedProfessores([]);
-        setSelectedTipos([]);
+        LimpaFiltrosLocalSession();
+        buscaQuestoesFiltrando();
     }
 
     if(loadding){
