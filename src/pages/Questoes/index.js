@@ -679,11 +679,13 @@ function Questoes(){
                 <h2>Matéria: {questao?.materia}</h2>
                 {
                     questao?.assunto ?
-                    <h3>
+                    <h4>
                         Assunto: {questao?.assunto}
-                    </h3>
+                    </h4>
                     :<></>
                 }
+                <h4>Prova: {questao?.prova?.nomeProva}</h4>
+                <h4>Banca: {questao?.prova?.banca}</h4>
             </div>
 
 

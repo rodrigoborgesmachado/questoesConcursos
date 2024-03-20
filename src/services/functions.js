@@ -47,6 +47,15 @@ export function formatDate(dateString) {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
+export function LimpaFiltrosLocalSession(){
+    localStorage.setItem(Config.filtroBancasSelecionadas, JSON.stringify([]));
+    localStorage.setItem(Config.filtroMateriasSelecionadas, JSON.stringify([]));
+    localStorage.setItem(Config.filtroAssuntosSelecionadas, JSON.stringify([]));
+    localStorage.setItem(Config.filtroProvasSelecionadas, JSON.stringify([]));
+    localStorage.setItem(Config.filtroProfessoresSelecionadas, JSON.stringify([]));
+    localStorage.setItem(Config.filtroTiposSelecionados, JSON.stringify([]));
+}
+
 export function MontaFiltrosLocalSession(){
     var bancas = localStorage.getItem(Config.filtroBancasSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroBancasSelecionadas)) : [];
     var materias = localStorage.getItem(Config.filtroMateriasSelecionadas) ? JSON.parse(localStorage.getItem(Config.filtroMateriasSelecionadas)) : [];

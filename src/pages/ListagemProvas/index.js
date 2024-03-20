@@ -23,6 +23,8 @@ function ListagemProvas() {
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(7);
     const [filtroMontado, setFiltroMontado] = useState(MontaFiltrosLocalSession());
+    const searchParams = new URLSearchParams(window.location.search);
+    const[isSimulado] = useState(searchParams.get('tipo') == 'simulado');
 
     function openModal() {
         setIsOpen(true);
@@ -159,7 +161,7 @@ function ListagemProvas() {
                 <h3 className='provaTitle'><a>Provas {JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados)).length > 0 ? JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados))[0].label : ''}</a></h3>
                 <div className='opcaoFiltro'>
                     {
-                        localStorage.getItem(Config.ADMIN) == '1' ?
+                        localStorage.getItem(Config.ADMIN) == '1' && !isSimulado ?
                             <h2><BsFileEarmarkPlusFill onClick={addProva} /></h2>
                             :
                             <></>
@@ -204,11 +206,18 @@ function ListagemProvas() {
                                     <br />
                                     <b className='clickOption' onClick={() => baixarArquivo(item.id, item.nomeProva, true)}>Baixar Prova 🔽</b> 
                                     <br />
-                                    <b className='clickOption' onClick={() => baixarArquivo(item.id, item.nomeProva, false)}>Baixar Gabarito 🔽</b> 
-                                    <br />
+                                    {
+                                        !isSimulado ? 
+                                        <>
+                                            <b className='clickOption' onClick={() => baixarArquivo(item.id, item.nomeProva, false)}>Baixar Gabarito 🔽</b> 
+                                            <br />
+                                        </>
+                                        :<></>
+                                    }
                                     <br />
                                     <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}🔥
                                     {
+                                        !isSimulado ?
                                         <>
                                             <br />
                                             <b>Quantidade de questões resolvidas:</b> {item.quantidadeQuestoesResolvidas}✅
@@ -222,23 +231,31 @@ function ListagemProvas() {
                                                 }
                                             }} value={parseInt((item.quantidadeQuestoesResolvidas / item.quantidadeQuestoesTotal) * 100)} />
                                         </>
+                                        :<></>
                                     }
                                     <br />
                                 </h4>
                                 <div className='global-buttonWrapper'>
                                     {
-                                        localStorage.getItem(Config.ADMIN) == '1' ?
-                                            <>
-                                                <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(item.id, item.isActive)}>{item.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
-                                            </>
-                                            :
-                                            <></>
+                                        !isSimulado ?
+                                        <>
+                                            {
+                                                localStorage.getItem(Config.ADMIN) == '1' ?
+                                                    <>
+                                                        <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(item.id, item.isActive)}>{item.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
+                                                    </>
+                                                    :
+                                                    <></>
+                                            }
+                                            <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
+                                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button>
+                                        </>
+                                        :
+                                        <>
+                                            <button className='global-button global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button>
+                                        </>
                                     }
-                                    <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
-                                    <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button></div>
-                                <br />
-                                <br />
-                                <br />
+                                </div>
                             </div>
                         )
                     })

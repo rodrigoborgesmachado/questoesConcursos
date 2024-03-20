@@ -22,7 +22,6 @@ import HistoricoUsuarioAdmin from './pages/Admin/HistoricoUsuario';
 import Config from './config.json';
 import Resultado from './pages/ResultadoSimulado';
 import HistoricoSimulado from './pages/HistoricoSimulado';
-import SimuladoSelecao from './pages/SimuladoSelecao';
 import AtualizaSenha from './pages/AtualizaSenha';
 import VerificadorUser from './pages/VerificadorUser';
 import ConfirmeConta from './pages/ConfirmeConta';
@@ -66,7 +65,6 @@ function RoutesApp(){
                 <Route path='/resetpass/:guid' element={<ResetPass/>}/>
                 <Route path='/resultadosimulado/:filtro' element={<Resultado/>}/>
                 <Route path='/historicosimulado/' element={<HistoricoSimulado/>}/>
-                <Route path='/simuladoselecao/' element={<SimuladoSelecao/>}/>
                 <Route path='/atualizasenha/' element={<AtualizaSenha/>}/>
                 <Route path='/valida/:guid' element={<VerificadorUser/>}/>
                 <Route path='/confirmesuaconta/:mail' element={<ConfirmeConta/>}/>
