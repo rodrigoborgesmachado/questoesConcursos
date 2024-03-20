@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
+import { LimpaFiltrosLocalSession } from '../../services/functions.js';
 
 const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu', '➕Pratique Tabuada'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
@@ -185,6 +186,8 @@ const ResponsiveAppBar = () => {
     localStorage.removeItem(Config.USUARIO);
     localStorage.removeItem(Config.TOKEN);
     localStorage.removeItem(Config.ADMIN);
+
+    LimpaFiltrosLocalSession();
     
     toast.success('Volte sempre!');
     navigate('/', {replace: true});
