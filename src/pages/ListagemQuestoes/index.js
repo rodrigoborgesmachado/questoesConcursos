@@ -189,6 +189,8 @@ function ListagemQuestoes(){
                         <br/>
                         Tipo: {prova?.tipoProva}
                         <br/>
+                        Ano: {prova?.dataAplicacao}
+                        <br/>
                         Local: {prova?.local}
                         <br />
                         {

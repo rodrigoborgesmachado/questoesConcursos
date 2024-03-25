@@ -44,7 +44,6 @@ function RoutesApp(){
         <BrowserRouter>
             <Header/>
             <Routes>
-                <Route path='/' element={<Home/>}/>
                 <Route path='/materias' element={<Materias/>}/>
                 <Route path='/bancas' element={<Bancas/>}/>
                 <Route path='/simulado' element={<Simulado/>}/>
@@ -73,6 +72,7 @@ function RoutesApp(){
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <>
+                        <Route path='/' element={<DashBoard/>}/>
                         <Route path='/historicoadmin' element={<HistoricoUsuarioAdmin/>}/>
                         <Route path='/dashboard' element={<DashBoard/>}/>
                         <Route path='/logs' element={<Logs/>}/>
@@ -83,12 +83,14 @@ function RoutesApp(){
                     :
                     localStorage.getItem(Config.ADMIN) === '2' ?
                     <>
+                        <Route path='/' element={<Home/>}/>
                         <Route path='/cadastroavaliacao' element={<CadastroAvaliacao/>}/>
                         <Route path='/cadastroavaliacao/:filtro' element={<CadastroAvaliacao/>}/>
                         <Route path='/listagemminhasavaliacoes' element={<MinhasAvaliacoes/>}/>
                     </>
                     :
                     <>
+                        <Route path='/' element={<Home/>}/>
                     </>
                 }
                 <Route path='/contato' element={<Contato/>}/>

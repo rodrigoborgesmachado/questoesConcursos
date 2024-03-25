@@ -10,6 +10,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { customStyles } from '../../../services/functions.js';
+import {abreQuestao} from './../../../services/functions.js'
 
 function DashBoard(){
     const styles = customStyles();
@@ -98,10 +99,6 @@ function DashBoard(){
         return data.split('-')[2] + '/' + data.split('-')[1] + '/' + data.split('-')[0];
     }
 
-    function abreQuestao(codigoQuestao){
-        navigate('/questoes/codigoquestaolistagem:' + codigoQuestao, {replace: true});
-    }
-
     function abreProva(codigoProva){
         navigate('/listagemquestoes/' + codigoProva, {replace: true});
     }
@@ -163,7 +160,7 @@ function DashBoard(){
                                     questoes.map((item, index) => {
                                         return(
                                             <tr key={item}>
-                                                <td className='option'>
+                                                <td className='option link'>
                                                     <h4 onClick={() => abreQuestao(item.id)}>
                                                         <a>✏️{item.id}</a>
                                                     </h4>

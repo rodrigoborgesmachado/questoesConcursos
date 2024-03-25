@@ -397,7 +397,7 @@ function Questoes(){
             navigate('/listagemquestoes' + (searchParams.get('pageListagem') ? '?page=' + searchParams.get('pageListagem') : ''), {replace: true});
         }
         else if(filtro.includes('codigoquestaolistagem')){
-            navigate('/listagemquestoes/' + questao?.codigoProva, {replace: true});
+            navigate('/listagemquestoes/' + questao?.codigoProva + '?page=' + searchParams.get('pageListagem'), {replace: true});
         }
         else if(filtro.includes('simulado')){
             localStorage.removeItem(Config.Historico);
@@ -554,7 +554,12 @@ function Questoes(){
                     <div className='separator separator--withMargins'></div>
                     <div className='global-buttonWrapper'>
                         <button className='global-button' onClick={buscaRespostaCorreta}>Visualizar resposta</button>
-                        <button className='global-button' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
+                        {
+                            questao?.ativo == "1" ? 
+                            <button className='global-button' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
+                            :
+                            <></>
+                        }
                         {
                             localStorage.getItem(Config.ADMIN) === '1' ?
                             <>
