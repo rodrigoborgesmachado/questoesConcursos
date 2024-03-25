@@ -16,6 +16,8 @@ function DashBoard(){
     const styles = customStyles();
     const navigate = useNavigate();
     const [dados, setDados] = useState({});
+    const [questoesPorUsuarios, setQuestoesPorUsuarios] = useState({});
+    const [questoesValidadasPorUsuarios, setQuestoesValidadasPorUsuarios] = useState({});
     const [loadding, setLoadding] = useState(true);
     const [questoes, setQuestoes] = useState([])
     const [provas, setProvas] = useState([])
@@ -56,6 +58,34 @@ function DashBoard(){
                 setDados(response.data.object);
                 setQuantityQuestoes(response.data.object.quantidadeQuestoesSolicitadasRevisao);
                 setQuantityProvas(response.data.object.quantidadeProvasDesativasAtivas);
+                setLoadding(false);
+                buscaQuantidadeQuestoesCadastradasPorUsuario();
+            }).catch(() => {
+                toast.error('Erro ao buscar os dados');
+                navigate('/', { replace: true });
+                return;
+            });
+    }
+
+    async function buscaQuantidadeQuestoesCadastradasPorUsuario(){
+        setLoadding(true);
+        await api.get('/Admin/getquantidadequestoescadastradasporusuarios')
+            .then((response) => {
+                setQuestoesPorUsuarios(response.data.object);
+                setLoadding(false);
+                buscaQuantidadeQuestoesValidadasPorUsuario();
+            }).catch(() => {
+                toast.error('Erro ao buscar os dados');
+                navigate('/', { replace: true });
+                return;
+            });
+    }
+
+    async function buscaQuantidadeQuestoesValidadasPorUsuario(){
+        setLoadding(true);
+        await api.get('/Admin/getquantidadequestoesvalidadasporusuarios')
+            .then((response) => {
+                setQuestoesValidadasPorUsuarios(response.data.object);
                 setLoadding(false);
             }).catch(() => {
                 toast.error('Erro ao buscar os dados');
@@ -325,6 +355,40 @@ function DashBoard(){
                         <h4>Quantidade de respostas: {dados?.quantidadeRespostasTabuadaDivertida}</h4>
                         <h4>Quantidade de respostas últimas 24 horas: {dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas}</h4>
                     </div>
+                </div>
+                <br/>
+                <h2>Quantidade de questões cadastradas por usuários</h2>
+                <div className='dados global-infoPanel'>
+                    {
+                        questoesPorUsuarios?.map((item, index) => {
+                            return(
+                                <div className="itemUsuarios" key={index}>
+                                    <h4>
+                                        Usuário: {item.descricao} 
+                                        <br/>
+                                        Quantidade de questões: {item.valor}
+                                    </h4>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <br/>
+                <h2>Quantidade de questões validadas por usuários</h2>
+                <div className='dados global-infoPanel'>
+                    {
+                        questoesValidadasPorUsuarios?.map((item, index) => {
+                            return(
+                                <div className="itemUsuarios" key={index}>
+                                    <h4>
+                                        Usuário: {item.descricao} 
+                                        <br/>
+                                        Quantidade de questões: {item.valor}
+                                    </h4>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <br/>
                 <h2>Usuários cadastrados nos últimos 30 dias</h2>
