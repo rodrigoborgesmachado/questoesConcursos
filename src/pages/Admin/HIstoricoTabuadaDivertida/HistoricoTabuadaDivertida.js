@@ -8,7 +8,8 @@ import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { customStyles } from "../../../services/functions.js";
+import { customStyles, formatDate } from "../../../services/functions.js";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 function HistoricoTabuadaDivertida(){
     const styles = customStyles();
@@ -44,6 +45,25 @@ function HistoricoTabuadaDivertida(){
                 setLoadding(false);
             }).catch(() => {
                 toast.error('Erro ao buscar os dados');
+                navigate('/', { replace: true });
+                return;
+            });
+    }
+
+    async function deleteItem(id){
+        await api.delete(`/ResultadosTabuadaDivertida?id=${id}`)
+            .then((response) => {
+                if(response.data.object){
+                    toast.info('Deletado com sucesso!');
+                    setLoadding(true);
+                    buscaDados(page);
+                }
+                else{
+                    toast.error('Erro ao deletar');
+                    buscaDados(page);
+                }
+            }).catch(() => {
+                toast.error('Erro ao deletar');
                 navigate('/', { replace: true });
                 return;
             });
@@ -111,16 +131,22 @@ function HistoricoTabuadaDivertida(){
                                 Nome
                             </th>
                             <th>
-                                Número Acertos
+                                Acertos
                             </th>
                             <th>
-                                Número Questões
+                                Questões
                             </th>
                             <th>
                                 Tempo
                             </th>
                             <th>
+                                Data
+                            </th>
+                            <th>
                                 Tipo
+                            </th>
+                            <th>
+
                             </th>
                             <th>
 
@@ -159,12 +185,22 @@ function HistoricoTabuadaDivertida(){
                                         </td>
                                         <td>
                                             <h4>
+                                                {formatDate(item.created)}
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <h4>
                                                 {item.tipo}
                                             </h4>
                                         </td>
                                         <td className='option'>
                                             <h4 onClick={() => openModal(index)}>
                                                 <a><VisibilityIcon/></a>
+                                            </h4>
+                                        </td>
+                                        <td className='option'>
+                                            <h4 onClick={() => deleteItem(item.id)}>
+                                                <a><HighlightOffIcon/></a>
                                             </h4>
                                         </td>
                                     </tr>
