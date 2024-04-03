@@ -10,7 +10,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { customStyles } from '../../../services/functions.js';
-import {abreQuestao} from './../../../services/functions.js'
+import {abreQuestao} from './../../../services/functions.js';
+import BasicPie from './../../../components/GraficoPie/graficoPie.js';
 
 function DashBoard(){
     const styles = customStyles();
@@ -145,6 +146,23 @@ function DashBoard(){
         setLoadding(true);
         buscaProvasParaRevisao(value);
     };
+
+    function criaInformacoesUsuarios(){
+        return [
+            {
+                id:0,
+                value: dados?.quantidadeVerificados, 
+                color: 'blue',
+                label: 'Usuários verificados'
+            },
+            {
+                id:1,
+                value: dados?.quantidadeNaoVerificados, 
+                color: 'red',
+                label: 'Usuários não verificados'
+            }
+        ]
+    }
 
     if (loadding) {
         return (
@@ -322,8 +340,9 @@ function DashBoard(){
                 <div className='dados global-infoPanel'>
                     <h3>Usuários:</h3>
                     <div className='dadosDashboard'>
-                        <h4>Quantidade de usuários verificados: {dados?.quantidadeVerificados}</h4>
-                        <h4>Quantidade de usuários não verificados: {dados?.quantidadeNaoVerificados}</h4>
+                        <BasicPie dados={criaInformacoesUsuarios()}/>
+                        {/* <h4>Quantidade de usuários verificados: {dados?.quantidadeVerificados}</h4>
+                        <h4>Quantidade de usuários não verificados: {dados?.quantidadeNaoVerificados}</h4> */}
                     </div>
                     <div className='dadosDashboard'>
                         <h4>Quantidade de usuários total: {dados?.quantidadeTotal}</h4>
