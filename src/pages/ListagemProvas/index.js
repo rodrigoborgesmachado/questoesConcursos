@@ -70,7 +70,7 @@ function ListagemProvas() {
     }
 
     function abrirSimulado(codigo) {
-        navigate('/questoes/simulado&' + codigo, { replace: true });
+        navigate('/questoes/simulado&' + codigo + '?codigoProva=' + codigo + '&page=1', { replace: true });
     }
 
     function filtrar() {

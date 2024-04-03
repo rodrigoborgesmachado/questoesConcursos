@@ -97,97 +97,99 @@ function HistoricoSimulado(){
     }
 
     return (
-        <div className='containerpage'>
-            <h2>
-                Histórico de Simulados
-            </h2>
-            <br/>
-            <div className='dadosResumidos'>
-                {
-                    localStorage.getItem(Config.ADMIN) === '1' ?
-                    <div className='formUsuario'>
-                        <div className='selectUsuario'>
-                            <p>Usuário:</p>
-                            <Select closeMenuOnSelect={false} components={animatedComponents} options={usuarios} onChange={handleUsuarios} style={{width: '100%'}}/>
-                        </div>
-                    </div>
-                    :
-                    <></>
-                }
-                {
-                    usuarioFiltro ?
-                    <h3>
-                        Simulados feitos por: {usuarioFiltro}
-                    </h3>
-                    :
-                    <></>
-                }
-
-                <Table>
-                <thead>
-                    <tr>
-                        <th>
-                            <h3>
-                            Prova
-                            </h3>
-                        </th>
-                        <th>
-                            <h3>
-                            Quantidade Questões
-                            </h3>
-                        </th>
-                        <th>
-                            <h3>
-                            Nº acertos
-                            </h3>
-                        </th>
-                        <th>
-                            <h3>
-                            Tempo
-                            </h3>
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div className='containerpage global-fullW'>
+            <div className='dados global-infoPanel'>
+                <h2>
+                    Histórico de Simulados
+                </h2>
+                <br/>
+                <div className='dadosResumidos'>
                     {
-                        lista?.map((item, index) => {
-                        return(
-                            <tr key={index}>
-                                <td>
-                                    <h4>
-                                        {
-                                            item.prova.nomeProva
-                                        }
-                                    </h4>
-                                </td>
-                                <td>
-                                    <h4>
-                                        {item.quantidadeQuestoes}
-                                    </h4>
-                                </td>
-                                <td>
-                                    <h4>
-                                        {item.quantidadeCertas}
-                                    </h4>
-                                </td>
-                                <td>
-                                    <h4>
-                                        {Math.round(item.tempo/60)} minutos
-                                    </h4>
-                                </td>
-                                <td>
-                                    <h4>
-                                        <button onClick={() => abreResultado(item.codigo)} className='global-button'>Visualizar</button>
-                                    </h4>
-                                </td>
-                            </tr>
-                        )
-                    })
+                        localStorage.getItem(Config.ADMIN) === '1' ?
+                        <div className='formUsuario'>
+                            <div className='selectUsuario'>
+                                <p>Usuário:</p>
+                                <Select closeMenuOnSelect={false} components={animatedComponents} options={usuarios} onChange={handleUsuarios} style={{width: '100%'}}/>
+                            </div>
+                        </div>
+                        :
+                        <></>
                     }
-                </tbody>
-                </Table>
+                    {
+                        usuarioFiltro ?
+                        <h3>
+                            Simulados feitos por: {usuarioFiltro}
+                        </h3>
+                        :
+                        <></>
+                    }
+
+                    <Table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <h3>
+                                Prova
+                                </h3>
+                            </th>
+                            <th>
+                                <h3>
+                                Quantidade Questões
+                                </h3>
+                            </th>
+                            <th>
+                                <h3>
+                                Nº acertos
+                                </h3>
+                            </th>
+                            <th>
+                                <h3>
+                                Tempo
+                                </h3>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            lista?.map((item, index) => {
+                            return(
+                                <tr key={index}>
+                                    <td>
+                                        <h4>
+                                            {
+                                                item.prova.nomeProva
+                                            }
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            {item.quantidadeQuestoes}
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            {item.quantidadeCertas}
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            {Math.round(item.tempo/60)} minutos
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            <button onClick={() => abreResultado(item.codigo)} className='global-button'>Visualizar</button>
+                                        </h4>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                        }
+                    </tbody>
+                    </Table>
+                </div>
             </div>
         </div>
     )
