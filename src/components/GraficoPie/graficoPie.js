@@ -8,7 +8,7 @@ export default function BasicPie({dados}) {
         <PieChart
             series={[
                 {
-                    data: dados, innerRadius: 0
+                    data: dados
                 },
             ]}
             width={400}

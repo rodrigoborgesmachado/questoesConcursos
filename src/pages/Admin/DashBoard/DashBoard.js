@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import { customStyles } from '../../../services/functions.js';
 import {abreQuestao} from './../../../services/functions.js';
 import BasicPie from './../../../components/GraficoPie/graficoPie.js';
+import BasicBars from '../../../components/GraficoBarra/graficoBarra.js';
 
 function DashBoard(){
     const styles = customStyles();
@@ -153,15 +154,109 @@ function DashBoard(){
                 id:0,
                 value: dados?.quantidadeVerificados, 
                 color: 'blue',
-                label: 'Usuários verificados'
+                label: 'Usuários verificados: ' + dados?.quantidadeVerificados
             },
             {
                 id:1,
                 value: dados?.quantidadeNaoVerificados, 
                 color: 'red',
-                label: 'Usuários não verificados'
+                label: 'Usuários não verificados' + dados?.quantidadeNaoVerificados
             }
         ]
+    }
+
+    function criaInformacoesRespostas(){
+        return [
+            {
+                id:0,
+                value: dados?.quantidadeRespostasUltimas24Horas, 
+                color: 'red',
+                label: 'Últimas 24 horas: ' + dados?.quantidadeRespostasUltimas24Horas
+            },
+            {
+                id:1,
+                value: dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas24Horas, 
+                color: 'blue',
+                label: 'Restante: ' + (dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas24Horas)
+            }
+        ]
+    }
+
+    function criaInformacoesTabuadaDivertida(){
+        return [
+            {
+                id:0,
+                value: dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas, 
+                color: 'red',
+                label: 'Últimas 24 horas: ' + dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas
+            },
+            {
+                id:1,
+                value: dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas, 
+                color: 'blue',
+                label: 'Restante: ' + (dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas)
+            }
+        ]
+    }
+
+    function criaInformacoesNomesQuestõesCadastradasPorUsuarios(){
+        var itens = new Array();
+
+        questoesPorUsuarios.forEach(element => {
+            itens.push(element.descricao);
+        });
+
+        return itens;
+    }
+
+    function criaInformacoesValoresQuestõesCadastradasPorUsuarios(){
+        var itens = new Array();
+
+        questoesPorUsuarios.forEach(element => {
+            itens.push(element.valor);
+        });
+
+        return itens;
+    }
+
+    function criaInformacoesNomesQuestõesValidadas(){
+        var itens = new Array();
+
+        questoesValidadasPorUsuarios.forEach(element => {
+            itens.push(element.descricao);
+        });
+
+        return itens;
+    }
+
+    function criaInformacoesValoresQuestõesValidadas(){
+        var itens = new Array();
+
+        questoesValidadasPorUsuarios.forEach(element => {
+            itens.push(element.valor);
+        });
+
+        return itens;
+    }
+
+    function criaInformacoesNomesUsuariosCadastrados(){
+        var itens = new Array();
+
+        dados?.usuariosDates?.forEach(element => {
+            itens.push(formataData(element.date));
+        });
+
+        return itens;
+    }
+
+    function criaInformacoesValoresUsuariosCadastrados(){
+        var itens = new Array();
+
+        dados?.usuariosDates?.forEach(element => {
+            itens.push(element.count);
+        });
+
+        return itens;
     }
 
     if (loadding) {
@@ -338,94 +433,56 @@ function DashBoard(){
                 <h2>DashBoard</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    <h3>Usuários:</h3>
                     <div className='dadosDashboard'>
-                        <BasicPie dados={criaInformacoesUsuarios()}/>
-                        {/* <h4>Quantidade de usuários verificados: {dados?.quantidadeVerificados}</h4>
-                        <h4>Quantidade de usuários não verificados: {dados?.quantidadeNaoVerificados}</h4> */}
+                        <div>
+                            <h3>Usuários ({dados?.quantidadeTotal}):</h3>
+                            <div className='dadosDashboard'>
+                                <BasicPie dados={criaInformacoesUsuarios()}/>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Respostas ({dados?.quantidadeRespostas}):</h3>
+                            <div className='dadosDashboard'>
+                                <BasicPie dados={criaInformacoesRespostas()}/>
+                            </div>
+                        </div>
                     </div>
+                    <h3>Respostas Tabuada Divertida ({dados?.quantidadeRespostasTabuadaDivertida}):</h3>
                     <div className='dadosDashboard'>
-                        <h4>Quantidade de usuários total: {dados?.quantidadeTotal}</h4>
+                        <BasicPie dados={criaInformacoesTabuadaDivertida()}/>
                     </div>
-                    <br/>
-                    <h3>Respostas</h3>
-                    <div className='dadosDashboard'>
-                        <h4>Quantidade de respostas certas: {dados?.quantidadeRespostasCertas}</h4>
-                        <h4>Quantidade de respostas: {dados?.quantidadeRespostas}</h4>
-                    </div>
-                    <div className='dadosDashboard'>
-                        <h4>Quantidade de respostas últimas 24 horas: {dados?.quantidadeRespostasUltimas24Horas}</h4>
-                    </div>
-                    <br/>
+                </div>
+                <br/>
+                <h2>Manutenção de provas e questões</h2>
+                <br/>
+                <div className='dados global-infoPanel'>
                     <h3>Questões</h3>
                     <div className='dadosDashboard'>
                         <h4>Quantidade de questões ativas: {dados?.quantidadeQuestoesAtivas}</h4>
                         <h4>Quantidade de questões para revisão: {dados?.quantidadeQuestoesSolicitadasRevisao}<VisibilityIcon onClick={(e) => buscaQuestoesParaRevisao(1)}/></h4>
                     </div>
-                    <br/>
                     <h3>Provas</h3>
                     <div className='dadosDashboard'>
                         <h4>Quantidade de provas ativas: {dados?.quantidadeProvasAtivas}</h4>
                         <h4>Quantidade de provas em aberto: {dados?.quantidadeProvasDesativasAtivas}<VisibilityIcon onClick={(e) => buscaProvasParaRevisao(1)}/></h4>
                     </div>
-                    <br/>
-                    <h3>Respostas Tabuada Divertida</h3>
-                    <div className='dadosDashboard'>
-                        <h4>Quantidade de respostas: {dados?.quantidadeRespostasTabuadaDivertida}</h4>
-                        <h4>Quantidade de respostas últimas 24 horas: {dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas}</h4>
-                    </div>
                 </div>
                 <br/>
                 <h2>Quantidade de questões cadastradas por usuários</h2>
+                <br/>
                 <div className='dados global-infoPanel'>
-                    {
-                        questoesPorUsuarios?.map((item, index) => {
-                            return(
-                                <div className="itemUsuarios" key={index}>
-                                    <h4>
-                                        Usuário: {item.descricao} 
-                                        <br/>
-                                        Quantidade de questões: {item.valor}
-                                    </h4>
-                                </div>
-                            )
-                        })
-                    }
+                    <BasicBars nomes={criaInformacoesNomesQuestõesCadastradasPorUsuarios()} dados={criaInformacoesValoresQuestõesCadastradasPorUsuarios()}/>
                 </div>
                 <br/>
                 <h2>Quantidade de questões validadas por usuários</h2>
                 <div className='dados global-infoPanel'>
-                    {
-                        questoesValidadasPorUsuarios?.map((item, index) => {
-                            return(
-                                <div className="itemUsuarios" key={index}>
-                                    <h4>
-                                        Usuário: {item.descricao} 
-                                        <br/>
-                                        Quantidade de questões: {item.valor}
-                                    </h4>
-                                </div>
-                            )
-                        })
-                    }
+                    <BasicBars nomes={criaInformacoesNomesQuestõesValidadas()} dados={criaInformacoesValoresQuestõesValidadas()}/>
                 </div>
                 <br/>
                 <h2>Usuários cadastrados nos últimos 30 dias</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    {
-                        dados?.usuariosDates?.map((item, index) => {
-                            return(
-                                <div className="itemUsuarios" key={index}>
-                                    <h4>
-                                        Dia: {formataData(item.date)} 
-                                        <br/>
-                                        Quantidade: {item.count}
-                                    </h4>
-                                </div>
-                            )
-                        })
-                    }
+                    <BasicBars nomes={criaInformacoesNomesUsuariosCadastrados()} dados={criaInformacoesValoresUsuariosCadastrados()}/>
                 </div>
             </div>
         </div>
