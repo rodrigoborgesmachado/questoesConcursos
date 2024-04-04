@@ -1,10 +1,10 @@
 import axios from "axios";
 import Config from './../config.json';
-import { toast } from 'react-toastify';
+
+var apiUrl = window.location.href.includes("localhost") ? 'https://localhost:7119/api' : 'https://apisunsale.azurewebsites.net/api';
 
 const api = axios.create({
-    //baseURL: 'https://localhost:7119/api',
-    baseURL: 'https://apisunsale.azurewebsites.net/api',
+    baseURL: apiUrl,
     headers: {
         'Content-Type': 'application/json',
     },
