@@ -29,3 +29,39 @@ export function StackedBarChart({nomes, pData, uData, pLabel, uvLabel}) {
     </div>
   );
 }
+
+export function BarraDoisItensCorretosErrados({itens}){
+  function criaInformacoesNomesValores(lista){
+    var itens = new Array();
+
+    lista.forEach(element => {
+        itens.push(element.descricao + ' | Total: ' + (element.certas + element.erradas));
+    });
+
+    return itens;
+  }
+
+  function criaInformacoesValoresCertos(lista){
+      var itens = new Array();
+
+      lista.forEach(element => {
+          itens.push(element.certas);
+      });
+
+      return itens;
+  }
+
+  function criaInformacoesValoresErrados(lista){
+      var itens = new Array();
+
+      lista.forEach(element => {
+          itens.push(element.erradas);
+      });
+
+      return itens;
+  }
+
+  return (
+    <StackedBarChart nomes={criaInformacoesNomesValores(itens)} pData={criaInformacoesValoresCertos(itens)} uData={criaInformacoesValoresErrados(itens)} pLabel={'Corretas'} uvLabel = {'Erradas'}/>
+  )
+}

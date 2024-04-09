@@ -25,6 +25,7 @@ if(localStorage.getItem(Config.ADMIN) === '1'){
 
 const settings = ['Olá ' + localStorage.getItem(Config.Nome)];
 settings.push('Perfil👽');
+settings.push('Meu Desempenho📊');
 
 if(localStorage.getItem(Config.ADMIN) === '2'){
   settings.push('Minhas Avaliações');
@@ -136,6 +137,9 @@ const ResponsiveAppBar = () => {
     
     if(setting === 'Perfil👽'){
       navigate('/perfil', {replace: true});
+    }
+    else if(setting === "Meu Desempenho📊"){
+      navigate('/meudesempenho', {replace: true});
     }
     else if(setting === 'Histórico de Questões⏳'){
         navigate('/historico', {replace: true});

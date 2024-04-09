@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import { customStyles } from '../../../services/functions.js';
 import { abreQuestao } from './../../../services/functions.js';
 import BasicPie from './../../../components/GraficoPie/graficoPie.js';
-import { BasicBars, StackedBarChart } from '../../../components/GraficoBarra/graficoBarra.js';
+import { BasicBars, BarraDoisItensCorretosErrados } from '../../../components/GraficoBarra/graficoBarra.js';
 
 function DashBoard(){
     const styles = customStyles();
@@ -20,8 +20,6 @@ function DashBoard(){
     const [dados, setDados] = useState({});
     const [questoesPorUsuarios, setQuestoesPorUsuarios] = useState({});
     const [questoesValidadasPorUsuarios, setQuestoesValidadasPorUsuarios] = useState({});
-    const [respostasPorProva, setRespostasPorProva] = useState({});
-    const [respostasPorMateria, setRespostasPorMateria] = useState({});
     const [loadding, setLoadding] = useState(true);
     const [questoes, setQuestoes] = useState([])
     const [provas, setProvas] = useState([])
@@ -90,34 +88,6 @@ function DashBoard(){
         await api.get('/Admin/getquantidadequestoesvalidadasporusuarios')
             .then((response) => {
                 setQuestoesValidadasPorUsuarios(response.data.object);
-                setLoadding(false);
-                buscaQuantidadeRespostasPorProva();
-            }).catch(() => {
-                toast.error('Erro ao buscar os dados');
-                navigate('/', { replace: true });
-                return;
-            });
-    }
-
-    async function buscaQuantidadeRespostasPorProva(){
-        setLoadding(true);
-        await api.get('/Admin/getquantidaderespostasporprova')
-            .then((response) => {
-                setRespostasPorProva(response.data.object);
-                setLoadding(false);
-                buscaQuantidadeRespostasPorMateria();
-            }).catch(() => {
-                toast.error('Erro ao buscar os dados');
-                navigate('/', { replace: true });
-                return;
-            });
-    }
-
-    async function buscaQuantidadeRespostasPorMateria(){
-        setLoadding(true);
-        await api.get('/Admin/getquantidaderespostaspormateria')
-            .then((response) => {
-                setRespostasPorMateria(response.data.object);
                 setLoadding(false);
             }).catch(() => {
                 toast.error('Erro ao buscar os dados');
@@ -284,66 +254,6 @@ function DashBoard(){
 
         dados?.usuariosDates?.forEach(element => {
             itens.push(element.count);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesNomesRespostasPorProva(){
-        var itens = new Array();
-
-        respostasPorProva.forEach(element => {
-            itens.push(element.descricao + ' | Total: ' + (element.certas + element.erradas));
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesValoresRespostasCertasPorProva(){
-        var itens = new Array();
-
-        respostasPorProva.forEach(element => {
-            itens.push(element.certas);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesValoresRespostasErradasPorProva(){
-        var itens = new Array();
-
-        respostasPorProva.forEach(element => {
-            itens.push(element.erradas);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesNomesRespostasPorMateria(){
-        var itens = new Array();
-
-        respostasPorMateria.forEach(element => {
-            itens.push(element.descricao + ' | Total: ' + (element.certas + element.erradas));
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesValoresRespostasCertasPorMateria(){
-        var itens = new Array();
-
-        respostasPorMateria.forEach(element => {
-            itens.push(element.certas);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesValoresRespostasErradasPorMateria(){
-        var itens = new Array();
-
-        respostasPorMateria.forEach(element => {
-            itens.push(element.erradas);
         });
 
         return itens;
@@ -561,13 +471,25 @@ function DashBoard(){
                 <h2>Quantidade de respostas por prova</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    <StackedBarChart nomes={criaInformacoesNomesRespostasPorProva()} pData={criaInformacoesValoresRespostasCertasPorProva()} uData={criaInformacoesValoresRespostasErradasPorProva()} pLabel={'Corretas'} uvLabel = {'Erradas'}/>
+                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorProvas}/>
                 </div>
                 <br/>
                 <h2>Quantidade de respostas por matéria</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    <StackedBarChart nomes={criaInformacoesNomesRespostasPorMateria()} pData={criaInformacoesValoresRespostasCertasPorMateria()} uData={criaInformacoesValoresRespostasErradasPorMateria()} pLabel={'Corretas'} uvLabel = {'Erradas'}/>
+                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorMateria}/>
+                </div>
+                <br/>
+                <h2>Quantidade de respostas por banca</h2>
+                <br/>
+                <div className='dados global-infoPanel'>
+                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorBanca}/>
+                </div>
+                <br/>
+                <h2>Quantidade de respostas por tipos</h2>
+                <br/>
+                <div className='dados global-infoPanel'>
+                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorTipo}/>
                 </div>
                 <br/>
                 <h2>Quantidade de questões cadastradas por usuários</h2>

@@ -38,6 +38,7 @@ import ListagemAvaliacoes from './pages/ListagemAvaliacoes/listagemAvaliacoes';
 import Avaliacao from './pages/Avaliacao';
 import ResultadoAvaliacao from './pages/ResultadoAvaliacao/resultadoAvaliacao';
 import HistoricoRespostas from './pages/Admin/HistoricoRespostas/HistoricoRespostas';
+import MeuDesempenho from './pages/MeuDesempenho/meuDesempenho';
 
 function RoutesApp(){
     return(
@@ -69,6 +70,7 @@ function RoutesApp(){
                 <Route path='/confirmesuaconta/:mail' element={<ConfirmeConta/>}/>
                 <Route path='/avaliacoes' element={<ListagemAvaliacoes/>}/>
                 <Route path='/avaliacoes/:code' element={<Avaliacao/>}/>
+                <Route path='/meudesempenho' element={<MeuDesempenho/>}/>
                 {
                     localStorage.getItem(Config.ADMIN) === '1' ?
                     <>
