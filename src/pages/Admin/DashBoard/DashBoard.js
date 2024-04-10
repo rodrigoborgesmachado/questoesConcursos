@@ -474,6 +474,12 @@ function DashBoard(){
                     <BarraDoisItensCorretosErrados itens={dados?.respostasPorProvas}/>
                 </div>
                 <br/>
+                <h2>Quantidade de respostas por avaliação</h2>
+                <br/>
+                <div className='dados global-infoPanel'>
+                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorAvaliacao}/>
+                </div>
+                <br/>
                 <h2>Quantidade de respostas por matéria</h2>
                 <br/>
                 <div className='dados global-infoPanel'>

@@ -601,7 +601,7 @@ const ResponsiveAppBar = () => {
                   {settings.map((setting, index) => (
                     <MenuItem key={setting} onClick={(e) => SelecionaOpcaoUsuario(setting)}>
                     {
-                      index == 3  && localStorage.getItem(Config.ADMIN) === '2'?
+                      setting == 'Minhas Avaliações'  && localStorage.getItem(Config.ADMIN) === '2'?
                       <>
                         <Typography key={setting} onClick={handleOpenMinhasAvaliacoes}>
                             {setting}
@@ -630,8 +630,6 @@ const ResponsiveAppBar = () => {
                         <Typography textAlign="center">
                           {setting}
                         </Typography>
-                      
-                      
                     }
                     </MenuItem>
                   ))}

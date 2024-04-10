@@ -80,25 +80,76 @@ export default function MeuDesempenho(){
                 <h2>Quantidade de respostas por prova</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorProvas}/>
+                {
+                    dados?.respostasPorProvas.length > 0 ?
+                    <>
+                        <BarraDoisItensCorretosErrados itens={dados?.respostasPorProvas}/>
+                    </>    
+                    :
+                    <>
+                        <h4>Sem dados</h4>
+                    </>
+                }
+                </div>
+                <br/>
+                <h2>Quantidade de respostas por avaliação</h2>
+                <br/>
+                <div className='dados global-infoPanel'>
+                {
+                    dados?.respostasPorAvaliacao.length > 0 ?
+                    <>
+                        <BarraDoisItensCorretosErrados itens={dados?.respostasPorAvaliacao}/>
+                    </>
+                    :
+                    <>
+                        <h4>Sem dados</h4>
+                    </>
+                }
                 </div>
                 <br/>
                 <h2>Quantidade de respostas por matéria</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorMateria}/>
+                {
+                    dados?.respostasPorMateria.length > 0 ?
+                    <>
+                        <BarraDoisItensCorretosErrados itens={dados?.respostasPorMateria}/>
+                    </>
+                    :
+                    <>
+                        <h4>Sem dados</h4>
+                    </>
+                }
                 </div>
                 <br/>
                 <h2>Quantidade de respostas por banca</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorBanca}/>
+                {
+                    dados?.respostasPorBanca.length > 0 ?
+                    <>
+                        <BarraDoisItensCorretosErrados itens={dados?.respostasPorBanca}/>
+                    </>
+                    :
+                    <>
+                        <h4>Sem dados</h4>
+                    </>
+                }
                 </div>
                 <br/>
                 <h2>Quantidade de respostas por tipo</h2>
                 <br/>
                 <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorTipo}/>
+                {
+                    dados?.respostasPorTipo.length > 0 ?
+                    <>
+                        <BarraDoisItensCorretosErrados itens={dados?.respostasPorTipo}/>
+                    </>
+                    :
+                    <>
+                        <h4>Sem dados</h4>
+                    </>
+                }
                 </div>
                 <br/>
             </div>

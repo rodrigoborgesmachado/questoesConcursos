@@ -34,7 +34,7 @@ export function BarraDoisItensCorretosErrados({itens}){
   function criaInformacoesNomesValores(lista){
     var itens = new Array();
 
-    lista.forEach(element => {
+    lista?.forEach(element => {
         itens.push(element.descricao + ' | Total: ' + (element.certas + element.erradas));
     });
 
@@ -44,7 +44,7 @@ export function BarraDoisItensCorretosErrados({itens}){
   function criaInformacoesValoresCertos(lista){
       var itens = new Array();
 
-      lista.forEach(element => {
+      lista?.forEach(element => {
           itens.push(element.certas);
       });
 
@@ -54,7 +54,7 @@ export function BarraDoisItensCorretosErrados({itens}){
   function criaInformacoesValoresErrados(lista){
       var itens = new Array();
 
-      lista.forEach(element => {
+      lista?.forEach(element => {
           itens.push(element.erradas);
       });
 
