@@ -154,13 +154,13 @@ function DashBoard(){
                 id:0,
                 value: dados?.quantidadeVerificados, 
                 color: 'blue',
-                label: 'Usuários verificados: ' + dados?.quantidadeVerificados
+                label: 'Verificados: ' + dados?.quantidadeVerificados
             },
             {
                 id:1,
                 value: dados?.quantidadeNaoVerificados, 
                 color: 'red',
-                label: 'Usuários não verificados' + dados?.quantidadeNaoVerificados
+                label: 'Não verificados' + dados?.quantidadeNaoVerificados
             }
         ]
     }
