@@ -259,6 +259,23 @@ function DashBoard(){
         return itens;
     }
 
+    function criaInformacoesUsuarios24Horas(){
+        return [
+            {
+                id:0,
+                value: dados?.quantidadeUsuarios24Horas, 
+                color: 'red',
+                label: 'Últimas 24 horas: ' + dados?.quantidadeUsuarios24Horas
+            },
+            {
+                id:1,
+                value: dados?.quantidadeTotal - dados?.quantidadeUsuarios24Horas, 
+                color: 'blue',
+                label: 'Restante: ' + (dados?.quantidadeTotal - dados?.quantidadeUsuarios24Horas)
+            }
+        ]
+    }
+
     if (loadding) {
         return (
             <div className='loaddingDiv'>
@@ -447,10 +464,21 @@ function DashBoard(){
                             </div>
                         </div>
                     </div>
-                    <h3>Respostas Tabuada Divertida ({dados?.quantidadeRespostasTabuadaDivertida}):</h3>
                     <div className='dadosDashboard'>
-                        <BasicPie dados={criaInformacoesTabuadaDivertida()}/>
+                        <div>
+                            <h3>Total usuários({dados?.quantidadeTotal}):</h3>
+                            <div className='dadosDashboard'>
+                                <BasicPie dados={criaInformacoesUsuarios24Horas()}/>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Respostas Tabuada Divertida ({dados?.quantidadeRespostasTabuadaDivertida}):</h3>
+                            <div className='dadosDashboard'>
+                                <BasicPie dados={criaInformacoesTabuadaDivertida()}/>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
                 <br/>
                 <h2>Manutenção de provas e questões</h2>
