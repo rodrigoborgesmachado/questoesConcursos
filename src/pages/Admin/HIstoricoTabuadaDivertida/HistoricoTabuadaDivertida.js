@@ -112,7 +112,7 @@ function HistoricoTabuadaDivertida(){
                             <br/>
                             Número de questões: {HistoricoTabuadaDivertida[index].numeroQuestoes}
                             <br/>
-                            Created: {HistoricoTabuadaDivertida[index].created}
+                            Created: {formatDate(HistoricoTabuadaDivertida[index].created)}
                             <br/>
                             Tipo: {HistoricoTabuadaDivertida[index].tipo}
                         </h4>
