@@ -169,15 +169,15 @@ function DashBoard(){
         return [
             {
                 id:0,
-                value: dados?.quantidadeRespostasUltimas24Horas, 
+                value: dados?.quantidadeRespostasUltimas30Dias, 
                 color: 'red',
-                label: 'Últimas 24 horas: ' + dados?.quantidadeRespostasUltimas24Horas
+                label: 'Últimos 30 dias: ' + dados?.quantidadeRespostasUltimas30Dias
             },
             {
                 id:1,
-                value: dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas24Horas, 
+                value: dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas30Dias, 
                 color: 'blue',
-                label: 'Restante: ' + (dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas24Horas)
+                label: 'Restante: ' + (dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas30Dias)
             }
         ]
     }
@@ -186,15 +186,15 @@ function DashBoard(){
         return [
             {
                 id:0,
-                value: dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas, 
+                value: dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias, 
                 color: 'red',
-                label: 'Últimas 24 horas: ' + dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas
+                label: 'Últimos 30 dias: ' + dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias
             },
             {
                 id:1,
-                value: dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas, 
+                value: dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias, 
                 color: 'blue',
-                label: 'Restante: ' + (dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas24Horas)
+                label: 'Restante: ' + (dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias)
             }
         ]
     }
@@ -259,19 +259,19 @@ function DashBoard(){
         return itens;
     }
 
-    function criaInformacoesUsuarios24Horas(){
+    function criaInformacoesUsuarios30dias(){
         return [
             {
                 id:0,
-                value: dados?.quantidadeUsuarios24Horas, 
+                value: dados?.quantidadeUsuarios30Dias, 
                 color: 'red',
-                label: 'Últimas 24 horas: ' + dados?.quantidadeUsuarios24Horas
+                label: 'Últimas 24 horas: ' + dados?.quantidadeUsuarios30Dias
             },
             {
                 id:1,
-                value: dados?.quantidadeTotal - dados?.quantidadeUsuarios24Horas, 
+                value: dados?.quantidadeTotal - dados?.quantidadeUsuarios30Dias, 
                 color: 'blue',
-                label: 'Restante: ' + (dados?.quantidadeTotal - dados?.quantidadeUsuarios24Horas)
+                label: 'Restante: ' + (dados?.quantidadeTotal - dados?.quantidadeUsuarios30Dias)
             }
         ]
     }
@@ -468,7 +468,7 @@ function DashBoard(){
                         <div>
                             <h3>Total usuários({dados?.quantidadeTotal}):</h3>
                             <div className='dadosDashboard'>
-                                <BasicPie dados={criaInformacoesUsuarios24Horas()}/>
+                                <BasicPie dados={criaInformacoesUsuarios30dias()}/>
                             </div>
                         </div>
                         <div>
