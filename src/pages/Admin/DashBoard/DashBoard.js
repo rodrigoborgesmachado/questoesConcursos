@@ -265,7 +265,7 @@ function DashBoard(){
                 id:0,
                 value: dados?.quantidadeUsuarios30Dias, 
                 color: 'red',
-                label: 'Últimas 24 horas: ' + dados?.quantidadeUsuarios30Dias
+                label: 'Últimos 30 dias: ' + dados?.quantidadeUsuarios30Dias
             },
             {
                 id:1,
