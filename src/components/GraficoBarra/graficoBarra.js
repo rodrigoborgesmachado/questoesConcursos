@@ -7,6 +7,7 @@ export function BasicBars({nomes, dados}) {
       <BarChart
         xAxis={[{ scaleType: 'band', data: nomes }]}
         series={[{data: dados}]}
+        colors={['#4B0082']}
         width={1000}
         height={700}
       />
@@ -24,6 +25,7 @@ export function StackedBarChart({nomes, pData, uData, pLabel, uvLabel}) {
           { data: pData, label: pLabel, id: 'pvId', stack: 'total' },
           { data: uData, label: uvLabel, id: 'uvId', stack: 'total' },
         ]}
+        colors={['#4B0082', '#340082']}
         xAxis={[{ data: nomes, scaleType: 'band' }]}
       />
     </div>
