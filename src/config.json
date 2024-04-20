@@ -18,5 +18,6 @@
     "filtroMateriasSelecionadas":"FILTROMATERIASSELECIONADAS",
     "filtroAssuntosSelecionadas":"FILTROASSUNTOSSELECIONADAS",
     "filtroProfessoresSelecionadas":"FILTROPROFESSORESSELECIONADAS",
-    "filtroTiposSelecionados":"FILTROTIPOSSELECIONADOS"
+    "filtroTiposSelecionados":"FILTROTIPOSSELECIONADOS",
+    "pallete" : ["#72C9DA","#F8D962","#5EBD9B"]
 }
