@@ -259,7 +259,7 @@ function PerfilUsuario(){
                 </div>
                 {/* <LinearProgressWithLabel  color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} /> */}
                 <LinearProgressWithLabel className='global-mt' sx={{
-                  backgroundColor: '#4B0082',
+                  backgroundColor: Config.pallete[0],
                   '& .MuiLinearProgress-bar': {
                     backgroundColor: '#8A2BE2'
                   }

@@ -225,7 +225,7 @@ function ListagemProvas() {
                                             <b>Progresso:</b>
                                             <br />
                                             <LinearProgressWithLabel sx={{
-                                                backgroundColor: '#4B0082',
+                                                backgroundColor: Config.pallete[0],
                                                 '& .MuiLinearProgress-bar': {
                                                     backgroundColor: '#8A2BE2'
                                                 }

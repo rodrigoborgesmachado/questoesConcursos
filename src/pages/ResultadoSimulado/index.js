@@ -148,7 +148,7 @@ function Resultado(){
             </div>
             <div className='barraPrograsso'>
                 <LinearProgressWithLabel sx={{
-                  backgroundColor: '#4B0082',
+                  backgroundColor: Config.pallete[0],
                   '& .MuiLinearProgress-bar': {
                     backgroundColor: '#8A2BE2'
                   }}} value={Math.round(parseInt((respostas.filter((item) => item.certa === '1').length/respostas.length)*100))} />

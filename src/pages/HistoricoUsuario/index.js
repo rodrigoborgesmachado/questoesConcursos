@@ -105,7 +105,7 @@ function HistoricoUsuario() {
                     </p>
                     <p>
                         <LinearProgressWithLabel sx={{
-                  backgroundColor: '#4B0082',
+                  backgroundColor: Config.pallete[0],
                   '& .MuiLinearProgress-bar': {
                     backgroundColor: '#8A2BE2'
                   }}} value={parseInt((quantity / qtTotal) * 100)} />

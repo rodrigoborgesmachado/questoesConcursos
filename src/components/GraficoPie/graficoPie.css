@@ -2,3 +2,7 @@
     color: white !important;
     fill: white;
 }
+
+.MuiPieArc-root{
+    stroke: unset !important;
+}

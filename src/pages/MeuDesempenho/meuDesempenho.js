@@ -43,13 +43,13 @@ export default function MeuDesempenho(){
             {
                 id:0,
                 value: dados?.quantidadeQuestoesResolvidasCorretas, 
-                color: '#340082',
+                color: Config.pallete[0],
                 label: 'Respostas certas: ' + dados?.quantidadeQuestoesResolvidasCorretas
             },
             {
                 id:1,
                 value: dados?.quantidadeQuestoesIncorretas, 
-                color: '#4B0082',
+                color: Config.pallete[1],
                 label: 'Respostas incorretas: ' + dados?.quantidadeQuestoesIncorretas
             }
         ]

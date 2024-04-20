@@ -8,10 +8,14 @@ export default function BasicPie({dados}) {
         <PieChart
             series={[
                 {
-                    data: dados
+                  data: dados,
+                  innerRadius: 30,
+                  outerRadius: 100,
+                  paddingAngle: 5,
+                  cornerRadius: 5,
                 },
             ]}
-            width={400}
+            width={500}
             height={200}
             margin={{ right: 250 }}
         />

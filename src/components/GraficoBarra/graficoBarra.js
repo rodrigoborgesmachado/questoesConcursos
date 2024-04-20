@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
+import Config from './../../config.json';
 
 export function BasicBars({nomes, dados}) {
   return (
@@ -7,7 +8,7 @@ export function BasicBars({nomes, dados}) {
       <BarChart
         xAxis={[{ scaleType: 'band', data: nomes }]}
         series={[{data: dados}]}
-        colors={['#4B0082']}
+        colors={[Config.pallete[0]]}
         width={1000}
         height={700}
       />
@@ -25,7 +26,7 @@ export function StackedBarChart({nomes, pData, uData, pLabel, uvLabel}) {
           { data: pData, label: pLabel, id: 'pvId', stack: 'total' },
           { data: uData, label: uvLabel, id: 'uvId', stack: 'total' },
         ]}
-        colors={['#4B0082', '#340082']}
+        colors={[Config.pallete[0], Config.pallete[1]]}
         xAxis={[{ data: nomes, scaleType: 'band' }]}
       />
     </div>
