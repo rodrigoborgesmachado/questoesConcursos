@@ -60,13 +60,7 @@
 
 --default-border-radius:4px;
 --default-border-radius-extra:16px;
-
-
-
-
 }
-
-
 
 * {
   padding: 0;
@@ -404,10 +398,6 @@ footer a {
   font-size: 19px;
 }
 
-.dadosResumidos{
-  
-}
-
 .dados{
   width: 100%;
 }
@@ -430,9 +420,6 @@ footer a {
 
 .descricao + .descricao{
   margin-top: 16px;
-}
-
-.descricao h4{
 }
 
 .dadosResumidos a{

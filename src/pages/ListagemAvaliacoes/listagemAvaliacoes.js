@@ -12,6 +12,7 @@ import {  BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
 import { customStyles } from '../../services/functions.js';
 import FilterComponent from '../../components/FilterComponent/index.js';
+import DownloadIcon from '@mui/icons-material/Download';
 
 function ListagemAvaliacoes(){
     const style = customStyles();
@@ -80,6 +81,31 @@ function ListagemAvaliacoes(){
 
     function addAvaliacao(){
         navigate('/cadastroavaliacao?previus=avaliacoes', { replace: true });
+    }
+
+    async function baixarArquivoProva(codigo, nome){
+        setLoadding(true);
+        let url = '/Avaliacao/downloadProva?codigo=';
+        url += codigo;
+
+        await api.get(url)
+        .then((response) => {
+            setLoadding(false);
+            if(response.data.success){
+                const link = document.createElement('a');
+                link.href = response.data.object;
+                link.download = 'Prova ' + nome.replace('/', '').replace('-', ' ') + '.html';
+                link.click();
+            }
+            else{
+                toast.error('Prova' + ' não encontrada');
+            }
+        })
+        .catch((error) => {
+            setLoadding(false);
+            console.log(error);
+            toast.error('Erro ao gerar a prova!');
+        })
     }
 
     if (loadding) {
@@ -177,8 +203,9 @@ function ListagemAvaliacoes(){
                                             }
                                         </td>
                                         <td className='option'>
-                                            <h4 onClick={() => openAvaliacao(item.id)}>
+                                            <h4>
                                                 <VisibilityIcon className='vis' onClick={() => openAvaliacao(item.id)}/>
+                                                <DownloadIcon className='vis' onClick={() => baixarArquivoProva(item.id, item.nome)}/>
                                             </h4>
                                         </td>
                                     </tr>
