@@ -225,7 +225,7 @@ function ListagemAvaliacoes(){
                 '& .MuiPaginationItem-root': {
                     color: 'white',
             
-            }}} count={parseInt(Math.ceil(quantity / quantityPerPage))} page={parseInt(quantity)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+            }}} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(quantity)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
                     :
                     <>
