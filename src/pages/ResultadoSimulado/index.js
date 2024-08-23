@@ -125,10 +125,10 @@ function Resultado(){
                     Reenviar boletinho por email: <a target='_blank' onClick={() => enviarBoletinhoPorEmail()}>📩</a>
                 </h3>
                 <h3>
-                    <b className='clickOption' onClick={() => baixarArquivo(prova.id, prova.nomeProva, true)}>Baixar Prova 🔽</b> 
+                    <b className='clickOption' onClick={() => baixarArquivo(prova.Id, prova.nomeProva, true)}>Baixar Prova 🔽</b> 
                 </h3>
                 <h3>
-                    <b className='clickOption' onClick={() => baixarArquivo(prova.id, prova.nomeProva, false)}>Baixar Gabarito 🔽</b> 
+                    <b className='clickOption' onClick={() => baixarArquivo(prova.Id, prova.nomeProva, false)}>Baixar Gabarito 🔽</b> 
                 </h3>
                 <h3>
                     Tempo: {tempo/60} minutos

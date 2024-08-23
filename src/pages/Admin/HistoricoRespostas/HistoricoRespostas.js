@@ -81,12 +81,12 @@ function HistoricoRespostas(){
                     </div>
                     <div className="separator separator--withMargins"></div>
                     <div className="detalhes-modal-separado">
-                        <h4>Id: {historicoRespostas[index].id}</h4>
+                        <h4>Id: {historicoRespostas[index].Id}</h4>
                         <h4>Nome: {historicoRespostas[index].usuario.nome}</h4>
                         <h4>Email: {historicoRespostas[index].usuario.email}</h4>
                         <h4>Data da resposta: {formatDate(historicoRespostas[index].dataResposta)}</h4>
                         <h4>Prova: {historicoRespostas[index].questao.prova.nomeProva}</h4>
-                        <button className='global-button global-button--full-width' onClick={() => abreQuestao(historicoRespostas[index].questao.id)}>Visualizar Questão</button>
+                        <button className='global-button global-button--full-width' onClick={() => abreQuestao(historicoRespostas[index].questao.Id)}>Visualizar Questão</button>
                     </div>
                 </div>
             </Modal>
@@ -125,7 +125,7 @@ function HistoricoRespostas(){
                                     <tr key={index}>
                                         <td className='option'>
                                             <h4 onClick={() => openModal(index)}>
-                                                <a>{item.id}</a>
+                                                <a>{item.Id}</a>
                                             </h4>
                                         </td>
                                         <td>
@@ -135,12 +135,12 @@ function HistoricoRespostas(){
                                         </td>
                                         <td>
                                             <h4>
-                                                {item.questao.id}
+                                                {item.questao.Id}
                                             </h4>
                                         </td>
                                         <td>
                                             <h4>
-                                                {item.questao.prova.id}
+                                                {item.questao.prova.Id}
                                             </h4>
                                         </td>
                                         <td>

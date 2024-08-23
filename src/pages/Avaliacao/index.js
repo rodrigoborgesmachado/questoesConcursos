@@ -92,10 +92,10 @@ function Avaliacao(){
                     <h4>Instituição: {avaliacao.usuario.instituicao}</h4>
                     <h4>Quantidade de questões: {avaliacao.questoesAvaliacao.length}</h4>
                     <h4>Nota total: {avaliacao.notaTotal}</h4>
-                    <h4 className='vis' onClick={() => baixarArquivo(avaliacao.id, avaliacao.nome, true)}>
+                    <h4 className='vis' onClick={() => baixarArquivo(avaliacao.Id, avaliacao.nome, true)}>
                         Baixar avaliação <DownloadIcon/>
                     </h4>
-                    <h4 className='vis' onClick={() => baixarArquivo(avaliacao.id, avaliacao.nome, false)}>
+                    <h4 className='vis' onClick={() => baixarArquivo(avaliacao.Id, avaliacao.nome, false)}>
                         Baixar gabarito <DownloadIcon/>
                     </h4>
                     {
@@ -109,8 +109,8 @@ function Avaliacao(){
                 </div>
                 <div className="separator separator--withMargins"></div>
                 <div className='opcoes-botoes'>
-                    <button className='global-button global-button--full-width' onClick={() => abrirAvaliacao(avaliacao.id)}>Iniciar Avaliacao</button>
-                    <button className='global-button global-button--full-width' onClick={() => abrirRespostas(avaliacao.id)}>Visualizar Minhas Respostas</button>
+                    <button className='global-button global-button--full-width' onClick={() => abrirAvaliacao(avaliacao.Id)}>Iniciar Avaliacao</button>
+                    <button className='global-button global-button--full-width' onClick={() => abrirRespostas(avaliacao.Id)}>Visualizar Minhas Respostas</button>
                 </div>
             </div>
         </div>

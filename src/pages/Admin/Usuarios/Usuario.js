@@ -111,7 +111,7 @@ function Usuarios(){
                     </div>
                     <div className="separator separator--withMargins"></div>
                     <div className="detalhes-modal-separado">
-                        <h4>Id: {usuarios[index].id}</h4>
+                        <h4>Id: {usuarios[index].Id}</h4>
                         <h4>Login: {usuarios[index].login}</h4>
                         <h4>Nome: {usuarios[index].nome}</h4>
                         <h4>Email: {usuarios[index].email}</h4>
@@ -193,7 +193,7 @@ function Usuarios(){
                                     <tr key={index}>
                                         <td className='option'>
                                             <h4 onClick={() => openModal(index)}>
-                                                <a>{item.id}</a>
+                                                <a>{item.Id}</a>
                                             </h4>
                                         </td>
                                         <td>

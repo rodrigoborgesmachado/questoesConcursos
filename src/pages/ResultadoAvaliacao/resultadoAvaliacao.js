@@ -216,7 +216,7 @@ function ResultadoAvaliacao(){
                                             {item.resposta.certa == "1" ? 'Correta✅' : 'Errado❌'}
                                         </td>
                                         <td className='option'>
-                                            <h4 onClick={() => abreQuestao(item.questao.id)}>
+                                            <h4 onClick={() => abreQuestao(item.questao.Id)}>
                                                 <VisibilityIcon className='vis'/>
                                             </h4>
                                         </td>

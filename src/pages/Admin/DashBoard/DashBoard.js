@@ -321,8 +321,8 @@ function DashBoard(){
                                         return(
                                             <tr key={item}>
                                                 <td className='option link'>
-                                                    <h4 onClick={() => abreQuestao(item.id)}>
-                                                        <a>✏️{item.id}</a>
+                                                    <h4 onClick={() => abreQuestao(item.Id)}>
+                                                        <a>✏️{item.Id}</a>
                                                     </h4>
                                                 </td>
                                                 <td>
@@ -401,8 +401,8 @@ function DashBoard(){
                                         return(
                                             <tr key={item}>
                                                 <td className='option'>
-                                                    <h4 onClick={() => abreProva(item.id)}>
-                                                        <a>✏️{item.id}</a>
+                                                    <h4 onClick={() => abreProva(item.Id)}>
+                                                        <a>✏️{item.Id}</a>
                                                     </h4>
                                                 </td>
                                                 <td>

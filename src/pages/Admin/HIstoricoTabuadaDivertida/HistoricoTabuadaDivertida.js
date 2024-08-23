@@ -102,7 +102,7 @@ function HistoricoTabuadaDivertida(){
                     <div className="separator separator--withMargins"></div>
                     <div>
                         <h4>
-                            Id: {HistoricoTabuadaDivertida[index].id}
+                            Id: {HistoricoTabuadaDivertida[index].Id}
                             <br/>
                             Nome: {HistoricoTabuadaDivertida[index].nome}
                             <br/>
@@ -160,7 +160,7 @@ function HistoricoTabuadaDivertida(){
                                     <tr key={index}>
                                         <td className='option'>
                                             <h4 onClick={() => openModal(index)}>
-                                                <a>{item.id}</a>
+                                                <a>{item.Id}</a>
                                             </h4>
                                         </td>
                                         <td>
@@ -199,7 +199,7 @@ function HistoricoTabuadaDivertida(){
                                             </h4>
                                         </td>
                                         <td className='option'>
-                                            <h4 onClick={() => deleteItem(item.id)}>
+                                            <h4 onClick={() => deleteItem(item.Id)}>
                                                 <a><HighlightOffIcon/></a>
                                             </h4>
                                         </td>

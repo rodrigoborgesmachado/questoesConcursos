@@ -210,7 +210,7 @@ function ListagemQuestoes(){
                 {
                     localStorage.getItem(Config.ADMIN) == '1' && filtro ?
                         <>
-                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(prova?.id, prova?.isActive)}>{prova?.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
+                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(prova?.Id, prova?.isActive)}>{prova?.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
                         </>
                         :
                         <></>
@@ -276,18 +276,18 @@ function ListagemQuestoes(){
                     {
                         questoes.map((item, index) => {
                             return(
-                                <tr key={item.id}>
+                                <tr key={item.Id}>
                                     {
                                         !filtro && localStorage.getItem(Config.ADMIN) === '1' ?
                                         <td className='option'>
                                             {
                                                 localStorage.getItem(Config.ADMIN) === '1' ?
-                                                <h4 onClick={() => editaQuestao(item.id)}>
-                                                    ✏️{item.id}
+                                                <h4 onClick={() => editaQuestao(item.Id)}>
+                                                    ✏️{item.Id}
                                                 </h4>
                                                 :
-                                                <h4 onClick={() => abreQuestao(item.id, index)}>
-                                                    ✏️{item.id}
+                                                <h4 onClick={() => abreQuestao(item.Id, index)}>
+                                                    ✏️{item.Id}
                                                 </h4>
                                             }
                                         </td>
@@ -297,23 +297,23 @@ function ListagemQuestoes(){
                                         <a>
                                             {
                                                 localStorage.getItem(Config.ADMIN) === '1' ?
-                                                <h4 onClick={() => editaQuestao(item.id)}>
+                                                <h4 onClick={() => editaQuestao(item.Id)}>
                                                     ✏️{item.numeroQuestao}
                                                 </h4>
                                                 :
-                                                <h4 onClick={() => abreQuestao(item.id, index)}>
+                                                <h4 onClick={() => abreQuestao(item.Id, index)}>
                                                     ✏️{item.numeroQuestao}
                                                 </h4>
                                             }
                                         </a>
                                     </td>
                                     <td>
-                                        <h4 onClick={() => abreQuestao(item.id, index)}>
+                                        <h4 onClick={() => abreQuestao(item.Id, index)}>
                                         {item.materia}
                                         </h4>
                                     </td>
                                     <td>
-                                        <h4 onClick={() => abreQuestao(item.id, index)}>
+                                        <h4 onClick={() => abreQuestao(item.Id, index)}>
                                         {item.assunto}
                                         </h4>
                                     </td>
@@ -326,14 +326,14 @@ function ListagemQuestoes(){
                                     }
                                     <td>
                                         {item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "1")) !== undefined ? 
-                                        <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.id, index)}>Respondida</button>
+                                        <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Respondida</button>
                                         :
                                         <>
                                         {
                                             item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "0")) !== undefined ? 
-                                            <button className='global-button-wrong global-button--full-width' onClick={() => abreQuestao(item.id, index)}>Responder</button>
+                                            <button className='global-button-wrong global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
                                             :
-                                            <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.id, index)}>Responder</button>
+                                            <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
                                         }
                                         </>
                                         }

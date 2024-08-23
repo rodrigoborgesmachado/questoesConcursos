@@ -173,10 +173,10 @@ function ListagemProvas() {
                 {
                     provas.map((item) => {
                         return (
-                            <div className='global-infoPanel' key={item.id}>
+                            <div className='global-infoPanel' key={item.Id}>
                                 <h4>
                                     <div className='tituloProva'>
-                                        <b>📚{item.nomeProva}📚{localStorage.getItem(Config.ADMIN) == '1' ? <a onClick={() => navigate('/cadastroProva/' + item.id, { replace: true })}>✏️</a> : <></>}</b>
+                                        <b>📚{item.nomeProva}📚{localStorage.getItem(Config.ADMIN) == '1' ? <a onClick={() => navigate('/cadastroProva/' + item.Id, { replace: true })}>✏️</a> : <></>}</b>
                                         <sub><b>{
                                             item.tipoProvaAssociado.map((t, index) => {
                                                 return (
@@ -204,12 +204,12 @@ function ListagemProvas() {
                                     <br />
                                     <b>Data de aplicação:</b> {item.dataAplicacao}
                                     <br />
-                                    <b className='clickOption' onClick={() => baixarArquivo(item.id, item.nomeProva, true)}>Baixar Prova 🔽</b> 
+                                    <b className='clickOption' onClick={() => baixarArquivo(item.Id, item.nomeProva, true)}>Baixar Prova 🔽</b> 
                                     <br />
                                     {
                                         !isSimulado ? 
                                         <>
-                                            <b className='clickOption' onClick={() => baixarArquivo(item.id, item.nomeProva, false)}>Baixar Gabarito 🔽</b> 
+                                            <b className='clickOption' onClick={() => baixarArquivo(item.Id, item.nomeProva, false)}>Baixar Gabarito 🔽</b> 
                                             <br />
                                         </>
                                         :<></>
@@ -242,17 +242,17 @@ function ListagemProvas() {
                                             {
                                                 localStorage.getItem(Config.ADMIN) == '1' ?
                                                     <>
-                                                        <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(item.id, item.isActive)}>{item.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
+                                                        <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(item.Id, item.isActive)}>{item.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
                                                     </>
                                                     :
                                                     <></>
                                             }
-                                            <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.id)}>Visualizar questões</button>
-                                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button>
+                                            <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.Id)}>Visualizar questões</button>
+                                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.Id)}>Iniciar Simulado</button>
                                         </>
                                         :
                                         <>
-                                            <button className='global-button global-button--full-width' onClick={() => abrirSimulado(item.id)}>Iniciar Simulado</button>
+                                            <button className='global-button global-button--full-width' onClick={() => abrirSimulado(item.Id)}>Iniciar Simulado</button>
                                         </>
                                     }
                                 </div>

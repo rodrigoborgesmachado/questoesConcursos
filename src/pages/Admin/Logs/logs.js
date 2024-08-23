@@ -92,7 +92,7 @@ function Logs(){
                     </div>
                     <div className="separator separator--withMargins"></div>
                     <div className="detalhes-modal-separado">
-                        <h4>Id: {logs[index].id}</h4>
+                        <h4>Id: {logs[index].Id}</h4>
                         <h4>Descrição: {logs[index].descricao}</h4>
                         <h4>Data de criação: {formatDate(logs[index].created)}</h4>
                         <h4>Data de atualização: {formatDate(logs[index].updated)}</h4>
@@ -150,7 +150,7 @@ function Logs(){
                                     <tr key={index}>
                                         <td className='option'>
                                             <h4 onClick={() => openModal(index)}>
-                                                <a>{item.id}</a>
+                                                <a>{item.Id}</a>
                                             </h4>
                                         </td>
                                         <td>

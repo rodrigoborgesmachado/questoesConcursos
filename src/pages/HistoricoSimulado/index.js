@@ -29,7 +29,7 @@ function HistoricoSimulado(){
                 var prov = [];
                 response.data.object.forEach(element => {
                     prov.push({
-                        value: element.id,
+                        value: element.Id,
                         label: element.nome
                     })
                 });

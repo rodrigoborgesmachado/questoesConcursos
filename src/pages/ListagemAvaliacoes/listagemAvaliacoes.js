@@ -204,8 +204,8 @@ function ListagemAvaliacoes(){
                                         </td>
                                         <td className='option'>
                                             <h4>
-                                                <VisibilityIcon className='vis' onClick={() => openAvaliacao(item.id)}/>
-                                                <DownloadIcon className='vis' onClick={() => baixarArquivoProva(item.id, item.nome)}/>
+                                                <VisibilityIcon className='vis' onClick={() => openAvaliacao(item.Id)}/>
+                                                <DownloadIcon className='vis' onClick={() => baixarArquivoProva(item.Id, item.nome)}/>
                                             </h4>
                                         </td>
                                     </tr>

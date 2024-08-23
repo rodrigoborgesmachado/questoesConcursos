@@ -155,7 +155,7 @@ function Questoes(){
         .then(async (response) => {
             if(response.data.success && response.data.quantity > 0){
                 setQuestao(response.data.object[0]);
-                buscarComentarios(response.data.object[0].id);
+                buscarComentarios(response.data.object[0].Id);
             }
             else{
                 var simulado = filtro.includes('simulado');
@@ -221,7 +221,7 @@ function Questoes(){
         .then(async (response) => {
             if(response.data.success){
                 setQuestao(response.data.object);
-                buscarComentarios(response.data.object.id);
+                buscarComentarios(response.data.object.Id);
             }
             else{
                 toast.error('Erro ao buscar questão');
@@ -274,7 +274,7 @@ function Questoes(){
                 BuscarProximaQuestao(false, true);
             }
             else if(avaliacao){
-                GravaRespostaAvaliacao(filtro.replace('avaliacao&', ''), questao?.id, codigo);
+                GravaRespostaAvaliacao(filtro.replace('avaliacao&', ''), questao?.Id, codigo);
                 BuscarProximaQuestao(false, true);
             }
             else{
@@ -327,7 +327,7 @@ function Questoes(){
     async function solicitarRevisao(){
         await api.get(`/Questoes/solicitaVerificacao`, {
             params:{
-                "id": questao?.id
+                "id": questao?.Id
             }
         })
         .then((response) => {
@@ -349,7 +349,7 @@ function Questoes(){
     async function revisar(){
         await api.get(`/Questoes/revisar`, {
             params:{
-                "id": questao?.id
+                "id": questao?.Id
             }
         })
         .then((response) => {
@@ -369,11 +369,11 @@ function Questoes(){
     }
 
     function editaQuestao(){
-        navigate('/cadastraQuestao/' + questao?.codigoProva + '/1/' + questao?.id + '?' + searchParams, {replace: true});
+        navigate('/cadastraQuestao/' + questao?.codigoProva + '/1/' + questao?.Id + '?' + searchParams, {replace: true});
     }
 
     async function buscaRespostaCorreta(){
-        await api.get(`/RespostasQuestoes/getRespostaCorreta?questao=${questao?.id}`)
+        await api.get(`/RespostasQuestoes/getRespostaCorreta?questao=${questao?.Id}`)
         .then((response) =>{
             closeModalSolicitacao();
             if(response.data.success){
@@ -439,7 +439,7 @@ function Questoes(){
     async function fazComentario(){
         var data = {
             "comentario": comentario,
-            "codigoQuestao": questao?.id
+            "codigoQuestao": questao?.Id
         };
 
         setLoadding(true);
@@ -472,7 +472,7 @@ function Questoes(){
         .then((response) => {
             if(response.data.success){
                 toast.success('Excluído');
-                buscarComentarios(questao?.id);
+                buscarComentarios(questao?.Id);
             }
             else{
                 toast.error('Erro ao excluir');
@@ -502,7 +502,7 @@ function Questoes(){
 
     async function atualizaAssunto(){
         var data = {
-            "CodigoQuestao": questao?.id,
+            "CodigoQuestao": questao?.Id,
             "Assunto": assunto
         };
 
@@ -518,7 +518,7 @@ function Questoes(){
 
             if(response.data.success){
                 toast.success('Assunto alterado!');
-                BuscarQuestaoById(questao?.id);
+                BuscarQuestaoById(questao?.Id);
             }
             else{
                 toast.info('Erro ao alterar assunto');
@@ -707,7 +707,7 @@ function Questoes(){
                     {
                         questao?.respostasQuestoes?.map((item) => {
                             return(
-                                <div key={item.id} className='dados global-infoPanel'>
+                                <div key={item.Id} className='dados global-infoPanel'>
                                     <label className='respostaLabel'>
                                         <input type='radio' className='radioOption' name={'Radio_' + item.codigo} onClick={(e) => ValidaResposta(e, item.codigo)}/>
                                         {

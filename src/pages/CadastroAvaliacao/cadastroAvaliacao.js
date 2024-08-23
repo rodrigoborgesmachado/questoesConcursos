@@ -141,7 +141,7 @@ function CadastroAvaliacao(){
     }
 
     function removeItemFromList(idToRemove){
-        var updatedList = questoesAvaliacao.filter(item => item.id !== idToRemove);
+        var updatedList = questoesAvaliacao.filter(item => item.Id !== idToRemove);
         setQuestoesAvaliacao(updatedList);
     };
 
@@ -167,7 +167,7 @@ function CadastroAvaliacao(){
 
         questoesAvaliacao.forEach(q => {
             obj.questoesAvaliacao.push({
-                idQuestao: q.id,
+                idQuestao: q.Id,
                 NotaQuestao: 1
             });
         });
@@ -242,7 +242,7 @@ function CadastroAvaliacao(){
                                         return(
                                             <tr key={item}>
                                                 <td className='option'>
-                                                    <h4 onClick={() => abreQuestao(item.id)}>
+                                                    <h4 onClick={() => abreQuestao(item.Id)}>
                                                         <VisibilityIcon className='vis' onClick={() => openModalQuestoesAvaliacao()}/>
                                                     </h4>
                                                 </td>
@@ -262,7 +262,7 @@ function CadastroAvaliacao(){
                                                     </h4>
                                                 </td>
                                                 <td>
-                                                    <button className='global-button global-button' onClick={() => removeItemFromList(item.id)}>Remover</button>
+                                                    <button className='global-button global-button' onClick={() => removeItemFromList(item.Id)}>Remover</button>
                                                 </td>
                                             </tr>
                                         )
@@ -337,7 +337,7 @@ function CadastroAvaliacao(){
                                                 return(
                                                     <tr key={item}>
                                                         <td className='option'>
-                                                            <h4 onClick={() => abreQuestao(item.id)}>
+                                                            <h4 onClick={() => abreQuestao(item.Id)}>
                                                                 <VisibilityIcon className='vis' onClick={() => openModalQuestoesAvaliacao()}/>
                                                             </h4>
                                                         </td>
@@ -358,9 +358,9 @@ function CadastroAvaliacao(){
                                                         </td>
                                                         <td>
                                                             {
-                                                                questoesAvaliacao.filter(i => item.id === i.id).length > 0 ?
+                                                                questoesAvaliacao.filter(i => item.Id === i.Id).length > 0 ?
                                                                 <>
-                                                                    <button className='global-button global-button' onClick={() => removeItemFromList(item.id)}>Remover</button>
+                                                                    <button className='global-button global-button' onClick={() => removeItemFromList(item.Id)}>Remover</button>
                                                                 </>
                                                                 :
                                                                 <>

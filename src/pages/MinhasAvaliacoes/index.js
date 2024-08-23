@@ -96,8 +96,8 @@ function MinhasAvaliacoes(){
                                 return(
                                     <tr key={item}>
                                         <td className='option'>
-                                            <h4 onClick={() => openAvaliacao(item.id)}>
-                                                <VisibilityIcon className='vis' onClick={() => openAvaliacao(item.id)}/>
+                                            <h4 onClick={() => openAvaliacao(item.Id)}>
+                                                <VisibilityIcon className='vis' onClick={() => openAvaliacao(item.Id)}/>
                                             </h4>
                                         </td>
                                         <td>
@@ -121,7 +121,7 @@ function MinhasAvaliacoes(){
                                             }
                                         </td>
                                         <td>
-                                            <button className='global-button global-button' onClick={() => abrirRespostas(item.id)}>Respostas</button>
+                                            <button className='global-button global-button' onClick={() => abrirRespostas(item.Id)}>Respostas</button>
                                         </td>
                                     </tr>
                                 )

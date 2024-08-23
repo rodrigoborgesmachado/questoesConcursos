@@ -95,7 +95,7 @@ function PerfilUsuario(){
     }
 
     function openEditPerfil(){
-        setPerfilSelecionado(usuario.usuario.tipoPerfil.id);
+        setPerfilSelecionado(usuario.usuario.tipoPerfil.Id);
         openModalPerfil();
     }
 
