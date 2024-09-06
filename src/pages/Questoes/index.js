@@ -241,7 +241,7 @@ function Questoes(){
         let temp = text;
         
         for(let i = 0; i< anexos.length; i++){
-            temp = temp.replace(`<img src=\"#\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`, `<img src=\"${anexos[i].anexo}\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`);
+            temp = temp.replace(`<img src=\"#\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`, `<img src=\"${anexos[i].link}\" alt=\"Anexo\" id=\"divAnexo${i}\"/>`);
         }
 
         return createMarkup(temp);
@@ -713,7 +713,7 @@ function Questoes(){
                                         {
                                             item.anexoResposta.length > 0 ? 
                                             <div id="imagemResposta">
-                                                <img src={item.anexoResposta[0].anexo}/>
+                                                <img src={item.anexoResposta[0].link}/>
                                             </div>
                                         : 
                                         <h4 dangerouslySetInnerHTML={createMarkup(item.textoResposta)} className='descricaoResposta'></h4>
