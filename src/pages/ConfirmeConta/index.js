@@ -48,8 +48,9 @@ function ConfirmeConta(){
         <div className="containerpage global-fullW">
             <div className='dados global-infoPanel'>
                 <h2 className="center-h2">
-                    Você receberá um email para validar sua conta em até 5 minutos.<br/>
-                    Verifique sua pasta de span.
+                    Usuário criado, você já pode logar!<br/><br/>
+                    Você receberá um email para validar sua conta em até 5 minutos, é necessário valida-lo afim de receber emails do questões aqui!<br/><br/>
+                    Verifique também sua pasta de span.
                 </h2>
                 <button className='global-button reenviar-button' onClick={() => ReenviaEmail()}>Reenviar email</button>
             </div>
