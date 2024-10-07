@@ -62,8 +62,8 @@ function CriarUsuario(){
         )
         .then((response) => {
             if(response.data.success){
-                toast.success('Usuário criado com sucesso!');
-                navigate('/confirmesuaconta/' + email, {replace: true});
+                toast.success('Usuário criado com sucesso! Login liberado!');
+                navigate('/login', {replace: true});
             }
             else{
                 toast.info('Já existe um usuário com esse email!');
