@@ -186,7 +186,7 @@ function CadastraQuestao(){
             .then((response) => {
                 if(response.data.success){
                     toast.success('Questão editada com sucesso!');
-                    navigate(`/questoes/codigoquestaolistagem:?${searchParams}`, {replace: true});
+                    navigate(`/listagemquestoes/${questaoPost.codigoProva}`, {replace: true});
                 }
                 else{
                     toast.info('Erro ao editar');
@@ -206,7 +206,7 @@ function CadastraQuestao(){
             .then((response) => {
                 if(response.data.success){
                     toast.success('Questão cadastrada com sucesso!');
-                    navigate(`/questoes/codigoquestaolistagem:?${searchParams}`, {replace: true});
+                    navigate(`/listagemquestoes/${questaoPost.codigoProva}`, {replace: true});
                 }
                 else{
                     toast.info('Erro ao cadastrar');
