@@ -10,6 +10,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import Modal from 'react-modal';
 import Tempo from './../../components/Tempo/tempo.js';
 import { customStyles } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
   const customStylesAssunto = {
     content: {
@@ -533,9 +534,7 @@ function Questoes(){
 
     if(loadding || !questao){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

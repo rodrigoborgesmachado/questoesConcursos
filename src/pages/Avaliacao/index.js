@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {toast} from 'react-toastify';
 import DownloadIcon from '@mui/icons-material/Download';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function Avaliacao(){
     const navigate = useNavigate();
@@ -73,9 +74,7 @@ function Avaliacao(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

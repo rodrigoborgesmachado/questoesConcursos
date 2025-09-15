@@ -7,6 +7,7 @@ import Config from './../../config.json';
 import { Table } from 'react-bootstrap';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader';
 
 function HistoricoSimulado(){
     const animatedComponents = makeAnimated();
@@ -90,9 +91,7 @@ function HistoricoSimulado(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

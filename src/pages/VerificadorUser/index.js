@@ -1,40 +1,38 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function VerificadorUser(){
     const{guid} = useParams();
-    const navigate = useNavigate();
     const[loadding, setLoadding] = useState(true);
     const[validado, setValidado] = useState(false);
 
-    async function ValidaUsuario(){
-        setLoadding(true);
-        await api.get('/Usuarios/liberauser?guid=' + guid)
-        .then((response) => {
-            if(response.data.success){
-                toast.success('Usuário validado com sucesso! Login liberado!');
-                setValidado(true);
-                setLoadding(false);
-            }
-            else{
-                toast.error('Não foi possível liberar o usuário!');
-                setValidado(false);
-                setLoadding(false);
-            }
-        });
-    }
-
+    
     useEffect(() => {
+        async function ValidaUsuario(){
+            setLoadding(true);
+            await api.get('/Usuarios/liberauser?guid=' + guid)
+            .then((response) => {
+                if(response.data.success){
+                    toast.success('Usuário validado com sucesso! Login liberado!');
+                    setValidado(true);
+                    setLoadding(false);
+                }
+                else{
+                    toast.error('Não foi possível liberar o usuário!');
+                    setValidado(false);
+                    setLoadding(false);
+                }
+            });
+        }
         ValidaUsuario();
-    }, [])
+    }, [guid])
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

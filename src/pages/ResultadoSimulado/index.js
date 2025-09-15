@@ -6,6 +6,7 @@ import {toast} from 'react-toastify';
 import api from '../../services/api.js';
 import { Table } from 'react-bootstrap';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function Resultado(){
     const navigate = useNavigate();
@@ -107,9 +108,7 @@ function Resultado(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

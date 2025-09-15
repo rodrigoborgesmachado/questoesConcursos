@@ -9,6 +9,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { customStyles, formatDate } from "../../../services/functions.js";
+import PacmanLoader from "../../../components/PacmanLoader/PacmanLoader.js";
 
 function Logs(){
     const style = customStyles();
@@ -72,9 +73,7 @@ function Logs(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

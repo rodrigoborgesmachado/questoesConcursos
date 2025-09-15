@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { customStyles } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function PerfilUsuario(){
     const style = customStyles();
@@ -165,9 +166,7 @@ function PerfilUsuario(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

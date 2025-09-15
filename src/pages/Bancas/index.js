@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Config from "./../../config.json";
 import './style.css';
+import PacmanLoader from "../../components/PacmanLoader/PacmanLoader.js";
 
 function Bancas() {
     const navigate = useNavigate();
@@ -68,9 +69,7 @@ function Bancas() {
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

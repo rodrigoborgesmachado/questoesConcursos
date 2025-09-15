@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
 import Modal from 'react-modal';
 import { customStyles } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function CadastraQuestao(){
     const searchParams = new URLSearchParams(window.location.search);
@@ -247,9 +248,7 @@ function CadastraQuestao(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
     else{

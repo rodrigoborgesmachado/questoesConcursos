@@ -13,6 +13,7 @@ import { customStyles } from '../../../services/functions.js';
 import { abreQuestao } from './../../../services/functions.js';
 import BasicPie from './../../../components/GraficoPie/graficoPie.js';
 import { BasicBars, BarraDoisItensCorretosErrados } from '../../../components/GraficoBarra/graficoBarra.js';
+import PacmanLoader from '../../../components/PacmanLoader/PacmanLoader.js';
 
 function DashBoard(){
     const styles = customStyles();
@@ -278,9 +279,7 @@ function DashBoard(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

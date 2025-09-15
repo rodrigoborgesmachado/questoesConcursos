@@ -14,6 +14,7 @@ import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import { customStylesQuestoes, abreQuestao, MontaFiltrosLocalSession } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function CadastroAvaliacao(){
     const styles = customStylesQuestoes();
@@ -200,9 +201,7 @@ function CadastroAvaliacao(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

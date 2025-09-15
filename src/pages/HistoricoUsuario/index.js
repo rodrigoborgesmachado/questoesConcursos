@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader';
 
 function HistoricoUsuario() {
     const navigate = useNavigate();
@@ -75,9 +76,7 @@ function HistoricoUsuario() {
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

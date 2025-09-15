@@ -5,6 +5,7 @@ import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Config from './../../config.json';
 import {toast} from 'react-toastify';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function Ranking(){
     const[loadding, setLoadding] = useState(true);
@@ -38,9 +39,7 @@ function Ranking(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

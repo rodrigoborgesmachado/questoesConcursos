@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
 import { useState } from 'react';
+import PacmanLoader from "../../components/PacmanLoader/PacmanLoader.js";
 
 function ConfirmeConta(){
     const{mail} = useParams();
@@ -38,9 +39,7 @@ function ConfirmeConta(){
     
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

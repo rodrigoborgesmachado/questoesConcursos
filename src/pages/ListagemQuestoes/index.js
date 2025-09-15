@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function ListagemQuestoes(){
     const style = customStyles();
@@ -160,9 +161,7 @@ function ListagemQuestoes(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

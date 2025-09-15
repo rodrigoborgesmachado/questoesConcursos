@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-modal';
 import { customStyles } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function CalculadoraEnem(){
     const style = customStyles();
@@ -135,9 +136,7 @@ function CalculadoraEnem(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

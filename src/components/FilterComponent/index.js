@@ -6,6 +6,7 @@ import Config from './../../config.json';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
 import { MontaFiltrosLocalSession, LimpaFiltrosLocalSession } from '../../services/functions.js';
+import PacmanLoader from '../PacmanLoader/PacmanLoader.js';
 
 const filtroBanca=1;
 const filtroProva=2;
@@ -242,9 +243,7 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

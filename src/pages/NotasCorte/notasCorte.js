@@ -9,6 +9,7 @@ import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import Modal from 'react-modal';
 import { customStyles } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function NotasCorte(){
     const style = customStyles();
@@ -169,9 +170,7 @@ function NotasCorte(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

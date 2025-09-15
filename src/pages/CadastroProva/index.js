@@ -8,6 +8,7 @@ import Select from 'react-select';
 import api from '../../services/api.js';
 import Modal from 'react-modal';
 import { customStyles } from '../../services/functions.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function CadastraProva(){
     const style = customStyles();
@@ -262,9 +263,7 @@ function CadastraProva(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

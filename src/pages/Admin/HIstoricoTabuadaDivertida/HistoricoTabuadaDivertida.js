@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { customStyles, formatDate } from "../../../services/functions.js";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import PacmanLoader from "../../../components/PacmanLoader/PacmanLoader.js";
 
 function HistoricoTabuadaDivertida(){
     const styles = customStyles();
@@ -81,9 +82,7 @@ function HistoricoTabuadaDivertida(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

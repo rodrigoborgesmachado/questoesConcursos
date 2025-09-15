@@ -8,6 +8,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
+import PacmanLoader from '../../../components/PacmanLoader/PacmanLoader.js';
 
 function HistoricoUsuarioAdmin() {
     const navigate = useNavigate();
@@ -127,9 +128,7 @@ function HistoricoUsuarioAdmin() {
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

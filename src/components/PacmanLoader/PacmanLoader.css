@@ -1,0 +1,161 @@
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+    width: 100%;
+}
+
+.pacman-loader{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  height:var(--size,64px);
+  width:calc(var(--size,64px) * 6); /* trilho das bolinhas */
+}
+
+.pacman {
+  width: var(--size, 64px);
+  height: var(--size, 64px);
+  border-radius: 50%;
+  background: var(--button-color-primary);
+
+  -webkit-mask: conic-gradient(
+    from 90deg,
+    transparent -1deg var(--mouth, 40deg),
+    #000 var(--mouth, 40deg) calc(360deg - var(--mouth, 40deg)),
+    transparent calc(360deg - var(--mouth, 40deg)) 361deg
+  );
+          mask: conic-gradient(
+    from 90deg,
+    transparent -1deg var(--mouth, 40deg),
+    #000 var(--mouth, 40deg) calc(360deg - var(--mouth, 40deg)),
+    transparent calc(360deg - var(--mouth, 40deg)) 361deg
+  );
+
+  animation: chomp 0.5s infinite ease-in-out;
+}
+
+@keyframes chomp {
+  0% {
+    /* boca fechada */
+    -webkit-mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+            mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+  }
+  15% {
+    /* ainda fechada (pausa antes de abrir) */
+    -webkit-mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+            mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+  }
+  40% {
+    /* boca aberta no máximo */
+    -webkit-mask: conic-gradient(
+      from 90deg,
+      transparent 0deg var(--mouth,40deg),
+      #000 var(--mouth,40deg) calc(360deg - var(--mouth,40deg)),
+      transparent calc(360deg - var(--mouth,40deg)) 360deg
+    );
+            mask: conic-gradient(
+      from 90deg,
+      transparent 0deg var(--mouth,40deg),
+      #000 var(--mouth,40deg) calc(360deg - var(--mouth,40deg)),
+      transparent calc(360deg - var(--mouth,40deg)) 360deg
+    );
+  }
+  60% {
+    /* continua aberta (pausa mordida) */
+    -webkit-mask: conic-gradient(
+      from 90deg,
+      transparent 0deg var(--mouth,40deg),
+      #000 var(--mouth,40deg) calc(360deg - var(--mouth,40deg)),
+      transparent calc(360deg - var(--mouth,40deg)) 360deg
+    );
+            mask: conic-gradient(
+      from 90deg,
+      transparent 0deg var(--mouth,40deg),
+      #000 var(--mouth,40deg) calc(360deg - var(--mouth,40deg)),
+      transparent calc(360deg - var(--mouth,40deg)) 360deg
+    );
+  }
+  85% {
+    /* boca fechando */
+    -webkit-mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+            mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+  }
+  100% {
+    /* fechada de novo */
+    -webkit-mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+            mask: conic-gradient(
+      from 90deg,
+      transparent 0deg 0deg,
+      #000 0deg 360deg,
+      transparent 360deg 360deg
+    );
+  }
+}
+
+
+.pellets{
+  position:absolute;
+  left:calc(var(--size,64px) - 28px);
+  right:0;
+  height:100%;
+  overflow:hidden;
+}
+
+.pellet{
+  position:absolute;
+  top:50%;
+  width:calc(var(--size,64px)/7);
+  height:calc(var(--size,64px)/7);
+  margin-top:calc(-1 * var(--size,64px)/14);
+  border-radius:50%;
+  background:#fff;
+
+  animation: pellet-move 1.8s linear infinite;
+  animation-delay: calc(var(--i) * (1.8s / max(var(--dots), 1)));
+}
+
+/* Move de 100% (bem à direita) até -12px (atrás da boca) */
+@keyframes pellet-move{
+  0%   { left:100%; opacity:0; }
+  10%  { opacity:1; }
+  55%  { opacity:1; }     /* ainda visível antes da boca */
+  65%  { opacity:1; }     /* “sumiu” na boca (lado +X) */
+  100% { left:-12px; opacity:0; }
+}

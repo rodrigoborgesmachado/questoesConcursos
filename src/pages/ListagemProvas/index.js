@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
 import FilterComponent from '../../components/FilterComponent/index.js';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function ListagemProvas() {
     const style = customStyles();
@@ -88,14 +89,6 @@ function ListagemProvas() {
         buscaProvas(value);
     };
 
-    if (loadding) {
-        return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
-        )
-    }
-
     function addProva() {
         navigate('/cadastroProva', { replace: true });
     }
@@ -145,6 +138,12 @@ function ListagemProvas() {
             console.log(error);
             toast.error('Não foi possível atualizar');
         })
+    }
+
+    if (loadding) {
+        return (
+            <PacmanLoader/>
+        )
     }
 
     return (

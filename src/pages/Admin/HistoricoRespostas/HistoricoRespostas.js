@@ -9,6 +9,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { customStyles, formatDate, abreQuestao } from "../../../services/functions.js";
+import PacmanLoader from "../../../components/PacmanLoader/PacmanLoader.js";
 
 function HistoricoRespostas(){
     const style = customStyles();
@@ -61,9 +62,7 @@ function HistoricoRespostas(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

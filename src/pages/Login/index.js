@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function Login() {
     const navigate = useNavigate();
@@ -89,9 +90,7 @@ function Login() {
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

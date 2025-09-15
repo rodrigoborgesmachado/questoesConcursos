@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Config from "../../config.json";
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 
 function AtualizaSenha(){
@@ -53,9 +54,7 @@ function AtualizaSenha(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

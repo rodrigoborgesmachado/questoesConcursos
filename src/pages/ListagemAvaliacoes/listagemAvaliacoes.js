@@ -13,6 +13,7 @@ import Config from './../../config.json';
 import { customStyles } from '../../services/functions.js';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import DownloadIcon from '@mui/icons-material/Download';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function ListagemAvaliacoes(){
     const style = customStyles();
@@ -110,9 +111,7 @@ function ListagemAvaliacoes(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

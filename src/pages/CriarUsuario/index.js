@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function CriarUsuario(){
     const navigate = useNavigate();
@@ -87,9 +88,7 @@ function CriarUsuario(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

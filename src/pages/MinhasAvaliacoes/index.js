@@ -6,6 +6,7 @@ import api from '../../services/api.js';
 import { toast } from 'react-toastify';
 import Config from './../../config.json';
 import { BsFileEarmarkPlusFill } from "react-icons/bs";
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function MinhasAvaliacoes(){
     const navigate = useNavigate();
@@ -51,9 +52,7 @@ function MinhasAvaliacoes(){
 
     if (loadding) {
         return (
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 

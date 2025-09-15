@@ -8,6 +8,7 @@ import Config from './../../config.json';
 import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
 import {abreQuestao} from './../../services/functions.js'
+import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 
 function ResultadoAvaliacao(){
     const navigate = useNavigate();
@@ -126,9 +127,7 @@ function ResultadoAvaliacao(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            </div>
+            <PacmanLoader/>
         )
     }
 
