@@ -17,6 +17,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 import { LimpaFiltrosLocalSession } from '../../services/functions.js';
+import iftmLogo from '../../assets/iftm-logo.svg';
 
 const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu', '➕Pratique Tabuada'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
@@ -310,6 +311,12 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
+              <MenuItem onClick={(e) => selecionaFiltroProva('IFTM')}>
+                <div className='iftm-option'>
+                  <img src={iftmLogo} alt='IFTM' className='iftm-logo' />
+                  <span className='iftm-label'>IFTM</span>
+                </div>
+              </MenuItem>
               {pages.map((page, index) => (
                 index != 0 && index != 4 && index != 6 ?
                 <MenuItem key={index} onClick={(e) => SelecionaOpcao(page)}>
@@ -451,6 +458,17 @@ const ResponsiveAppBar = () => {
             <a href='/'>ConQuest</a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Button
+              aria-label='Provas IFTM'
+              onClick={(e) => selecionaFiltroProva('IFTM')}
+              className='iftm-nav-button'
+              sx={{ my: 1, display: { xs: 'none', md: 'flex' }, minWidth: 'auto', color: 'white' }}
+            >
+              <span className='iftm-option'>
+                <img src={iftmLogo} alt='IFTM' className='iftm-logo' />
+                <span className='iftm-label'>IFTM</span>
+              </span>
+            </Button>
             {pages.map((page, index) => (
               index != 0 && index != 4 && index != 6 ?
               <Button
