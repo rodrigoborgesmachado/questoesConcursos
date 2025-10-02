@@ -1,0 +1,34 @@
+.iftm-nav-button {
+  margin-right: 12px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+}
+
+.iftm-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iftm-logo {
+  width: 28px;
+  height: auto;
+  display: block;
+}
+
+.iftm-label {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 900px) {
+  .iftm-nav-button {
+    padding: 0;
+  }
+
+  .iftm-logo {
+    width: 24px;
+  }
+}

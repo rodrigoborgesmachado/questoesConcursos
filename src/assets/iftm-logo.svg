@@ -1,0 +1,12 @@
+<svg width="250" height="250" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Logotipo do IFTM</title>
+  <circle cx="35" cy="35" r="35" fill="#C11F27" />
+  <rect x="90" width="70" height="70" rx="12" fill="#2EA84A" />
+  <rect x="180" width="70" height="70" rx="12" fill="#2EA84A" />
+  <rect y="90" width="70" height="70" rx="12" fill="#2EA84A" />
+  <rect x="90" y="90" width="70" height="70" rx="12" fill="#2EA84A" />
+  <rect x="180" y="90" width="70" height="70" rx="12" fill="#2EA84A" />
+  <rect y="180" width="70" height="70" rx="12" fill="#2EA84A" />
+  <rect x="90" y="180" width="70" height="70" rx="12" fill="#2EA84A" />
+  <rect x="180" y="180" width="70" height="70" rx="12" fill="#2EA84A" />
+</svg>
