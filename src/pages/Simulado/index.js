@@ -23,7 +23,7 @@ function Simulado(){
                 <p>
                 Prepare-se para explorar o desconhecido, colocar suas habilidades à prova e descobrir seu potencial oculto. Entre no modo simulado agora mesmo e embarque em uma aventura educativa como nunca antes! 🚀🎓✨
                 </p>
-                <button className='global-button global-button--full-width' onClick={() => {
+                <button className='global-button global-button--transparent global-button--full-width' onClick={() => {
                     LimpaFiltrosLocalSession();
                     navigate('/listagemprovas/1?tipo=simulado',{replace: true});
                 }}>Selecione sua prova</button>

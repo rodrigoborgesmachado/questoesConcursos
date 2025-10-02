@@ -116,7 +116,7 @@ function Logs(){
                         <input type='text' value={filtro} onChange={(e) => setFiltro(e.target.value)}/>
                     </div>
                     <div className='botoesModalFiltro'>
-                        <button className='global-button global-button' onClick={() => buscaDados(1)}>Filtrar</button>
+                        <button className='global-button global-button--transparent' onClick={() => buscaDados(1)}>Filtrar</button>
                     </div>
                 </div>
             </Modal>

@@ -82,7 +82,7 @@ function Bancas() {
                     <Select closeMenuOnSelect={false} components={animatedComponents} options={bancas} isMulti onChange={handleChange} />
                 </div>
                 <div>
-                    <Link className='global-button global-mt' to={`/questoes/bancas&${MontaUrlBancas()}`}>Iniciar</Link>
+                    <Link className='global-button global-button--transparent global-mt' to={`/questoes/bancas&${MontaUrlBancas()}`}>Iniciar</Link>
                 </div>
             </div>
 

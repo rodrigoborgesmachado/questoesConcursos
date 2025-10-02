@@ -341,7 +341,7 @@ function CadastraProva(){
                         <Select closeMenuOnSelect={false} components={animatedComponents} options={tipos} value={selected} isMulti onChange={handleChange} />
                         <button className='global-button global-button--transparent' onClick={() => openModal()}>Adicionar Tipo</button>
                     </div>
-                    <button className='global-button global-button' onClick={confirmaFormulario}>Confirma</button>
+                    <button className='global-button global-button--transparent' onClick={confirmaFormulario}>Confirma</button>
                 </div>
             </div>
         </div>

@@ -108,8 +108,8 @@ function Avaliacao(){
                 </div>
                 <div className="separator separator--withMargins"></div>
                 <div className='opcoes-botoes'>
-                    <button className='global-button global-button--full-width' onClick={() => abrirAvaliacao(avaliacao.Id)}>Iniciar Avaliacao</button>
-                    <button className='global-button global-button--full-width' onClick={() => abrirRespostas(avaliacao.Id)}>Visualizar Minhas Respostas</button>
+                    <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirAvaliacao(avaliacao.Id)}>Iniciar Avaliacao</button>
+                    <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirRespostas(avaliacao.Id)}>Visualizar Minhas Respostas</button>
                 </div>
             </div>
         </div>

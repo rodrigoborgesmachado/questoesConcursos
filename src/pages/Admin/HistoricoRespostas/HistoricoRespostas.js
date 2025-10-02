@@ -85,7 +85,7 @@ function HistoricoRespostas(){
                         <h4>Email: {historicoRespostas[index].usuario.email}</h4>
                         <h4>Data da resposta: {formatDate(historicoRespostas[index].dataResposta)}</h4>
                         <h4>Prova: {historicoRespostas[index].questao.prova.nomeProva}</h4>
-                        <button className='global-button global-button--full-width' onClick={() => abreQuestao(historicoRespostas[index].questao.Id)}>Visualizar Questão</button>
+                        <button className='global-button global-button--transparent global-button--full-width' onClick={() => abreQuestao(historicoRespostas[index].questao.Id)}>Visualizar Questão</button>
                     </div>
                 </div>
             </Modal>

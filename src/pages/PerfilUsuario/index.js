@@ -185,7 +185,7 @@ function PerfilUsuario(){
                     <div className='separator separator--withMargins'></div>
                     <div className='global-buttonWrapper'>
                         <input type='text' className='global-input' value={novoNome} onChange={(e) => setNovoNome(e.target.value)}/>
-                        <button className='global-button' onClick={() => atualizaNome()}>Atualizar</button>
+                        <button className='global-button global-button--transparent' onClick={() => atualizaNome()}>Atualizar</button>
                     </div>
                 </div>
             </Modal>
@@ -202,7 +202,7 @@ function PerfilUsuario(){
                     <div className='separator separator--withMargins'></div>
                     <div className='global-buttonWrapper'>
                         <input type='text' className='global-input' value={novoInstituicao} onChange={(e) => setNovaInstituicao(e.target.value)}/>
-                        <button className='global-button' onClick={() => atualizaInstituicao()}>Atualizar</button>
+                        <button className='global-button global-button--transparent' onClick={() => atualizaInstituicao()}>Atualizar</button>
                     </div>
                 </div>
             </Modal>
@@ -221,7 +221,7 @@ function PerfilUsuario(){
                         <div className='opcoes'>
                             <Select closeMenuOnSelect={false} components={animatedComponents} options={perfis} onChange={handleChange} />
                         </div>
-                        <button className='global-button' onClick={() => atualizaPerfil()}>Atualizar</button>
+                        <button className='global-button global-button--transparent' onClick={() => atualizaPerfil()}>Atualizar</button>
                     </div>
                 </div>
             </Modal>

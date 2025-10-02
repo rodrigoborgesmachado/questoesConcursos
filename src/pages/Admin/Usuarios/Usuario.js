@@ -121,7 +121,7 @@ function Usuarios(){
                                 usuarios[index].isVerified == "1" ? 
                                 <></> 
                                 : 
-                                <button className='global-button' onClick={() => ReenviaEmail(usuarios[index])}>Reenviar email</button>
+                                <button className='global-button global-button--transparent' onClick={() => ReenviaEmail(usuarios[index])}>Reenviar email</button>
                             }
                         </h4>
                         <h4>Perfil: {usuarios[index].tipoPerfil?.descricao}</h4>
@@ -147,7 +147,7 @@ function Usuarios(){
                         <input type='text' value={filtro} onChange={(e) => setFiltro(e.target.value)}/>
                     </div>
                     <div className='botoesModalFiltro'>
-                        <button className='global-button global-button' onClick={() => buscaDados(1)}>Filtrar</button>
+                        <button className='global-button global-button--transparent' onClick={() => buscaDados(1)}>Filtrar</button>
                     </div>
                 </div>
             </Modal>
@@ -223,7 +223,7 @@ function Usuarios(){
                                         <td>
                                             {
                                                 item.isVerified == '0' ?
-                                                <button className='global-button' onClick={() => ReenviaEmail(item.email)}>Reenviar email</button>
+                                                <button className='global-button global-button--transparent' onClick={() => ReenviaEmail(item.email)}>Reenviar email</button>
                                                 :<></>
                                             }
                                         </td>

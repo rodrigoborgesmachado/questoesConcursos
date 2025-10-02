@@ -171,7 +171,7 @@ function HistoricoUsuarioAdmin() {
                                                 Data resposta: {item.dataResposta?.replace('T', ' ')}
                                             </p>
                                             <p>
-                                                <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.codigoQuestao)}>Visualizar Questão✏️</button>
+                                                <button className='global-button global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.codigoQuestao)}>Visualizar Questão✏️</button>
                                             </p>
                                         </h4>
                                     </div>

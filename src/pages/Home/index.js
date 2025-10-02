@@ -32,20 +32,6 @@ function Home() {
 
                 </div>
             </div>
-            {/* <div className="containerpage-type1">
-                <div className="containerpage-type1-text">
-                    <div className='paragrafo1'>
-                        Bem-vindo ao maravilhoso mundo do
-                    </div>
-                    <div className='paragrafo2'>
-                        QuestoesAqui
-                    </div>
-                    <div className='paragrafo3'>
-                        Aqui, você vai embarcar em uma aventura incrível de preparação para o Enem, Vestibulares e concursos públicos, desvendando mistérios e desafios em forma de questões de provas anteriores.
-                    </div>
-
-                </div>
-            </div> */}
             <div className="containerpage-type3">
                 <div className='containerpage-type3-block'>
                     <div className="new-h1">Intuitivo</div>
@@ -63,7 +49,7 @@ function Home() {
 
             <div className="separator"></div>
 
-            <div className="containerpage global-extraBottom">
+            <div className="global-extraBottom global-extraTop">
                 <div className='botoes-type2'>
                     <Link className='botao-type2' to={`/listagemquestoes`}>
                         Listar todas questões

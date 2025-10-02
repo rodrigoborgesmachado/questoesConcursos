@@ -120,7 +120,7 @@ function MinhasAvaliacoes(){
                                             }
                                         </td>
                                         <td>
-                                            <button className='global-button global-button' onClick={() => abrirRespostas(item.Id)}>Respostas</button>
+                                            <button className='global-button global-button--transparent' onClick={() => abrirRespostas(item.Id)}>Respostas</button>
                                         </td>
                                     </tr>
                                 )

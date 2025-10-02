@@ -205,7 +205,7 @@ function NotasCorte(){
                             <Select closeMenuOnSelect={false} components={animatedComponents} options={cursos} value={cursos.filter(function(option){return option.value == filtro.curso})} onChange={handleChangeCurso} />
                         </div>
                         <div className="opcoes">
-                            <Button className='global-button global-mt' onClick={() => Buscar()}>Filtrar</Button>
+                            <Button className='global-button global-button--transparent global-mt' onClick={() => Buscar()}>Filtrar</Button>
                         </div>
                     </div>
                     :
@@ -346,7 +346,7 @@ function NotasCorte(){
                         }
                         <br/>
                         <div className="opcoes">
-                            <Button className='global-button global-mt' onClick={() => Limpar()}>Refazer Busca</Button>
+                            <Button className='global-button global-button--transparent global-mt' onClick={() => Limpar()}>Refazer Busca</Button>
                         </div>
                     </div>
                 }

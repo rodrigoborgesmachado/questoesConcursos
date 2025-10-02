@@ -138,7 +138,7 @@ function HistoricoUsuario() {
                                    </p>
 
                                     <div className='global-buttonWrapper'>
-                                        <button className='global-button' onClick={() => abreQuestao(item.codigoQuestao)}>✏️ Visualizar Questão</button>
+                                        <button className='global-button global-button--transparent' onClick={() => abreQuestao(item.codigoQuestao)}>✏️ Visualizar Questão</button>
                                     </div>
 
                                 </h4>

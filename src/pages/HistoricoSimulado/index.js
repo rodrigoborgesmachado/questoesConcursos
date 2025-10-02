@@ -179,7 +179,7 @@ function HistoricoSimulado(){
                                     </td>
                                     <td>
                                         <h4>
-                                            <button onClick={() => abreResultado(item.codigo)} className='global-button'>Visualizar</button>
+                                            <button onClick={() => abreResultado(item.codigo)} className='global-button global-button--transparent'>Visualizar</button>
                                         </h4>
                                     </td>
                                 </tr>

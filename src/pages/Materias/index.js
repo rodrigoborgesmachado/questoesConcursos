@@ -83,7 +83,7 @@ function Materias() {
                     <Select closeMenuOnSelect={false} components={animatedComponents} options={materias} isMulti onChange={handleChange} />
                 </div>
                 <div>
-                    <Link className='global-button global-mt' to={`/questoes/materias&${MontaUrlMaterias()}`}>Iniciar</Link>
+                    <Link className='global-button global-button--transparent global-mt' to={`/questoes/materias&${MontaUrlMaterias()}`}>Iniciar</Link>
                 </div>
             </div>
         </div>

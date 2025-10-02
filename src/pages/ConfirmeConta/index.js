@@ -51,7 +51,7 @@ function ConfirmeConta(){
                     Você receberá um email para validar sua conta em até 5 minutos, é necessário valida-lo afim de receber emails do questões aqui!<br/><br/>
                     Verifique também sua pasta de span.
                 </h2>
-                <button className='global-button reenviar-button' onClick={() => ReenviaEmail()}>Reenviar email</button>
+                <button className='global-button global-button--transparent reenviar-button' onClick={() => ReenviaEmail()}>Reenviar email</button>
             </div>
         </div>
     )

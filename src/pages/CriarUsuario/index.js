@@ -119,7 +119,7 @@ function CriarUsuario(){
                 <label for="date">Instituição:</label>
                 <input id='date' type='text' value={instituicao} selectedOption={perfilSelecionado} onChange={(e) => setInstituicao(e.target.value)}></input>
 
-                <button className='global-button global-button--full-width' onClick={confirmaFormulario}>Confirma</button>
+                <button className='global-button global-button--transparent global-button--full-width' onClick={confirmaFormulario}>Confirma</button>
             </div>
             
         </div>

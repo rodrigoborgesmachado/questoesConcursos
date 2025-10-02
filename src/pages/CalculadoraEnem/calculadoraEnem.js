@@ -170,8 +170,8 @@ function CalculadoraEnem(){
                             <Select closeMenuOnSelect={false} components={animatedComponents} options={cursos} value={cursos.filter(function(option){return option.value == filtro})} onChange={handleChangeCurso} />
                         </div>
                         <div className='opcoesBotoesCalculadora'>
-                            <Button className='global-button global-mt' onClick={() => Buscar()}>Filtrar</Button>
-                            <Button className='global-button global-mt' onClick={() => MontarPesos()}>Entrar com os pesos manualmente</Button>
+                            <Button className='global-button global-button--transparent global-mt' onClick={() => Buscar()}>Filtrar</Button>
+                            <Button className='global-button global-button--transparentglobal-mt' onClick={() => MontarPesos()}>Entrar com os pesos manualmente</Button>
                         </div>
                     </div>
                     :
@@ -229,8 +229,8 @@ function CalculadoraEnem(){
                                 }
                             </div>
                             <div className="opcoes">
-                                <Button className='global-button global-mt' onClick={() => Calcular()}>Calcular média</Button>
-                                <Button className='global-button global-mt' onClick={() => Voltar()}>Voltar</Button>
+                                <Button className='global-button global-button--transparent global-mt' onClick={() => Calcular()}>Calcular média</Button>
+                                <Button className='global-button global-button--transparent global-mt' onClick={() => Voltar()}>Voltar</Button>
                             </div>
                         </h3>
 

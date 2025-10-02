@@ -114,8 +114,8 @@ function Login() {
                     <label for="email">Senha:</label>
                     <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
                     <div className='global-buttonWrapper'>
-                        <button className='global-button global-button--full-width' onClick={logar}>Logar</button>
-                        <Link className='global-button global-button--basic global-button--full-width' to={`/recoverypass`}>Esqueci minha senha</Link>
+                        <button className='global-button global-button--transparent global-button--full-width' onClick={logar}>Logar</button>
+                        <Link className='global-button global-button--transparent global-button--basic global-button--full-width' to={`/recoverypass`}>Esqueci minha senha</Link>
                     </div>
                 </div>
             </div>

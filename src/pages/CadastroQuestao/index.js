@@ -618,7 +618,7 @@ function CadastraQuestao(){
                         Testar Layout
                     </button>
                     <button 
-                        className='global-button global-button'
+                        className='global-button global-button--transparent'
                         onClick={confirmaFormulario}> {questaoCode != undefined ? <>Editar Questão</> : <>Cadastrar Questão</>}</button>
                 </div>
                 

@@ -136,8 +136,8 @@ function ListagemAvaliacoes(){
                         </div>
                         <div className="separator separator--withMargins"></div>
                         <div className='botoesModalFiltroAvaliacoes'>
-                            <button className='global-button global-button' onClick={BuscaAvaliacoes}>Buscar</button>
-                            <button className='global-button global-button' onClick={() => setFiltrarChave(false)}>Mais filtros</button>
+                            <button className='global-button global-button--transparent' onClick={BuscaAvaliacoes}>Buscar</button>
+                            <button className='global-button global-button--transparent' onClick={() => setFiltrarChave(false)}>Mais filtros</button>
                         </div>
                     </div>
                     :

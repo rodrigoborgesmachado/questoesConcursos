@@ -552,18 +552,18 @@ function Questoes(){
                     </div>
                     <div className='separator separator--withMargins'></div>
                     <div className='global-buttonWrapper'>
-                        <button className='global-button' onClick={buscaRespostaCorreta}>Visualizar resposta</button>
+                        <button className='global-button global-button--transparent' onClick={buscaRespostaCorreta}>Visualizar resposta</button>
                         {
                             questao?.ativo == "1" ? 
-                            <button className='global-button' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
+                            <button className='global-button global-button--transparent' onClick={solicitarRevisao}>Solicitar revisão da questão</button>
                             :
                             <></>
                         }
                         {
                             localStorage.getItem(Config.ADMIN) === '1' ?
                             <>
-                                <button className='global-button' onClick={editaQuestao}>Editar questão</button>
-                                <button className='global-button' onClick={() => revisar()}>Colocar questão como revisada</button>
+                                <button className='global-button global-button--transparent' onClick={editaQuestao}>Editar questão</button>
+                                <button className='global-button global-button--transparent' onClick={() => revisar()}>Colocar questão como revisada</button>
                             </>
                             :
                             <></>
@@ -571,7 +571,7 @@ function Questoes(){
                         {
                             localStorage.getItem(Config.ADMIN) === '1' || localStorage.getItem(Config.ADMIN) === '1'?
                             <>
-                                <button className='global-button' onClick={openModalAssunto}>Alterar Assunto</button>
+                                <button className='global-button global-button--transparent' onClick={openModalAssunto}>Alterar Assunto</button>
                             </>
                             :
                             <></>
@@ -635,7 +635,7 @@ function Questoes(){
                         <textarea type='text' placeholder="Comentário" rows="10" value={comentario} onChange={(e) => setComentario(e.target.value)}/>
                     </div>
                     <div className='botoesModal'>
-                        <button className='global-button global-fullW' onClick={fazComentario}>Comentar</button>
+                        <button className='global-button global-button--transparent global-fullW' onClick={fazComentario}>Comentar</button>
                     </div>
                 </div>
             </Modal>
@@ -652,7 +652,7 @@ function Questoes(){
                         <input type='text' placeholder="Assunto" value={assunto} onChange={(e) => setAssunto(e.target.value)}/>
                     </div>
                     <div className='botoesModal'>
-                        <button className='global-button global-fullW' onClick={atualizaAssunto}>Alterar</button>
+                        <button className='global-button global-button--transparent global-fullW' onClick={atualizaAssunto}>Alterar</button>
                     </div>
                 </div>
             </Modal>
@@ -736,10 +736,10 @@ function Questoes(){
                         :
                         <div className='opcoesBotoesNavegacao'>
                             <div className='opcaoBotaoBefore'>
-                                <button className='global-button' onClick={() => {BuscarProximaQuestao(true, false);}}>Questão anterior</button>
+                                <button className='global-button global-button--transparent' onClick={() => {BuscarProximaQuestao(true, false);}}>Questão anterior</button>
                             </div>
                             <div className='opcaoBotaoAfter'>
-                                <button className='global-button' onClick={() => {BuscarProximaQuestao(false, true);}}>Próxima questão</button>
+                                <button className='global-button global-button--transparent' onClick={() => {BuscarProximaQuestao(false, true);}}>Próxima questão</button>
                             </div>
                         </div>
                     }

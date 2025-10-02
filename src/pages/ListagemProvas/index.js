@@ -246,12 +246,12 @@ function ListagemProvas() {
                                                     :
                                                     <></>
                                             }
-                                            <button className='global-button global-button--full-width' onClick={() => abrirQuestao(item.Id)}>Visualizar questões</button>
+                                            <button className='global-button global-button--transparent global-button--full-width ' onClick={() => abrirQuestao(item.Id)}>Visualizar questões</button>
                                             <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.Id)}>Iniciar Simulado</button>
                                         </>
                                         :
                                         <>
-                                            <button className='global-button global-button--full-width' onClick={() => abrirSimulado(item.Id)}>Iniciar Simulado</button>
+                                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.Id)}>Iniciar Simulado</button>
                                         </>
                                     }
                                 </div>

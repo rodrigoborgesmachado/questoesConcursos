@@ -311,7 +311,7 @@ function FilterComponent({ buscaQuestoesFiltrando, setFiltro, showBancas=true, s
                 </div>
                 <div className='botoesModalFiltro'>
                     <button className='global-button global-button--transparent' onClick={limparFiltro}>Limpar</button>
-                    <button className='global-button global-button' onClick={buscaQuestoesFiltrando}>Filtrar</button>
+                    <button className='global-button global-button--transparent' onClick={buscaQuestoesFiltrando}>Filtrar</button>
                 </div>
             </div>
         </div>

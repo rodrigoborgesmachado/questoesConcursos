@@ -261,7 +261,7 @@ function CadastroAvaliacao(){
                                                     </h4>
                                                 </td>
                                                 <td>
-                                                    <button className='global-button global-button' onClick={() => removeItemFromList(item.Id)}>Remover</button>
+                                                    <button className='global-button global-button--transparent' onClick={() => removeItemFromList(item.Id)}>Remover</button>
                                                 </td>
                                             </tr>
                                         )
@@ -359,11 +359,11 @@ function CadastroAvaliacao(){
                                                             {
                                                                 questoesAvaliacao.filter(i => item.Id === i.Id).length > 0 ?
                                                                 <>
-                                                                    <button className='global-button global-button' onClick={() => removeItemFromList(item.Id)}>Remover</button>
+                                                                    <button className='global-button global-button--transparent' onClick={() => removeItemFromList(item.Id)}>Remover</button>
                                                                 </>
                                                                 :
                                                                 <>
-                                                                    <button className='global-button global-button' onClick={() => adicionaQuestao(item)}>Selecionar</button>
+                                                                    <button className='global-button global-button--transparent' onClick={() => adicionaQuestao(item)}>Selecionar</button>
                                                                 </>
                                                             }
                                                         </td>
@@ -436,7 +436,7 @@ function CadastroAvaliacao(){
                         <VisibilityIcon className='vis' onClick={() => openModalQuestoesAvaliacao()}/>
                     </div>
                     <div className='addQuestao'>
-                        <button className='global-button global-button' onClick={cadastrarAvaliacao}>{acao == 'I' ? 'Cadastrar Avaliação' : 'Editar Avaliação'}</button>
+                        <button className='global-button global-button--transparent' onClick={cadastrarAvaliacao}>{acao == 'I' ? 'Cadastrar Avaliação' : 'Editar Avaliação'}</button>
                     </div>
                 </div>
             </div>

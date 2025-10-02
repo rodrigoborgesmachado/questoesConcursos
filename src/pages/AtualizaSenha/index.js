@@ -74,7 +74,7 @@ function AtualizaSenha(){
                         Nova senha
                     </p>
                     <input type='password' className='global-input' value={newPass} onChange={(e) => setNewPass(e.target.value)}/>
-                    <button className='global-button' onClick={() => AtualizaSenha()}>Atualizar</button>
+                    <button className='global-button global-button--transparent' onClick={() => AtualizaSenha()}>Atualizar</button>
                 </div>
             </div>
         </div>

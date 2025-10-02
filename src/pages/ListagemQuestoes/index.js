@@ -325,14 +325,14 @@ function ListagemQuestoes(){
                                     }
                                     <td>
                                         {item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "1")) !== undefined ? 
-                                        <button className='global-button-right global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Respondida</button>
+                                        <button className='global-button-right global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Respondida</button>
                                         :
                                         <>
                                         {
                                             item?.respostasUsuarios?.find(element => item?.respostasQuestoes.find(elem => elem.codigo == element.codigoResposta && elem.certa === "0")) !== undefined ? 
-                                            <button className='global-button-wrong global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
+                                            <button className='global-button-wrong global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
                                             :
-                                            <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
+                                            <button className='global-button global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
                                         }
                                         </>
                                         }
