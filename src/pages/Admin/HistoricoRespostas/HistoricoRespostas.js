@@ -139,7 +139,7 @@ function HistoricoRespostas(){
                                         </td>
                                         <td>
                                             <h4>
-                                                {item.questao.prova.Id}
+                                                {item.questao.prova.nomeProva}
                                             </h4>
                                         </td>
                                         <td>
