@@ -19,7 +19,7 @@ import api from '../../services/api.js';
 import { LimpaFiltrosLocalSession } from '../../services/functions.js';
 import iftmLogo from '../../assets/iftm-logo.svg';
 
-const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu', '➕Pratique Tabuada'];
+const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu'];
 if(localStorage.getItem(Config.ADMIN) === '1'){
   pages.push('Admin');
 }
@@ -125,9 +125,6 @@ const ResponsiveAppBar = () => {
     }
     else if(page === pages[3]){
       navigate('/listagemquestoes', {replace: true});
-    }
-    else if(page === pages[5]){
-      window.open("https://www.tabuadadivertida.com/", "_blank");
     }
   }
 
@@ -279,7 +276,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <a href='/'>ConQuest</a>
+            <a href='/'>Questões Aqui</a>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -455,7 +452,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <a href='/'>ConQuest</a>
+            <a href='/'>Questões Aqui</a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button
