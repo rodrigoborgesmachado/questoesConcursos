@@ -315,7 +315,7 @@ const ResponsiveAppBar = () => {
                 </div>
               </MenuItem>
               {pages.map((page, index) => (
-                index != 0 && index != 4 && index != 6 ?
+                page !== 'Admin' && index != 0 && index != 4 ?
                 <MenuItem key={index} onClick={(e) => SelecionaOpcao(page)}>
                   <Typography textAlign="center">
                     {page}
@@ -467,7 +467,7 @@ const ResponsiveAppBar = () => {
               </span>
             </Button>
             {pages.map((page, index) => (
-              index != 0 && index != 4 && index != 6 ?
+              page !== 'Admin' && index != 0 && index != 4 ?
               <Button
                 key={index}
                 onClick={(e) => SelecionaOpcao(page)}
