@@ -41,7 +41,7 @@ function VerificadorUser(){
             {
                 !validado ? 
                 <p>
-                    ⚠️Não foi possível liberar o usuário! Entre em contato com o suporte: sunsalesystem@outlook.com⚠️
+                    ⚠️Não foi possível liberar o usuário! Entre em contato com o suporte: rodrigomachado@sunsalesystem.com⚠️
                 </p>
                 :
                 <p>

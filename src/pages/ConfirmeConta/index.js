@@ -13,7 +13,7 @@ function ConfirmeConta(){
     async function ReenviaEmail(){
 
         if(quantidadeEnvio > 5){
-            toast.warn('Já foi tentado mais de ' + quantidadeEnvio + ' vezes o envio! Entre em contato com o suporte (sunsalesystem@outlook.com)!');
+            toast.warn('Já foi tentado mais de ' + quantidadeEnvio + ' vezes o envio! Entre em contato com o suporte (rodrigomachado@sunsalesystem.com)!');
             return;
         }
         
@@ -28,12 +28,12 @@ function ConfirmeConta(){
                 toast.success('Email reenviado!');
             }
             else{
-                toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte (sunsalesystem@outlook.com)!');
+                toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte (rodrigomachado@sunsalesystem.com)!');
             }
         })
         .catch(() => {
             setLoadding(false);
-            toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte! (sunsalesystem@outlook.com)');
+            toast.warn('Não foi possível reenviar o email. Entre em contato com o suporte! (rodrigomachado@sunsalesystem.com)');
         })
     }
     

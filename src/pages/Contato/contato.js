@@ -17,7 +17,7 @@ function Contato(){
                         <a href="https://wa.me/5534999798100" target="_blank"><WhatsAppIcon/> Rodrigo Machado</a>
                     </p>
                     <p>
-                        <EmailIcon/> sunsalesystem@outlook.com
+                        <EmailIcon/> rodrigomachado@sunsalesystem.com
                     </p>
                     <p>
                         <a href="https://www.linkedin.com/company/sunsale-system/" target="_blank"><LinkedInIcon/> LinkedIn</a>
