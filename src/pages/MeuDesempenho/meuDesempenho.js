@@ -17,11 +17,7 @@ export default function MeuDesempenho(){
     const [dados, setDados] = useState({});
 
     async function buscaDados() {
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
 
         await api.get('/meudesempenho/analysis')
             .then((response) => {

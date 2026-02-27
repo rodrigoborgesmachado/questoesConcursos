@@ -11,6 +11,9 @@ import Modal from 'react-modal';
 import Tempo from './../../components/Tempo/tempo.js';
 import { customStyles } from '../../services/functions.js';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
   const customStylesAssunto = {
     content: {
@@ -46,6 +49,8 @@ function Questoes(){
     const[questao, setQuestao] = useState({});
     const[comentarios, setComentarios] = useState([]);
     const[qtQuestoesCertas, setQtQuestoesCertas] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_ACERTADAS) || 0));
+    const { role } = useAuth();
+    const isAdmin = requireRole(role, [Roles.Admin]);
     const[questoesTotal, setQuestoesTotal] = useState(parseInt(localStorage.getItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS) || 0));
     const[loadding, setLoadding] = useState(true);
     const[modalIsOpen, setIsOpen] = useState(false);
@@ -133,11 +138,7 @@ function Questoes(){
     }
 
     async function BuscarProximaQuestao(anterior = false, proxima = false){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
 
         setLoadding(true);
 
@@ -211,11 +212,7 @@ function Questoes(){
     }
 
     async function BuscarQuestaoById(id){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
 
         setLoadding(true);
         await api.get('/questoes/getById?id=' + id)
@@ -560,7 +557,7 @@ function Questoes(){
                             <></>
                         }
                         {
-                            localStorage.getItem(Config.ADMIN) === '1' ?
+                            isAdmin ?
                             <>
                                 <button className='global-button global-button--transparent' onClick={editaQuestao}>Editar questão</button>
                                 <button className='global-button global-button--transparent' onClick={() => revisar()}>Colocar questão como revisada</button>
@@ -569,7 +566,7 @@ function Questoes(){
                             <></>
                         }
                         {
-                            localStorage.getItem(Config.ADMIN) === '1' || localStorage.getItem(Config.ADMIN) === '1'?
+                            isAdmin || isAdmin?
                             <>
                                 <button className='global-button global-button--transparent' onClick={openModalAssunto}>Alterar Assunto</button>
                             </>
@@ -771,3 +768,4 @@ function Questoes(){
 }
 
 export default Questoes;
+

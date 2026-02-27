@@ -7,10 +7,15 @@ import { toast } from 'react-toastify';
 import Config from './../../config.json';
 import { BsFileEarmarkPlusFill } from "react-icons/bs";
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
 function MinhasAvaliacoes(){
     const navigate = useNavigate();
     const [loadding, setLoadding] = useState(false);
+    const { role } = useAuth();
+    const isTeacher = requireRole(role, [Roles.Teacher]);
 
     const[avaliacoes, setAvaliacoes] = useState([]);
 
@@ -62,7 +67,7 @@ function MinhasAvaliacoes(){
                 <div className='opcoesFiltro'>
                     <h3>Minhas Avaliações</h3>
                     {
-                        localStorage.getItem(Config.ADMIN) === '2' ?
+                        isTeacher ?
                         <h3 className='link' onClick={addAvaliacao} ><BsFileEarmarkPlusFill/>Adicionar avaliação</h3>
                         :
                         <></>

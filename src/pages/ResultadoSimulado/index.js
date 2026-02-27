@@ -7,6 +7,7 @@ import api from '../../services/api.js';
 import { Table } from 'react-bootstrap';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
 
 function Resultado(){
     const navigate = useNavigate();
@@ -16,13 +17,10 @@ function Resultado(){
     const[usuario, setUsuario] = useState(0);
     const[respostas, setResposta] = useState([]);
     const[loadding, setLoadding] = useState(true);
+    const { session } = useAuth();
 
     async function buscaHistorico(codigoSimulado){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
         
         await api.get('/Simulado/getById?id=' + codigoSimulado)
         .then((response) => {
@@ -53,7 +51,7 @@ function Resultado(){
             if(response.data.success){
                 const link = document.createElement('a');
                 link.href = response.data.object;
-                link.download = 'Boletinho - Prova ' + prova.nomeProva.replace('/', '').replace('-', ' ') + localStorage.getItem(Config.Nome) + '.html';
+                link.download = 'Boletinho - Prova ' + prova.nomeProva.replace('/', '').replace('-', ' ') + session?.name + '.html';
                 link.click();
             }
             else{
@@ -195,3 +193,4 @@ function Resultado(){
 }
 
 export default Resultado;
+

@@ -18,27 +18,33 @@ import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 import { LimpaFiltrosLocalSession } from '../../services/functions.js';
 import iftmLogo from '../../assets/iftm-logo.svg';
-
-const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu'];
-if(localStorage.getItem(Config.ADMIN) === '1'){
-  pages.push('Admin');
-}
-
-const settings = ['Olá ' + localStorage.getItem(Config.Nome)];
-settings.push('Perfil👽');
-settings.push('Meu Desempenho📊');
-
-if(localStorage.getItem(Config.ADMIN) === '2'){
-  settings.push('Minhas Avaliações');
-}
-
-settings.push('Histórico de Questões⏳');
-settings.push('Histórico Simulados🧾');
-settings.push('Ranking dos usuários🔝');
-settings.push('Sair👋');
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
+    const { session, role, isAuthenticated, logout } = useAuth();
+    const isAdmin = requireRole(role, [Roles.Admin]);
+    const isTeacher = requireRole(role, [Roles.Teacher]);
+    const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu'];
+    const settings = [`Olá ${session?.name || ''}`];
+
+    if (isAdmin) {
+      pages.push('Admin');
+    }
+
+    settings.push('Perfil👽');
+    settings.push('Meu Desempenho📊');
+
+    if (isTeacher) {
+      settings.push('Minhas Avaliações');
+    }
+
+    settings.push('Histórico de Questões⏳');
+    settings.push('Histórico Simulados🧾');
+    settings.push('Ranking dos usuários🔝');
+    settings.push('Sair👋');
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -175,25 +181,15 @@ const ResponsiveAppBar = () => {
       localStorage.setItem(Config.filtroBancasSelecionadas, JSON.stringify([]));
     }
     
-    window.location.href = '/listagemprovas/1';
+    navigate('/listagemprovas/1', { replace: true });
   }
 
   function sair(){
-    localStorage.setItem(Config.LOGADO, 0);
-    localStorage.setItem(Config.USUARIO, '');
-    localStorage.setItem(Config.TOKEN, '');
-    localStorage.setItem(Config.ADMIN, '');
-    localStorage.setItem(Config.TEMPO_PARAM, 0);
-    localStorage.removeItem(Config.LOGADO);
-    localStorage.removeItem(Config.USUARIO);
-    localStorage.removeItem(Config.TOKEN);
-    localStorage.removeItem(Config.ADMIN);
-
+    logout();
     LimpaFiltrosLocalSession();
     
     toast.success('Volte sempre!');
     navigate('/', {replace: true});
-    window.location.href = '/';
   }
 
   function abreTelaNotaDeCorte(){
@@ -584,7 +580,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {
-                localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'?
+                !isAuthenticated ?
                 <>
                 <h3>
                 <Link className='logo' to='/login'><span>Login</span></Link>
@@ -616,7 +612,7 @@ const ResponsiveAppBar = () => {
                   {settings.map((setting, index) => (
                     <MenuItem key={setting} onClick={(e) => SelecionaOpcaoUsuario(setting)}>
                     {
-                      setting == 'Minhas Avaliações'  && localStorage.getItem(Config.ADMIN) === '2'?
+                      setting == 'Minhas Avaliações'  && isTeacher?
                       <>
                         <Typography key={setting} onClick={handleOpenMinhasAvaliacoes}>
                             {setting}

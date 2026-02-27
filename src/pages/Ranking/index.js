@@ -6,21 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import Config from './../../config.json';
 import {toast} from 'react-toastify';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
 
 function Ranking(){
     const[loadding, setLoadding] = useState(true);
     const[lista, setLista] = useState({});
-    const[usuarioLogado] = useState(localStorage.getItem(Config.USUARIO));
+    const { session } = useAuth();
+    const usuarioLogado = session?.username;
     const navigate = useNavigate();
 
     useEffect(() => {
 
         async function BuscarRanking(){
-            if(!localStorage.getItem(Config.TOKEN)){
-                toast.info('Necessário logar para acessar!');
-                navigate('/', {replace: true});
-                return;
-            }
+            
 
             await api.get('/RespostasUsuaro/ranking')
             .then((response) => {
@@ -104,3 +102,4 @@ function Ranking(){
 }
 
 export default Ranking;
+

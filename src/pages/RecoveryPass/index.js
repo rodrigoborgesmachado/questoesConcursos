@@ -1,15 +1,16 @@
 import './style.css';
 import api from '../../services/api.js';
-import Config from './../../config.json';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
 
 function RecoveryPass(){
     const navigate = useNavigate();
     const[email, setEmail] = useState('');
     const[loadding, setLoadding] = useState(false);
+    const { isAuthenticated } = useAuth();
 
     async function reset(){
         setLoadding(true);
@@ -30,7 +31,7 @@ function RecoveryPass(){
             });
     }
 
-    if(localStorage.getItem(Config.LOGADO) == 1){
+    if(isAuthenticated){
         navigate('/', {replace: true});
     }
 

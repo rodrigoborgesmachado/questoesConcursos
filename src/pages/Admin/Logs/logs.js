@@ -42,11 +42,7 @@ function Logs(){
     }
 
     async function buscaDados(page) {
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
         closeModalFiltro();
 
         await api.get(`/Logger/pagged?page=${page}&quantity=${quantityPerPage}${(filtro ? '&message=' + filtro : '')}`)

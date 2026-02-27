@@ -10,6 +10,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { customStyles } from '../../services/functions.js';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
 
 function PerfilUsuario(){
     const style = customStyles();
@@ -33,6 +34,7 @@ function PerfilUsuario(){
         },
     ]);
     const[perfilSelecionado, setPerfilSelecionado] = useState(0);
+    const { isAuthenticated } = useAuth();
 
     function openModalNome() {
         setIsOpenModalNome(true);
@@ -73,7 +75,7 @@ function PerfilUsuario(){
     
     useEffect(() => {
 
-        if(localStorage.getItem(Config.LOGADO) === '1'){
+        if(isAuthenticated){
             BuscaDadosUsuario();
         }
         else{

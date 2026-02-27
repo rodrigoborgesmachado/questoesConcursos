@@ -8,18 +8,23 @@ import { Table } from 'react-bootstrap';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader';
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
 function HistoricoSimulado(){
     const animatedComponents = makeAnimated();
     const[lista, setLista] = useState([]);
     const navigate = useNavigate();
     const[loadding, setLoadding] = useState(true);
+    const { role, isAuthenticated } = useAuth();
+    const isAdmin = requireRole(role, [Roles.Admin]);
     const[usuarios, setUsuarios] = useState([]);
     const [quantityPerPage] = useState(1000);
     const[usuarioFiltro, setUsuarioFiltro] = useState([]);
 
-    if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'){
-        navigate('/', {replace: true});
+    if(!isAuthenticated){
+        navigate('/login', {replace: true});
     }
 
     async function buscaUsuarios(){
@@ -71,7 +76,7 @@ function HistoricoSimulado(){
     useEffect(() => {
         setLoadding(true);
 
-        if(localStorage.getItem(Config.ADMIN) === '1')
+        if(isAdmin)
         {
             buscaUsuarios();
         }
@@ -104,7 +109,7 @@ function HistoricoSimulado(){
                 <br/>
                 <div className='dadosResumidos'>
                     {
-                        localStorage.getItem(Config.ADMIN) === '1' ?
+                        isAdmin ?
                         <div className='formUsuario'>
                             <div className='selectUsuario'>
                                 <p>Usuário:</p>

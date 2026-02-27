@@ -33,11 +33,7 @@ function HistoricoTabuadaDivertida(){
     }
 
     async function buscaDados(page) {
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
 
         await api.get(`/ResultadosTabuadaDivertida/pagged?page=${page}&quantity=${quantityPerPage}`)
             .then((response) => {

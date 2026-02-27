@@ -18,11 +18,7 @@ function Materias() {
 
     useEffect(() => {
         async function buscaMaterias() {
-            if (!localStorage.getItem(Config.TOKEN)) {
-                toast.info('Necessário logar para acessar!');
-                navigate('/', { replace: true });
-                return;
-            }
+            
 
             await api.get('/Questoes/GetAllMaterias')
                 .then((response) => {

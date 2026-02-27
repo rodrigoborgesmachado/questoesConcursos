@@ -32,11 +32,7 @@ function HistoricoRespostas(){
     }
 
     async function buscaDados(page) {
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
 
         await api.get(`/respostasusuaro/pagged?page=${page}&quantity=${quantityPerPage}&idUser=-1`)
             .then((response) => {

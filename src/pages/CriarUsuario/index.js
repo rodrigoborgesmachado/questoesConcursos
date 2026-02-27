@@ -1,15 +1,17 @@
 import './style.css';
 import { useState } from 'react';
-import Config from '../../config.json';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api.js';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { stringToHash } from '../../utils/auth/passwordHash';
+import { useAuth } from '../../auth/useAuth';
 
 function CriarUsuario(){
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
     const animatedComponents = makeAnimated();
 
     const[nome, setNome] = useState('');
@@ -29,21 +31,6 @@ function CriarUsuario(){
     ]);
     const[perfilSelecionado, setPerfilSelecionado] = useState(0);
     const[loadding, setLoadding] = useState(false);
-
-    function stringToHash(string) {
-                  
-        let hash = 0;
-          
-        if (string.length === 0) return hash;
-          
-        for (let i = 0; i < string.length; i++) {
-            let char = string.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-          
-        return hash;
-    }
 
     function logarUsuario() {
         navigate('/login', { replace: true });
@@ -82,7 +69,7 @@ function CriarUsuario(){
         setPerfilSelecionado(selectedOption.value);
     }
 
-    if(localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1'){
+    if(isAuthenticated){
         navigate('/', {replace: true});
     }
 

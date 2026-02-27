@@ -42,11 +42,7 @@ function Usuarios(){
     }
 
     async function buscaDados(page) {
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
 
         await api.get(`/Usuarios/pagged?page=${page}&quantity=${quantityPerPage}${(filtro ? '&email=' + filtro : '')}`)
             .then((response) => {

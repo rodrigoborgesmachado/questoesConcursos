@@ -8,12 +8,14 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader';
+import { useAuth } from '../../auth/useAuth';
 
 function HistoricoUsuario() {
     const navigate = useNavigate();
+    const { isAuthenticated, session } = useAuth();
 
-    if (localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0') {
-        navigate('/', { replace: true });
+    if (!isAuthenticated) {
+        navigate('/login', { replace: true });
     }
 
     const [loadding, setLoadding] = useState(true);
@@ -60,7 +62,7 @@ function HistoricoUsuario() {
                 if (response.data.success) {
                     const link = document.createElement('a');
                     link.href = response.data.object;
-                    link.download = 'Histórico - ' + localStorage.getItem(Config.Nome) + '.html';
+                    link.download = 'Histórico - ' + session?.name + '.html';
                     link.click();
                 }
                 else {

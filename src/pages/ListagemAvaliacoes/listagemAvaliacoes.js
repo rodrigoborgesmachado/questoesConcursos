@@ -14,6 +14,9 @@ import { customStyles } from '../../services/functions.js';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import DownloadIcon from '@mui/icons-material/Download';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
 function ListagemAvaliacoes(){
     const style = customStyles();
@@ -27,6 +30,8 @@ function ListagemAvaliacoes(){
     const [modalIsOpen, setIsOpen] = useState(false);
     const [filtro, setFiltro] = useState('');
     const [filtrarChave, setFiltrarChave] = useState(true);
+    const { role } = useAuth();
+    const isTeacher = requireRole(role, [Roles.Teacher]);
 
     function openModal() {
         setIsOpen(true);
@@ -38,11 +43,7 @@ function ListagemAvaliacoes(){
     }
 
     async function BuscaAvaliacoes(){
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
 
         closeModal();
         setLoadding(true);
@@ -147,7 +148,7 @@ function ListagemAvaliacoes(){
             <div className='global-infoPanel'>
                 <div>
                     {
-                        localStorage.getItem(Config.ADMIN) === '2' ?
+                        isTeacher ?
                         <h3 className='link' onClick={addAvaliacao} ><BsFileEarmarkPlusFill/>Adicionar avaliação</h3>
                         :
                         <></>
@@ -236,3 +237,4 @@ function ListagemAvaliacoes(){
 }
 
 export default ListagemAvaliacoes;
+

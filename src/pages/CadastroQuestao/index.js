@@ -84,11 +84,7 @@ function CadastraQuestao(){
     const[loadding, setLoadding] = useState(false);
 
     async function buscaQuestao(codigo){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
 
         await api.get('/Questoes/getById?id=' + codigo)
         .then((response) => {
@@ -237,16 +233,7 @@ function CadastraQuestao(){
     function voltarListagemQuestoes(){
         navigate('/questoes/codigoquestaolistagem:?' + searchParams, { replace: true });
     }
-
-    if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0' ){
-        navigate('/login', {replace: true});
-    }
-
-    if(localStorage.getItem(Config.ADMIN) != '1'){
-        navigate('/', {replace: true});
-    }
-
-    if(loadding){
+if(loadding){
         return(
             <PacmanLoader/>
         )
@@ -628,3 +615,4 @@ function CadastraQuestao(){
 }
 
 export default CadastraQuestao;
+

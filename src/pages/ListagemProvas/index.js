@@ -12,6 +12,9 @@ import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
 function ListagemProvas() {
     const style = customStyles();
@@ -26,6 +29,8 @@ function ListagemProvas() {
     const [filtroMontado, setFiltroMontado] = useState(MontaFiltrosLocalSession());
     const searchParams = new URLSearchParams(window.location.search);
     const[isSimulado] = useState(searchParams.get('tipo') == 'simulado');
+    const { role } = useAuth();
+    const isAdmin = requireRole(role, [Roles.Admin]);
 
     function openModal() {
         setIsOpen(true);
@@ -36,13 +41,7 @@ function ListagemProvas() {
     }
 
     async function buscaProvas(page) {
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
-
-        await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage + MontaFiltrosLocalSession())
+await api.get('/Prova/pagged?page=' + page + '&quantity=' + quantityPerPage + MontaFiltrosLocalSession())
             .then((response) => {
                 if (response.data.success) {
                     setProvas(response.data.object);
@@ -160,7 +159,7 @@ function ListagemProvas() {
                 <h3 className='provaTitle'><a>Provas {JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados)).length > 0 ? JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados))[0].label : ''}</a></h3>
                 <div className='opcaoFiltro'>
                     {
-                        localStorage.getItem(Config.ADMIN) == '1' && !isSimulado ?
+                        isAdmin && !isSimulado ?
                             <h2><BsFileEarmarkPlusFill onClick={addProva} /></h2>
                             :
                             <></>
@@ -175,7 +174,7 @@ function ListagemProvas() {
                             <div className='global-infoPanel' key={item.Id}>
                                 <h4>
                                     <div className='tituloProva'>
-                                        <b>📚{item.nomeProva}📚{localStorage.getItem(Config.ADMIN) == '1' ? <a onClick={() => navigate('/cadastroProva/' + item.Id, { replace: true })}>✏️</a> : <></>}</b>
+                                        <b>📚{item.nomeProva}📚{isAdmin ? <a onClick={() => navigate('/cadastroProva/' + item.Id, { replace: true })}>✏️</a> : <></>}</b>
                                         <sub><b>{
                                             item.tipoProvaAssociado.map((t, index) => {
                                                 return (
@@ -187,7 +186,7 @@ function ListagemProvas() {
                                     </div>
                                     <br />
                                     {
-                                        localStorage.getItem(Config.ADMIN) == '1' ?
+                                        isAdmin ?
                                             <>
                                                 Status: <b>{item.isActive == '1' ? 'ATIVO' : 'DESATIVADO'}</b>
                                             </>
@@ -239,7 +238,7 @@ function ListagemProvas() {
                                         !isSimulado ?
                                         <>
                                             {
-                                                localStorage.getItem(Config.ADMIN) == '1' ?
+                                                isAdmin ?
                                                     <>
                                                         <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(item.Id, item.isActive)}>{item.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
                                                     </>

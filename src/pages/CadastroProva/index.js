@@ -41,11 +41,7 @@ function CadastraProva(){
     }
 
     async function buscaTipos(){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
 
         await api.get('/TipoProva/pagged?page=1&quantity=10000')
         .then((response) => {
@@ -72,11 +68,7 @@ function CadastraProva(){
     }
 
     async function buscaProva(codigo){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
 
         await api.get('/Prova/getById?id=' + codigo)
         .then((response) => {
@@ -252,16 +244,7 @@ function CadastraProva(){
         var page = localStorage.getItem(Config.PaginaListagem) == null ? '1' : localStorage.getItem(Config.PaginaListagem);
         navigate('/listagemprovas/' + page, {replace: true});
     }
-
-    if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0' ){
-        navigate('/login', {replace: true});
-    }
-
-    if(localStorage.getItem(Config.ADMIN) != '1'){
-        navigate('/', {replace: true});
-    }
-
-    if(loadding){
+if(loadding){
         return(
             <PacmanLoader/>
         )
@@ -349,3 +332,4 @@ function CadastraProva(){
 }
 
 export default CadastraProva;
+

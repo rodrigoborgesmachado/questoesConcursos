@@ -12,6 +12,9 @@ import Modal from 'react-modal';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
 function ListagemQuestoes(){
     const style = customStyles();
@@ -27,6 +30,8 @@ function ListagemQuestoes(){
     const [quantityPerPage] = useState(10);
     const [modalFiltroIsOpen, setModalFiltroIsOpen] = useState(false);
     const [filtroMontado, setFiltroMontado] = useState(MontaFiltrosLocalSession());
+    const { role } = useAuth();
+    const isAdmin = requireRole(role, [Roles.Admin]);
 
     async function openModalFiltro() {
         setModalFiltroIsOpen(true);
@@ -37,11 +42,7 @@ function ListagemQuestoes(){
     }
 
     async function buscaProva(){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
 
         await api.get(filtro ? `/Prova/getById?id=${filtro}` : `/Prova/getById?id=-1`)
         .then((response) => {
@@ -68,11 +69,7 @@ function ListagemQuestoes(){
     }
 
     async function buscaQuestoes(page){
-        if(!localStorage.getItem(Config.TOKEN)){
-            toast.info('Necessário logar para acessar!');
-            navigate('/', {replace: true});
-            return;
-        }
+        
         setLoadding(true);
         
         await api.get(`/Questoes/pagged?page=${page}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : MontaFiltrosLocalSession()))
@@ -193,7 +190,7 @@ function ListagemQuestoes(){
                         Local: {prova?.local}
                         <br />
                         {
-                            localStorage.getItem(Config.ADMIN) == '1' ?
+                            isAdmin ?
                                 <>
                                     Status: <b>{prova?.isActive == '1' ? 'ATIVO' : 'DESATIVADO'}</b>
                                 </>
@@ -207,7 +204,7 @@ function ListagemQuestoes(){
             }
             <div className='opcoesQuestoes'>
                 {
-                    localStorage.getItem(Config.ADMIN) == '1' && filtro ?
+                    isAdmin && filtro ?
                         <>
                             <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(prova?.Id, prova?.isActive)}>{prova?.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button>
                         </>
@@ -216,7 +213,7 @@ function ListagemQuestoes(){
                 }
                 <div className='opcaoFiltro'>
                     {
-                        localStorage.getItem(Config.ADMIN) == '1' && filtro ?
+                        isAdmin && filtro ?
                         <h3 onClick={addQuestao}><BsFileEarmarkPlusFill/>  Adicionar</h3>
                         :
                         <></>
@@ -239,7 +236,7 @@ function ListagemQuestoes(){
                 <thead>
                     <tr>
                         {
-                            !filtro && localStorage.getItem(Config.ADMIN) === '1' ?
+                            !filtro && isAdmin ?
                             <th>
                                 Código
                             </th>
@@ -277,10 +274,10 @@ function ListagemQuestoes(){
                             return(
                                 <tr key={item.Id}>
                                     {
-                                        !filtro && localStorage.getItem(Config.ADMIN) === '1' ?
+                                        !filtro && isAdmin ?
                                         <td className='option'>
                                             {
-                                                localStorage.getItem(Config.ADMIN) === '1' ?
+                                                isAdmin ?
                                                 <h4 onClick={() => editaQuestao(item.Id)}>
                                                     ✏️{item.Id}
                                                 </h4>
@@ -295,7 +292,7 @@ function ListagemQuestoes(){
                                     <td className='option'>
                                         <a>
                                             {
-                                                localStorage.getItem(Config.ADMIN) === '1' ?
+                                                isAdmin ?
                                                 <h4 onClick={() => editaQuestao(item.Id)}>
                                                     ✏️{item.numeroQuestao}
                                                 </h4>
@@ -367,3 +364,4 @@ function ListagemQuestoes(){
 }
 
 export default ListagemQuestoes;
+

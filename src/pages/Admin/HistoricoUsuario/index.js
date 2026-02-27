@@ -9,6 +9,7 @@ import makeAnimated from 'react-select/animated';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import PacmanLoader from '../../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../../auth/useAuth';
 
 function HistoricoUsuarioAdmin() {
     const navigate = useNavigate();
@@ -20,14 +21,11 @@ function HistoricoUsuarioAdmin() {
     const [page, setPage] = useState(1);
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(7);
+    const { session } = useAuth();
 
     async function buscaRespostas(page, usuario) {
 
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
         setLoadding(true);
 
         await api.get('/RespostasUsuaro/getHistory?page=' + page + '&quantity=' + quantityPerPage + '&userCode=' + usuario)
@@ -49,11 +47,7 @@ function HistoricoUsuarioAdmin() {
     }
 
     async function buscaUsuarios() {
-        if (!localStorage.getItem(Config.TOKEN)) {
-            toast.info('Necessário logar para acessar!');
-            navigate('/', { replace: true });
-            return;
-        }
+        
 
         await api.get('/Usuarios')
             .then((response) => {
@@ -112,7 +106,7 @@ function HistoricoUsuarioAdmin() {
                 if (response.data.success) {
                     const link = document.createElement('a');
                     link.href = response.data.object;
-                    link.download = 'Histórico - ' + localStorage.getItem(Config.Nome) + '.html';
+                    link.download = 'Histórico - ' + session?.name + '.html';
                     link.click();
                 }
                 else {
@@ -202,3 +196,4 @@ function HistoricoUsuarioAdmin() {
 }
 
 export default HistoricoUsuarioAdmin;
+

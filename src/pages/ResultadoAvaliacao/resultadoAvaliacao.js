@@ -9,11 +9,16 @@ import makeAnimated from 'react-select/animated';
 import Select from 'react-select';
 import {abreQuestao} from './../../services/functions.js'
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
+import { Roles } from '../../auth/roles';
+import { requireRole } from '../../auth/requireRole';
 
 function ResultadoAvaliacao(){
     const navigate = useNavigate();
     const{code} = useParams();
     const[loadding, setLoadding] = useState(true);
+    const { role } = useAuth();
+    const isTeacher = requireRole(role, [Roles.Teacher]);
     const animatedComponents = makeAnimated();
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -91,7 +96,7 @@ function ResultadoAvaliacao(){
 
     useEffect(() => {
         BuscaAvaliacao(code);
-        if(localStorage.getItem(Config.ADMIN) === '2')
+        if(isTeacher)
             BuscaUsuarios(code);
     }, [])
 
@@ -155,7 +160,7 @@ function ResultadoAvaliacao(){
                     }
                 </div>
                 {
-                    localStorage.getItem(Config.ADMIN) === '2' ?
+                    isTeacher ?
                     <div className='alunosResponderamAvaliacao'>
                         <div className="separator separator--withMargins"></div>
                         <h4>Alunos que responderam a avaliação:</h4>
@@ -167,7 +172,7 @@ function ResultadoAvaliacao(){
                 }
                 <div className="separator separator--withMargins"></div>
                 {
-                    localStorage.getItem(Config.ADMIN) === '2' ?
+                    isTeacher ?
                         <h3 className='center-text'>Respostas - {selectedUsuarios}</h3>
                         :
                         <h3 className='center-text'>Respostas</h3>

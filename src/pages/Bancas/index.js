@@ -18,11 +18,7 @@ function Bancas() {
 
     useEffect(() => {
         async function buscaBancas() {
-            if (!localStorage.getItem(Config.TOKEN)) {
-                toast.info('Necessário logar para acessar!');
-                navigate('/', { replace: true });
-                return;
-            }
+            
 
             await api.get('/Prova/GetAllBancas')
                 .then((response) => {

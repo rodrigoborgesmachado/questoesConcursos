@@ -1,31 +1,18 @@
 import './style.css';
 import api from '../../services/api.js';
-import Config from './../../config.json';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { stringToHash } from '../../utils/auth/passwordHash';
+import { useAuth } from '../../auth/useAuth';
 
 function ResetPass(){
     const navigate = useNavigate();
     const[senha, setSenha] = useState('');
     const{guid} = useParams();
     const[loadding, setLoadding] = useState(false);
-
-    function stringToHash(string) {
-                  
-        let hash = 0;
-          
-        if (string.length === 0) return hash;
-          
-        for (let i = 0; i < string.length; i++) {
-            let char = string.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-          
-        return hash;
-    }
+    const { isAuthenticated } = useAuth();
 
     async function reset(){
         setLoadding(true);
@@ -47,7 +34,7 @@ function ResetPass(){
             });
     }
 
-    if(localStorage.getItem(Config.LOGADO) == 1){
+    if(isAuthenticated){
         navigate('/', {replace: true});
     }
 

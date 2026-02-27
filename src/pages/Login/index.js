@@ -1,54 +1,32 @@
 import './style.css';
 import api from '../../services/api.js';
-import Config from './../../config.json';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
+import { useAuth } from '../../auth/useAuth';
+import { useSearchParams } from 'react-router-dom';
 
 function Login() {
     const navigate = useNavigate();
+    const { login, isAuthenticated } = useAuth();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [loadding, setLoadding] = useState(false);
-
-    function stringToHash(string) {
-
-        let hash = 0;
-
-        if (string.length === 0) return hash;
-
-        for (let i = 0; i < string.length; i++) {
-            let char = string.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-
-        return hash;
-    }
+    const [searchParams, setSearchParams] = useSearchParams();
 
     async function logar() {
         setLoadding(true);
-        await api.post(`/Token`, { username: email, password: stringToHash(senha) + '' })
-            .then((response) => {
+        await login({ email, password: senha })
+            .then(() => {
                 setLoadding(false);
-                localStorage.setItem(Config.LOGADO, 1);
-                localStorage.setItem(Config.USUARIO, response.data.username);
-                localStorage.setItem(Config.Nome, response.data.nome);
-                localStorage.setItem(Config.TOKEN, response.data.token);
-                localStorage.setItem(Config.ADMIN, response.data.admin);
-                localStorage.setItem(Config.TEMPO_PARAM, 0);
-                //localStorage.setItem(Config.CodigoUsuario, response.data.CodigoUsuario);
-                //localStorage.setItem(Config.QUANTIDADE_QUESTOES_RESPONDIDAS, response.data.QuantidadeQuestoesResolvidas);
-                //localStorage.setItem(Config.QUANTIDADE_QUESTOES_ACERTADAS, response.data.QuantidadeQuestoesAcertadas);
                 toast.success('Bem vindo!');
-
-                //navigate('/', {replace: true});
-                window.location.href = '/';
-            }).catch((response) => {
+                navigate('/', { replace: true });
+            }).catch((error) => {
                 setLoadding(false);
-                if(response.response.status == 300){
+                if(error.response?.status == 300){
                     toast.error('Usuário não verificado! Favor acessar seu email ou entre em contato com o suporte!');
                     ReenviaEmail(email);
                 }
@@ -84,7 +62,14 @@ function Login() {
         navigate('/criarUsuario', { replace: true });
     }
 
-    if (localStorage.getItem(Config.LOGADO) == 1) {
+    useEffect(() => {
+        if (searchParams.get('reason') === 'session-expired') {
+            toast.info('Sessão expirada. Faça login novamente.');
+            setSearchParams({}, { replace: true });
+        }
+    }, [searchParams, setSearchParams]);
+
+    if (isAuthenticated) {
         navigate('/', { replace: true });
     }
 
