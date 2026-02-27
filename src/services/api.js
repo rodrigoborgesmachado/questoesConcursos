@@ -1,36 +1,37 @@
 import axios from "axios";
-import Config from './../config.json';
-
-var apiUrl = 'https://apisunsale.azurewebsites.net/api';
+import { API_BASE_URL } from './apiConfig';
+import { authService } from './auth/authService';
 
 const api = axios.create({
-    baseURL: apiUrl,
+    baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },
 })
 
-const token = localStorage.getItem(Config.TOKEN);
+api.interceptors.request.use((config) => {
+  const token = authService.getToken();
 
-if (token) {
-  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else if (config.headers?.Authorization) {
+    delete config.headers.Authorization;
+  }
+
+  return config;
+});
 
 // Add an interceptor to handle unauthorized responses
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-      if (error.code === "ERR_NETWORK" || (error.response && error.response.status === 401)) {
-        localStorage.setItem(Config.LOGADO, 0);
-        localStorage.setItem(Config.USUARIO, '');
-        localStorage.setItem(Config.TOKEN, '');
-        localStorage.setItem(Config.ADMIN, '');
-        localStorage.setItem(Config.TEMPO_PARAM, 0);
-        localStorage.removeItem(Config.LOGADO);
-        localStorage.removeItem(Config.USUARIO);
-        localStorage.removeItem(Config.TOKEN);
-        localStorage.removeItem(Config.ADMIN);
+      const isUnauthorized = error.response && error.response.status === 401;
+      const isTokenRequest = error.config?.url?.includes('/Token');
+
+      if (isUnauthorized && !isTokenRequest) {
+        authService.logout({ redirectToLogin: true, reason: 'session-expired' });
       }
+
       return Promise.reject(error);
   }
 );
