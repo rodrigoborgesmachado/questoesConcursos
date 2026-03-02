@@ -1,6 +1,6 @@
 .info-contato a{
     text-decoration: none;
-    color: white;
+    color: var(--text-color-secondary);
 }
 
 .info-contato p{

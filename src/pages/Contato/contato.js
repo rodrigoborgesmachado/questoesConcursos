@@ -14,16 +14,16 @@ function Contato(){
                         <a target='_blank' rel='noreferrer' href='http://www.sunsalesystem.com.br/' ><LanguageIcon/> SunSale System</a>
                     </p>
                     <p>
-                        <a href="https://wa.me/5534999798100" target="_blank"><WhatsAppIcon/> Rodrigo Machado</a>
+                        <a href="https://wa.me/5534999798100" target="_blank" rel='noreferrer'><WhatsAppIcon/> Rodrigo Machado</a>
                     </p>
                     <p>
                         <EmailIcon/> rodrigomachado@sunsalesystem.com
                     </p>
                     <p>
-                        <a href="https://www.linkedin.com/company/sunsale-system/" target="_blank"><LinkedInIcon/> LinkedIn</a>
+                        <a href="https://www.linkedin.com/company/sunsale-system/" target="_blank" rel='noreferrer'><LinkedInIcon/> LinkedIn</a>
                     </p>
                     <p>
-                        <a href="https://github.com/rodrigoborgesmachado" target="_blank"><GitHubIcon/> GitHub</a>
+                        <a href="https://github.com/rodrigoborgesmachado" target="_blank" rel='noreferrer'><GitHubIcon/> GitHub</a>
                     </p>
                 </div>
             </div>

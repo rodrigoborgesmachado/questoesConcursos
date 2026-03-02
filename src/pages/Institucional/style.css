@@ -1,0 +1,39 @@
+.institutional-page {
+    width: 100%;
+    max-width: 900px;
+}
+
+.institutional-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.institutional-title {
+    margin-bottom: 8px;
+}
+
+.institutional-section-title {
+    margin-top: 10px;
+    color: var(--text-color-primary-light);
+}
+
+.institutional-paragraph {
+    line-height: 1.6;
+    color: var(--text-color-primary);
+}
+
+.institutional-list {
+    margin-left: 18px;
+    line-height: 1.6;
+    color: var(--text-color-primary);
+}
+
+.institutional-list li + li {
+    margin-top: 6px;
+}
+
+.institutional-cta {
+    margin-top: 8px;
+}
+

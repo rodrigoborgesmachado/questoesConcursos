@@ -39,6 +39,9 @@ import ResultadoAvaliacao from './pages/ResultadoAvaliacao/resultadoAvaliacao';
 import HistoricoRespostas from './pages/Admin/HistoricoRespostas/HistoricoRespostas';
 import MeuDesempenho from './pages/MeuDesempenho/meuDesempenho';
 import QuestaoPublica from './pages/QuestaoPublica';
+import Privacidade from './pages/Privacidade';
+import Termos from './pages/Termos';
+import Sobre from './pages/Sobre';
 import PrivateRoute from './auth/PrivateRoute';
 import RoleRoute from './auth/RoleRoute';
 import { Roles } from './auth/roles';
@@ -67,6 +70,9 @@ function RoutesApp(){
                 <Route path='/valida/:guid' element={<VerificadorUser/>}/>
                 <Route path='/confirmesuaconta/:mail' element={<ConfirmeConta/>}/>
                 <Route path='/contato' element={<Contato/>}/>
+                <Route path='/privacidade' element={<Privacidade/>}/>
+                <Route path='/termos' element={<Termos/>}/>
+                <Route path='/sobre' element={<Sobre/>}/>
                 <Route path='/notasCorte' element={<NotasCorte/>}/>
                 <Route path='/calculadoraEnem' element={<CalculadoraEnem/>}/>
                 <Route path='/listagemprovas' element={<ListagemProvas/>}/>

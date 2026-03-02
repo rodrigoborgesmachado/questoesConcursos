@@ -1,12 +1,16 @@
 import './style.css';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Header(){
-    const navigate = useNavigate();
-
     return(
         <footer>
-            <h1><a target='_blank' rel='noreferrer' href='http://www.sunsalesystem.com.br/' >SunSale System</a> | <a onClick={() => navigate('/contato', {replace: true})}>Contato</a></h1>
+            <div className='footer-links'>
+                <a target='_blank' rel='noreferrer' href='http://www.sunsalesystem.com.br/'>SunSale System</a>
+                <Link to='/sobre'>Sobre</Link>
+                <Link to='/privacidade'>Privacidade</Link>
+                <Link to='/termos'>Termos</Link>
+                <Link to='/contato'>Contato</Link>
+            </div>
         </footer>
     )
 }
