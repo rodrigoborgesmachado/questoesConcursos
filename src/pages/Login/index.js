@@ -16,6 +16,20 @@ function Login() {
     const [senha, setSenha] = useState('');
     const [loadding, setLoadding] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
+    const returnUrl = searchParams.get('returnUrl');
+
+    function getSafeReturnUrl() {
+        if (!returnUrl) {
+            return '/';
+        }
+
+        try {
+            const decoded = decodeURIComponent(returnUrl);
+            return decoded.startsWith('/') ? decoded : '/';
+        } catch {
+            return '/';
+        }
+    }
 
     async function logar() {
         setLoadding(true);
@@ -23,7 +37,7 @@ function Login() {
             .then(() => {
                 setLoadding(false);
                 toast.success('Bem vindo!');
-                navigate('/', { replace: true });
+                navigate(getSafeReturnUrl(), { replace: true });
             }).catch((error) => {
                 setLoadding(false);
                 if(error.response?.status == 300){
@@ -65,7 +79,9 @@ function Login() {
     useEffect(() => {
         if (searchParams.get('reason') === 'session-expired') {
             toast.info('Sessão expirada. Faça login novamente.');
-            setSearchParams({}, { replace: true });
+            const nextParams = new URLSearchParams(searchParams);
+            nextParams.delete('reason');
+            setSearchParams(nextParams, { replace: true });
         }
     }, [searchParams, setSearchParams]);
 
@@ -110,3 +126,4 @@ function Login() {
 }
 
 export default Login;
+

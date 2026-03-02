@@ -27,8 +27,12 @@ api.interceptors.response.use(
   (error) => {
       const isUnauthorized = error.response && error.response.status === 401;
       const isTokenRequest = error.config?.url?.includes('/Token');
+      const hasAuthHeader = !!error.config?.headers?.Authorization;
+      const hasActiveSession = authService.isAuthenticated();
 
-      if (isUnauthorized && !isTokenRequest) {
+      // Only force global logout/redirect when an authenticated request fails.
+      // Public requests without a token should not redirect visitors.
+      if (isUnauthorized && !isTokenRequest && hasAuthHeader && hasActiveSession) {
         authService.logout({ redirectToLogin: true, reason: 'session-expired' });
       }
 

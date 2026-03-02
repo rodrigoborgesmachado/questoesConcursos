@@ -38,6 +38,7 @@ import Avaliacao from './pages/Avaliacao';
 import ResultadoAvaliacao from './pages/ResultadoAvaliacao/resultadoAvaliacao';
 import HistoricoRespostas from './pages/Admin/HistoricoRespostas/HistoricoRespostas';
 import MeuDesempenho from './pages/MeuDesempenho/meuDesempenho';
+import QuestaoPublica from './pages/QuestaoPublica';
 import PrivateRoute from './auth/PrivateRoute';
 import RoleRoute from './auth/RoleRoute';
 import { Roles } from './auth/roles';
@@ -68,14 +69,15 @@ function RoutesApp(){
                 <Route path='/contato' element={<Contato/>}/>
                 <Route path='/notasCorte' element={<NotasCorte/>}/>
                 <Route path='/calculadoraEnem' element={<CalculadoraEnem/>}/>
+                <Route path='/listagemprovas/:filtro' element={<ListagemProvas/>}/>
+                <Route path='/listagemquestoes' element={<ListagemQuestoes/>}/>
+                <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>
+                <Route path='/questaopublica/:id' element={<QuestaoPublica/>}/>
 
                 <Route element={<PrivateRoute />}>
                     <Route path='/materias' element={<Materias/>}/>
                     <Route path='/bancas' element={<Bancas/>}/>
                     <Route path='/simulado' element={<Simulado/>}/>
-                    <Route path='/listagemprovas/:filtro' element={<ListagemProvas/>}/>
-                    <Route path='/listagemquestoes' element={<ListagemQuestoes/>}/>
-                    <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>
                     <Route path='/ranking' element={<Ranking/>}/>
                     <Route path='/historico' element={<HistoricoUsuario/>}/>
                     <Route path='/perfil' element={<PerfilUsuario/>}/>
