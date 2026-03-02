@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import api from '../../services/api.js';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import Config from '../../config.json';
 import { BsFileEarmarkPlusFill } from 'react-icons/bs';
 import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
@@ -127,7 +126,7 @@ function ListagemProvas() {
     }
 
     function abrirSimulado(codigo) {
-        const returnUrl = '/questoes/simulado&' + codigo + '?codigoProva=' + codigo + '&page=1';
+        const returnUrl = `/questoes/simulado&${codigo}?codigoProva=${codigo}&page=1`;
 
         if (!isAuthenticated) {
             redirectToLogin(returnUrl);
@@ -222,18 +221,21 @@ function ListagemProvas() {
                 />
             </Modal>
             <div className='opcoesProva'>
-                <h3 className='provaTitle'><a>Provas {selectedTipos.length > 0 ? selectedTipos[0] : ''}</a></h3>
+                <h3 className='provaTitle'>Provas {selectedTipos.length > 0 ? selectedTipos[0] : ''}</h3>
                 <div className='opcaoFiltro'>
                     {isAdmin && !isSimulado ? <h2><BsFileEarmarkPlusFill onClick={addProva} /></h2> : <></>}
-                    <h3 className='link'><button className='global-button global-button--transparent' onClick={openModal}>Filtrar</button></h3>
+                    <h3 className='link'><button className='global-button global-button--secondary' onClick={openModal}>Filtrar</button></h3>
                 </div>
             </div>
             <div className='provas'>
                 {provas.map((item) => (
-                    <div className='global-infoPanel' key={item.Id}>
+                    <div className='global-infoPanel global-infoPanel--subtle' key={item.Id}>
                         <h4>
                             <div className='tituloProva'>
-                                <b>📚{item.nomeProva}📚{isAdmin ? <a onClick={() => navigate('/cadastroProva/' + item.Id, { replace: true })}>✏️</a> : <></>}</b>
+                                <b>
+                                    📚{item.nomeProva}📚
+                                    {isAdmin ? <button className='link-icon-button' onClick={() => navigate('/cadastroProva/' + item.Id, { replace: true })} aria-label='Editar prova'>✏️</button> : <></>}
+                                </b>
                                 <sub><b>{item.tipoProvaAssociado?.map((t, index) => (index === 0 ? t.tipoProva.descricao : ' | ' + t.tipoProva.descricao))}</b></sub>
                             </div>
                             <br />
@@ -260,9 +262,9 @@ function ListagemProvas() {
                             <b>Quantidade de questões:</b> {item.quantidadeQuestoesTotal}🔥
                             {!isSimulado ? <><br /><b>Quantidade de questões resolvidas:</b> {item.quantidadeQuestoesResolvidas || 0}✅<br /><b>Progresso:</b><br />
                                 <LinearProgressWithLabel sx={{
-                                    backgroundColor: Config.pallete[0],
+                                    backgroundColor: 'var(--progress-track-color)',
                                     '& .MuiLinearProgress-bar': {
-                                        backgroundColor: 'var(--button-color-secondary)',
+                                        backgroundColor: 'var(--progress-bar-color)',
                                     },
                                 }} value={parseInt(((item.quantidadeQuestoesResolvidas || 0) / (item.quantidadeQuestoesTotal || 1)) * 100, 10)} />
                             </> : <></>}
@@ -270,11 +272,11 @@ function ListagemProvas() {
                         </h4>
                         <div className='global-buttonWrapper'>
                             {!isSimulado ? <>
-                                {isAdmin ? <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(item.Id, item.isActive)}>{item.isActive === '1' ? 'DESATIVAR' : 'ATIVAR'}</button> : <></>}
-                                <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirQuestao(item.Id)}>Visualizar questões</button>
-                                <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.Id)}>{isAuthenticated ? 'Iniciar Simulado' : 'Entrar para responder'}</button>
+                                {isAdmin ? <button className={`global-button global-button--full-width ${item.isActive === '1' ? 'global-button--danger' : 'global-button--success'}`} onClick={() => AtualizaStatus(item.Id, item.isActive)}>{item.isActive === '1' ? 'DESATIVAR' : 'ATIVAR'}</button> : <></>}
+                                <button className='global-button global-button--secondary global-button--full-width' onClick={() => abrirQuestao(item.Id)}>Visualizar questões</button>
+                                <button className='global-button global-button--full-width' onClick={() => abrirSimulado(item.Id)}>{isAuthenticated ? 'Iniciar Simulado' : 'Entrar para responder'}</button>
                             </> : <>
-                                <button className='global-button global-button--transparent global-button--full-width' onClick={() => abrirSimulado(item.Id)}>{isAuthenticated ? 'Iniciar Simulado' : 'Entrar para responder'}</button>
+                                <button className='global-button global-button--full-width' onClick={() => abrirSimulado(item.Id)}>{isAuthenticated ? 'Iniciar Simulado' : 'Entrar para responder'}</button>
                             </>}
                         </div>
                     </div>
@@ -284,8 +286,8 @@ function ListagemProvas() {
                 {quantity > 0 ? <Stack spacing={4}>
                     <Pagination
                         sx={{
-                            '& .Mui-selected': { color: 'var(--text-color-secondary)' },
-                            '& .MuiPaginationItem-root': { color: 'var(--text-color-secondary)' },
+                            '& .Mui-selected': { color: 'var(--pagination-item-color)' },
+                            '& .MuiPaginationItem-root': { color: 'var(--pagination-item-color)' },
                         }}
                         count={Math.ceil(quantity / quantityPerPage)}
                         page={parseInt(page, 10)}

@@ -107,4 +107,17 @@
 
 .clickOption{
     cursor: pointer;
+    color: var(--text-color-accent);
+}
+
+.clickOption:hover{
+    text-decoration: underline;
+}
+
+.link-icon-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-size: 1rem;
 }

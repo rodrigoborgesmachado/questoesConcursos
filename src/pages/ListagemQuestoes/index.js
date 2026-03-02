@@ -205,7 +205,7 @@ function ListagemQuestoes() {
 
     async function AtualizaStatus(id, status) {
         setLoadding(true);
-        const url = '/Prova/updateStatus?id=' + id + '&active=' + (status == '0' ? 'true' : 'false');
+        const url = '/Prova/updateStatus?id=' + id + '&active=' + (status === '0' ? 'true' : 'false');
 
         await api.put(url)
             .then((response) => {
@@ -247,7 +247,7 @@ function ListagemQuestoes() {
             {filtro
                 ? <>
                     <div className='total'>
-                        <button className='global-button global-button--transparent' onClick={voltarListagemProva}>Voltar</button>
+                        <button className='global-button global-button--secondary' onClick={voltarListagemProva}>Voltar</button>
                     </div>
                     <h3 className='nomeProvaDescricao'>
                         Prova: {prova?.nomeProva}
@@ -260,22 +260,22 @@ function ListagemQuestoes() {
                         <br />
                         Local: {prova?.local}
                         <br />
-                        {isAdmin ? <>Status: <b>{prova?.isActive == '1' ? 'ATIVO' : 'DESATIVADO'}</b></> : <></>}
+                        {isAdmin ? <>Status: <b>{prova?.isActive === '1' ? 'ATIVO' : 'DESATIVADO'}</b></> : <></>}
                     </h3>
                 </>
                 : <></>}
             <div className='opcoesQuestoes'>
-                {isAdmin && filtro ? <button className='global-button global-button--transparent global-button--full-width' onClick={() => AtualizaStatus(prova?.Id, prova?.isActive)}>{prova?.isActive == '1' ? 'DESATIVAR' : 'ATIVAR'}</button> : <></>}
+                {isAdmin && filtro ? <button className={`global-button global-button--full-width ${prova?.isActive === '1' ? 'global-button--danger' : 'global-button--success'}`} onClick={() => AtualizaStatus(prova?.Id, prova?.isActive)}>{prova?.isActive === '1' ? 'DESATIVAR' : 'ATIVAR'}</button> : <></>}
                 <div className='opcaoFiltro'>
-                    {isAdmin && filtro ? <h3 onClick={addQuestao}><BsFileEarmarkPlusFill />  Adicionar</h3> : <></>}
+                    {isAdmin && filtro ? <h3 onClick={addQuestao}><BsFileEarmarkPlusFill /> Adicionar</h3> : <></>}
                 </div>
             </div>
             {!filtro
                 ? <div className='opcoes-top-tabela'>
                     <h3>Questões (Total: {quantity})</h3>
-                    <h3 className='link'><button className='global-button global-button--transparent' onClick={openModalFiltro}>Filtrar</button></h3>
+                    <h3 className='link'><button className='global-button global-button--secondary' onClick={openModalFiltro}>Filtrar</button></h3>
                 </div>
-                : <div className=''>
+                : <div>
                     <h3>Questões (Total: {quantity})</h3>
                 </div>}
             <div className='global-fullW'>
@@ -299,22 +299,22 @@ function ListagemQuestoes() {
                                     </td>
                                     : <></>}
                                 <td className='option'>
-                                    <a>
+                                    <span className='questao-link'>
                                         {isAdmin ? <h4 onClick={() => editaQuestao(item.Id)}>✏️{item.numeroQuestao}</h4> : <h4 onClick={() => abreQuestao(item.Id, index)}>✏️{item.numeroQuestao}</h4>}
-                                    </a>
+                                    </span>
                                 </td>
                                 <td><h4 onClick={() => abreQuestao(item.Id, index)}>{item.materia}</h4></td>
                                 <td><h4 onClick={() => abreQuestao(item.Id, index)}>{item.assunto}</h4></td>
                                 {!filtro ? <td>{item.prova?.nomeProva}</td> : <></>}
                                 <td>
                                     {!isAuthenticated
-                                        ? <button className='global-button global-button--transparent global-button--full-width' onClick={() => entrarParaResponder(item.Id, index)}>Entrar para responder</button>
-                                        : item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo == element.codigoResposta && elem.certa === '1')) !== undefined
-                                            ? <button className='global-button-right global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Respondida</button>
+                                        ? <button className='global-button global-button--secondary global-button--full-width' onClick={() => entrarParaResponder(item.Id, index)}>Entrar para responder</button>
+                                        : item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo === element.codigoResposta && elem.certa === '1')) !== undefined
+                                            ? <button className='global-button global-button--success global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Respondida</button>
                                             : <>
-                                                {item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo == element.codigoResposta && elem.certa === '0')) !== undefined
-                                                    ? <button className='global-button-wrong global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
-                                                    : <button className='global-button global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>}
+                                                {item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo === element.codigoResposta && elem.certa === '0')) !== undefined
+                                                    ? <button className='global-button global-button--danger global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
+                                                    : <button className='global-button global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>}
                                             </>}
                                 </td>
                             </tr>
@@ -328,10 +328,10 @@ function ListagemQuestoes() {
                         <Pagination
                             sx={{
                                 '& .Mui-selected': {
-                                    color: 'var(--text-color-secondary)',
+                                    color: 'var(--pagination-item-color)',
                                 },
                                 '& .MuiPaginationItem-root': {
-                                    color: 'var(--text-color-secondary)',
+                                    color: 'var(--pagination-item-color)',
                                 },
                             }}
                             count={Math.ceil(quantity / quantityPerPage)}

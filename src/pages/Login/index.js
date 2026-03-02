@@ -97,7 +97,7 @@ function Login() {
 
     return (
         <div className="global-pageContainer">
-            <div className='global-infoPanel global-miniW'>
+            <div className='global-infoPanel global-infoPanel--subtle global-infoPanel--accent global-miniW'>
                 <div className='login'>
 
                     <div className='login-wrapper'>
@@ -110,13 +110,13 @@ function Login() {
                     </div>
 
                     <div className='separator'></div>
-                    <label for="email">Email:</label>
-                    <input type="email" name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
-                    <label for="email">Senha:</label>
-                    <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
+                    <label htmlFor='email'>Email:</label>
+                    <input className='global-input' type='email' name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
+                    <label htmlFor='senha'>Senha:</label>
+                    <input className='global-input' type='password' name='senha' id='senha' value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
                     <div className='global-buttonWrapper'>
-                        <button className='global-button global-button--transparent global-button--full-width' onClick={logar}>Logar</button>
-                        <Link className='global-button global-button--transparent global-button--basic global-button--full-width' to={`/recoverypass`}>Esqueci minha senha</Link>
+                        <button className='global-button global-button--full-width' onClick={logar}>Logar</button>
+                        <Link className='global-button global-button--secondary global-button--full-width' to={`/recoverypass`}>Esqueci minha senha</Link>
                     </div>
                 </div>
             </div>
