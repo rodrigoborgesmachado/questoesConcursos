@@ -1,20 +1,19 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import './style.css';
-import { useNavigate } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
 import { LimpaFiltrosLocalSession } from '../../services/functions.js';
@@ -24,631 +23,278 @@ import { Roles } from '../../auth/roles';
 import { requireRole } from '../../auth/requireRole';
 import { useTheme } from '../../theme/useTheme';
 
-const ResponsiveAppBar = () => {
-    const navigate = useNavigate();
-    const { theme, toggleTheme, isDarkTheme } = useTheme();
-    const { session, role, isAuthenticated, logout } = useAuth();
-    const isAdmin = requireRole(role, [Roles.Admin]);
-    const isTeacher = requireRole(role, [Roles.Teacher]);
-    const pages = ['📚 Provas', '🧾 Simulados', '📒Avaliações', '📔Questões', '🎓 Sisu'];
-    const settings = [`Olá ${session?.name || ''}`];
+const menuPaperSx = {
+  borderRadius: '12px',
+  minWidth: '220px',
+  border: '1px solid var(--separator-color-primary)',
+  backgroundColor: 'var(--primary-color)',
+  color: 'var(--text-color-secondary)',
+  boxShadow: 'var(--elevation-shadow)',
+};
 
-    if (isAdmin) {
-      pages.push('Admin');
-    }
+function Navbar() {
+  const navigate = useNavigate();
+  const { theme, toggleTheme, isDarkTheme } = useTheme();
+  const { session, role, isAuthenticated, logout } = useAuth();
+  const isAdmin = requireRole(role, [Roles.Admin]);
+  const isTeacher = requireRole(role, [Roles.Teacher]);
 
-    settings.push('Perfil👽');
-    settings.push('Meu Desempenho📊');
-
-    if (isTeacher) {
-      settings.push('Minhas Avaliações');
-    }
-
-    settings.push('Histórico de Questões⏳');
-    settings.push('Histórico Simulados🧾');
-    settings.push('Ranking dos usuários🔝');
-    settings.push('Sair👋');
-
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [anchorElProva, setAnchorElProva] = React.useState(null);
-    const [anchorElSisu, setAnchorElSisu] = React.useState(null);
-    const [anchorElAdmin, setAnchorElAdmin] = React.useState(null);
-    const [anchorElMinhasAvaliacoes, setAnchorElMinhasAvaliacoes] = React.useState(null);
-    const [tipos, setTipos] = React.useState([]);
-
-  async function buscaTipos(){
-    await api.get('/TipoProva/getAll')
-    .then((response) => {
-        if(response.data.success){
-            setTipos(response.data.object);
-        }
-        else{
-            toast.warn('Erro ao buscar tipos');    
-        }
-    })
-    .catch(() => {
-        toast.warn('Erro ao buscar tipos');
-    })
-  }
+  const [tipos, setTipos] = React.useState([]);
+  const [anchorMobile, setAnchorMobile] = React.useState(null);
+  const [anchorProvas, setAnchorProvas] = React.useState(null);
+  const [anchorSisu, setAnchorSisu] = React.useState(null);
+  const [anchorAdmin, setAnchorAdmin] = React.useState(null);
+  const [anchorUser, setAnchorUser] = React.useState(null);
 
   React.useEffect(() => {
+    async function buscaTipos() {
+      try {
+        const response = await api.get('/TipoProva/getAll');
+
+        if (response.data.success) {
+          setTipos(response.data.object);
+          return;
+        }
+
+        toast.warn('Erro ao buscar tipos de prova');
+      } catch {
+        toast.warn('Erro ao buscar tipos de prova');
+      }
+    }
+
     buscaTipos();
-  }, [])
+  }, []);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleOpenProvaMenu = (event) => {
-    setAnchorElProva(event.currentTarget);
-  };
-
-  const handleCloseProvaMenu = () => {
-    setAnchorElProva(null);
-  };
-
-  const handleOpenSisuMenu = (event) => {
-    setAnchorElSisu(event.currentTarget);
-  };
-
-  const handleCloseSisuMenu = () => {
-    setAnchorElSisu(null);
-  };
-
-  const handleOpenAdminMenu = (event) => {
-    setAnchorElAdmin(event.currentTarget);
-  };
-
-  const handleCloseAdminMenu = () => {
-    setAnchorElAdmin(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const handleOpenMinhasAvaliacoes = (event) => {
-    setAnchorElMinhasAvaliacoes(event.currentTarget);
-  };
-
-  const handleCloseMinhasAvaliacoes = () => {
-    setAnchorElMinhasAvaliacoes(null);
-    setAnchorElUser(null);
-  };
-
-  function SelecionaOpcao(page){
-    handleCloseNavMenu();
-    if(page === pages[1]){
-      navigate('/simulado', {replace: true});
-    }
-    else if(page === pages[2]){
-      navigate('/avaliacoes', {replace: true});
-    }
-    else if(page === pages[3]){
-      navigate('/listagemquestoes', {replace: true});
-    }
+  function closeAllMenus() {
+    setAnchorMobile(null);
+    setAnchorProvas(null);
+    setAnchorSisu(null);
+    setAnchorAdmin(null);
+    setAnchorUser(null);
   }
 
-  function SelecionaOpcaoUsuario(setting){
-    if(setting !== 'Minhas Avaliações'){
-      handleCloseUserMenu();
-    }
-    
-    if(setting === 'Perfil👽'){
-      navigate('/perfil', {replace: true});
-    }
-    else if(setting === "Meu Desempenho📊"){
-      navigate('/meudesempenho', {replace: true});
-    }
-    else if(setting === 'Histórico de Questões⏳'){
-        navigate('/historico', {replace: true});
-    }
-    else if(setting === 'Histórico Simulados🧾'){
-      navigate('/historicosimulado', {replace: true});
-    }
-    else if(setting === 'Ranking dos usuários🔝'){
-        navigate('/ranking', {replace: true});
-    }
-    else if(setting === 'Sair👋'){
-        sair();
-    }
+  function navigateTo(path) {
+    closeAllMenus();
+    navigate(path, { replace: true });
   }
 
-  function selecionaFiltroProva(descricao){
-    handleCloseProvaMenu();
-    handleCloseNavMenu();
-
-    if(descricao !== 'Todas as provas'){
-      navigate('/listagemprovas?page=1&tipos=' + encodeURIComponent(descricao), { replace: true });
-      return;
-    }
-
-    navigate('/listagemprovas?page=1', { replace: true });
+  function selecionaFiltroProva(descricao) {
+    const isAll = descricao === 'Todas as provas';
+    const suffix = isAll ? '' : `&tipos=${encodeURIComponent(descricao)}`;
+    navigateTo(`/listagemprovas?page=1${suffix}`);
   }
 
-  function sair(){
+  function sair() {
+    closeAllMenus();
     logout();
     LimpaFiltrosLocalSession();
-    
     toast.success('Volte sempre!');
-    navigate('/', {replace: true});
+    navigate('/', { replace: true });
   }
 
-  function abreTelaNotaDeCorte(){
-    handleCloseSisuMenu();
-    handleCloseNavMenu();
-    navigate('/notasCorte', {replace: true});
-  }
+  function renderPrimaryActions(isMobile = false) {
+    const itemClass = isMobile ? 'nav-mobile-item' : 'nav-link-btn';
 
-  function abreTelaCalculadoraEnem(){
-    handleCloseSisuMenu();
-    handleCloseNavMenu();
-    navigate('/calculadoraEnem', {replace: true});
-  }
-
-  function abreTelaListagemHistoricoUsuario(){
-    handleCloseAdminMenu();
-    handleCloseNavMenu();
-    navigate('/historicoadmin', {replace: true});
-  }
-
-  function abreTelaDashboard(){
-    handleCloseAdminMenu();
-    handleCloseNavMenu();
-    navigate('/dashboard', {replace: true});
-  }
-
-  function abreTelaLogs(){
-    handleCloseAdminMenu();
-    handleCloseNavMenu();
-    navigate('/logs', {replace: true});
-  }
-
-  function abreTelaUsuarios(){
-    handleCloseAdminMenu();
-    handleCloseNavMenu();
-    navigate('/usuarios', {replace: true});
-  }
-
-  function abreTelaHistoricoTabuadaDivertida(){
-    handleCloseAdminMenu();
-    handleCloseNavMenu();
-    navigate('/historicotabuadadivertida', {replace: true});
-  }
-
-  function abreTelaHistoricoRespostas(){
-    handleCloseAdminMenu();
-    handleCloseNavMenu();
-    navigate('/historicorespostas', {replace: true});
-  }
-
-  function abreTelaCadastroAvaliacao(){
-    handleCloseMinhasAvaliacoes();
-    handleCloseUserMenu();
-    navigate('/cadastroavaliacao?previus=', {replace: true});
-  }
-
-  function abreTelaMinhasAvaliacoes(){
-    handleCloseMinhasAvaliacoes();
-    handleCloseUserMenu();
-    navigate('/listagemminhasavaliacoes', {replace: true});
+    return (
+      <>
+        <Button
+          onClick={(event) => setAnchorProvas(event.currentTarget)}
+          className={itemClass}
+          aria-haspopup='menu'
+          aria-expanded={Boolean(anchorProvas) ? 'true' : undefined}
+          aria-controls='menu-provas'
+        >
+          📚 Provas
+        </Button>
+        <Button onClick={() => navigateTo('/simulado')} className={itemClass}>
+          🧾 Simulados
+        </Button>
+        <Button onClick={() => navigateTo('/avaliacoes')} className={itemClass}>
+          📒 Avaliações
+        </Button>
+        <Button onClick={() => navigateTo('/listagemquestoes')} className={itemClass}>
+          📔 Questões
+        </Button>
+        <Button
+          onClick={(event) => setAnchorSisu(event.currentTarget)}
+          className={itemClass}
+          aria-haspopup='menu'
+          aria-expanded={Boolean(anchorSisu) ? 'true' : undefined}
+          aria-controls='menu-sisu'
+        >
+          🎓 Sisu
+        </Button>
+        {isAdmin && (
+          <Button
+            onClick={(event) => setAnchorAdmin(event.currentTarget)}
+            className={itemClass}
+            aria-haspopup='menu'
+            aria-expanded={Boolean(anchorAdmin) ? 'true' : undefined}
+            aria-controls='menu-admin'
+          >
+            Admin
+          </Button>
+        )}
+      </>
+    );
   }
 
   return (
-    <AppBar position="static" className='varBarResponsive'>
-      <div className='conNav'>
-        <div disableGutters className='toolNav'>
-          <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+    <AppBar position='static' className='nav-root'>
+      <div className='nav-shell'>
+        <div className='nav-left'>
+          <IconButton
+            className='mobile-menu-button nav-mobile-only'
+            onClick={(event) => setAnchorMobile(event.currentTarget)}
+            aria-label='Abrir menu principal'
+            aria-haspopup='menu'
+            aria-expanded={Boolean(anchorMobile) ? 'true' : undefined}
+            aria-controls='menu-mobile'
           >
-            <a href='/'>Questões Aqui</a>
-          </Typography>
+            <MenuIcon />
+          </IconButton>
+          <Link to='/' className='nav-brand' aria-label='Ir para página inicial'>
+            <span className='nav-brand-title'>Questões Aqui</span>
+          </Link>
+        </div>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+        <div className='nav-center nav-desktop-only'>
+          <Button
+            onClick={() => selecionaFiltroProva('IFTM')}
+            className='iftm-nav-button'
+            aria-label='Abrir provas do IFTM'
+          >
+            <span className='iftm-option'>
+              <img src={iftmLogo} alt='IFTM' className='iftm-logo' />
+              <span className='iftm-label'>IFTM</span>
+            </span>
+          </Button>
+          {renderPrimaryActions(false)}
+        </div>
+
+        <div className='nav-right'>
+          <Tooltip title={isDarkTheme ? 'Ativar tema claro' : 'Ativar tema escuro'}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+              onClick={toggleTheme}
+              className='theme-toggle-button'
+              aria-label={isDarkTheme ? 'Ativar tema claro' : 'Ativar tema escuro'}
             >
-              <MenuIcon />
+              {theme === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              <MenuItem onClick={(e) => selecionaFiltroProva('IFTM')}>
-                <div className='iftm-option'>
-                  <img src={iftmLogo} alt='IFTM' className='iftm-logo' />
-                  <span className='iftm-label'>IFTM</span>
-                </div>
-              </MenuItem>
-              {pages.map((page, index) => (
-                page !== 'Admin' && index != 0 && index != 4 ?
-                <MenuItem key={index} onClick={(e) => SelecionaOpcao(page)}>
-                  <Typography textAlign="center">
-                    {page}
-                  </Typography>
-                </MenuItem>
-                :
-                index == 0?
-                <>
-                  <MenuItem key={index} onClick={handleOpenProvaMenu} >
-                    <Typography textAlign="center">
-                      {page}
-                    </Typography>
-                  </MenuItem>
-                  <Menu
-                    sx={{ ml: '45px' }}
-                    id="menu-appbar"
-                    anchorEl={anchorElProva}
-                    keepMounted
-                    open={Boolean(anchorElProva)}
-                    onClose={handleCloseProvaMenu}
-                  >
-                    {
-                      tipos == 0 ? 
-                      <MenuItem>
-                        <Typography textAlign="center">
-                            Carregando
-                          </Typography>
-                      </MenuItem>
-                      :
-                      <>
-                      {tipos.map((tipos) => (
-                        <MenuItem key={tipos.codigo} onClick={(e) => selecionaFiltroProva(tipos.descricao)}>
-                          <Typography textAlign="center">
-                              {tipos.descricao}
-                            </Typography>
-                        </MenuItem>
-                      ))}
-                      </>
-                    }
-                  </Menu>
-                </>
-                :
-                index == 4?
-                <>
-                  <MenuItem key={page} onClick={handleOpenSisuMenu} >
-                    <Typography textAlign="center">
-                      {page}
-                    </Typography>
-                  </MenuItem>
-                  <Menu
-                    sx={{ ml: '45px' }}
-                    id="menu-appbar"
-                    anchorEl={anchorElSisu}
-                    keepMounted
-                    open={Boolean(anchorElSisu)}
-                    onClose={handleCloseSisuMenu}
-                  >
-                    <MenuItem onClick={(e) => abreTelaNotaDeCorte()}>
-                      <Typography textAlign="center">
-                          Notas de corte
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={(e) => abreTelaCalculadoraEnem()}>
-                      <Typography textAlign="center">
-                          Calculadora Enem
-                      </Typography>
-                    </MenuItem>
-                  </Menu>
-                </>
-                :
-                <>
-                  <MenuItem key={page} onClick={handleOpenAdminMenu} >
-                    <Typography textAlign="center">
-                      {page}
-                    </Typography>
-                  </MenuItem>
-                  <Menu
-                    sx={{ ml: '45px' }}
-                    id="menu-appbar"
-                    anchorEl={anchorElAdmin}
-                    keepMounted
-                    open={Boolean(anchorElAdmin)}
-                    onClose={handleCloseAdminMenu}
-                  >
-                    <MenuItem onClick={(e) => abreTelaDashboard()}>
-                      <Typography textAlign="center">
-                          DashBoard
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={(e) => abreTelaLogs()}>
-                      <Typography textAlign="center">
-                          Logs
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={(e) => abreTelaUsuarios()}>
-                      <Typography textAlign="center">
-                          Usuarios
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={(e) => abreTelaListagemHistoricoUsuario()}>
-                      <Typography textAlign="center">
-                          Histórico de usuários
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={(e) => abreTelaHistoricoTabuadaDivertida()}>
-                      <Typography textAlign="center">
-                          Histórico Tabuada Divertida
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={(e) => abreTelaHistoricoRespostas()}>
-                      <Typography textAlign="center">
-                          Histórico Respostas
-                      </Typography>
-                    </MenuItem>
-                  </Menu>
-                </>
-              ))}
-            </Menu>
-          </Box>
-          <BatteryChargingFullIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            <a href='/'>Questões Aqui</a>
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Button
-              aria-label='Provas IFTM'
-              onClick={(e) => selecionaFiltroProva('IFTM')}
-              className='iftm-nav-button'
-              sx={{ my: 1, display: { xs: 'none', md: 'flex' }, minWidth: 'auto', color: 'var(--text-color-secondary)' }}
-            >
-              <span className='iftm-option'>
-                <img src={iftmLogo} alt='IFTM' className='iftm-logo' />
-                <span className='iftm-label'>IFTM</span>
-              </span>
-            </Button>
-            {pages.map((page, index) => (
-              page !== 'Admin' && index != 0 && index != 4 ?
-              <Button
-                key={index}
-                onClick={(e) => SelecionaOpcao(page)}
-                sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}
-              >
-                {page}
-              </Button>
-              : index == 0 ?
-              <> 
-                <Button key={index} onClick={handleOpenProvaMenu} sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}>
-                    {page}
-                </Button>
-                <Menu
-                  sx={{ ml: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElProva}
-                  keepMounted
-                  open={Boolean(anchorElProva)}
-                  onClose={handleCloseProvaMenu}
-                >
-                  {
-                    tipos.length == 0 ? 
-                    <MenuItem>
-                      <Typography textAlign="center">
-                          Carregando
-                        </Typography>
-                    </MenuItem>
-                    :
-                    <>
-                    {tipos.map((tipos) => (
-                      <MenuItem key={tipos.codigo} onClick={(e) => selecionaFiltroProva(tipos.descricao)}>
-                        <Typography textAlign="center">
-                            {tipos.descricao}
-                          </Typography>
-                      </MenuItem>
-                    ))}
-                    </>
-                  }
-                </Menu>
-              </>
-              :
-              index == 4 ?
-              <> 
-                <Button key={index} onClick={handleOpenSisuMenu} sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}>
-                    {page}
-                </Button>
-                <Menu
-                  sx={{ ml: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElSisu}
-                  keepMounted
-                  open={Boolean(anchorElSisu)}
-                  onClose={handleCloseSisuMenu}
-                >
-                  <MenuItem onClick={(e) => abreTelaNotaDeCorte()}>
-                    <Typography textAlign="center">
-                        Notas de corte
-                      </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={(e) => abreTelaCalculadoraEnem()}>
-                      <Typography textAlign="center">
-                          Calculadora Enem
-                      </Typography>
-                    </MenuItem>
-                </Menu>
-              </>
-              :
-              <> 
-                <Button key={index} onClick={handleOpenAdminMenu} sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}>
-                    {page}
-                </Button>
-                <Menu
-                  sx={{ ml: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElAdmin}
-                  keepMounted
-                  open={Boolean(anchorElAdmin)}
-                  onClose={handleCloseAdminMenu}
-                >
-                  <MenuItem onClick={(e) => abreTelaDashboard()}>
-                    <Typography textAlign="center">
-                        DashBoard
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={(e) => abreTelaLogs()}>
-                    <Typography textAlign="center">
-                        Logs
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={(e) => abreTelaUsuarios()}>
-                    <Typography textAlign="center">
-                        Usuarios
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={(e) => abreTelaListagemHistoricoUsuario()}>
-                    <Typography textAlign="center">
-                        Histórico de usuários
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={(e) => abreTelaHistoricoTabuadaDivertida()}>
-                    <Typography textAlign="center">
-                        Histórico Tabuada Divertida
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={(e) => abreTelaHistoricoRespostas()}>
-                      <Typography textAlign="center">
-                          Histórico Respostas
-                      </Typography>
-                    </MenuItem>
-                </Menu>
-              </>
-            ))}
-          </Box>
+          </Tooltip>
 
-          <Box className='nav-right-actions' sx={{ flexGrow: 0 }}>
-            <Tooltip title={isDarkTheme ? 'Ativar tema claro' : 'Ativar tema escuro'}>
+          {!isAuthenticated && (
+            <Link className='nav-login-link' to='/login' aria-label='Entrar na plataforma'>
+              Login
+            </Link>
+          )}
+
+          {isAuthenticated && (
+            <Tooltip title='Abrir opções da conta'>
               <IconButton
-                onClick={toggleTheme}
-                className='theme-toggle-button'
-                aria-label={isDarkTheme ? 'Ativar tema claro' : 'Ativar tema escuro'}
+                onClick={(event) => setAnchorUser(event.currentTarget)}
+                className='avatar-button'
+                aria-label='Opções da conta'
+                aria-haspopup='menu'
+                aria-expanded={Boolean(anchorUser) ? 'true' : undefined}
+                aria-controls='menu-user'
               >
-                {theme === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+                <Avatar alt={session?.name || 'Usuário'} />
               </IconButton>
             </Tooltip>
-            {
-                !isAuthenticated ?
-                <>
-                <Link className='nav-login-link' to='/login'><span>Login</span></Link>
-                </>
-                :
-                <>
-                <Tooltip title="Opções">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp"/>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting, index) => (
-                    <MenuItem key={setting} onClick={(e) => SelecionaOpcaoUsuario(setting)}>
-                    {
-                      setting == 'Minhas Avaliações'  && isTeacher?
-                      <>
-                        <Typography key={setting} onClick={handleOpenMinhasAvaliacoes}>
-                            {setting}
-                        </Typography>
-                        <Menu
-                          sx={{ ml: '45px' }}
-                          id="menu-appbar"
-                          anchorEl={anchorElMinhasAvaliacoes}
-                          keepMounted
-                          open={Boolean(anchorElMinhasAvaliacoes)}
-                          onClose={handleCloseMinhasAvaliacoes}
-                        >
-                          <MenuItem onClick={(e) => abreTelaCadastroAvaliacao()}>
-                            <Typography textAlign="center">
-                                Cadastrar
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem onClick={(e) => abreTelaMinhasAvaliacoes()}>
-                            <Typography textAlign="center">
-                                Listar Avaliações
-                            </Typography>
-                          </MenuItem>
-                        </Menu>
-                      </>
-                      :
-                        <Typography textAlign="center">
-                          {setting}
-                        </Typography>
-                    }
-                    </MenuItem>
-                  ))}
-                </Menu>
-                </>
-            }
-            
-          </Box>
+          )}
+
         </div>
       </div>
+
+      <Menu
+        id='menu-mobile'
+        anchorEl={anchorMobile}
+        open={Boolean(anchorMobile)}
+        onClose={() => setAnchorMobile(null)}
+        PaperProps={{ sx: menuPaperSx }}
+        className='nav-mobile-only'
+      >
+        <MenuItem onClick={() => selecionaFiltroProva('IFTM')}>
+          <span className='iftm-option'>
+            <img src={iftmLogo} alt='IFTM' className='iftm-logo' />
+            <span className='iftm-label'>IFTM</span>
+          </span>
+        </MenuItem>
+        <Divider />
+        <div className='nav-mobile-actions'>{renderPrimaryActions(true)}</div>
+      </Menu>
+
+      <Menu
+        id='menu-provas'
+        anchorEl={anchorProvas}
+        open={Boolean(anchorProvas)}
+        onClose={() => setAnchorProvas(null)}
+        PaperProps={{ sx: menuPaperSx }}
+      >
+        <MenuItem onClick={() => selecionaFiltroProva('Todas as provas')}>Todas as provas</MenuItem>
+        {tipos.length === 0 && <MenuItem disabled>Carregando tipos...</MenuItem>}
+        {tipos.map((tipo) => (
+          <MenuItem key={tipo.codigo} onClick={() => selecionaFiltroProva(tipo.descricao)}>
+            {tipo.descricao}
+          </MenuItem>
+        ))}
+      </Menu>
+
+      <Menu
+        id='menu-sisu'
+        anchorEl={anchorSisu}
+        open={Boolean(anchorSisu)}
+        onClose={() => setAnchorSisu(null)}
+        PaperProps={{ sx: menuPaperSx }}
+      >
+        <MenuItem onClick={() => navigateTo('/notasCorte')}>Notas de corte</MenuItem>
+        <MenuItem onClick={() => navigateTo('/calculadoraEnem')}>Calculadora Enem</MenuItem>
+      </Menu>
+
+      <Menu
+        id='menu-admin'
+        anchorEl={anchorAdmin}
+        open={Boolean(anchorAdmin)}
+        onClose={() => setAnchorAdmin(null)}
+        PaperProps={{ sx: menuPaperSx }}
+      >
+        <MenuItem onClick={() => navigateTo('/dashboard')}>Dashboard</MenuItem>
+        <MenuItem onClick={() => navigateTo('/logs')}>Logs</MenuItem>
+        <MenuItem onClick={() => navigateTo('/usuarios')}>Usuários</MenuItem>
+        <MenuItem onClick={() => navigateTo('/historicoadmin')}>Histórico de usuários</MenuItem>
+        <MenuItem onClick={() => navigateTo('/historicotabuadadivertida')}>Histórico Tabuada Divertida</MenuItem>
+        <MenuItem onClick={() => navigateTo('/historicorespostas')}>Histórico Respostas</MenuItem>
+      </Menu>
+
+      <Menu
+        id='menu-user'
+        anchorEl={anchorUser}
+        open={Boolean(anchorUser)}
+        onClose={() => setAnchorUser(null)}
+        PaperProps={{ sx: menuPaperSx }}
+      >
+        <MenuItem disabled>
+          <Typography variant='body2'>Olá, {session?.name || 'Usuário'}</Typography>
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={() => navigateTo('/perfil')}>Perfil 👽</MenuItem>
+        <MenuItem onClick={() => navigateTo('/meudesempenho')}>Meu Desempenho 📊</MenuItem>
+        <MenuItem onClick={() => navigateTo('/historico')}>Histórico de Questões ⏳</MenuItem>
+        <MenuItem onClick={() => navigateTo('/historicosimulado')}>Histórico Simulados 🧾</MenuItem>
+        <MenuItem onClick={() => navigateTo('/ranking')}>Ranking dos usuários 🔝</MenuItem>
+        {isTeacher && (
+          <Box>
+            <Divider />
+            <MenuItem onClick={() => navigateTo('/cadastroavaliacao?previus=')}>Cadastrar Avaliação</MenuItem>
+            <MenuItem onClick={() => navigateTo('/listagemminhasavaliacoes')}>Minhas Avaliações</MenuItem>
+          </Box>
+        )}
+        <Divider />
+        <MenuItem onClick={sair}>Sair 👋</MenuItem>
+      </Menu>
     </AppBar>
   );
-};
-export default ResponsiveAppBar;
+}
+
+export default Navbar;

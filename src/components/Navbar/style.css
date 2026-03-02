@@ -1,45 +1,100 @@
-.iftm-nav-button {
-  margin-right: 12px;
-  padding: 6px 12px;
-  display: inline-flex;
-  align-items: center;
-  color: inherit;
-}
-
-.theme-toggle-button {
-  margin-right: 10px !important;
+.nav-root {
+  background-color: var(--primary-color) !important;
   color: var(--text-color-secondary) !important;
-  border: 1px solid var(--separator-color-primary) !important;
-  border-radius: 10px !important;
+  box-shadow: var(--nav-shadow) !important;
 }
 
-.theme-toggle-button:hover {
-  background-color: var(--secundary-color) !important;
+.nav-shell {
+  max-width: var(--default-max-width);
+  margin: 0 auto;
+  width: 100%;
+  min-height: 72px;
+  padding: 0 var(--double-default-spacing);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--double-default-spacing);
 }
 
-.nav-right-actions {
+.nav-left,
+.nav-center,
+.nav-right {
   display: inline-flex;
   align-items: center;
+}
+
+.nav-left {
+  gap: 8px;
+}
+
+.nav-center {
+  justify-content: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.nav-right {
+  justify-content: flex-end;
   gap: 10px;
 }
 
-.nav-login-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 38px;
-  padding: 0 12px;
-  border: 1px solid var(--separator-color-primary);
-  border-radius: 10px;
-  color: var(--text-color-secondary);
-  font-size: 1.05rem;
-  font-weight: 700;
+.nav-brand {
   text-decoration: none;
+  color: var(--text-color-secondary);
+  border-radius: 8px;
+  padding: 6px 8px;
 }
 
-.nav-login-link:hover {
-  background-color: var(--secundary-color);
-  text-decoration: none;
+.nav-brand:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+.nav-brand-title {
+  font-family: "Nunito Sans", Arial, sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.iftm-nav-button,
+.nav-link-btn,
+.nav-mobile-item {
+  color: var(--text-color-secondary) !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.01em !important;
+  min-width: auto !important;
+  border: 1px solid transparent !important;
+}
+
+.iftm-nav-button:hover,
+.nav-link-btn:hover,
+.nav-mobile-item:hover {
+  background-color: var(--nav-item-hover-bg) !important;
+}
+
+.iftm-nav-button:active,
+.nav-link-btn:active,
+.nav-mobile-item:active {
+  background-color: var(--nav-item-active-bg) !important;
+}
+
+.iftm-nav-button:focus-visible,
+.nav-link-btn:focus-visible,
+.nav-mobile-item:focus-visible,
+.mobile-menu-button:focus-visible,
+.theme-toggle-button:focus-visible,
+.avatar-button:focus-visible,
+.nav-login-link:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+.iftm-nav-button {
+  padding: 6px 10px !important;
 }
 
 .iftm-option {
@@ -49,32 +104,100 @@
 }
 
 .iftm-logo {
-  width: 28px;
+  width: 24px;
   height: auto;
   display: block;
 }
 
 .iftm-label {
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 700;
 }
 
-@media (max-width: 900px) {
-  .iftm-nav-button {
-    padding: 0;
+.theme-toggle-button {
+  color: var(--text-color-secondary) !important;
+  border: 1px solid var(--nav-item-border) !important;
+  border-radius: 10px !important;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--nav-item-hover-bg) !important;
+}
+
+.nav-login-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--nav-item-border);
+  border-radius: 10px;
+  color: var(--text-color-secondary);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-login-link:hover {
+  background-color: var(--nav-item-hover-bg);
+}
+
+.avatar-button {
+  padding: 0 !important;
+}
+
+.mobile-menu-button {
+  color: var(--text-color-secondary) !important;
+  border: 1px solid var(--nav-item-border) !important;
+  border-radius: 10px !important;
+}
+
+.mobile-menu-button:hover {
+  background-color: var(--nav-item-hover-bg) !important;
+}
+
+.nav-mobile-only {
+  display: none !important;
+}
+
+.nav-mobile-actions {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  min-width: 220px;
+}
+
+.nav-mobile-item {
+  justify-content: flex-start !important;
+}
+
+@media (max-width: 980px) {
+  .nav-shell {
+    min-height: 64px;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    padding: 0 var(--default-spacing);
   }
 
-  .iftm-logo {
-    width: 24px;
+  .nav-desktop-only {
+    display: none !important;
   }
 
-  .nav-right-actions {
+  .nav-mobile-only {
+    display: inline-flex !important;
+  }
+
+  .nav-brand-title {
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-right {
     gap: 6px;
   }
 
   .nav-login-link {
     min-height: 34px;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     padding: 0 10px;
   }
 }

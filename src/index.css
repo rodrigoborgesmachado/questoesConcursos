@@ -45,6 +45,10 @@
   --progress-bar-color: #2cdebf;
   --pagination-item-color: #ffffff;
   --chart-highlight-color: #2cdebf;
+  --nav-item-hover-bg: rgba(77, 91, 125, 0.75);
+  --nav-item-active-bg: rgba(44, 222, 191, 0.2);
+  --nav-item-border: rgba(173, 179, 187, 0.48);
+  --focus-outline-color: #2cdebf;
   --footer-heigth: 48px;
   --default-spacing: 8px;
   --double-default-spacing: calc(2 * var(--default-spacing));
@@ -100,6 +104,10 @@
   --progress-bar-color: #0d7f94;
   --pagination-item-color: #1f2937;
   --chart-highlight-color: #0d7f94;
+  --nav-item-hover-bg: rgba(228, 235, 247, 0.9);
+  --nav-item-active-bg: rgba(13, 127, 148, 0.16);
+  --nav-item-border: #c7d3e6;
+  --focus-outline-color: #0d7f94;
 }
 
 * {
@@ -349,36 +357,6 @@ th{
   color: var(--text-color-secondary);
 }
 
-/* HeaderDoc */
-
-.varBarResponsive {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.conNav {
-  width: 100%;
-  background-color: var(--primary-color);
-  box-shadow: var(--nav-shadow);
-  display: flex;
-  justify-content: center;
-}
-
-.toolNav {
-  width: 100%;
-  background-color: var(--primary-color);
-  display: flex;
-  max-width: 1080px;
-  align-items: center;
-}
-
-.varBarResponsive a {
-  text-decoration: none;
-  color: var(--text-color-secondary);
-  font-size: 19px;
-}
-
 /* FooterDoc */
 
 footer {
@@ -413,31 +391,7 @@ footer a {
 
 .button-base:hover {
   background-color: var(--button-color-secondary);
-  ;
   color: var(--text-color-secondary);
-}
-
-.varBarResponsive {
-  background-color: var(--primary-color);
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.conNav {
-  width: 100%;
-  background-color: var(--primary-color);
-}
-
-.toolNav {
-  width: 100%;
-  background-color: var(--primary-color);
-}
-
-.varBarResponsive a {
-  text-decoration: none;
-  color: var(--text-color-secondary);
-  font-size: 19px;
 }
 
 .dados{
