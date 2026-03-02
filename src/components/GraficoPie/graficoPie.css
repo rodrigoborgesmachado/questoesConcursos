@@ -1,6 +1,10 @@
-.grafico tspan{
-    color: white !important;
-    fill: white;
+.grafico tspan,
+.grafico svg text,
+.grafico .MuiChartsLegend-label,
+.grafico .MuiChartsAxis-tickLabel,
+.grafico .MuiChartsAxis-label {
+    color: var(--text-color-primary) !important;
+    fill: var(--text-color-primary) !important;
 }
 
 .MuiPieArc-root{

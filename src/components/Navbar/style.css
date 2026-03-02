@@ -6,6 +6,42 @@
   color: inherit;
 }
 
+.theme-toggle-button {
+  margin-right: 10px !important;
+  color: var(--text-color-secondary) !important;
+  border: 1px solid var(--separator-color-primary) !important;
+  border-radius: 10px !important;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--secundary-color) !important;
+}
+
+.nav-right-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-login-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--separator-color-primary);
+  border-radius: 10px;
+  color: var(--text-color-secondary);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-login-link:hover {
+  background-color: var(--secundary-color);
+  text-decoration: none;
+}
+
 .iftm-option {
   display: inline-flex;
   align-items: center;
@@ -30,5 +66,15 @@
 
   .iftm-logo {
     width: 24px;
+  }
+
+  .nav-right-actions {
+    gap: 6px;
+  }
+
+  .nav-login-link {
+    min-height: 34px;
+    font-size: 0.95rem;
+    padding: 0 10px;
   }
 }

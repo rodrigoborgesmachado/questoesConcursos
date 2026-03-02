@@ -2,8 +2,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full screen height */
+    min-height: 55vh;
     width: 100%;
+    padding: 24px;
+}
+
+.loader-surface {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px 24px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--loader-card-border);
+  background: var(--loader-card-background);
+  box-shadow: var(--elevation-shadow);
+  backdrop-filter: blur(4px);
 }
 
 .pacman-loader{
@@ -145,10 +160,17 @@
   height:calc(var(--size,64px)/7);
   margin-top:calc(-1 * var(--size,64px)/14);
   border-radius:50%;
-  background:#fff;
+  background: var(--loader-pellet-color);
 
   animation: pellet-move 1.8s linear infinite;
   animation-delay: calc(var(--i) * (1.8s / max(var(--dots), 1)));
+}
+
+.loader-label {
+  color: var(--text-color-primary);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  opacity: 0.92;
 }
 
 /* Move de 100% (bem à direita) até -12px (atrás da boca) */

@@ -55,9 +55,9 @@
 .contextModal{
     display: flex;
     flex-direction: column;    
-    background-color: #424242;
+    background-color: var(--context-modal-background);
     width: 100%;
-    color: #fff;
+    color: var(--context-modal-text);
 }
 
 .tituloModal{

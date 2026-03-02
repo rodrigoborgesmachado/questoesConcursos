@@ -181,10 +181,10 @@ function HistoricoUsuarioAdmin() {
                     <Stack spacing={4}>
                         <Pagination sx={{
                             '& .Mui-selected': {
-                                color: 'white'
+                                color: 'var(--text-color-secondary)'
                             },
                             '& .MuiPaginationItem-root': {
-                                color: 'white',
+                                color: 'var(--text-color-secondary)',
 
                             }
                         }} count={parseInt((quantity / quantityPerPage) + 1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange} />
@@ -196,4 +196,5 @@ function HistoricoUsuarioAdmin() {
 }
 
 export default HistoricoUsuarioAdmin;
+
 

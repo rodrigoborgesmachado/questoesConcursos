@@ -10,6 +10,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
@@ -20,9 +22,11 @@ import iftmLogo from '../../assets/iftm-logo.svg';
 import { useAuth } from '../../auth/useAuth';
 import { Roles } from '../../auth/roles';
 import { requireRole } from '../../auth/requireRole';
+import { useTheme } from '../../theme/useTheme';
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
+    const { theme, toggleTheme, isDarkTheme } = useTheme();
     const { session, role, isAuthenticated, logout } = useAuth();
     const isAdmin = requireRole(role, [Roles.Admin]);
     const isTeacher = requireRole(role, [Roles.Teacher]);
@@ -441,7 +445,7 @@ const ResponsiveAppBar = () => {
               aria-label='Provas IFTM'
               onClick={(e) => selecionaFiltroProva('IFTM')}
               className='iftm-nav-button'
-              sx={{ my: 1, display: { xs: 'none', md: 'flex' }, minWidth: 'auto', color: 'white' }}
+              sx={{ my: 1, display: { xs: 'none', md: 'flex' }, minWidth: 'auto', color: 'var(--text-color-secondary)' }}
             >
               <span className='iftm-option'>
                 <img src={iftmLogo} alt='IFTM' className='iftm-logo' />
@@ -453,13 +457,13 @@ const ResponsiveAppBar = () => {
               <Button
                 key={index}
                 onClick={(e) => SelecionaOpcao(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}
               >
                 {page}
               </Button>
               : index == 0 ?
               <> 
-                <Button key={index} onClick={handleOpenProvaMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Button key={index} onClick={handleOpenProvaMenu} sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}>
                     {page}
                 </Button>
                 <Menu
@@ -493,7 +497,7 @@ const ResponsiveAppBar = () => {
               :
               index == 4 ?
               <> 
-                <Button key={index} onClick={handleOpenSisuMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Button key={index} onClick={handleOpenSisuMenu} sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}>
                     {page}
                 </Button>
                 <Menu
@@ -518,7 +522,7 @@ const ResponsiveAppBar = () => {
               </>
               :
               <> 
-                <Button key={index} onClick={handleOpenAdminMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Button key={index} onClick={handleOpenAdminMenu} sx={{ my: 2, color: 'var(--text-color-secondary)', display: 'block' }}>
                     {page}
                 </Button>
                 <Menu
@@ -564,13 +568,20 @@ const ResponsiveAppBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box className='nav-right-actions' sx={{ flexGrow: 0 }}>
+            <Tooltip title={isDarkTheme ? 'Ativar tema claro' : 'Ativar tema escuro'}>
+              <IconButton
+                onClick={toggleTheme}
+                className='theme-toggle-button'
+                aria-label={isDarkTheme ? 'Ativar tema claro' : 'Ativar tema escuro'}
+              >
+                {theme === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
+            </Tooltip>
             {
                 !isAuthenticated ?
                 <>
-                <h3>
-                <Link className='logo' to='/login'><span>Login</span></Link>
-                </h3>
+                <Link className='nav-login-link' to='/login'><span>Login</span></Link>
                 </>
                 :
                 <>

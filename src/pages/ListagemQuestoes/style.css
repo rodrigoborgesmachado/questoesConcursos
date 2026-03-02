@@ -1,16 +1,16 @@
 .respondida{
-    background-color: green;
-    color: #FFF;
+    background-color: var(--button-color-primary-right);
+    color: var(--text-color-button);
 }
 
 .errado{
-    background-color: red;
-    color: #FFF;
+    background-color: var(--button-color-primary-wrong);
+    color: var(--text-color-button);
 }
 
 .responder{
-    background-color: #2F4F4F;
-    color: #FFF;
+    background-color: var(--secundary-color);
+    color: var(--text-color-button);
 }
 
 .opcoesQuestoes{

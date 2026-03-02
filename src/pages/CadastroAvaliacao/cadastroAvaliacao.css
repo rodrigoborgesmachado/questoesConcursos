@@ -1,10 +1,10 @@
 .toggleButton{
-    color: #4D5B7D;
-    background-color: #4D5B7D;
+    color: var(--secundary-color);
+    background-color: var(--secundary-color);
 }
 
 .toggleButtonClicked{
-    background-color: #4D5B7D;
+    background-color: var(--secundary-color);
 }
 
 .leftContent{
@@ -13,7 +13,7 @@
 }
 
 .leftContent h3{
-    color: #fff;
+    color: var(--text-color-secondary);
 }
 
 .vis{

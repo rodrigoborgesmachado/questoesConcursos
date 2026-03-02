@@ -12,8 +12,8 @@
 
 .not-found a{
     text-decoration: none;
-    background-color: #116feb;
-    color: #FFF;
+    background-color: var(--button-color-primary);
+    color: var(--text-color-button);
     padding: 10px;
     margin-top: 14px;
 }

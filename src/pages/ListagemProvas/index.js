@@ -262,7 +262,7 @@ function ListagemProvas() {
                                 <LinearProgressWithLabel sx={{
                                     backgroundColor: Config.pallete[0],
                                     '& .MuiLinearProgress-bar': {
-                                        backgroundColor: '#8A2BE2',
+                                        backgroundColor: 'var(--button-color-secondary)',
                                     },
                                 }} value={parseInt(((item.quantidadeQuestoesResolvidas || 0) / (item.quantidadeQuestoesTotal || 1)) * 100, 10)} />
                             </> : <></>}
@@ -284,8 +284,8 @@ function ListagemProvas() {
                 {quantity > 0 ? <Stack spacing={4}>
                     <Pagination
                         sx={{
-                            '& .Mui-selected': { color: 'white' },
-                            '& .MuiPaginationItem-root': { color: 'white' },
+                            '& .Mui-selected': { color: 'var(--text-color-secondary)' },
+                            '& .MuiPaginationItem-root': { color: 'var(--text-color-secondary)' },
                         }}
                         count={Math.ceil(quantity / quantityPerPage)}
                         page={parseInt(page, 10)}

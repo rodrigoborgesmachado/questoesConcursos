@@ -328,10 +328,10 @@ function ListagemQuestoes() {
                         <Pagination
                             sx={{
                                 '& .Mui-selected': {
-                                    color: 'white',
+                                    color: 'var(--text-color-secondary)',
                                 },
                                 '& .MuiPaginationItem-root': {
-                                    color: 'white',
+                                    color: 'var(--text-color-secondary)',
                                 },
                             }}
                             count={Math.ceil(quantity / quantityPerPage)}

@@ -35,7 +35,7 @@
 .tiposProva{
     width: 100%;
     height: 100%;
-    color: black;
+    color: var(--text-color-primary);
 }
 
 .tiposProva input{

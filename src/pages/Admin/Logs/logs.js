@@ -176,9 +176,9 @@ function Logs(){
                     <Stack spacing={4}>
                         <Pagination sx={{
                 '& .Mui-selected': {
-                    color: 'white'},
+                    color: 'var(--text-color-secondary)'},
                 '& .MuiPaginationItem-root': {
-                    color: 'white',
+                    color: 'var(--text-color-secondary)',
                 
                 }}} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
@@ -192,3 +192,4 @@ function Logs(){
 }
 
 export default Logs;
+

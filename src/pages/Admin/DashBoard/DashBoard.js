@@ -349,9 +349,9 @@ function DashBoard(){
                         <Stack spacing={4}>
                             <Pagination sx={{
                     '& .Mui-selected': {
-                        color: 'white'},
+                        color: 'var(--text-color-secondary)'},
                     '& .MuiPaginationItem-root': {
-                        color: 'white',
+                        color: 'var(--text-color-secondary)',
                   
                   }}} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
@@ -429,9 +429,9 @@ function DashBoard(){
                         <Stack spacing={4}>
                             <Pagination sx={{
                     '& .Mui-selected': {
-                        color: 'white'},
+                        color: 'var(--text-color-secondary)'},
                     '& .MuiPaginationItem-root': {
-                        color: 'white',
+                        color: 'var(--text-color-secondary)',
                   
                   }}} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChangeProva} />
                         </Stack>
