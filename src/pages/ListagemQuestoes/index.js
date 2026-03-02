@@ -279,7 +279,7 @@ function ListagemQuestoes() {
                     <h3>Questões (Total: {quantity})</h3>
                 </div>}
             <div className='global-fullW'>
-                <Table>
+                <Table className='global-table'>
                     <thead>
                         <tr>
                             {!filtro && isAdmin ? <th>Código</th> : <></>}

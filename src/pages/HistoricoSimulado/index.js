@@ -128,7 +128,7 @@ function HistoricoSimulado(){
                         <></>
                     }
 
-                    <Table>
+                    <Table className='global-table'>
                     <thead>
                         <tr>
                             <th>

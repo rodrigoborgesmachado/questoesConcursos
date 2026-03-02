@@ -11,6 +11,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Table } from 'react-bootstrap';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { paginationSx } from '../../services/uiStyles.js';
 import AddIcon from '@mui/icons-material/Add';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import { customStylesQuestoes, abreQuestao, MontaFiltrosLocalSession } from '../../services/functions.js';
@@ -213,13 +214,13 @@ function CadastroAvaliacao(){
                 style={styles}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Questões da Avaliacao</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
                     <div>
-                        <Table>
+                        <Table className='global-table'>
                             <thead>
                                 <tr>
                                     <th>
@@ -275,13 +276,7 @@ function CadastroAvaliacao(){
                 {
                     questoesAvaliacao.length > 0 ?
                         <Stack spacing={4}>
-                            <Pagination sx={{
-                    '& .Mui-selected': {
-                        color: 'var(--pagination-item-color)'},
-                    '& .MuiPaginationItem-root': {
-                        color: 'var(--pagination-item-color)',
-                  
-                  }}} count={parseInt(Math.ceil(questoesAvaliacao.length / quantityPerPage))} page={parseInt(pageQuestoesAvaliacao)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                            <Pagination sx={paginationSx} count={parseInt(Math.ceil(questoesAvaliacao.length / quantityPerPage))} page={parseInt(pageQuestoesAvaliacao)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
                         :
                         <>
@@ -295,7 +290,7 @@ function CadastroAvaliacao(){
                 style={styles}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Questões Disponíveis</h3>
                     </div>
@@ -312,7 +307,7 @@ function CadastroAvaliacao(){
                                 <button className='global-button global-button--transparent' onClick={() => setFiltrando(true)}>Voltar para filtros</button>
                             </div>
                             <div>
-                                <Table>
+                                <Table className='global-table'>
                                     <thead>
                                         <tr>
                                             <th>
@@ -380,13 +375,7 @@ function CadastroAvaliacao(){
                             {
                                 quantityQuestoes > 0 ?
                                     <Stack spacing={4}>
-                                        <Pagination sx={{
-                                '& .Mui-selected': {
-                                    color: 'var(--pagination-item-color)'},
-                                '& .MuiPaginationItem-root': {
-                                    color: 'var(--pagination-item-color)',
-                            
-                            }}} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(pageQuestoes)} color="primary" showFirstButton showLastButton onChange={handleChangeQuestoes} />
+                                        <Pagination sx={paginationSx} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(pageQuestoes)} color="primary" showFirstButton showLastButton onChange={handleChangeQuestoes} />
                                     </Stack>
                                     :
                                     <>

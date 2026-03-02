@@ -6,6 +6,7 @@ import api from '../../services/api';
 import { toast } from 'react-toastify';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { paginationSx } from '../../services/uiStyles.js';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader';
 import { useAuth } from '../../auth/useAuth';
@@ -154,13 +155,7 @@ function HistoricoUsuario() {
             {
                     qtTotal > 0 ?
                         <Stack spacing={4}>
-                            <Pagination sx={{
-                    '& .Mui-selected': {
-                        color: 'var(--pagination-item-color)'},
-                    '& .MuiPaginationItem-root': {
-                        color: 'var(--pagination-item-color)',
-                  
-                  }}} count={parseInt((qtTotal / quantityPerPage) + 1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                            <Pagination sx={paginationSx} count={parseInt((qtTotal / quantityPerPage) + 1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
                         :
                         <>

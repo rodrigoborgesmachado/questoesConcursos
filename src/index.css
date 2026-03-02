@@ -902,3 +902,41 @@ textarea::placeholder {
 .link{
   cursor: pointer;
 }
+
+.global-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent !important;
+}
+
+.global-table thead th {
+  background-color: var(--card-background-subtle);
+  color: var(--text-color-primary-light);
+  border-bottom: 1px solid var(--separator-color-primary);
+}
+
+.global-table tbody td {
+  color: var(--text-color-primary);
+}
+
+.global-table tbody tr:hover {
+  background-color: var(--nav-item-hover-bg);
+}
+
+.global-tableWrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.global-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--default-spacing);
+  width: 100%;
+  color: var(--context-modal-text);
+  background-color: var(--context-modal-background);
+}
+
+.global-pagination .MuiPaginationItem-root {
+  color: var(--pagination-item-color);
+}

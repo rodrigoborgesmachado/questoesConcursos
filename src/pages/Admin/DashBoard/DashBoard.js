@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { paginationSx } from '../../../services/uiStyles.js';
 import { customStyles } from '../../../services/functions.js';
 import { abreQuestao } from './../../../services/functions.js';
 import BasicPie from './../../../components/GraficoPie/graficoPie.js';
@@ -287,13 +288,13 @@ function DashBoard(){
                 style={styles}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Questões solicitado revisão</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
                     <div>
-                        <Table>
+                        <Table className='global-table'>
                             <thead>
                                 <tr>
                                     <th>
@@ -347,13 +348,7 @@ function DashBoard(){
                 {
                     quantityQuestoes > 0 ?
                         <Stack spacing={4}>
-                            <Pagination sx={{
-                    '& .Mui-selected': {
-                        color: 'var(--text-color-secondary)'},
-                    '& .MuiPaginationItem-root': {
-                        color: 'var(--text-color-secondary)',
-                  
-                  }}} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                            <Pagination sx={paginationSx} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
                         :
                         <>
@@ -367,13 +362,13 @@ function DashBoard(){
                 style={styles}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Provas em revisão</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
                     <div>
-                        <Table>
+                        <Table className='global-table'>
                             <thead>
                                 <tr>
                                     <th>
@@ -427,13 +422,7 @@ function DashBoard(){
                 {
                     quantityQuestoes > 0 ?
                         <Stack spacing={4}>
-                            <Pagination sx={{
-                    '& .Mui-selected': {
-                        color: 'var(--text-color-secondary)'},
-                    '& .MuiPaginationItem-root': {
-                        color: 'var(--text-color-secondary)',
-                  
-                  }}} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChangeProva} />
+                            <Pagination sx={paginationSx} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChangeProva} />
                         </Stack>
                         :
                         <>

@@ -46,7 +46,7 @@ function Ranking(){
             <h2>
                 Ranking
             </h2>
-            <Table>
+            <Table className='global-table'>
                 <thead>
                     <tr>
                         <th>

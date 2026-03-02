@@ -7,6 +7,7 @@ import api from '../../services/api.js';
 import { toast } from 'react-toastify';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { paginationSx } from '../../services/uiStyles.js';
 import Modal from 'react-modal';
 import {  BsFileEarmarkPlusFill } from "react-icons/bs";
 import Config from './../../config.json';
@@ -126,7 +127,7 @@ function ListagemAvaliacoes(){
             >
                 {
                     filtrarChave ?
-                    <div className='contextModal'>
+                    <div className='contextModal global-modal'>
                         <div className='bodymodal'>
                             <h3>Filtros</h3>
                         </div>
@@ -158,7 +159,7 @@ function ListagemAvaliacoes(){
                     <h3>Avaliações</h3>
                     <h3 className='link'><button className='global-button global-button--transparent' onClick={openModal}>Filtrar</button></h3>
                 </div>
-                <Table>
+                <Table className='global-table'>
                     <thead>
                         <tr>
                             <th>
@@ -219,13 +220,7 @@ function ListagemAvaliacoes(){
             {
                 quantity > 0 ?
                     <Stack spacing={4}>
-                        <Pagination sx={{
-                '& .Mui-selected': {
-                    color: 'var(--pagination-item-color)'},
-                '& .MuiPaginationItem-root': {
-                    color: 'var(--pagination-item-color)',
-            
-            }}} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(quantity)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                        <Pagination sx={paginationSx} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(quantity)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
                     :
                     <>

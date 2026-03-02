@@ -177,7 +177,7 @@ function ResultadoAvaliacao(){
                         :
                         <h3 className='center-text'>Respostas</h3>
                 }
-                <Table>
+                <Table className='global-table'>
                     <thead>
                         <tr>
                             <th>

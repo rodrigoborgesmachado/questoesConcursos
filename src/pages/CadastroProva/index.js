@@ -258,7 +258,7 @@ if(loadding){
               style={style}
               contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Cadastro de tipo</h3>
                     </div>

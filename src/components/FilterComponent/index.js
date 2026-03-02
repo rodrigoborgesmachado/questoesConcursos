@@ -326,7 +326,7 @@ function FilterComponent({
 
     return (
         <div className='global-pageContainer-left'>
-            <div className='contextModal'>
+            <div className='contextModal global-modal'>
                 <div className='bodymodal'>
                     <h3>Filtros</h3>
                 </div>

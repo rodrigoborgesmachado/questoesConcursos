@@ -73,7 +73,7 @@ function MinhasAvaliacoes(){
                         <></>
                     }
                 </div>
-                <Table>
+                <Table className='global-table'>
                     <thead>
                         <tr>
                             <th>

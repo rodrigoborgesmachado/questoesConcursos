@@ -150,7 +150,7 @@ function Resultado(){
                   }}} value={Math.round(parseInt((respostas.filter((item) => item.certa === '1').length/respostas.length)*100))} />
             </div>
             <div className='respostasHistorico'>
-                <Table>
+                <Table className='global-table'>
                     <thead>
                         <tr>
                             <th>

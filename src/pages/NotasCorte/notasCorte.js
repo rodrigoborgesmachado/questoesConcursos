@@ -182,7 +182,7 @@ function NotasCorte(){
               style={style}
               contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h4>
                             {modosConcorrencia[indexModoConcorrencia]}
@@ -219,7 +219,7 @@ function NotasCorte(){
                         <h3>Notas de Corte:</h3>
                         {
                             isMobile ? 
-                            <Table>
+                            <Table className='global-table'>
                                 <thead>
                                     <tr>
                                         <th>
@@ -260,7 +260,7 @@ function NotasCorte(){
                                 </tbody>
                             </Table>
                             :
-                            <Table>
+                            <Table className='global-table'>
                                 <thead>
                                     <tr>
                                         <th>

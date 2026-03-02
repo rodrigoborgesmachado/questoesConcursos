@@ -148,7 +148,7 @@ function CalculadoraEnem(){
               style={style}
               contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div>
                         <h4>
                             Média para o curso {cursos.filter(function(option){return option.value == filtro})[0]?.label}:

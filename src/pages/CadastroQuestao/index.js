@@ -249,7 +249,7 @@ if(loadding){
               style={style}
               contentLabel="Questão"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='Materia'>
                         <h2>Matéria: {questao?.materia}</h2>
                         <h3>Assunto: {questao?.assunto}</h3>

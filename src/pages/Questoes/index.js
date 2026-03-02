@@ -550,7 +550,7 @@ function Questoes(){
               style={style}
               contentLabel="Solicitação"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>O que deseja fazer?</h3>
                     </div>
@@ -589,7 +589,7 @@ function Questoes(){
               style={style}
               contentLabel="Example Modal"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Deseja solicitar revisão da questão?</h3>
                     </div>
@@ -604,7 +604,7 @@ function Questoes(){
               style={style}
               contentLabel="Example Modal"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Deseja visualizar resposta da questão?</h3>
                     </div>
@@ -620,7 +620,7 @@ function Questoes(){
               contentLabel="Example Modal"
             >
             
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3 dangerouslySetInnerHTML={createMarkup(textoResposta)}></h3>
                     </div>
@@ -632,7 +632,7 @@ function Questoes(){
               style={customStylesComentario}
               contentLabel="Comentário"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <h3>Comentário:</h3>
                     <div className="separator separator--withMargins"></div>
                     <div className='bodymodalComentario'>
@@ -649,7 +649,7 @@ function Questoes(){
               style={customStylesAssunto}
               contentLabel="Comentário"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <h3>Assunto:</h3>
                     <div className="separator separator--withMargins"></div>
                     <div className='bodymodalAssunto'>

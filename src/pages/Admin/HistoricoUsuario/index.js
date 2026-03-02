@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Stack from '@mui/material/Stack';
+import { paginationSx } from '../../../services/uiStyles.js';
 import Pagination from '@mui/material/Pagination';
 import PacmanLoader from '../../../components/PacmanLoader/PacmanLoader.js';
 import { useAuth } from '../../../auth/useAuth';
@@ -179,15 +180,7 @@ function HistoricoUsuarioAdmin() {
             <div className='itensPaginacao global-mt'>
                 {
                     <Stack spacing={4}>
-                        <Pagination sx={{
-                            '& .Mui-selected': {
-                                color: 'var(--text-color-secondary)'
-                            },
-                            '& .MuiPaginationItem-root': {
-                                color: 'var(--text-color-secondary)',
-
-                            }
-                        }} count={parseInt((quantity / quantityPerPage) + 1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                        <Pagination sx={paginationSx} count={parseInt((quantity / quantityPerPage) + 1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
                 }
             </div>

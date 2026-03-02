@@ -7,6 +7,7 @@ import { Table } from 'react-bootstrap';
 import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { paginationSx } from '../../../services/uiStyles.js';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { customStyles, formatDate } from "../../../services/functions.js";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -90,7 +91,7 @@ function HistoricoTabuadaDivertida(){
                 style={styles}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Log</h3>
                     </div>
@@ -116,7 +117,7 @@ function HistoricoTabuadaDivertida(){
             </Modal>
             <div className='dados global-infoPanel'>
                 <h3>Historico Tabuada Divertida ({quantity}):</h3>
-                <Table>
+                <Table className='global-table'>
                     <thead>
                         <tr>
                             <th>
@@ -209,13 +210,7 @@ function HistoricoTabuadaDivertida(){
             {
                 quantity > 0 ?
                     <Stack spacing={4}>
-                        <Pagination sx={{
-                '& .Mui-selected': {
-                    color: 'var(--text-color-secondary)'},
-                '& .MuiPaginationItem-root': {
-                    color: 'var(--text-color-secondary)',
-                
-                }}} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                        <Pagination sx={paginationSx} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
                     :
                     <>

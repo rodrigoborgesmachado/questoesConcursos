@@ -179,7 +179,7 @@ function PerfilUsuario(){
               style={style}
               contentLabel="Atualização nome"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Nome:</h3>
                     </div>
@@ -196,7 +196,7 @@ function PerfilUsuario(){
               style={style}
               contentLabel="Atualização Instituicao"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Insituição:</h3>
                     </div>
@@ -213,7 +213,7 @@ function PerfilUsuario(){
               style={style}
               contentLabel="Atualização de Perfil"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Perfil:</h3>
                     </div>

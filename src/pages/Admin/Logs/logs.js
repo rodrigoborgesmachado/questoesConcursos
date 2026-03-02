@@ -7,6 +7,7 @@ import { Table } from 'react-bootstrap';
 import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { paginationSx } from '../../../services/uiStyles.js';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { customStyles, formatDate } from "../../../services/functions.js";
 import PacmanLoader from "../../../components/PacmanLoader/PacmanLoader.js";
@@ -81,7 +82,7 @@ function Logs(){
                 style={style}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Log</h3>
                     </div>
@@ -102,7 +103,7 @@ function Logs(){
                 style={style}
                 contentLabel="Filtro"
             >
-                <div className='contextModal'>
+                <div className='contextModal global-modal'>
                     <div className='bodymodal'>
                         <h3>Filtro</h3>
                     </div>
@@ -121,7 +122,7 @@ function Logs(){
                     <h3>Logs ({quantity}):</h3>
                     <h3 className='link'><button className='global-button global-button--transparent' onClick={openModalFiltro}>Filtrar</button></h3>
                 </div>
-                <Table>
+                <Table className='global-table'>
                     <thead>
                         <tr>
                             <th>
@@ -174,13 +175,7 @@ function Logs(){
             {
                 quantity > 0 ?
                     <Stack spacing={4}>
-                        <Pagination sx={{
-                '& .Mui-selected': {
-                    color: 'var(--text-color-secondary)'},
-                '& .MuiPaginationItem-root': {
-                    color: 'var(--text-color-secondary)',
-                
-                }}} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                        <Pagination sx={paginationSx} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>
                     :
                     <>
