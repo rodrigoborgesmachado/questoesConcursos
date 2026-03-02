@@ -1,53 +1,74 @@
 import './style.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import api from '../../services/api.js';
 import { toast } from 'react-toastify';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Config from '../../config.json';
 import { BsFileEarmarkPlusFill } from 'react-icons/bs';
 import Modal from 'react-modal';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
-import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
+import { customStyles } from '../../services/functions.js';
 import FilterComponent from '../../components/FilterComponent/index.js';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 import { useAuth } from '../../auth/useAuth';
 import { Roles } from '../../auth/roles';
 import { requireRole } from '../../auth/requireRole';
+import {
+    buildApiFilterQuery,
+    getCurrentUrl,
+    getFiltersFromSearchParams,
+    getPageFromSearchParams,
+    mergeFiltersIntoSearchParams,
+} from '../../services/listingQueryState.js';
 
 function ListagemProvas() {
     const style = customStyles();
     const { filtro } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const fallbackPage = Number.isNaN(parseInt(filtro, 10)) ? 1 : parseInt(filtro, 10);
+
     const [loadding, setLoadding] = useState(true);
     const [provas, setProvas] = useState([]);
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [page, setPage] = useState(filtro);
+    const [page, setPage] = useState(getPageFromSearchParams(searchParams, fallbackPage));
+    const [filters, setFilters] = useState(getFiltersFromSearchParams(searchParams));
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(7);
-    const searchParams = new URLSearchParams(window.location.search);
-    const [isSimulado] = useState(searchParams.get('tipo') === 'simulado');
+
+    const isSimulado = searchParams.get('tipo') === 'simulado';
+    const selectedTipos = filters?.tipos || [];
+
     const { role, isAuthenticated } = useAuth();
     const isAdmin = requireRole(role, [Roles.Admin]);
-    const selectedTipos = JSON.parse(localStorage.getItem(Config.filtroTiposSelecionados) || '[]');
 
-    function openModal() {
-        setIsOpen(true);
-    }
+    const apiFilters = useMemo(() => buildApiFilterQuery(filters), [filters]);
 
-    function closeModal() {
-        setIsOpen(false);
-    }
+    useEffect(() => {
+        if (!searchParams.get('page')) {
+            const next = mergeFiltersIntoSearchParams(searchParams, getFiltersFromSearchParams(searchParams));
+            next.set('page', String(fallbackPage));
 
-    function redirectToLogin(returnUrl) {
-        navigate(`/login?returnUrl=${encodeURIComponent(returnUrl)}`, { replace: true });
-    }
+            if (isSimulado) {
+                next.set('tipo', 'simulado');
+            }
 
-    async function buscaProvas(nextPage) {
+            setSearchParams(next, { replace: true });
+        }
+    }, []);
+
+    useEffect(() => {
+        setPage(getPageFromSearchParams(searchParams, fallbackPage));
+        setFilters(getFiltersFromSearchParams(searchParams));
+    }, [searchParams, fallbackPage]);
+
+    async function buscaProvas(nextPage, nextFiltersQuery) {
         const endpoint = isAuthenticated
-            ? '/Prova/pagged?page=' + nextPage + '&quantity=' + quantityPerPage + MontaFiltrosLocalSession()
-            : '/PublicQuestoes/provas-pagged?page=' + nextPage + '&quantity=' + quantityPerPage + MontaFiltrosLocalSession();
+            ? `/Prova/pagged?page=${nextPage}&quantity=${quantityPerPage}${nextFiltersQuery}`
+            : `/PublicQuestoes/provas-pagged?page=${nextPage}&quantity=${quantityPerPage}${nextFiltersQuery}`;
 
         await api.get(endpoint)
             .then((response) => {
@@ -69,11 +90,40 @@ function ListagemProvas() {
 
     useEffect(() => {
         setLoadding(true);
-        buscaProvas(page);
-    }, []);
+        buscaProvas(page, apiFilters);
+    }, [page, apiFilters, isAuthenticated]);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    function persistListState(nextPage, nextFilters) {
+        let next = new URLSearchParams(searchParams);
+        next = mergeFiltersIntoSearchParams(next, nextFilters);
+        next.set('page', String(nextPage));
+
+        if (isSimulado) {
+            next.set('tipo', 'simulado');
+        }
+
+        setSearchParams(next, { replace: true });
+    }
+
+    function redirectToLogin(returnUrl) {
+        navigate(`/login?returnUrl=${encodeURIComponent(returnUrl)}`, { replace: true });
+    }
+
+    function getCurrentListUrl() {
+        return getCurrentUrl(location.pathname, searchParams);
+    }
 
     function abrirQuestao(codigo) {
-        navigate('/listagemquestoes/' + codigo, { replace: true });
+        const returnTo = encodeURIComponent(getCurrentListUrl());
+        navigate(`/listagemquestoes/${codigo}?page=1&returnTo=${returnTo}`, { replace: true });
     }
 
     function abrirSimulado(codigo) {
@@ -87,19 +137,18 @@ function ListagemProvas() {
         navigate(returnUrl, { replace: true });
     }
 
-    function filtrar() {
+    function filtrar(nextFilters) {
         closeModal();
         setLoadding(true);
+        setFilters(nextFilters);
         setPage(1);
-        buscaProvas(1);
+        persistListState(1, nextFilters);
     }
 
     const handleChange = (event, value) => {
-        localStorage.setItem(Config.PaginaListagem, value);
-        navigate('/listagemprovas/' + value, { replace: true });
-        setPage(value);
         setLoadding(true);
-        buscaProvas(value);
+        setPage(value);
+        persistListState(value, filters);
     };
 
     function addProva() {
@@ -138,7 +187,7 @@ function ListagemProvas() {
                 setLoadding(false);
                 if (response.data.success) {
                     toast.success('Atualizado com sucesso!');
-                    buscaProvas(page);
+                    buscaProvas(page, apiFilters);
                 }
                 else {
                     toast.error('Não foi possível atualizar');
@@ -162,10 +211,18 @@ function ListagemProvas() {
                 style={style}
                 contentLabel='Filtro'
             >
-                <FilterComponent buscaQuestoesFiltrando={filtrar} setFiltro={() => {}} showMaterias={false} showAssuntos={false} />
+                <FilterComponent
+                    buscaQuestoesFiltrando={filtrar}
+                    setFiltro={() => {}}
+                    showMaterias={false}
+                    showAssuntos={false}
+                    filters={filters}
+                    onApply={filtrar}
+                    persistInLocalStorage={false}
+                />
             </Modal>
             <div className='opcoesProva'>
-                <h3 className='provaTitle'><a>Provas {selectedTipos.length > 0 ? selectedTipos[0].label : ''}</a></h3>
+                <h3 className='provaTitle'><a>Provas {selectedTipos.length > 0 ? selectedTipos[0] : ''}</a></h3>
                 <div className='opcaoFiltro'>
                     {isAdmin && !isSimulado ? <h2><BsFileEarmarkPlusFill onClick={addProva} /></h2> : <></>}
                     <h3 className='link'><button className='global-button global-button--transparent' onClick={openModal}>Filtrar</button></h3>
@@ -196,7 +253,7 @@ function ListagemProvas() {
                                 !isSimulado && isAuthenticated
                                     ? <><b className='clickOption' onClick={() => baixarArquivo(item.Id, item.nomeProva, false)}>Baixar Gabarito 🔽</b><br /></>
                                     : !isSimulado
-                                        ? <><b className='clickOption' onClick={() => redirectToLogin('/listagemprovas/' + page)}>Entrar para ver gabarito</b><br /></>
+                                        ? <><b className='clickOption' onClick={() => redirectToLogin(getCurrentListUrl())}>Entrar para ver gabarito</b><br /></>
                                         : <></>
                             }
                             <br />
@@ -207,7 +264,7 @@ function ListagemProvas() {
                                     '& .MuiLinearProgress-bar': {
                                         backgroundColor: '#8A2BE2',
                                     },
-                                }} value={parseInt(((item.quantidadeQuestoesResolvidas || 0) / (item.quantidadeQuestoesTotal || 1)) * 100)} />
+                                }} value={parseInt(((item.quantidadeQuestoesResolvidas || 0) / (item.quantidadeQuestoesTotal || 1)) * 100, 10)} />
                             </> : <></>}
                             <br />
                         </h4>
@@ -231,7 +288,7 @@ function ListagemProvas() {
                             '& .MuiPaginationItem-root': { color: 'white' },
                         }}
                         count={Math.ceil(quantity / quantityPerPage)}
-                        page={parseInt(page)}
+                        page={parseInt(page, 10)}
                         color='primary'
                         showFirstButton
                         showLastButton
@@ -244,4 +301,3 @@ function ListagemProvas() {
 }
 
 export default ListagemProvas;
-

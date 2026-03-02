@@ -69,6 +69,7 @@ function RoutesApp(){
                 <Route path='/contato' element={<Contato/>}/>
                 <Route path='/notasCorte' element={<NotasCorte/>}/>
                 <Route path='/calculadoraEnem' element={<CalculadoraEnem/>}/>
+                <Route path='/listagemprovas' element={<ListagemProvas/>}/>
                 <Route path='/listagemprovas/:filtro' element={<ListagemProvas/>}/>
                 <Route path='/listagemquestoes' element={<ListagemQuestoes/>}/>
                 <Route path='/listagemquestoes/:filtro' element={<ListagemQuestoes/>}/>

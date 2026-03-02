@@ -11,7 +11,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import './style.css';
-import Config from './../../config.json';
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -163,25 +162,12 @@ const ResponsiveAppBar = () => {
     handleCloseProvaMenu();
     handleCloseNavMenu();
 
-    if(descricao != 'Todas as provas'){
-      var list = [];
-      list.push({
-        value: descricao,
-        label: descricao
-      });
-  
-      localStorage.setItem(Config.filtroTiposSelecionados, JSON.stringify(list));
+    if(descricao !== 'Todas as provas'){
+      navigate('/listagemprovas?page=1&tipos=' + encodeURIComponent(descricao), { replace: true });
+      return;
     }
-    else{
-      localStorage.setItem(Config.filtroTiposSelecionados, JSON.stringify([]));
-      localStorage.setItem(Config.filtroProfessoresSelecionadas, JSON.stringify([]));
-      localStorage.setItem(Config.filtroAssuntosSelecionadas, JSON.stringify([]));
-      localStorage.setItem(Config.filtroMateriasSelecionadas, JSON.stringify([]));
-      localStorage.setItem(Config.filtroProvasSelecionadas, JSON.stringify([]));
-      localStorage.setItem(Config.filtroBancasSelecionadas, JSON.stringify([]));
-    }
-    
-    navigate('/listagemprovas/1', { replace: true });
+
+    navigate('/listagemprovas?page=1', { replace: true });
   }
 
   function sair(){

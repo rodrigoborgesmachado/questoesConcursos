@@ -14,6 +14,7 @@ import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 import { useAuth } from '../../auth/useAuth';
 import { Roles } from '../../auth/roles';
 import { requireRole } from '../../auth/requireRole';
+import { decodeReturnTo } from '../../services/listingQueryState.js';
 
   const customStylesAssunto = {
     content: {
@@ -191,7 +192,7 @@ function Questoes(){
                     }
                     else{
                         toast.success('Você respondeu todas as questões dessa prova!');
-                        navigate('/listagemprovas/1', {replace: true});
+                        navigate('/listagemprovas?page=1', {replace: true});
                     }
                     
                     return;
@@ -385,6 +386,12 @@ function Questoes(){
     }
 
     function ListagemProva(){
+        const returnTo = searchParams.get('returnTo');
+        if (returnTo) {
+            navigate(decodeReturnTo(returnTo, '/listagemprovas?page=1'), { replace: true });
+            return;
+        }
+
         if(filtro.includes('codigoquestaohistoricoadmin')){
             navigate('/historicoadmin/', {replace: true});
         }

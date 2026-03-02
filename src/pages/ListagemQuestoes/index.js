@@ -1,43 +1,78 @@
 import './style.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import api from '../../services/api.js';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { BsFileEarmarkPlusFill } from 'react-icons/bs';
-import Config from '../../config.json';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Modal from 'react-modal';
 import FilterComponent from '../../components/FilterComponent/index.js';
-import { customStyles, MontaFiltrosLocalSession } from '../../services/functions.js';
+import { customStyles } from '../../services/functions.js';
 import PacmanLoader from '../../components/PacmanLoader/PacmanLoader.js';
 import { useAuth } from '../../auth/useAuth';
 import { Roles } from '../../auth/roles';
 import { requireRole } from '../../auth/requireRole';
+import {
+    buildApiFilterQuery,
+    decodeReturnTo,
+    getCurrentUrl,
+    getFiltersFromSearchParams,
+    getPageFromSearchParams,
+    mergeFiltersIntoSearchParams,
+} from '../../services/listingQueryState.js';
 
 function ListagemQuestoes() {
     const style = customStyles();
     const navigate = useNavigate();
-    const searchParams = new URLSearchParams(window.location.search);
+    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [loadding, setLoadding] = useState(true);
     const { filtro } = useParams();
     const [questoes, setQuestoes] = useState([]);
     const [prova, setProva] = useState({});
-    const [page, setPage] = useState(searchParams.get('page') ? searchParams.get('page') : 1);
+    const [page, setPage] = useState(getPageFromSearchParams(searchParams, 1));
     const [quantity, setQuantity] = useState(1);
     const [quantityPerPage] = useState(10);
     const [modalFiltroIsOpen, setModalFiltroIsOpen] = useState(false);
+    const [filters, setFilters] = useState(getFiltersFromSearchParams(searchParams));
+
     const { role, isAuthenticated } = useAuth();
     const isAdmin = requireRole(role, [Roles.Admin]);
+
+    const returnTo = searchParams.get('returnTo');
+    const apiFilters = useMemo(() => buildApiFilterQuery(filters), [filters]);
+
+    useEffect(() => {
+        if (!searchParams.get('page')) {
+            const next = new URLSearchParams(searchParams);
+            next.set('page', '1');
+            setSearchParams(next, { replace: true });
+        }
+    }, []);
+
+    useEffect(() => {
+        setPage(getPageFromSearchParams(searchParams, 1));
+        setFilters(getFiltersFromSearchParams(searchParams));
+    }, [searchParams]);
+
+    function getCurrentListUrl() {
+        return getCurrentUrl(location.pathname, searchParams);
+    }
 
     function redirectToLogin(returnUrl) {
         navigate(`/login?returnUrl=${encodeURIComponent(returnUrl)}`, { replace: true });
     }
 
     function buildResponderUrl(codigoQuestao, index) {
-        return (filtro ? '/questoes/codigoquestaolistagem:?codigoProva=' + filtro : '/questoes/codigoquestaolistagemsemprova?1=1') + '&id=' + codigoQuestao + '&pageListagem=' + page + '&page=' + (quantityPerPage * (page - 1) + (index + 1)) + '&' + MontaFiltrosLocalSession();
+        const baseRoute = filtro ? '/questoes/codigoquestaolistagem:?codigoProva=' + filtro : '/questoes/codigoquestaolistagemsemprova?1=1';
+        const listIndex = (quantityPerPage * (page - 1) + (index + 1));
+        const currentUrl = encodeURIComponent(getCurrentListUrl());
+        const filterQuery = filtro ? '' : apiFilters;
+
+        return `${baseRoute}&id=${codigoQuestao}&pageListagem=${page}&page=${listIndex}${filterQuery}&returnTo=${currentUrl}`;
     }
 
     function openModalFiltro() {
@@ -46,6 +81,18 @@ function ListagemQuestoes() {
 
     function closeModalFiltro() {
         setModalFiltroIsOpen(false);
+    }
+
+    function persistListState(nextPage, nextFilters) {
+        let next = new URLSearchParams(searchParams);
+        next = mergeFiltersIntoSearchParams(next, nextFilters);
+        next.set('page', String(nextPage));
+
+        if (returnTo) {
+            next.set('returnTo', returnTo);
+        }
+
+        setSearchParams(next, { replace: true });
     }
 
     async function buscaProva() {
@@ -57,7 +104,6 @@ function ListagemQuestoes() {
             .then((response) => {
                 if (response.data.success) {
                     setProva(response.data.object);
-                    buscaQuestoes(page);
                 }
                 else {
                     navigate('/', { replace: true });
@@ -70,28 +116,23 @@ function ListagemQuestoes() {
             });
     }
 
-    async function buscaQuestoesFiltrando() {
-        setPage(1);
-        await buscaQuestoes(1);
-        closeModalFiltro();
-    }
-
     async function buscaQuestoes(nextPage) {
         setLoadding(true);
 
         const endpoint = isAuthenticated
-            ? `/Questoes/pagged?page=${nextPage}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : MontaFiltrosLocalSession())
-            : `/PublicQuestoes/questoes-pagged?page=${nextPage}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : MontaFiltrosLocalSession());
+            ? `/Questoes/pagged?page=${nextPage}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : apiFilters)
+            : `/PublicQuestoes/questoes-pagged?page=${nextPage}&quantity=${quantityPerPage}&anexos=false` + (filtro ? `&codigoProva=${filtro}` : apiFilters);
 
         await api.get(endpoint)
             .then((response) => {
                 if (response.data.success) {
                     if (filtro) {
-                        setQuestoes(response.data.object.sort((a, b) => parseInt(a.numeroQuestao) - parseInt(b.numeroQuestao)));
+                        setQuestoes(response.data.object.sort((a, b) => parseInt(a.numeroQuestao, 10) - parseInt(b.numeroQuestao, 10)));
                     }
                     else {
                         setQuestoes(response.data.object);
                     }
+
                     setQuantity(response.data.total);
                     setLoadding(false);
                 }
@@ -107,13 +148,23 @@ function ListagemQuestoes() {
     }
 
     useEffect(() => {
-        if (filtro) {
-            buscaProva();
+        async function load() {
+            if (filtro) {
+                await buscaProva();
+            }
+
+            await buscaQuestoes(page);
         }
-        else {
-            buscaQuestoes(page);
-        }
-    }, []);
+
+        load();
+    }, [filtro, page, apiFilters, isAuthenticated]);
+
+    function buscaQuestoesFiltrando(nextFilters) {
+        setPage(1);
+        setFilters(nextFilters);
+        persistListState(1, nextFilters);
+        closeModalFiltro();
+    }
 
     function abreQuestao(codigoQuestao, index) {
         if (!isAuthenticated) {
@@ -143,14 +194,13 @@ function ListagemQuestoes() {
     }
 
     function voltarListagemProva() {
-        const currentPage = localStorage.getItem(Config.PaginaListagem) == null ? '1' : localStorage.getItem(Config.PaginaListagem);
-        navigate('/listagemprovas/' + currentPage, { replace: true });
+        navigate(decodeReturnTo(returnTo, '/listagemprovas?page=1'), { replace: true });
     }
 
     const handleChange = (event, value) => {
-        setPage(value);
         setLoadding(true);
-        buscaQuestoes(value);
+        setPage(value);
+        persistListState(value, filters);
     };
 
     async function AtualizaStatus(id, status) {
@@ -186,10 +236,16 @@ function ListagemQuestoes() {
                 style={style}
                 contentLabel='Filtro'
             >
-                <FilterComponent buscaQuestoesFiltrando={buscaQuestoesFiltrando} setFiltro={() => {}} />
+                <FilterComponent
+                    buscaQuestoesFiltrando={buscaQuestoesFiltrando}
+                    setFiltro={() => {}}
+                    filters={filters}
+                    onApply={buscaQuestoesFiltrando}
+                    persistInLocalStorage={false}
+                />
             </Modal>
-            {filtro ?
-                <>
+            {filtro
+                ? <>
                     <div className='total'>
                         <button className='global-button global-button--transparent' onClick={voltarListagemProva}>Voltar</button>
                     </div>
@@ -214,13 +270,12 @@ function ListagemQuestoes() {
                     {isAdmin && filtro ? <h3 onClick={addQuestao}><BsFileEarmarkPlusFill />  Adicionar</h3> : <></>}
                 </div>
             </div>
-            {!filtro ?
-                <div className='opcoes-top-tabela'>
+            {!filtro
+                ? <div className='opcoes-top-tabela'>
                     <h3>Questões (Total: {quantity})</h3>
                     <h3 className='link'><button className='global-button global-button--transparent' onClick={openModalFiltro}>Filtrar</button></h3>
                 </div>
-                :
-                <div className=''>
+                : <div className=''>
                     <h3>Questões (Total: {quantity})</h3>
                 </div>}
             <div className='global-fullW'>
@@ -238,8 +293,8 @@ function ListagemQuestoes() {
                     <tbody>
                         {questoes.map((item, index) => (
                             <tr key={item.Id}>
-                                {!filtro && isAdmin ?
-                                    <td className='option'>
+                                {!filtro && isAdmin
+                                    ? <td className='option'>
                                         {isAdmin ? <h4 onClick={() => editaQuestao(item.Id)}>✏️{item.Id}</h4> : <h4 onClick={() => abreQuestao(item.Id, index)}>✏️{item.Id}</h4>}
                                     </td>
                                     : <></>}
@@ -252,19 +307,15 @@ function ListagemQuestoes() {
                                 <td><h4 onClick={() => abreQuestao(item.Id, index)}>{item.assunto}</h4></td>
                                 {!filtro ? <td>{item.prova?.nomeProva}</td> : <></>}
                                 <td>
-                                    {!isAuthenticated ?
-                                        <button className='global-button global-button--transparent global-button--full-width' onClick={() => entrarParaResponder(item.Id, index)}>Entrar para responder</button>
-                                        :
-                                        item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo == element.codigoResposta && elem.certa === '1')) !== undefined ?
-                                            <button className='global-button-right global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Respondida</button>
-                                            :
-                                            <>
-                                                {item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo == element.codigoResposta && elem.certa === '0')) !== undefined ?
-                                                    <button className='global-button-wrong global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
-                                                    :
-                                                    <button className='global-button global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>}
-                                            </>
-                                    }
+                                    {!isAuthenticated
+                                        ? <button className='global-button global-button--transparent global-button--full-width' onClick={() => entrarParaResponder(item.Id, index)}>Entrar para responder</button>
+                                        : item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo == element.codigoResposta && elem.certa === '1')) !== undefined
+                                            ? <button className='global-button-right global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Respondida</button>
+                                            : <>
+                                                {item?.respostasUsuarios?.find((element) => item?.respostasQuestoes?.find((elem) => elem.codigo == element.codigoResposta && elem.certa === '0')) !== undefined
+                                                    ? <button className='global-button-wrong global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>
+                                                    : <button className='global-button global-button--transparent global-button--full-width' onClick={() => abreQuestao(item.Id, index)}>Responder</button>}
+                                            </>}
                                 </td>
                             </tr>
                         ))}
@@ -272,8 +323,8 @@ function ListagemQuestoes() {
                 </Table>
             </div>
             <div className='itensPaginacao global-mt'>
-                {quantity > 0 ?
-                    <Stack spacing={4}>
+                {quantity > 0
+                    ? <Stack spacing={4}>
                         <Pagination
                             sx={{
                                 '& .Mui-selected': {
@@ -284,15 +335,14 @@ function ListagemQuestoes() {
                                 },
                             }}
                             count={Math.ceil(quantity / quantityPerPage)}
-                            page={parseInt(page)}
+                            page={parseInt(page, 10)}
                             color='primary'
                             showFirstButton
                             showLastButton
                             onChange={handleChange}
                         />
                     </Stack>
-                    :
-                    <></>}
+                    : <></>}
             </div>
 
         </div>
@@ -300,4 +350,3 @@ function ListagemQuestoes() {
 }
 
 export default ListagemQuestoes;
-

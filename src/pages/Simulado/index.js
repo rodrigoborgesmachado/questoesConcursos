@@ -25,7 +25,7 @@ function Simulado(){
                 </p>
                 <button className='global-button global-button--transparent global-button--full-width' onClick={() => {
                     LimpaFiltrosLocalSession();
-                    navigate('/listagemprovas/1?tipo=simulado',{replace: true});
+                    navigate('/listagemprovas?page=1&tipo=simulado',{replace: true});
                 }}>Selecione sua prova</button>
             </h3>
             </div>
