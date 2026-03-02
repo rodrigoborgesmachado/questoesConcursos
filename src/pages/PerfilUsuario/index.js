@@ -1,7 +1,6 @@
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import {useState, useEffect} from 'react';
-import Config from "../../config.json";
 import api from '../../services/api.js';
 import {toast} from 'react-toastify';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel';
@@ -260,9 +259,9 @@ function PerfilUsuario(){
                 </div>
                 {/* <LinearProgressWithLabel  color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} /> */}
                 <LinearProgressWithLabel className='global-mt' sx={{
-                  backgroundColor: Config.pallete[0],
+                  backgroundColor: 'var(--progress-track-color)',
                   '& .MuiLinearProgress-bar': {
-                    backgroundColor: '#8A2BE2'
+                    backgroundColor: 'var(--progress-bar-color)'
                   }
                 }} color="primary" value={parseInt((usuario?.quantidadeQuestoesAcertadas/usuario?.quantidadeQuestoesResolvidas) * 100)} />
             </div>

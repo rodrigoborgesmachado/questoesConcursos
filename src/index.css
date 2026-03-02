@@ -36,6 +36,15 @@
   --loader-card-background: rgba(18, 18, 18, 0.56);
   --loader-card-border: rgba(255, 255, 255, 0.14);
   --loader-pellet-color: #f5f7fb;
+  --modal-surface-color: #2f2f2f;
+  --input-background-color: #1b1b1b;
+  --input-border-color: rgba(173, 179, 187, 0.48);
+  --input-text-color: #ffffff;
+  --input-placeholder-color: #c9d1d9;
+  --progress-track-color: #4d5b7d;
+  --progress-bar-color: #2cdebf;
+  --pagination-item-color: #ffffff;
+  --chart-highlight-color: #2cdebf;
   --footer-heigth: 48px;
   --default-spacing: 8px;
   --double-default-spacing: calc(2 * var(--default-spacing));
@@ -82,6 +91,15 @@
   --loader-card-background: rgba(255, 255, 255, 0.82);
   --loader-card-border: rgba(13, 127, 148, 0.28);
   --loader-pellet-color: #0d7f94;
+  --modal-surface-color: #ffffff;
+  --input-background-color: #ffffff;
+  --input-border-color: #c7d3e6;
+  --input-text-color: #1f2937;
+  --input-placeholder-color: #64748b;
+  --progress-track-color: #d5deee;
+  --progress-bar-color: #0d7f94;
+  --pagination-item-color: #1f2937;
+  --chart-highlight-color: #0d7f94;
 }
 
 * {
@@ -541,9 +559,9 @@ footer a {
 }
 
 .ReactModal__Content{
-  background-color: var(--background-color) !important;
+  background-color: var(--modal-surface-color) !important;
   .contextModal{
-    background-color: var(--background-color) !important;
+    background-color: var(--modal-surface-color) !important;
   }
 
 }
@@ -762,12 +780,23 @@ table{
   width: 100%;
   padding: 8px;
   border-radius: 4px;
+  background-color: var(--input-background-color);
+  border: 1px solid var(--input-border-color);
+  color: var(--input-text-color);
 }
 
 .global-input{
   width: 100%;
   padding: 8px;
   border-radius: 10px;
+  background-color: var(--input-background-color);
+  border: 1px solid var(--input-border-color);
+  color: var(--input-text-color);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--input-placeholder-color);
 }
 
 .center-h2{

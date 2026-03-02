@@ -221,9 +221,9 @@ function ListagemAvaliacoes(){
                     <Stack spacing={4}>
                         <Pagination sx={{
                 '& .Mui-selected': {
-                    color: 'white'},
+                    color: 'var(--pagination-item-color)'},
                 '& .MuiPaginationItem-root': {
-                    color: 'white',
+                    color: 'var(--pagination-item-color)',
             
             }}} count={Math.ceil(quantity / quantityPerPage)} page={parseInt(quantity)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                     </Stack>

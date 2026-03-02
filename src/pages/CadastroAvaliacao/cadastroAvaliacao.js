@@ -277,9 +277,9 @@ function CadastroAvaliacao(){
                         <Stack spacing={4}>
                             <Pagination sx={{
                     '& .Mui-selected': {
-                        color: 'white'},
+                        color: 'var(--pagination-item-color)'},
                     '& .MuiPaginationItem-root': {
-                        color: 'white',
+                        color: 'var(--pagination-item-color)',
                   
                   }}} count={parseInt(Math.ceil(questoesAvaliacao.length / quantityPerPage))} page={parseInt(pageQuestoesAvaliacao)} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>
@@ -382,9 +382,9 @@ function CadastroAvaliacao(){
                                     <Stack spacing={4}>
                                         <Pagination sx={{
                                 '& .Mui-selected': {
-                                    color: 'white'},
+                                    color: 'var(--pagination-item-color)'},
                                 '& .MuiPaginationItem-root': {
-                                    color: 'white',
+                                    color: 'var(--pagination-item-color)',
                             
                             }}} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(pageQuestoes)} color="primary" showFirstButton showLastButton onChange={handleChangeQuestoes} />
                                     </Stack>

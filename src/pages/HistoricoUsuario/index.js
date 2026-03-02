@@ -106,9 +106,9 @@ function HistoricoUsuario() {
                     </p>
                     <p>
                         <LinearProgressWithLabel sx={{
-                  backgroundColor: Config.pallete[0],
+                  backgroundColor: 'var(--progress-track-color)',
                   '& .MuiLinearProgress-bar': {
-                    backgroundColor: '#8A2BE2'
+                    backgroundColor: 'var(--progress-bar-color)'
                   }}} value={parseInt((quantity / qtTotal) * 100)} />
                     </p>
                 </div>
@@ -156,9 +156,9 @@ function HistoricoUsuario() {
                         <Stack spacing={4}>
                             <Pagination sx={{
                     '& .Mui-selected': {
-                        color: 'white'},
+                        color: 'var(--pagination-item-color)'},
                     '& .MuiPaginationItem-root': {
-                        color: 'white',
+                        color: 'var(--pagination-item-color)',
                   
                   }}} count={parseInt((qtTotal / quantityPerPage) + 1)} page={page} color="primary" showFirstButton showLastButton onChange={handleChange} />
                         </Stack>

@@ -22,8 +22,8 @@ import { decodeReturnTo } from '../../services/listingQueryState.js';
       right: 'auto',
       bottom: 'auto',
       border: 0,
-      background: '#424242',
-      'border-radius': '5px',
+      background: 'var(--modal-surface-color)',
+      borderRadius: '5px',
       width: '50%',
     },
   };
@@ -34,8 +34,8 @@ import { decodeReturnTo } from '../../services/listingQueryState.js';
       right: 'auto',
       bottom: 'auto',
       border: 0,
-      background: '#424242',
-      'border-radius': '5px',
+      background: 'var(--modal-surface-color)',
+      borderRadius: '5px',
       width: '80%',
     },
   };

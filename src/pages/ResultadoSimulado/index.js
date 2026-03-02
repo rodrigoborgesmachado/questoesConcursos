@@ -1,5 +1,4 @@
 import './resultado.css';
-import Config from './../../config.json';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify';
@@ -145,9 +144,9 @@ function Resultado(){
             </div>
             <div className='barraPrograsso'>
                 <LinearProgressWithLabel sx={{
-                  backgroundColor: Config.pallete[0],
+                  backgroundColor: 'var(--progress-track-color)',
                   '& .MuiLinearProgress-bar': {
-                    backgroundColor: '#8A2BE2'
+                    backgroundColor: 'var(--progress-bar-color)'
                   }}} value={Math.round(parseInt((respostas.filter((item) => item.certa === '1').length/respostas.length)*100))} />
             </div>
             <div className='respostasHistorico'>
