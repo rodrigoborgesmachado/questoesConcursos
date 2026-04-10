@@ -102,6 +102,10 @@
     background-color: var(--context-modal-background);
     width: 100%;
     color: var(--context-modal-text);
+    border-radius: var(--default-border-radius-extra);
+    border: 1px solid var(--separator-color-primary);
+    padding: 20px;
+    gap: 12px;
     
 }
 
@@ -127,7 +131,19 @@
 
 .bodymodalComentario textarea{
     width: 100%;
-    padding: 10px;
+    min-height: 240px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--input-border-color);
+    background-color: var(--input-background-color);
+    color: var(--input-text-color);
+    resize: vertical;
+}
+
+.bodymodalComentario textarea:focus-visible{
+    outline: none;
+    border-color: var(--button-color-primary);
+    box-shadow: 0 0 0 3px var(--input-focus-ring);
 }
 
 .botoesModal{

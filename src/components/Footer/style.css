@@ -1,17 +1,49 @@
-footer a{
-    cursor: pointer;
+.site-footer {
+    padding: 24px 16px 30px;
+}
+
+.site-footer-content {
+    width: min(100%, var(--default-max-width));
+    margin: 0 auto;
+    text-align: center;
+    color: var(--text-color-primary);
+}
+
+.site-footer-content p {
+    margin: 0;
+    font-weight: 700;
+}
+
+.site-footer-content strong {
+    font-family: var(--font-title);
+    letter-spacing: 0.02em;
 }
 
 .footer-links {
-    display: inline-flex;
+    margin-top: 8px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
 .footer-links a {
     font-size: 1rem;
     font-weight: 700;
+    color: var(--text-color-accent);
     text-decoration: none;
+    cursor: pointer;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.site-footer-content small {
+    display: block;
+    margin-top: 6px;
+    color: var(--text-color-primary);
+    opacity: 0.9;
+    font-size: 0.88rem;
 }

@@ -18,25 +18,39 @@ import { decodeReturnTo } from '../../services/listingQueryState.js';
 
   const customStylesAssunto = {
     content: {
-      left: '25%',
+      top: '50%',
+      left: '50%',
       right: 'auto',
       bottom: 'auto',
-      border: 0,
+      border: '1px solid var(--separator-color-primary)',
       background: 'var(--modal-surface-color)',
-      borderRadius: '5px',
-      width: '50%',
+      borderRadius: '24px',
+      transform: 'translate(-50%, -50%)',
+      width: 'min(92vw, 680px)',
+      maxHeight: '86vh',
+      overflow: 'auto',
+      position: 'fixed',
+      boxShadow: 'var(--nav-shadow)',
+      padding: 0,
     },
   };
 
   const customStylesComentario = {
     content: {
-      left: '10%',
+      top: '50%',
+      left: '50%',
       right: 'auto',
       bottom: 'auto',
-      border: 0,
+      border: '1px solid var(--separator-color-primary)',
       background: 'var(--modal-surface-color)',
-      borderRadius: '5px',
-      width: '80%',
+      borderRadius: '24px',
+      transform: 'translate(-50%, -50%)',
+      width: 'min(94vw, 1120px)',
+      maxHeight: '86vh',
+      overflow: 'auto',
+      position: 'fixed',
+      boxShadow: 'var(--nav-shadow)',
+      padding: 0,
     },
   };
 

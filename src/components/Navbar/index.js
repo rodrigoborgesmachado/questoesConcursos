@@ -24,12 +24,13 @@ import { requireRole } from '../../auth/requireRole';
 import { useTheme } from '../../theme/useTheme';
 
 const menuPaperSx = {
-  borderRadius: '12px',
+  borderRadius: '16px',
   minWidth: '220px',
   border: '1px solid var(--separator-color-primary)',
   backgroundColor: 'var(--primary-color)',
-  color: 'var(--text-color-secondary)',
+  color: 'var(--text-color-primary)',
   boxShadow: 'var(--elevation-shadow)',
+  backdropFilter: 'blur(6px)',
 };
 
 function Navbar() {
@@ -154,7 +155,11 @@ function Navbar() {
             <MenuIcon />
           </IconButton>
           <Link to='/' className='nav-brand' aria-label='Ir para página inicial'>
-            <span className='nav-brand-title'>Questões Aqui</span>
+            <span className='nav-brand-badge' aria-hidden='true'>Q</span>
+            <span className='nav-brand-text'>
+              <strong className='nav-brand-title'>Questoes Aqui</strong>
+              <small className='nav-brand-subtitle'>SunSale System</small>
+            </span>
           </Link>
         </div>
 
