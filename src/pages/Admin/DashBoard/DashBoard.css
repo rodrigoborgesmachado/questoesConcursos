@@ -1,20 +1,265 @@
-@media only screen and (max-width: 1000px) {
-    .dadosDashboard{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    /* Add additional styles specific to smartphones */
+.report-page {
+    gap: 18px;
+    align-items: stretch;
 }
 
-@media only screen and (min-width: 1001px) {
-    .dadosDashboard{
-        display: flex;
-        justify-content: space-between;
-    }
-    /* Add additional styles specific to smartphones */
+.report-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: center;
+    text-align: left;
 }
 
-.itemUsuarios{
+.report-eyebrow {
+    color: var(--text-color-accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.report-title {
+    color: var(--text-color-primary-light);
+    font-size: clamp(1.65rem, 3vw, 2.35rem);
+    line-height: 1.05;
+    margin-top: 4px;
+}
+
+.report-subtitle {
+    color: var(--text-color-primary);
+    line-height: 1.55;
+    margin-top: 8px;
+    max-width: 720px;
+}
+
+.report-score {
+    min-width: 160px;
     padding: 16px;
+    border: 1px solid var(--card-border-accent);
+    border-radius: var(--default-border-radius);
+    background-color: var(--card-background-subtle);
+    text-align: center;
+}
+
+.report-score strong {
+    display: block;
+    color: var(--text-color-primary-light);
+    font-family: var(--font-title);
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.report-score span {
+    color: var(--text-color-primary);
+    display: block;
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
+.report-grid,
+.report-kpi-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.report-kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.report-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.report-card {
+    border: 1px solid var(--card-border-subtle);
+    border-radius: var(--default-border-radius);
+    background-color: var(--card-background-subtle);
+    padding: 16px;
+    text-align: left;
+}
+
+.report-card--action {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+}
+
+.report-card-label {
+    color: var(--text-color-primary);
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.report-card-value {
+    color: var(--text-color-primary-light);
+    display: block;
+    font-family: var(--font-title);
+    font-size: 2rem;
+    line-height: 1.05;
+    margin-top: 4px;
+}
+
+.report-card-note {
+    color: var(--text-color-code);
+    display: block;
+    font-size: 0.86rem;
+    line-height: 1.35;
+    margin-top: 6px;
+}
+
+.report-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.report-section-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-end;
+    text-align: left;
+}
+
+.report-section-title {
+    color: var(--text-color-primary-light);
+    font-size: 1.28rem;
+    line-height: 1.15;
+}
+
+.report-section-description {
+    color: var(--text-color-primary);
+    line-height: 1.45;
+    margin-top: 4px;
+}
+
+.report-chart-card {
+    overflow: hidden;
+}
+
+.report-chart-card .grafico {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.report-chart-card svg text {
+    fill: var(--text-color-primary);
+}
+
+.report-chart-card .MuiChartsLegend-root text {
+    fill: var(--text-color-primary) !important;
+}
+
+.report-insights {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.report-insight {
+    border-left: 3px solid var(--text-color-accent);
+    padding: 8px 10px;
+    background-color: var(--color-surface-variant);
+    border-radius: 8px;
+    text-align: left;
+}
+
+.report-insight strong {
+    color: var(--text-color-primary-light);
+    display: block;
+    font-size: 0.95rem;
+}
+
+.report-insight span {
+    color: var(--text-color-primary);
+    display: block;
+    font-size: 0.84rem;
+    margin-top: 2px;
+}
+
+.report-empty {
+    border: 1px dashed var(--separator-color-primary);
+    border-radius: var(--default-border-radius);
+    color: var(--text-color-code);
+    padding: 28px 16px;
+    text-align: center;
+}
+
+.report-action-button {
+    align-items: center;
+    background: var(--button-color-ghost);
+    border: 1px solid var(--button-color-ghost-border);
+    border-radius: 999px;
+    color: var(--button-color-ghost-border);
+    cursor: pointer;
+    display: inline-flex;
+    height: 42px;
+    justify-content: center;
+    min-width: 42px;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.report-action-button:hover {
+    background-color: var(--button-color-ghost-hover);
+    color: var(--text-color-primary);
+    transform: translateY(-1px);
+}
+
+.report-progress {
+    background-color: var(--progress-track-color);
+    border-radius: 999px;
+    height: 12px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.report-progress-bar {
+    background: linear-gradient(90deg, var(--button-color-primary), var(--chart-highlight-color));
+    border-radius: inherit;
+    height: 100%;
+    min-width: 4px;
+}
+
+.report-summary-row {
+    align-items: stretch;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.report-modal-content {
+    max-height: 70vh;
+    overflow: auto;
+}
+
+.report-table-action {
+    color: var(--text-color-accent);
+    cursor: pointer;
+    font-weight: 800;
+}
+
+@media only screen and (max-width: 900px) {
+    .report-hero,
+    .report-section-header {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+    }
+
+    .report-kpi-grid,
+    .report-grid--two,
+    .report-summary-row,
+    .report-insights {
+        grid-template-columns: 1fr;
+    }
+
+    .report-score {
+        min-width: 0;
+        text-align: left;
+    }
+
+    .report-card--action {
+        align-items: flex-start;
+    }
 }

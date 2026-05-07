@@ -1,5 +1,5 @@
 import './DashBoard.css';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import api from '../../../services/api.js';
 import Config from "../../../config.json";
 import { toast } from 'react-toastify';
@@ -16,520 +16,447 @@ import BasicPie from './../../../components/GraficoPie/graficoPie.js';
 import { BasicBars, BarraDoisItensCorretosErrados } from '../../../components/GraficoBarra/graficoBarra.js';
 import PacmanLoader from '../../../components/PacmanLoader/PacmanLoader.js';
 
+const quantityPerPage = 8;
+const numberFormatter = new Intl.NumberFormat('pt-BR');
+
+function safeList(list) {
+    return Array.isArray(list) ? list : [];
+}
+
+function formatNumber(value) {
+    return numberFormatter.format(Number(value || 0));
+}
+
+function formatPercent(value, total) {
+    if (!total) {
+        return '0%';
+    }
+
+    return `${Math.round((value / total) * 100)}%`;
+}
+
+function formatDate(data) {
+    if (!data) {
+        return '-';
+    }
+
+    const datePart = data.split('T')[0];
+    const parts = datePart.split('-');
+
+    if (parts.length !== 3) {
+        return data;
+    }
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+function getItemId(item) {
+    return item?.id ?? item?.Id;
+}
+
+function getTotalFromResponseList(list) {
+    return safeList(list).reduce((total, item) => total + Number(item.certas || 0) + Number(item.erradas || 0), 0);
+}
+
+function getCorrectFromResponseList(list) {
+    return safeList(list).reduce((total, item) => total + Number(item.certas || 0), 0);
+}
+
+function getTopItem(list) {
+    return safeList(list).reduce((top, item) => {
+        const currentTotal = Number(item.certas || 0) + Number(item.erradas || 0);
+        const topTotal = top ? Number(top.certas || 0) + Number(top.erradas || 0) : -1;
+        return currentTotal > topTotal ? item : top;
+    }, null);
+}
+
+function makePieData(primaryLabel, primaryValue, secondaryLabel, secondaryValue) {
+    return [
+        {
+            id: 0,
+            value: Number(primaryValue || 0),
+            color: Config.pallete[0],
+            label: `${primaryLabel}: ${formatNumber(primaryValue)}`
+        },
+        {
+            id: 1,
+            value: Number(secondaryValue || 0),
+            color: Config.pallete[1],
+            label: `${secondaryLabel}: ${formatNumber(secondaryValue)}`
+        }
+    ];
+}
+
+function StatCard({ label, value, note, action }) {
+    return (
+        <div className={`report-card ${action ? 'report-card--action' : ''}`}>
+            <div>
+                <span className="report-card-label">{label}</span>
+                <strong className="report-card-value">{formatNumber(value)}</strong>
+                {note && <span className="report-card-note">{note}</span>}
+            </div>
+            {action}
+        </div>
+    );
+}
+
+function ReportSection({ title, description, items, children }) {
+    const list = safeList(items);
+    const total = getTotalFromResponseList(list);
+    const correct = getCorrectFromResponseList(list);
+    const topItem = getTopItem(list);
+
+    return (
+        <section className="report-section global-infoPanel">
+            <div className="report-section-header">
+                <div>
+                    <h2 className="report-section-title">{title}</h2>
+                    <p className="report-section-description">{description}</p>
+                </div>
+            </div>
+            {list.length > 0 && (
+                <div className="report-insights">
+                    <div className="report-insight">
+                        <strong>{formatNumber(total)}</strong>
+                        <span>respostas registradas</span>
+                    </div>
+                    <div className="report-insight">
+                        <strong>{formatPercent(correct, total)}</strong>
+                        <span>de aproveitamento</span>
+                    </div>
+                    <div className="report-insight">
+                        <strong>{topItem?.descricao || '-'}</strong>
+                        <span>maior volume</span>
+                    </div>
+                </div>
+            )}
+            <div className="report-chart-card">
+                {list.length > 0 ? children : <div className="report-empty">Sem dados para este recorte.</div>}
+            </div>
+        </section>
+    );
+}
+
+function SimpleChartSection({ title, description, hasData, children }) {
+    return (
+        <section className="report-section global-infoPanel">
+            <div>
+                <h2 className="report-section-title">{title}</h2>
+                <p className="report-section-description">{description}</p>
+            </div>
+            <div className="report-chart-card">
+                {hasData ? children : <div className="report-empty">Sem dados para este recorte.</div>}
+            </div>
+        </section>
+    );
+}
+
+function SummaryMetric({ label, value, note }) {
+    return (
+        <div className="report-insight">
+            <strong>{value}</strong>
+            <span>{label}</span>
+            {note && <span>{note}</span>}
+        </div>
+    );
+}
+
 function DashBoard(){
     const styles = customStyles();
     const navigate = useNavigate();
     const [dados, setDados] = useState({});
-    const [questoesPorUsuarios, setQuestoesPorUsuarios] = useState({});
-    const [questoesValidadasPorUsuarios, setQuestoesValidadasPorUsuarios] = useState({});
+    const [questoesPorUsuarios, setQuestoesPorUsuarios] = useState([]);
+    const [questoesValidadasPorUsuarios, setQuestoesValidadasPorUsuarios] = useState([]);
     const [loadding, setLoadding] = useState(true);
-    const [questoes, setQuestoes] = useState([])
-    const [provas, setProvas] = useState([])
+    const [questoes, setQuestoes] = useState([]);
+    const [provas, setProvas] = useState([]);
     const [modalQuestoesIsOpen, setModalQuestoesIsOpen] = useState(false);
     const [modalProvasIsOpen, setModalProvasIsOpen] = useState(false);
-    const [page, setPage] = useState(1);
+    const [pageQuestoes, setPageQuestoes] = useState(1);
+    const [pageProvas, setPageProvas] = useState(1);
     const [quantityQuestoes, setQuantityQuestoes] = useState(1);
     const [quantityProvas, setQuantityProvas] = useState(1);
-    const [quantityPerPage] = useState(8);
 
-    function openModalQuestoes() {
-        setPage(1);
-        setModalQuestoesIsOpen(true);
-    }
-
-    function closeModalQuestoes() {
-        setModalQuestoesIsOpen(false);
-    }
-
-    function openModalProvas() {
-        setPage(1);
-        setModalProvasIsOpen(true);
-    }
-
-    function closeModalProvas() {
-        setModalProvasIsOpen(false);
-    }
-
-    async function buscaDados() {
-        
-
-        await api.get('/Admin/analysis')
-            .then((response) => {
-                setDados(response.data.object);
-                setQuantityQuestoes(response.data.object.quantidadeQuestoesSolicitadasRevisao);
-                setQuantityProvas(response.data.object.quantidadeProvasDesativasAtivas);
-                setLoadding(false);
-                buscaQuantidadeQuestoesCadastradasPorUsuario();
-            }).catch(() => {
-                toast.error('Erro ao buscar os dados');
-                navigate('/', { replace: true });
-                return;
-            });
-    }
-
-    async function buscaQuantidadeQuestoesCadastradasPorUsuario(){
+    const buscaDados = useCallback(async () => {
         setLoadding(true);
-        await api.get('/Admin/getquantidadequestoescadastradasporusuarios')
-            .then((response) => {
-                setQuestoesPorUsuarios(response.data.object);
-                setLoadding(false);
-                buscaQuantidadeQuestoesValidadasPorUsuario();
-            }).catch(() => {
-                toast.error('Erro ao buscar os dados');
-                navigate('/', { replace: true });
-                return;
-            });
-    }
 
-    async function buscaQuantidadeQuestoesValidadasPorUsuario(){
-        setLoadding(true);
-        await api.get('/Admin/getquantidadequestoesvalidadasporusuarios')
-            .then((response) => {
-                setQuestoesValidadasPorUsuarios(response.data.object);
-                setLoadding(false);
-            }).catch(() => {
-                toast.error('Erro ao buscar os dados');
-                navigate('/', { replace: true });
-                return;
-            });
-    }
+        try {
+            const [analysisResponse, questoesResponse, validadasResponse] = await Promise.all([
+                api.get('/Admin/analysis'),
+                api.get('/Admin/getquantidadequestoescadastradasporusuarios'),
+                api.get('/Admin/getquantidadequestoesvalidadasporusuarios')
+            ]);
 
-    async function buscaQuestoesParaRevisao(page) {
-        await api.get('/Admin/questoespararevisao?page=' + page + '&quantity=' + quantityPerPage)
-            .then((response) => {
-                setQuestoes(response.data.object);
-                setLoadding(false);
-                openModalQuestoes();
-            }).catch(() => {
-                toast.error('Erro ao buscar os dados');
-                navigate('/', { replace: true });
-                return;
-            });
-    }
-
-    async function buscaProvasParaRevisao(){
-        await api.get('/Admin/provaspararevisao?page=' + page + '&quantity=' + quantityPerPage)
-        .then((response) => {
-            setProvas(response.data.object);
-            setLoadding(false);
-            openModalProvas();
-        }).catch(() => {
+            const analysis = analysisResponse.data.object || {};
+            setDados(analysis);
+            setQuantityQuestoes(analysis.quantidadeQuestoesSolicitadasRevisao || 0);
+            setQuantityProvas(analysis.quantidadeProvasDesativasAtivas || 0);
+            setQuestoesPorUsuarios(questoesResponse.data.object || []);
+            setQuestoesValidadasPorUsuarios(validadasResponse.data.object || []);
+        } catch {
             toast.error('Erro ao buscar os dados');
             navigate('/', { replace: true });
-            return;
-        });
+        } finally {
+            setLoadding(false);
+        }
+    }, [navigate]);
+
+    async function buscaQuestoesParaRevisao(nextPage = 1) {
+        setLoadding(true);
+
+        try {
+            const response = await api.get(`/Admin/questoespararevisao?page=${nextPage}&quantity=${quantityPerPage}`);
+            setQuestoes(response.data.object || []);
+            setPageQuestoes(nextPage);
+            setModalQuestoesIsOpen(true);
+        } catch {
+            toast.error('Erro ao buscar os dados');
+            navigate('/', { replace: true });
+        } finally {
+            setLoadding(false);
+        }
+    }
+
+    async function buscaProvasParaRevisao(nextPage = 1){
+        setLoadding(true);
+
+        try {
+            const response = await api.get(`/Admin/provaspararevisao?page=${nextPage}&quantity=${quantityPerPage}`);
+            setProvas(response.data.object || []);
+            setPageProvas(nextPage);
+            setModalProvasIsOpen(true);
+        } catch {
+            toast.error('Erro ao buscar os dados');
+            navigate('/', { replace: true });
+        } finally {
+            setLoadding(false);
+        }
     }
 
     useEffect(() => {
-
         buscaDados();
-    }, []);
-
-    function formataData(data){
-        return data.split('-')[2] + '/' + data.split('-')[1] + '/' + data.split('-')[0];
-    }
+    }, [buscaDados]);
 
     function abreProva(codigoProva){
         navigate('/listagemquestoes/' + codigoProva, {replace: true});
     }
 
+    const totalUsuarios = Number(dados?.quantidadeTotal || 0);
+    const totalRespostas = Number(dados?.quantidadeRespostas || 0);
+    const respostasCertas = Number(dados?.quantidadeRespostasCertas || 0);
+    const taxaAcerto = formatPercent(respostasCertas, totalRespostas);
+    const usuariosPendentes = Number(dados?.quantidadeNaoVerificados || 0);
+    const respostasUltimos30Dias = Number(dados?.quantidadeRespostasUltimas30Dias || 0);
+    const tabuadaTotal = Number(dados?.quantidadeRespostasTabuadaDivertida || 0);
+    const tabuadaUltimos30Dias = Number(dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias || 0);
+    const tabuadaPercentualRecente = tabuadaTotal ? Math.round((tabuadaUltimos30Dias / tabuadaTotal) * 100) : 0;
 
-    const handleChange = (event, value) => {
-        setPage(value);
-        setLoadding(true);
-        buscaQuestoesParaRevisao(value);
-    };
-
-    const handleChangeProva = (event, value) => {
-        setPage(value);
-        setLoadding(true);
-        buscaProvasParaRevisao(value);
-    };
-
-    function criaInformacoesUsuarios(){
-        return [
-            {
-                id:0,
-                value: dados?.quantidadeVerificados, 
-                color: Config.pallete[0],
-                label: 'Verificados: ' + dados?.quantidadeVerificados
-            },
-            {
-                id:1,
-                value: dados?.quantidadeNaoVerificados, 
-                color: Config.pallete[1],
-                label: 'Não verificados' + dados?.quantidadeNaoVerificados
-            }
-        ]
-    }
-
-    function criaInformacoesRespostas(){
-        return [
-            {
-                id:0,
-                value: dados?.quantidadeRespostasUltimas30Dias, 
-                color: Config.pallete[0],
-                label: 'Últimos 30 dias: ' + dados?.quantidadeRespostasUltimas30Dias
-            },
-            {
-                id:1,
-                value: dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas30Dias, 
-                color: Config.pallete[1],
-                label: 'Restante: ' + (dados?.quantidadeRespostas - dados?.quantidadeRespostasUltimas30Dias)
-            }
-        ]
-    }
-
-    function criaInformacoesTabuadaDivertida(){
-        return [
-            {
-                id:0,
-                value: dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias, 
-                color: Config.pallete[0],
-                label: 'Últimos 30 dias: ' + dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias
-            },
-            {
-                id:1,
-                value: dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias, 
-                color: Config.pallete[1],
-                label: 'Restante: ' + (dados?.quantidadeRespostasTabuadaDivertida - dados?.quantidadeRespostasTabuadaDivertidaUltimas30Dias)
-            }
-        ]
-    }
-
-    function criaInformacoesNomesQuestõesCadastradasPorUsuarios(){
-        var itens = new Array();
-
-        questoesPorUsuarios.forEach(element => {
-            itens.push(element.descricao);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesValoresQuestõesCadastradasPorUsuarios(){
-        var itens = new Array();
-
-        questoesPorUsuarios.forEach(element => {
-            itens.push(element.valor);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesNomesQuestõesValidadas(){
-        var itens = new Array();
-
-        questoesValidadasPorUsuarios.forEach(element => {
-            itens.push(element.descricao);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesValoresQuestõesValidadas(){
-        var itens = new Array();
-
-        questoesValidadasPorUsuarios.forEach(element => {
-            itens.push(element.valor);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesNomesUsuariosCadastrados(){
-        var itens = new Array();
-
-        dados?.usuariosDates?.forEach(element => {
-            itens.push(formataData(element.date));
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesValoresUsuariosCadastrados(){
-        var itens = new Array();
-
-        dados?.usuariosDates?.forEach(element => {
-            itens.push(element.count);
-        });
-
-        return itens;
-    }
-
-    function criaInformacoesUsuarios30dias(){
-        return [
-            {
-                id:0,
-                value: dados?.quantidadeUsuarios30Dias, 
-                color: Config.pallete[0],
-                label: 'Últimos 30 dias: ' + dados?.quantidadeUsuarios30Dias
-            },
-            {
-                id:1,
-                value: dados?.quantidadeTotal - dados?.quantidadeUsuarios30Dias, 
-                color: Config.pallete[1],
-                label: 'Restante: ' + (dados?.quantidadeTotal - dados?.quantidadeUsuarios30Dias)
-            }
-        ]
-    }
+    const nomesQuestoesCadastradas = safeList(questoesPorUsuarios).map((item) => item.descricao);
+    const valoresQuestoesCadastradas = safeList(questoesPorUsuarios).map((item) => item.valor);
+    const nomesQuestoesValidadas = safeList(questoesValidadasPorUsuarios).map((item) => item.descricao);
+    const valoresQuestoesValidadas = safeList(questoesValidadasPorUsuarios).map((item) => item.valor);
+    const nomesUsuariosCadastrados = safeList(dados?.usuariosDates).map((item) => formatDate(item.date));
+    const valoresUsuariosCadastrados = safeList(dados?.usuariosDates).map((item) => item.count);
 
     if (loadding) {
         return (
             <PacmanLoader/>
-        )
+        );
     }
 
     return (
-        <div className="containerpage global-fullW">
+        <div className="containerpage global-fullW report-page">
             <Modal
                 isOpen={modalQuestoesIsOpen}
-                onRequestClose={closeModalQuestoes}
+                onRequestClose={() => setModalQuestoesIsOpen(false)}
                 style={styles}
-                contentLabel="Filtro"
+                contentLabel="Questões para revisão"
             >
-                <div className='contextModal global-modal'>
+                <div className='contextModal global-modal report-modal-content'>
                     <div className='bodymodal'>
-                        <h3>Questões solicitado revisão</h3>
+                        <h3>Questões com revisão solicitada</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
-                    <div>
+                    <div className="global-tableWrap">
                         <Table className='global-table'>
                             <thead>
                                 <tr>
-                                    <th>
-                                        Código
-                                    </th>
-                                    <th>
-                                        Matéria
-                                    </th>
-                                    <th>
-                                        Prova
-                                    </th>
-                                    <th>
-                                        Numero Questao
-                                    </th>
+                                    <th>Código</th>
+                                    <th>Matéria</th>
+                                    <th>Prova</th>
+                                    <th>Número da questão</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    questoes.map((item, index) => {
-                                        return(
-                                            <tr key={item}>
-                                                <td className='option link'>
-                                                    <h4 onClick={() => abreQuestao(item.Id)}>
-                                                        <a>✏️{item.Id}</a>
-                                                    </h4>
-                                                </td>
-                                                <td>
-                                                    <h4>
-                                                        {item.materia}
-                                                    </h4>
-                                                </td>
-                                                <td>
-                                                    <h4>
-                                                        {item.prova?.nomeProva}
-                                                    </h4>
-                                                </td>
-                                                <td>
-                                                    <h4>
-                                                        {item.numeroQuestao}
-                                                    </h4>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                {questoes.map((item) => (
+                                    <tr key={getItemId(item)}>
+                                        <td>
+                                            <span className="report-table-action" onClick={() => abreQuestao(getItemId(item))}>
+                                                Ver #{getItemId(item)}
+                                            </span>
+                                        </td>
+                                        <td>{item.materia}</td>
+                                        <td>{item.prova?.nomeProva}</td>
+                                        <td>{item.numeroQuestao}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
                     </div>
                 </div>
-                <div className='itensPaginacao global-mt'>
-                {
-                    quantityQuestoes > 0 ?
+                <div className='itensPaginacao global-mt global-pagination'>
+                    {quantityQuestoes > 0 && (
                         <Stack spacing={4}>
-                            <Pagination sx={paginationSx} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChange} />
+                            <Pagination sx={paginationSx} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(pageQuestoes)} color="primary" showFirstButton showLastButton onChange={(event, value) => buscaQuestoesParaRevisao(value)} />
                         </Stack>
-                        :
-                        <>
-                        </>
-                }
+                    )}
                 </div>
             </Modal>
+
             <Modal
                 isOpen={modalProvasIsOpen}
-                onRequestClose={closeModalProvas}
+                onRequestClose={() => setModalProvasIsOpen(false)}
                 style={styles}
-                contentLabel="Filtro"
+                contentLabel="Provas em revisão"
             >
-                <div className='contextModal global-modal'>
+                <div className='contextModal global-modal report-modal-content'>
                     <div className='bodymodal'>
                         <h3>Provas em revisão</h3>
                     </div>
                     <div className="separator separator--withMargins"></div>
-                    <div>
+                    <div className="global-tableWrap">
                         <Table className='global-table'>
                             <thead>
                                 <tr>
-                                    <th>
-                                        Código
-                                    </th>
-                                    <th>
-                                        Nome
-                                    </th>
-                                    <th>
-                                        Banca
-                                    </th>
-                                    <th>
-                                        Created
-                                    </th>
+                                    <th>Código</th>
+                                    <th>Nome</th>
+                                    <th>Banca</th>
+                                    <th>Cadastro</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    provas.map((item, index) => {
-                                        return(
-                                            <tr key={item}>
-                                                <td className='option'>
-                                                    <h4 onClick={() => abreProva(item.Id)}>
-                                                        <a>✏️{item.Id}</a>
-                                                    </h4>
-                                                </td>
-                                                <td>
-                                                    <h4>
-                                                        {item.nomeProva}
-                                                    </h4>
-                                                </td>
-                                                <td>
-                                                    <h4>
-                                                        {item.banca}
-                                                    </h4>
-                                                </td>
-                                                <td>
-                                                    <h4>
-                                                        {item.dataRegistro}
-                                                    </h4>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                {provas.map((item) => (
+                                    <tr key={getItemId(item)}>
+                                        <td>
+                                            <span className="report-table-action" onClick={() => abreProva(getItemId(item))}>
+                                                Ver #{getItemId(item)}
+                                            </span>
+                                        </td>
+                                        <td>{item.nomeProva}</td>
+                                        <td>{item.banca}</td>
+                                        <td>{formatDate(item.dataRegistro)}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
                     </div>
                 </div>
-                <div className='itensPaginacao global-mt'>
-                {
-                    quantityQuestoes > 0 ?
+                <div className='itensPaginacao global-mt global-pagination'>
+                    {quantityProvas > 0 && (
                         <Stack spacing={4}>
-                            <Pagination sx={paginationSx} count={parseInt(Math.ceil(quantityQuestoes / quantityPerPage))} page={parseInt(page)} color="primary" showFirstButton showLastButton onChange={handleChangeProva} />
+                            <Pagination sx={paginationSx} count={parseInt(Math.ceil(quantityProvas / quantityPerPage))} page={parseInt(pageProvas)} color="primary" showFirstButton showLastButton onChange={(event, value) => buscaProvasParaRevisao(value)} />
                         </Stack>
-                        :
-                        <>
-                        </>
-                }
+                    )}
                 </div>
             </Modal>
-            <div className='dados global-infoPanel'>
-                <h2>DashBoard</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <div className='dadosDashboard'>
-                        <div>
-                            <h3>Usuários ({dados?.quantidadeTotal}):</h3>
-                            <div className='dadosDashboard'>
-                                <BasicPie dados={criaInformacoesUsuarios()}/>
-                            </div>
-                        </div>
-                        <div>
-                            <h3>Respostas ({dados?.quantidadeRespostas}):</h3>
-                            <div className='dadosDashboard'>
-                                <BasicPie dados={criaInformacoesRespostas()}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='dadosDashboard'>
-                        <div>
-                            <h3>Total usuários({dados?.quantidadeTotal}):</h3>
-                            <div className='dadosDashboard'>
-                                <BasicPie dados={criaInformacoesUsuarios30dias()}/>
-                            </div>
-                        </div>
-                        <div>
-                            <h3>Respostas Tabuada Divertida ({dados?.quantidadeRespostasTabuadaDivertida}):</h3>
-                            <div className='dadosDashboard'>
-                                <BasicPie dados={criaInformacoesTabuadaDivertida()}/>
-                            </div>
-                        </div>
-                    </div>
-                    
+
+            <section className="report-hero global-infoPanel">
+                <div>
+                    <span className="report-eyebrow">Painel administrativo</span>
+                    <h1 className="report-title">Dashboard</h1>
+                    <p className="report-subtitle">
+                        Visão consolidada de usuários, respostas e itens que precisam de revisão.
+                    </p>
                 </div>
-                <br/>
-                <h2>Manutenção de provas e questões</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <h3>Questões</h3>
-                    <div className='dadosDashboard'>
-                        <h4>Quantidade de questões ativas: {dados?.quantidadeQuestoesAtivas}</h4>
-                        <h4>Quantidade de questões para revisão: {dados?.quantidadeQuestoesSolicitadasRevisao}<VisibilityIcon onClick={(e) => buscaQuestoesParaRevisao(1)}/></h4>
-                    </div>
-                    <h3>Provas</h3>
-                    <div className='dadosDashboard'>
-                        <h4>Quantidade de provas ativas: {dados?.quantidadeProvasAtivas}</h4>
-                        <h4>Quantidade de provas em aberto: {dados?.quantidadeProvasDesativasAtivas}<VisibilityIcon onClick={(e) => buscaProvasParaRevisao(1)}/></h4>
-                    </div>
+                <div className="report-score">
+                    <strong>{taxaAcerto}</strong>
+                    <span>acerto geral</span>
                 </div>
-                <br/>
-                <h2>Quantidade de respostas por prova</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorProvas}/>
+            </section>
+
+            <section className="report-kpi-grid">
+                <StatCard label="Usuários" value={totalUsuarios} note={`${formatNumber(dados?.quantidadeUsuarios30Dias)} nos últimos 30 dias`} />
+                <StatCard label="Respostas" value={totalRespostas} note={`${formatNumber(respostasUltimos30Dias)} nos últimos 30 dias`} />
+                <StatCard label="Questões ativas" value={dados?.quantidadeQuestoesAtivas} note={`${formatNumber(dados?.quantidadeQuestoesSolicitadasRevisao)} pedindo revisão`} />
+                <StatCard label="Provas ativas" value={dados?.quantidadeProvasAtivas} note={`${formatNumber(dados?.quantidadeProvasDesativasAtivas)} em aberto`} />
+            </section>
+
+            <section className="report-grid report-grid--two">
+                <div className="report-card">
+                    <h2 className="report-section-title">Usuários verificados</h2>
+                    <p className="report-section-description">{formatNumber(usuariosPendentes)} contas ainda precisam de verificação.</p>
+                    <BasicPie dados={makePieData('Verificados', dados?.quantidadeVerificados, 'Não verificados', dados?.quantidadeNaoVerificados)} />
                 </div>
-                <br/>
-                <h2>Quantidade de respostas por avaliação</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorAvaliacao}/>
+                <div className="report-card">
+                    <h2 className="report-section-title">Atividade recente</h2>
+                    <p className="report-section-description">Participação dos últimos 30 dias no volume total de respostas.</p>
+                    <BasicPie dados={makePieData('Últimos 30 dias', respostasUltimos30Dias, 'Histórico anterior', totalRespostas - respostasUltimos30Dias)} />
                 </div>
-                <br/>
-                <h2>Quantidade de respostas por matéria</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorMateria}/>
+            </section>
+
+            <section className="report-grid report-grid--two">
+                <StatCard
+                    label="Questões para revisão"
+                    value={dados?.quantidadeQuestoesSolicitadasRevisao}
+                    note="Abra a fila para validar correções solicitadas."
+                    action={<button className="report-action-button" type="button" onClick={() => buscaQuestoesParaRevisao(1)} aria-label="Ver questões para revisão"><VisibilityIcon /></button>}
+                />
+                <StatCard
+                    label="Provas em aberto"
+                    value={dados?.quantidadeProvasDesativasAtivas}
+                    note="Acompanhe provas pendentes antes de publicar."
+                    action={<button className="report-action-button" type="button" onClick={() => buscaProvasParaRevisao(1)} aria-label="Ver provas em revisão"><VisibilityIcon /></button>}
+                />
+            </section>
+
+            <ReportSection title="Respostas por prova" description="Volume e aproveitamento agrupados por prova." items={dados?.respostasPorProvas}>
+                <BarraDoisItensCorretosErrados itens={dados?.respostasPorProvas}/>
+            </ReportSection>
+
+            <ReportSection title="Respostas por avaliação" description="Comparação entre acertos e erros em avaliações." items={dados?.respostasPorAvaliacao}>
+                <BarraDoisItensCorretosErrados itens={dados?.respostasPorAvaliacao}/>
+            </ReportSection>
+
+            <ReportSection title="Respostas por matéria" description="Matérias com maior participação e melhor leitura de desempenho." items={dados?.respostasPorMateria}>
+                <BarraDoisItensCorretosErrados itens={dados?.respostasPorMateria}/>
+            </ReportSection>
+
+            <ReportSection title="Respostas por banca" description="Distribuição de respostas por banca." items={dados?.respostasPorBanca}>
+                <BarraDoisItensCorretosErrados itens={dados?.respostasPorBanca}/>
+            </ReportSection>
+
+            <ReportSection title="Respostas por tipo" description="Desempenho por tipo de questão." items={dados?.respostasPorTipo}>
+                <BarraDoisItensCorretosErrados itens={dados?.respostasPorTipo}/>
+            </ReportSection>
+
+            <SimpleChartSection title="Questões cadastradas por usuário" description="Quem mais contribuiu com cadastro de questões." hasData={questoesPorUsuarios.length > 0}>
+                <BasicBars nomes={nomesQuestoesCadastradas} dados={valoresQuestoesCadastradas}/>
+            </SimpleChartSection>
+
+            <SimpleChartSection title="Questões validadas por usuário" description="Quem mais atuou na validação de questões." hasData={questoesValidadasPorUsuarios.length > 0}>
+                <BasicBars nomes={nomesQuestoesValidadas} dados={valoresQuestoesValidadas}/>
+            </SimpleChartSection>
+
+            <SimpleChartSection title="Usuários cadastrados nos últimos 30 dias" description="Evolução diária de novos usuários." hasData={safeList(dados?.usuariosDates).length > 0}>
+                <BasicBars nomes={nomesUsuariosCadastrados} dados={valoresUsuariosCadastrados}/>
+            </SimpleChartSection>
+
+            <section className="report-section global-infoPanel">
+                <div>
+                    <h2 className="report-section-title">Tabuada Divertida</h2>
+                    <p className="report-section-description">Resumo de uso do módulo e participação da atividade recente no histórico.</p>
                 </div>
-                <br/>
-                <h2>Quantidade de respostas por banca</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorBanca}/>
+                <div className="report-summary-row">
+                    <SummaryMetric label="respostas no total" value={formatNumber(tabuadaTotal)} />
+                    <SummaryMetric label="respostas nos últimos 30 dias" value={formatNumber(tabuadaUltimos30Dias)} />
+                    <SummaryMetric label="participação recente" value={`${tabuadaPercentualRecente}%`} note={`${formatNumber(Math.max(tabuadaTotal - tabuadaUltimos30Dias, 0))} no histórico anterior`} />
                 </div>
-                <br/>
-                <h2>Quantidade de respostas por tipos</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BarraDoisItensCorretosErrados itens={dados?.respostasPorTipo}/>
+                <div className="report-progress" aria-label="Participação dos últimos 30 dias na Tabuada Divertida">
+                    <div className="report-progress-bar" style={{ width: `${Math.min(tabuadaPercentualRecente, 100)}%` }} />
                 </div>
-                <br/>
-                <h2>Quantidade de questões cadastradas por usuários</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BasicBars nomes={criaInformacoesNomesQuestõesCadastradasPorUsuarios()} dados={criaInformacoesValoresQuestõesCadastradasPorUsuarios()}/>
-                </div>
-                <br/>
-                <h2>Quantidade de questões validadas por usuários</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BasicBars nomes={criaInformacoesNomesQuestõesValidadas()} dados={criaInformacoesValoresQuestõesValidadas()}/>
-                </div>
-                <br/>
-                <h2>Usuários cadastrados nos últimos 30 dias</h2>
-                <br/>
-                <div className='dados global-infoPanel'>
-                    <BasicBars nomes={criaInformacoesNomesUsuariosCadastrados()} dados={criaInformacoesValoresUsuariosCadastrados()}/>
-                </div>
-            </div>
+            </section>
         </div>
-    )
+    );
 }
 
 export default DashBoard;

@@ -42,6 +42,7 @@ import QuestaoPublica from './pages/QuestaoPublica';
 import Privacidade from './pages/Privacidade';
 import Termos from './pages/Termos';
 import Sobre from './pages/Sobre';
+import Seo from './components/Seo/Seo';
 import PrivateRoute from './auth/PrivateRoute';
 import RoleRoute from './auth/RoleRoute';
 import { Roles } from './auth/roles';
@@ -60,6 +61,7 @@ function DefaultHomeRoute() {
 function RoutesApp(){
     return(
         <BrowserRouter>
+            <Seo/>
             <Header/>
             <Routes>
                 <Route path='/' element={<DefaultHomeRoute/>}/>

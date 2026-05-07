@@ -1,0 +1,35 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /login
+Disallow: /criarUsuario
+Disallow: /recoverypass
+Disallow: /resetpass
+Disallow: /valida
+Disallow: /confirmesuaconta
+Disallow: /materias
+Disallow: /bancas
+Disallow: /simulado
+Disallow: /ranking
+Disallow: /historico
+Disallow: /perfil
+Disallow: /questoes
+Disallow: /resultadosimulado
+Disallow: /historicosimulado
+Disallow: /atualizasenha
+Disallow: /avaliacoes
+Disallow: /meudesempenho
+Disallow: /resultadoAvaliacao
+Disallow: /cadastroProva
+Disallow: /cadastraQuestao
+Disallow: /historicoadmin
+Disallow: /logs
+Disallow: /usuarios
+Disallow: /historicotabuadadivertida
+Disallow: /historicorespostas
+Disallow: /cadastroavaliacao
+Disallow: /listagemminhasavaliacoes
+
+Sitemap: https://www.questoesaqui.com/sitemap.xml
