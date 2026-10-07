@@ -57,6 +57,7 @@ function Privacidade() {
                 </p>
                 <ul className='institutional-list'>
                     <li>Quando necessário para a operação técnica da plataforma (como serviços de hospedagem e infraestrutura).</li>
+                    <li>Com fornecedores de publicidade, como o Google AdSense, conforme descrito abaixo.</li>
                     <li>Para cumprimento de obrigação legal ou determinação judicial.</li>
                     <li>Para prevenção de fraudes, abusos ou atividades ilícitas.</li>
                     <li>Para proteção dos direitos do usuário ou da própria plataforma.</li>
@@ -102,6 +103,28 @@ function Privacidade() {
                     funcionalidades podem ser impactadas.
                 </p>
 
+                <h3 className='institutional-section-title'>Publicidade e Google AdSense</h3>
+                <p className='institutional-paragraph'>
+                    O Questões Aqui utiliza o Google AdSense para veicular anúncios. O Google e outros fornecedores
+                    de publicidade podem utilizar cookies e tecnologias similares para exibir anúncios com base
+                    em visitas a este e a outros sites. Esses serviços podem receber informações técnicas, como
+                    endereço IP, identificadores de cookies e interações com anúncios.
+                </p>
+                <p className='institutional-paragraph'>
+                    Os cookies de publicidade permitem que o Google e seus parceiros exibam anúncios personalizados.
+                    Você pode gerenciar a personalização na página de{' '}
+                    <a href='https://myadcenter.google.com/' target='_blank' rel='noopener noreferrer'>
+                        configurações de anúncios do Google
+                    </a>. Para saber como essas informações são utilizadas, consulte{' '}
+                    <a href='https://policies.google.com/technologies/partner-sites' target='_blank' rel='noopener noreferrer'>
+                        como o Google usa dados de sites e apps parceiros
+                    </a>. Também é possível consultar opções de desativação de publicidade personalizada
+                    de outros fornecedores em{' '}
+                    <a href='https://www.aboutads.info/choices/' target='_blank' rel='noopener noreferrer'>
+                        AdChoices
+                    </a>.
+                </p>
+
                 <h3 className='institutional-section-title'>Atualizações desta política</h3>
                 <p className='institutional-paragraph'>
                     Esta Política de Privacidade pode ser atualizada periodicamente para refletir melhorias na plataforma,
@@ -112,7 +135,7 @@ function Privacidade() {
                     indicada ao final do documento.
                 </p>
 
-                <p className='institutional-paragraph'>Última atualização: 02/03/2026</p>
+                <p className='institutional-paragraph'>Última atualização: 07/10/2026</p>
 
                 <div className='institutional-cta'>
                     <Link className='global-button global-button--transparent' to='/contato'>Falar com o suporte</Link>

@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 const SITE_URL = (process.env.REACT_APP_SITE_URL || 'https://www.questoesaqui.com').replace(/\/$/, '');
 
-const DEFAULT_TITLE = 'Questoes Aqui - Questoes de Concurso, Enem e Vestibulares';
-const DEFAULT_DESCRIPTION = 'Site de questoes de concurso, Enem e Vestibulares. Ideal para quem busca aprender de forma gratuita e treinar seus conhecimentos.';
+const DEFAULT_TITLE = 'Questões Aqui - Questões de Concurso, Enem e Vestibulares';
+const DEFAULT_DESCRIPTION = 'Estude para concursos, Enem e vestibulares com questões e provas anteriores. Conheça os simulados e organize sua rotina de revisão no Questões Aqui.';
 
 const SEO_BY_PATH = {
     '/': {
@@ -147,6 +147,24 @@ function Seo() {
             : 'index, follow';
 
         document.title = seo.title;
+
+        [
+            ['property', 'og:title', seo.title],
+            ['property', 'og:description', seo.description],
+            ['property', 'og:url', `${SITE_URL}${canonicalPath}`],
+            ['name', 'twitter:title', seo.title],
+            ['name', 'twitter:description', seo.description],
+        ].forEach(([attribute, key, content]) => {
+            upsertMeta(
+                `meta[${attribute}="${key}"]`,
+                () => {
+                    const element = document.createElement('meta');
+                    element.setAttribute(attribute, key);
+                    return element;
+                },
+                (element) => element.setAttribute('content', content),
+            );
+        });
 
         upsertMeta(
             'meta[name="description"]',

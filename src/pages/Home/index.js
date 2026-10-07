@@ -3,100 +3,127 @@ import { Link } from 'react-router-dom';
 import Config from './../../config.json';
 import { useEffect } from 'react';
 
+const resources = [
+    { title: 'Banco de questões', text: 'Consulte enunciados e alternativas de questões de concursos, Enem e vestibulares. Use os filtros disponíveis para direcionar sua pesquisa e escolher o que estudar.', to: '/listagemquestoes', action: 'Explorar questões' },
+    { title: 'Provas anteriores', text: 'Conheça a organização de uma prova e os conteúdos cobrados. Estudar provas anteriores ajuda a reconhecer o estilo das perguntas e a planejar a revisão.', to: '/listagemprovas', action: 'Consultar provas' },
+    { title: 'Simulados e prática', text: 'Com uma conta, pratique questões e realize simulados. No modo simulado, confira o resultado ao final para avaliar seus acertos e os assuntos que merecem atenção.', to: '/simulado', action: 'Realizar um simulado' },
+];
+
+const questions = [
+    { title: 'Posso consultar questões sem criar uma conta?', text: 'Sim. A listagem de questões, a consulta de provas e as páginas públicas de questões podem ser acessadas sem login. Para responder no modo de prática, realizar simulados e acessar seu histórico pessoal, entre na sua conta.' },
+    { title: 'Qual é a diferença entre praticar e fazer um simulado?', text: 'Na prática, você trabalha as questões e recebe retorno sobre as respostas. No simulado, as respostas são conferidas ao final. Use a prática para revisar conteúdos e o simulado para exercitar a resolução de uma sequência de questões.' },
+    { title: 'Como escolher as questões para estudar?', text: 'Comece pelo conteúdo previsto no edital ou pela área de conhecimento da sua prova. Consulte o banco de questões e as provas disponíveis, aplicando os filtros que correspondem ao seu objetivo. Alterne assuntos já estudados com aqueles em que você encontra dificuldade.' },
+    { title: 'Resolver questões substitui o estudo da teoria?', text: 'A resolução complementa o estudo teórico. Quando errar ou acertar por dúvida, retome o conceito em seu material de estudo e tente explicar o raciocínio com suas próprias palavras. Depois, resolva outras questões sobre o mesmo tema.' },
+    { title: 'O Questões Aqui é um site oficial de concursos ou do Enem?', text: 'Não. O Questões Aqui é uma plataforma educacional da SunSale System. Para datas, regras, inscrições e conteúdos oficiais, consulte o Inep, a instituição de ensino ou a organizadora responsável pelo processo seletivo.' },
+];
+
 function Home() {
     useEffect(() => {
-        localStorage.setItem(Config.lastLink, "/");
-    }, [])
+        localStorage.setItem(Config.lastLink, '/');
+    }, []);
 
     return (
-        <div className='mainBlock'>
-            <div className='insideBlock'>
-                <div className='mainWrapper'>
-                    <div className='containerpage-type1'>
-                    <div className="containerpage-type1-text">
-                    <div className='paragrafo1'>
-                        Bem-vindo ao maravilhoso mundo do
+        <main className='home-page'>
+            <section className='home-hero' aria-labelledby='home-title'>
+                <div>
+                    <p className='home-eyebrow'>Questões Aqui · Sua rotina de estudos começa aqui</p>
+                    <h1 id='home-title'>Questões de concursos, Enem e vestibulares para estudar e praticar</h1>
+                    <p>Transforme o conteúdo que você estuda em prática. No Questões Aqui, você pode consultar questões e provas, testar seus conhecimentos e organizar a preparação para o seu próximo desafio.</p>
+                    <p>Escolha um assunto, resolva com atenção e use seus resultados para decidir o que revisar. Uma rotina consistente começa com um passo possível hoje.</p>
+                    <div className='home-actions'>
+                        <Link className='home-button' to='/listagemquestoes'>Explorar questões</Link>
+                        <Link className='home-button home-button-secondary' to='/criarUsuario'>Criar minha conta</Link>
                     </div>
-                    <div className='paragrafo2'>
-                        Questões Aqui
-                    </div>
-                    <div className='paragrafo3'>
-                        Aqui, você vai embarcar em uma aventura incrível de preparação para o Enem, Vestibulares e concursos públicos, desvendando mistérios e desafios em forma de questões. Faça questões de concursos, questões do Enem, de vestibulares e estude observando seu progresso e podendo ter em primeira mão o que precisa para estudar.
-                    </div>
+                    <p className='home-note'>Consulte questões e provas sem login. Entre na sua conta para praticar e acompanhar seu histórico.</p>
+                </div>
+                <aside className='home-plan' aria-labelledby='home-plan-title'>
+                    <span className='home-eyebrow'>Um passo de cada vez</span>
+                    <h2 id='home-plan-title'>Seu próximo bloco de estudo</h2>
+                    <ol>
+                        <li><strong>Escolha um tema</strong><span>Defina o conteúdo que você quer revisar.</span></li>
+                        <li><strong>Resolva com atenção</strong><span>Leia o enunciado e analise as alternativas.</span></li>
+                        <li><strong>Aprenda com o resultado</strong><span>Revise as dúvidas antes de seguir em frente.</span></li>
+                    </ol>
+                    <Link to='/listagemprovas'>Encontre uma prova para começar →</Link>
+                </aside>
+            </section>
 
+            <section className='home-section' aria-labelledby='home-resources-title'>
+                <p className='home-eyebrow'>Conheça a plataforma</p>
+                <h2 id='home-resources-title'>Recursos para cada etapa da preparação</h2>
+                <div className='home-grid'>
+                    {resources.map((resource) => (
+                        <article className='home-card' key={resource.to}>
+                            <h3>{resource.title}</h3>
+                            <p>{resource.text}</p>
+                            <Link to={resource.to}>{resource.action} →</Link>
+                        </article>
+                    ))}
                 </div>
-                    </div>
-                
-                </div>
-                <div className='mainGeometric'>
+            </section>
 
+            <section className='home-section home-panel' aria-labelledby='home-study-title'>
+                <p className='home-eyebrow'>Estude com intenção</p>
+                <h2 id='home-study-title'>Como aproveitar melhor o estudo por questões</h2>
+                <p>Questões ajudam a perceber como um conteúdo aparece na prova. Mais do que contar acertos, procure entender o caminho até a resposta: quais informações do enunciado são relevantes, qual conceito está sendo cobrado e por que as outras alternativas não se aplicam.</p>
+                <div className='home-grid'>
+                    <article>
+                        <h3>Antes de resolver</h3>
+                        <p>Defina um objetivo pequeno e claro, como revisar interpretação de texto ou um tópico de matemática. Separe seu material de apoio e escolha um conjunto de questões compatível com o tempo que você tem disponível.</p>
+                    </article>
+                    <article>
+                        <h3>Durante a prática</h3>
+                        <p>Tente responder antes de consultar a teoria. Observe palavras que mudam o sentido da pergunta, unidades de medida e condições do problema. Registre as dúvidas e diferencie uma resposta segura de um acerto por tentativa.</p>
+                    </article>
+                    <article>
+                        <h3>Depois de responder</h3>
+                        <p>Classifique seus erros: falta de conteúdo, interpretação ou distração. Retome os assuntos necessários e volte a praticá-los em outra sessão. Use o histórico e os resultados disponíveis na sua conta para orientar a revisão.</p>
+                    </article>
                 </div>
-            </div>
-            <div className="containerpage-type3">
-                <div className='containerpage-type3-block'>
-                    <div className="new-h1">Intuitivo</div>
-                    <div className="new-h2">Prepare-se para mergulhar em uma infinidade de perguntas surpreendentes, organizadas por disciplina e assunto. Temos um verdadeiro tesouro de questões para você praticar e se tornar um mestre da sabedoria acadêmica!</div>
-                </div>
-                <div className='containerpage-type3-block'>
-                    <div className="new-h1">Responsivo</div>
-                    <div className="new-h2">Ao longo dessa jornada, você vai poder acompanhar seu progresso e desvendar seus pontos fortes e fracos. Com as explicações detalhadas de cada questão, você vai aprimorar seus conhecimentos como um verdadeiro detetive do conhecimento!</div>
-                </div>
-                <div className='containerpage-type3-block'>
-                    <div className="new-h1">Dinâmico</div>
-                    <div className="new-h2">Então, prepare-se para os desafios acadêmicos e profissionais com o QuestoesAqui! A aventura começa agora, e estamos prontos para ajudá-lo a alcançar as estrelas do conhecimento!</div>
-                </div>
-            </div>
+            </section>
 
-            <div className="separator"></div>
-
-            <div className="global-extraBottom global-extraTop">
-                <div className='botoes-type2'>
-                    <Link className='botao-type2' to={`/listagemquestoes`}>
-                        Listar todas questões
-                        <div>
-                            <svg fill="inherit" width="50px" height="50px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                <title>alt-clipboard</title>
-                                <path d="M2.016 30.016v-26.016q0-0.832 0.576-1.408t1.408-0.576h4v4h-1.984v21.984h20v-21.984h-2.016v-4h4q0.832 0 1.408 0.576t0.608 1.408v26.016q0 0.832-0.608 1.408t-1.408 0.576h-24q-0.832 0-1.408-0.576t-0.576-1.408zM8 26.016v-18.016h2.016q0 0.832 0.576 1.44t1.408 0.576h8q0.832 0 1.408-0.576t0.608-1.44h1.984v18.016h-16zM10.016 22.016h9.984v-2.016h-9.984v2.016zM10.016 18.016h8v-2.016h-8v2.016zM10.016 14.016h12v-2.016h-12v2.016zM10.016 6.016v-4h4v-2.016h4v2.016h4v4q0 0.832-0.608 1.408t-1.408 0.576h-8q-0.832 0-1.408-0.576t-0.576-1.408zM14.016 6.016h4v-2.016h-4v2.016z"></path>
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link className='botao-type2' to={`/questoes/aleatoria?page=1&Tipo=Generic&randon=true`}>
-                        Questões aleatórias
-                        <div>
-                            <svg fill="inherit" width="50px" height="50px" viewBox="0 -4 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m24.983 8.539v-2.485h-4.902l-3.672 5.945-2.099 3.414-3.24 5.256c-.326.51-.889.844-1.53.845h-9.54v-3.568h8.538l3.673-5.946 2.099-3.414 3.24-5.256c.325-.509.886-.843 1.525-.845h5.904v-2.485l7.417 4.27-7.417 4.27z" /><path d="m12.902 6.316-.63 1.022-1.468 2.39-2.265-3.675h-8.538v-3.568h9.54c.641.001 1.204.335 1.526.838l.004.007 1.836 2.985z" /><path d="m24.983 24v-2.485h-5.904c-.639-.002-1.201-.336-1.521-.838l-.004-.007-1.836-2.985.63-1.022 1.468-2.39 2.264 3.675h4.902v-2.485l7.417 4.27-7.417 4.27z" /></svg>
-                        </div>
-                    </Link>
-                    <Link className='botao-type2' to={`/questoes/enem?page=1&Tipo=Enem&randon=true`}>
-                        Questões do ENEM
-                        <div>
-                            <svg fill="inherit" width="50px" height="50px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                <title>pencil</title>
-                                <path d="M0 32l12-4 20-20-8-8-20 20zM4 28l2.016-5.984 4 4zM8 20l12-12 4 4-12 12z"></path>
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link className='botao-type2' to={`/questoes/IFTM?page=1&Tipo=IFTM&randon=true`}>
-                        Questões do IFTM
-                        <div>
-                            <svg width="50px" height="50px" viewBox="0 0 15 15" id="college" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7.5,1L0,4.5l2,0.9v1.7C1.4,7.3,1,7.9,1,8.5s0.4,1.2,1,1.4V10l-0.9,2.1&#xA; C0.8,13,1,14,2.5,14s1.7-1,1.4-1.9L3,10c0.6-0.3,1-0.8,1-1.5S3.6,7.3,3,7.1V5.9L7.5,8L15,4.5L7.5,1z M11.9,7.5l-4.5,2L5,8.4v0.1&#xA; c0,0.7-0.3,1.3-0.8,1.8l0.6,1.4v0.1C4.9,12.2,5,12.6,4.9,13c0.7,0.3,1.5,0.5,2.5,0.5c3.3,0,4.5-2,4.5-3L11.9,7.5L11.9,7.5z" />
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link className='botao-type2' to={`/simulado`}>
-                        Realizar Simulado
-                        <div>
-                            <svg fill="inherit" width="50px" height="50px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                <title>pencil</title>
-                                <path d="M0 32l12-4 20-20-8-8-20 20zM4 28l2.016-5.984 4 4zM8 20l12-12 4 4-12 12z"></path>
-                            </svg>
-                        </div>
-                    </Link>
+            <section className='home-section' aria-labelledby='home-goals-title'>
+                <h2 id='home-goals-title'>Direcione a prática para o seu objetivo</h2>
+                <div className='home-grid'>
+                    <article className='home-card'>
+                        <h3>Concursos públicos</h3>
+                        <p>Use o edital como referência para organizar as disciplinas. Consulte as provas disponíveis e observe a forma como os assuntos são cobrados. Combine revisão da teoria com exercícios, dando atenção aos temas em que seus erros se repetem.</p>
+                        <Link to='/listagemprovas'>Pesquisar provas →</Link>
+                    </article>
+                    <article className='home-card'>
+                        <h3>Enem</h3>
+                        <p>Pratique leitura, interpretação de gráficos e aplicação de conceitos em diferentes contextos. Ao revisar, identifique a habilidade exigida pela questão. Reserve também tempo para a redação e para os demais conteúdos previstos na preparação.</p>
+                        <Link to='/questoes/enem?page=1&Tipo=Enem&randon=true'>Praticar questões do Enem →</Link>
+                    </article>
+                    <article className='home-card'>
+                        <h3>Vestibulares e processos seletivos</h3>
+                        <p>Consulte as orientações da instituição e estude as provas anteriores disponíveis. Compare os assuntos exigidos com seu plano de estudos e pratique a leitura dos enunciados. Para processos do IFTM, há também um acesso direto ao modo de questões.</p>
+                        <Link to='/questoes/IFTM?page=1&Tipo=IFTM&randon=true'>Praticar questões do IFTM →</Link>
+                    </article>
                 </div>
-            </div>
-        </div>
+            </section>
 
-    )
+            <section className='home-section home-faq' aria-labelledby='home-faq-title'>
+                <h2 id='home-faq-title'>Dúvidas frequentes</h2>
+                {questions.map((question) => (
+                    <details key={question.title}>
+                        <summary>{question.title}</summary>
+                        <p>{question.text}</p>
+                    </details>
+                ))}
+            </section>
+
+            <nav className='home-section home-panel home-map' aria-labelledby='home-map-title'>
+                <h2 id='home-map-title'>Mapa do site</h2>
+                <p>Encontre os recursos de estudo e as informações sobre a plataforma.</p>
+                <div className='home-grid'>
+                    <div><h3>Estudar</h3><Link to='/listagemquestoes'>Banco de questões</Link><Link to='/listagemprovas'>Provas anteriores</Link><Link to='/questoes/aleatoria?page=1&Tipo=Generic&randon=true'>Questões aleatórias (com login)</Link><Link to='/simulado'>Simulados (com login)</Link></div>
+                    <div><h3>Planejar</h3><Link to='/calculadoraEnem'>Calculadora Enem</Link><Link to='/notasCorte'>Notas de corte</Link><Link to='/criarUsuario'>Criar conta</Link><Link to='/login'>Entrar na plataforma</Link></div>
+                    <div><h3>Conhecer</h3><Link to='/sobre'>Sobre o Questões Aqui</Link><Link to='/contato'>Contato e sugestões</Link><Link to='/privacidade'>Política de privacidade</Link><Link to='/termos'>Termos de uso</Link></div>
+                </div>
+            </nav>
+        </main>
+    );
 }
 
 export default Home;

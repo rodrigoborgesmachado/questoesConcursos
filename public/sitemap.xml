@@ -3,7 +3,7 @@
   <!-- Rotas dinamicas publicas (/listagemprovas/:filtro, /listagemquestoes/:filtro e /questaopublica/:id) dependem de dados da API e nao ha fonte local confiavel para gerar URLs conhecidas; por isso, URLs dinamicas nao foram inventadas neste sitemap. -->
   <url>
     <loc>https://www.questoesaqui.com/</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -27,7 +27,7 @@
   </url>
   <url>
     <loc>https://www.questoesaqui.com/privacidade</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
